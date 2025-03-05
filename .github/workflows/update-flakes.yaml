@@ -6,6 +6,8 @@ on:
 
 permissions: {}
 
+# https://github.com/bbigras/nix-config
+
 jobs:
   get-flake-inputs:
     runs-on: ubuntu-latest
