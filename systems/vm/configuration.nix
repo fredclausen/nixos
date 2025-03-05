@@ -164,7 +164,7 @@
       rtl-sdr-librtlsdr
       rrdtool
       python3Full
-      discord
+      # discord
       cabal-install
       ghc
     ];
