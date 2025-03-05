@@ -12,9 +12,9 @@
   imports = [
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.default
-    ../common/fonts.nix
-    ../common/system.nix
-    ../common/gnomeextensions.nix
+    ../../common/fonts.nix
+    ../../common/system.nix
+    ../../common/gnomeextensions.nix
   ];
 
   nix.settings.experimental-features = [
