@@ -97,9 +97,6 @@
     enableSSHSupport = true;
   };
 
-  users.users.fred.packages.tradingview.enabled = false;
-  users.users.fred.packages.discord.enabled = false;
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
