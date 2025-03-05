@@ -75,19 +75,22 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  environment.gnome.excludePackages = (with pkgs; [
-  atomix # puzzle game
-  cheese # webcam tool
-  epiphany # web browser
-  gnome-characters
-  gnome-music
-  gnome-photos
-  gnome-tour
-  hitori # sudoku game
-  iagno # go game
-  tali # poker game
-  totem # video player
-]);
+  environment.gnome.excludePackages = (
+    with pkgs;
+    [
+      atomix # puzzle game
+      cheese # webcam tool
+      epiphany # web browser
+      gnome-characters
+      gnome-music
+      gnome-photos
+      gnome-tour
+      hitori # sudoku game
+      iagno # go game
+      tali # poker game
+      totem # video player
+    ]
+  );
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -166,23 +169,23 @@
   };
 
   home-manager.users.fred = {
-  dconf = {
-    enable = true;
-    settings."org/gnome/shell" = {
-      disable-user-extensions = false;
-      enabled-extensions = with pkgs.gnomeExtensions; [
-        caffeine.extensionUuid
-        vitals.extensionUuid
-        impatience.extensionUuid
-        clipboard-indicator.extensionUuid
-        dash-to-panel.extensionUuid
-        arcmenu.extensionUuid
-        search-light.extensionUuid
-      ];
+    dconf = {
+      enable = true;
+      settings."org/gnome/shell" = {
+        disable-user-extensions = false;
+        enabled-extensions = with pkgs.gnomeExtensions; [
+          caffeine.extensionUuid
+          vitals.extensionUuid
+          impatience.extensionUuid
+          clipboard-indicator.extensionUuid
+          dash-to-panel.extensionUuid
+          arcmenu.extensionUuid
+          search-light.extensionUuid
+        ];
+      };
+      settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
     };
-    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
   };
-};
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
