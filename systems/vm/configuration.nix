@@ -12,16 +12,9 @@
   imports = [
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.default
-    ../../common/system.nix
-    ../../common/locale.nix
-    ../../common/docker.nix
-    ../../common/shell.nix
-    ../../common/openssh.nix
-    ../../desktop/fonts.nix
-    ../../desktop/gnome.nix
-    ../../desktop/print.nix
-    ../../desktop/browser.nix
-    ../../users/fred.nix
+    ../../common
+    ../../desktop
+    ../../users
   ];
 
   nix.settings.experimental-features = [
