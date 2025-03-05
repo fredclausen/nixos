@@ -44,6 +44,6 @@ repos:
           )
 
   - repo: https://github.com/NixOS/nixfmt
-    rev: master
+    rev: 3261d1016ecc753c59ff92767a257f91b587e705
     hooks:
       - id: nixfmt
