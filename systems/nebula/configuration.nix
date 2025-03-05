@@ -157,9 +157,6 @@
 
   # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
   nixpkgs.config.permittedInsecurePackages = [
     "openssl-1.1.1w"
   ];
