@@ -15,6 +15,7 @@
     ../../common/fonts.nix
     ../../common/system.nix
     ../../common/gnome.nix
+    ../../common/docker.nix
   ];
 
   nix.settings.experimental-features = [
@@ -201,8 +202,6 @@
       }
     });
   '';
-
-  virtualisation.docker.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
