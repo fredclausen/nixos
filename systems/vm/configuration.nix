@@ -16,6 +16,7 @@
     ../../common/locale.nix
     ../../common/docker.nix
     ../../common/shell.nix
+    ../../common/openssh.nix
     ../../desktop/fonts.nix
     ../../desktop/gnome.nix
     ../../desktop/print.nix
