@@ -113,16 +113,8 @@
       "wheel"
       "docker"
     ];
-    #programs.zsh.enable = true;
-    #programs.bash.enable = true;
-    #programs.neovim =  {
-    #	enable = true;
-    #	defaultEditor = true;
-    #    };
 
     packages = with pkgs; [
-      zsh
-      bash
       neovim
       fastfetch
       bat
