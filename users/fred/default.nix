@@ -35,7 +35,6 @@
         _1password-gui
         ghostty
         sublime4
-        tradingview
         libGL
         libxkbcommon
         lua51Packages.lua
@@ -44,7 +43,6 @@
         rtl-sdr-librtlsdr
         rrdtool
         python3Full
-        discord
         cabal-install
         ghc
       ];

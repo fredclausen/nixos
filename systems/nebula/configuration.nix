@@ -15,6 +15,7 @@
     ../../common
     ../../desktop
     ../../users
+    ../../users/fred_extra
   ];
 
   nix.settings.experimental-features = [
