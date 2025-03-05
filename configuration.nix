@@ -165,6 +165,25 @@
     ];
   };
 
+  home-manager.users.fred = {
+  dconf = {
+    enable = true;
+    settings."org/gnome/shell" = {
+      disable-user-extensions = false;
+      enabled-extensions = with pkgs.gnomeExtensions; [
+        caffeine.extensionUuid
+        vitals.extensionUuid
+        impatience.extensionUuid
+        clipboard-indicator.extensionUuid
+        dash-to-panel.extensionUuid
+        arcmenu.extensionUuid
+        search-light.extensionUuid
+      ];
+    };
+    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+  };
+};
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
