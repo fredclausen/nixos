@@ -5,8 +5,6 @@
       pkgs.pass
       pkgs.wget
       pkgs.git
-      pkgs.bash
-      pkgs.zsh
     ];
   };
 }
