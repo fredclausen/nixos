@@ -14,7 +14,7 @@
     inputs.home-manager.nixosModules.default
     ../../common/fonts.nix
     ../../common/system.nix
-    ../../common/gnomeextensions.nix
+    ../../common/gnome.nix
   ];
 
   nix.settings.experimental-features = [
