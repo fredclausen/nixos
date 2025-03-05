@@ -105,7 +105,7 @@
   };
 
   users.users.fred.pkgs.tradingview.enabled = false;
-  users.users.fred.pgs.discord.enabled = false;
+  users.users.fred.pkgs.discord.enabled = false;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
