@@ -12,6 +12,9 @@
   imports = [
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.default
+    ./common/fonts.nix
+    ./common/system.nix
+    ./common/gnomeextensions.nix
   ];
 
   nix.settings.experimental-features = [
@@ -50,46 +53,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    pass
-    wget
-    git
-    nerdfonts
-    fira-code
-    fira-code-symbols
-    bash
-    zsh
-    gnomeExtensions.caffeine
-    gnomeExtensions.vitals
-    gnomeExtensions.impatience
-    gnomeExtensions.clipboard-indicator
-    gnomeExtensions.dash-to-panel
-    gnomeExtensions.arcmenu
-    gnomeExtensions.search-light
   ];
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  environment.gnome.excludePackages = (
-    with pkgs;
-    [
-      atomix # puzzle game
-      cheese # webcam tool
-      epiphany # web browser
-      gnome-characters
-      gnome-music
-      gnome-photos
-      gnome-tour
-      hitori # sudoku game
-      iagno # go game
-      tali # poker game
-      totem # video player
-    ]
-  );
 
   # Configure keymap in X11
   services.xserver.xkb = {
