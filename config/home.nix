@@ -44,7 +44,7 @@ in
         "dash-to-panel@jderose9.github.com"
         "impatience@gfxmonk.net"
         "search-light@icedman.github.com"
-
+        "weatherornot@somepaulo.github.io"
       ];
     };
   };

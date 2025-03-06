@@ -9,6 +9,7 @@
       pkgs.gnomeExtensions.dash-to-panel
       pkgs.gnomeExtensions.arcmenu
       pkgs.gnomeExtensions.search-light
+      pkgs.gnomeExtensions.weather-or-not
     ];
 
     # Enable the X11 windowing system.
