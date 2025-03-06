@@ -30,6 +30,25 @@ in
     };
   };
 
+  dconf.settings = {
+    # ...
+    "org/gnome/shell" = {
+      disable-user-extensions = false;
+
+      # `gnome-extensions list` for a list
+      enabled-extensions = [
+        "Vitals@CoreCoding.com"
+        "arcmenu@arcmenu.com"
+        "caffeine@patapon.info"
+        "clipboard-indicator@tudmotu.com"
+        "dash-to-panel@jderose9.github.com"
+        "impatience@gfxmonk.net"
+        "search-light@icedman.github.com"
+
+      ];
+    };
+  };
+
   home = {
     username = "${username}";
     homeDirectory = "/home/${username}";
