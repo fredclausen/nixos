@@ -45,6 +45,7 @@
         python3Full
         cabal-install
         ghc
+        nodejs_23
       ];
     };
   };
