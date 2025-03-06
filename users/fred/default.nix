@@ -14,17 +14,13 @@
         neovim
         fastfetch
         bat
-        github-desktop
         gh
         fzf
         oh-my-posh
-        vscode
         stow
         zoxide
         pay-respects
         lsd
-        wezterm
-        brave
         lazygit
         yazi
         pre-commit
@@ -32,9 +28,6 @@
         libgcc
         gcc
         cmake
-        _1password-gui
-        ghostty
-        sublime4
         libGL
         libxkbcommon
         lua51Packages.lua
@@ -45,7 +38,7 @@
         python3Full
         cabal-install
         ghc
-        nodejs_23
+        nodePackages_latest.nodejs
       ];
     };
   };
