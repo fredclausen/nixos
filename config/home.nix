@@ -1,0 +1,41 @@
+{ pkgs, ... }:
+let
+  username = "fred";
+in
+{
+  xdg = {
+    enable = true;
+    userDirs = {
+      enable = true;
+      createDirectories = false;
+    };
+
+    mimeApps = {
+      enable = true;
+
+      associations.added = {
+        "text/html" = [ "firefox.desktop" ];
+        "x-scheme-handler/http" = [ "firefox.desktop" ];
+        "x-scheme-handler/https" = [ "firefox.desktop" ];
+        "x-scheme-handler/about" = [ "firefox.desktop" ];
+        "x-scheme-handler/unknown" = [ "firefox.desktop" ];
+      };
+      defaultApplications = {
+        "text/html" = [ "firefox.desktop" ];
+        "x-scheme-handler/http" = [ "firefox.desktop" ];
+        "x-scheme-handler/https" = [ "firefox.desktop" ];
+        "x-scheme-handler/about" = [ "firefox.desktop" ];
+        "x-scheme-handler/unknown" = [ "firefox.desktop" ];
+      };
+    };
+  };
+
+  home = {
+    username = "${username}";
+    homeDirectory = "/home/${username}";
+    stateVersion = "24.11";
+
+    packages = with pkgs; [
+    ];
+  };
+}
