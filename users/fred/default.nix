@@ -24,9 +24,6 @@
         lazygit
         yazi
         pre-commit
-        clang_19
-        libgcc
-        gcc
         cmake
         lua51Packages.lua
         luajitPackages.luarocks_bootstrap
