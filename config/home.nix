@@ -47,6 +47,11 @@ in
         "weatherornot@somepaulo.github.io"
       ];
     };
+
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+
   };
 
   home = {
