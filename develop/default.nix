@@ -4,5 +4,7 @@
     ./python
     ./clang
     ./gcc
+    ./shellcheck
+    ./hadolint
   ];
 }

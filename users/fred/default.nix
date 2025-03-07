@@ -24,7 +24,6 @@
         lazygit
         yazi
         pre-commit
-        cmake
         lua51Packages.lua
         luajitPackages.luarocks_bootstrap
         tree-sitter
