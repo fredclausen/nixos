@@ -11,7 +11,6 @@
       ];
 
       packages = with pkgs; [
-        neovim
         fastfetch
         bat
         gh
@@ -23,14 +22,8 @@
         lsd
         lazygit
         yazi
-        pre-commit
-        lua51Packages.lua
-        luajitPackages.luarocks_bootstrap
-        tree-sitter
         rtl-sdr-librtlsdr
         rrdtool
-        cabal-install
-        ghc
       ];
     };
   };

@@ -6,5 +6,8 @@
     ./gcc
     ./shellcheck
     ./hadolint
+    ./nvim
+    ./pre-commit
+    ./rust
   ];
 }
