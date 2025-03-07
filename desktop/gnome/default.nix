@@ -10,6 +10,7 @@
       pkgs.gnomeExtensions.arcmenu
       pkgs.gnomeExtensions.search-light
       pkgs.gnomeExtensions.weather-or-not
+      pkgs.flat-remix-gnome
     ];
 
     # Enable the X11 windowing system.

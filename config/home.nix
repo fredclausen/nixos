@@ -37,6 +37,7 @@ in
 
       # `gnome-extensions list` for a list
       enabled-extensions = [
+        "user-theme@gnome-shell-extensions.gcampax.github.com"
         "Vitals@CoreCoding.com"
         "arcmenu@arcmenu.com"
         "caffeine@patapon.info"
@@ -50,6 +51,10 @@ in
 
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
+    };
+
+    "org/gnome/shell/extensions/user-theme" = {
+      name = "Flat-Remix-Grey-Dark";
     };
 
   };
