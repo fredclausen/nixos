@@ -8,6 +8,11 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -15,6 +20,7 @@
       self,
       nixpkgs,
       home-manager,
+      nixos-cosmic,
       ...
     }:
     let
@@ -26,6 +32,7 @@
           specialArgs = { inherit inputs; };
           modules = [
             ./systems/nebula/configuration.nix
+            nixos-cosmic.nixosModules.default
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
