@@ -16,6 +16,7 @@
     ../../desktop
     ../../users
     ../../users/fred_gui
+    ../../develop
   ];
 
   nix.settings.experimental-features = [

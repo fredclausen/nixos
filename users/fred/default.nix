@@ -28,17 +28,13 @@
         libgcc
         gcc
         cmake
-        libGL
-        libxkbcommon
         lua51Packages.lua
         luajitPackages.luarocks_bootstrap
         tree-sitter
         rtl-sdr-librtlsdr
         rrdtool
-        python3Full
         cabal-install
         ghc
-        nodePackages_latest.nodejs
       ];
     };
   };
