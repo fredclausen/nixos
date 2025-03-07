@@ -5,6 +5,7 @@
       pkgs.pass
       pkgs.wget
       pkgs.git
+      pkgs.unzip
     ];
 
     xdg.portal = {
