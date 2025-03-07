@@ -9,5 +9,6 @@
     ./nvim
     ./pre-commit
     ./rust
+    ./make
   ];
 }
