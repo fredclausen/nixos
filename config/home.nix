@@ -68,6 +68,10 @@ in
       signByDefault = true;
       key = "F406B080289FEC21";
     };
+    lfs = {
+      enable = true;
+      skipSmudge = true;
+    };
   };
 
   home = {
