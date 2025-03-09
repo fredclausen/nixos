@@ -37,7 +37,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.fred = import ./config/home.nix;
+              home-manager.users.fred = import ./users/homemanager;
               home-manager.extraSpecialArgs = { inherit inputs self user; };
             }
           ];
@@ -51,7 +51,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.fred = import ./config/home.nix;
+              home-manager.users.fred = import ./users/homemanager;
               home-manager.extraSpecialArgs = { inherit inputs self user; };
             }
           ];
