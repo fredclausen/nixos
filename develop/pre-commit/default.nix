@@ -3,11 +3,10 @@
   config = {
     users.users.fred = {
       packages = with pkgs; [
-        neovim
-        # packages needed for my nvim config to work
-        lua51Packages.lua
-        luajitPackages.luarocks_bootstrap
-        tree-sitter
+        pre-commit
+        # packages needed for my usual pre-commit plugins to work
+        cabal-install
+        ghc
       ];
     };
   };
