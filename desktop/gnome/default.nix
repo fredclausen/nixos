@@ -11,6 +11,7 @@
       pkgs.gnomeExtensions.search-light
       pkgs.gnomeExtensions.weather-or-not
       pkgs.flat-remix-gnome
+      pkgs.wl-clipboard
     ];
 
     # Enable the X11 windowing system.
