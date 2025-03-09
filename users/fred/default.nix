@@ -24,6 +24,7 @@
         yazi
         rtl-sdr-librtlsdr
         rrdtool
+        sqlitebrowser
       ];
     };
   };
