@@ -15,6 +15,7 @@
       pkgs.dconf-editor
       pkgs.gthumb
       pkgs.gimp
+      pkgs.sushi
     ];
 
     programs.nautilus-open-any-terminal = {
