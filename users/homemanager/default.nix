@@ -57,6 +57,12 @@ in
     "org/gnome/shell/extensions/user-theme" = {
       name = "Flat-Remix-Grey-Dark";
     };
+
+    "org/gnome/desktop/background" = {
+      picture-uri = "file:///home/fred/GitHub/fred-config/lewis.jpg";
+      picture-uri-dark = "file:///home/fred/GitHub/fred-config/lewis.jpg"; # Updated dark background...same as light for now
+    };
+
   };
 
   # programs.git = {
