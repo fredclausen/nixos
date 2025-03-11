@@ -11,6 +11,10 @@
 
 ## TODO
 
--[ ] Document all packages -[ ] Readme documentation in case anyone is crazy enough to want to use my stuff -[ ] Move to home-manager
-[ ] nvim config
-[ ] ZSH config -[ ] Move MacOS brew packages to nix -[ ] Add in server profiles
+- [ ] Document all packages
+- [ ] Readme documentation in case anyone is crazy enough to want to use my stuff
+- [ ] Move to home-manager
+  - [ ] nvim config
+  - [ ] ZSH config
+- [ ] Move MacOS brew packages to nix
+- [ ] Add in server profiles
