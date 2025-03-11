@@ -13,6 +13,8 @@
       pkgs.flat-remix-gnome
       pkgs.wl-clipboard
       pkgs.dconf-editor
+      pkgs.gthumb
+      pkgs.gimp
     ];
 
     programs.nautilus-open-any-terminal = {
