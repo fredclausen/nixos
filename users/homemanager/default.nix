@@ -16,6 +16,7 @@ with lib.hm.gvariant;
 
       associations.added = {
         "text/html" = [ "firefox.desktop" ];
+        "text/plain" = [ "sublime_text.desktop" ];
         "x-scheme-handler/http" = [ "firefox.desktop" ];
         "x-scheme-handler/https" = [ "firefox.desktop" ];
         "x-scheme-handler/about" = [ "firefox.desktop" ];
@@ -34,9 +35,11 @@ with lib.hm.gvariant;
         "image/svg+xml" = [ "org.gnome.gThumb.desktop" ];
         "image/webp" = [ "org.gnome.gThumb.desktop" ];
         "image/jxl" = [ "org.gnome.gThumb.desktop" ];
+        "application/x-zerosize" = [ "sublime_text.desktop" ];
       };
       defaultApplications = {
         "text/html" = [ "firefox.desktop" ];
+        "text/plain" = [ "sublime_text.desktop" ];
         "x-scheme-handler/http" = [ "firefox.desktop" ];
         "x-scheme-handler/https" = [ "firefox.desktop" ];
         "x-scheme-handler/about" = [ "firefox.desktop" ];
@@ -55,6 +58,7 @@ with lib.hm.gvariant;
         "image/svg+xml" = [ "org.gnome.gThumb.desktop" ];
         "image/webp" = [ "org.gnome.gThumb.desktop" ];
         "image/jxl" = [ "org.gnome.gThumb.desktop" ];
+        "application/x-zerosize" = [ "sublime_text.desktop" ];
       };
     };
   };
