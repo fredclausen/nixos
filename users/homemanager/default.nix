@@ -20,6 +20,7 @@ with lib.hm.gvariant;
         "x-scheme-handler/https" = [ "firefox.desktop" ];
         "x-scheme-handler/about" = [ "firefox.desktop" ];
         "x-scheme-handler/unknown" = [ "firefox.desktop" ];
+        "x-terminal-emulator" = [ "ghostty.desktop" ];
       };
       defaultApplications = {
         "text/html" = [ "firefox.desktop" ];
@@ -27,6 +28,7 @@ with lib.hm.gvariant;
         "x-scheme-handler/https" = [ "firefox.desktop" ];
         "x-scheme-handler/about" = [ "firefox.desktop" ];
         "x-scheme-handler/unknown" = [ "firefox.desktop" ];
+        "x-terminal-emulator" = [ "ghostty.desktop" ];
       };
     };
   };
@@ -49,6 +51,10 @@ with lib.hm.gvariant;
         "search-light@icedman.github.com"
         "weatherornot@somepaulo.github.io"
       ];
+    };
+
+    "org.gnome.desktop.default-applications.terminal" = {
+      exec = "ghostty";
     };
 
     "org/gnome/desktop/interface" = {

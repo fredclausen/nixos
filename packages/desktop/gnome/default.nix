@@ -15,6 +15,11 @@
       pkgs.dconf-editor
     ];
 
+    programs.nautilus-open-any-terminal = {
+      enable = true;
+      terminal = "wezterm";
+    };
+
     # Enable the X11 windowing system.
     services.xserver.enable = true;
 
