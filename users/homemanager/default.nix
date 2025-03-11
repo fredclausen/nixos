@@ -81,6 +81,15 @@ with lib.hm.gvariant;
         "search-light@icedman.github.com"
         "weatherornot@somepaulo.github.io"
       ];
+
+      favorite-apps = [
+        "org.gnome.Nautilus.desktop"
+        "org.gnome.Geary.desktop"
+        "discord.desktop"
+        "code.desktop"
+        "com.mitchellh.ghostty.desktop"
+        "firefox.desktop"
+      ];
     };
 
     "org.gnome.desktop.default-applications.terminal" = {
