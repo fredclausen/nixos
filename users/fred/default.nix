@@ -15,6 +15,7 @@
         bat
         gh
         fzf
+        fd
         oh-my-posh
         stow
         zoxide
