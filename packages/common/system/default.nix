@@ -8,6 +8,7 @@
       pkgs.unzip
       pkgs.file
       pkgs.lsd
+      pkgs.zip
     ];
 
     xdg.portal = {

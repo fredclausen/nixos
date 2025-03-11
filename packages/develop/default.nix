@@ -10,5 +10,6 @@
     ./pre-commit
     ./rust
     ./make
+    ./ninja
   ];
 }
