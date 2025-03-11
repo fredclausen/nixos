@@ -6,6 +6,8 @@
       pkgs.wget
       pkgs.git
       pkgs.unzip
+      pkgs.file
+      pkgs.lsd
     ];
 
     xdg.portal = {
@@ -13,5 +15,13 @@
       config.common.default = "*";
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
+
+    nix.gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+      persistent = true;
+    };
+    nix.settings.auto-optimise-store = true;
   };
 }

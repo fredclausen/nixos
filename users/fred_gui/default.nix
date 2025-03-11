@@ -10,6 +10,7 @@
         _1password-gui
         ghostty
         sublime4
+        sqlitebrowser
       ];
     };
   };

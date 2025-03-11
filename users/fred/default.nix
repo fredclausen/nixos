@@ -19,12 +19,10 @@
         stow
         zoxide
         pay-respects
-        lsd
         lazygit
         yazi
         rtl-sdr-librtlsdr
         rrdtool
-        sqlitebrowser
       ];
     };
   };
