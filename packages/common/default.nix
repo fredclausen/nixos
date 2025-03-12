@@ -5,5 +5,6 @@
     ./openssh
     ./locale
     ./system
+    ./boot
   ];
 }
