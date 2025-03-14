@@ -43,6 +43,21 @@
           ];
         };
 
+        maranello = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./systems/nebula/configuration.nix
+            nixos-cosmic.nixosModules.default
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.fred = import ./users/homemanager;
+              home-manager.extraSpecialArgs = { inherit inputs self user; };
+            }
+          ];
+        };
+
         vm = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
