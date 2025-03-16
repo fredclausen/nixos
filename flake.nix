@@ -46,7 +46,7 @@
         maranello = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
-            ./systems/nebula/configuration.nix
+            ./systems/maranello/configuration.nix
             nixos-cosmic.nixosModules.default
             home-manager.nixosModules.home-manager
             {
