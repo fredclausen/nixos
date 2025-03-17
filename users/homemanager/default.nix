@@ -128,6 +128,9 @@ with lib.hm.gvariant;
     "org/gnome/shell/extensions/dash-to-panel" = {
       trans-panel-opacity = 0.5;
       trans-use-custom-panel-opacity = true;
+      panel-element-positions = ''
+        {"0":[{"element":"showAppsButton","visible":false,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":true,"position":"stackedBR"},{"element":"new-element","visible":true,"position":"stackedBR"}]}
+      '';
     };
 
     "org/gnome/shell/extensions/weatherornot" = {
