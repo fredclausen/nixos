@@ -18,7 +18,6 @@
         fd
         oh-my-posh
         stow
-        zoxide
         pay-respects
         lazygit
         yazi

@@ -251,6 +251,14 @@ with lib.hm.gvariant;
     autosuggestion.enable = true;
   };
 
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+    options = [
+      "--cmd cd"
+    ];
+  };
+
   programs.starship = {
     enable = true;
     settings = {
@@ -369,6 +377,7 @@ with lib.hm.gvariant;
     stateVersion = "24.11";
 
     packages = with pkgs; [
+      zoxide
     ];
   };
 }
