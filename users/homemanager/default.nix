@@ -281,7 +281,7 @@ with lib.hm.gvariant;
     settings = {
       add_newline = false;
       right_format = "$cmd_duration $time";
-      format = "$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$c$cmake$java$lua$nodejs$python$rust$zig$nix_shell$sudo$line_break[└─](bold white)$jobs$battery$status$character";
+      format = "$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$line_break[└─](bold white)$jobs$battery$status$character";
 
       time = {
         disabled = false;
@@ -303,20 +303,20 @@ with lib.hm.gvariant;
       hostname = {
         ssh_only = false;
         style = "#73a942";
-        format = "[](fg:black bg:$style)[$hostname](bold fg:black bg:$style)[](fg:$style)";
+        format = "[$hostname](bold fg:black bg:$style)[](fg:#73a942 bg:#9863ba)";
       };
 
       username = {
         style_user = "#73a942";
         style_root = "#C00311";
-        format = "[](fg:black bg:$style)[$user](bold fg:black bg:$style)[](fg:$style)";
+        format = "[](fg:black bg:$style)[$user](bold fg:black bg:$style)[@](bold fg:black bg:$style)";
         show_always = true;
       };
 
       directory = {
         disabled = false;
         style = "#9863ba";
-        format = "[](fg:black bg:$style)[$path[$read_only](bold bg:$style fg:black)](bold bg:$style fg:white)[](fg:$style)";
+        format = "[](bg:#9863ba fg:$style)[$path[$read_only](bold bg:$style fg:white)](bold bg:$style fg:white)[](fg:$style)";
         read_only = " ";
         truncate_to_repo = false;
       };
@@ -350,38 +350,10 @@ with lib.hm.gvariant;
         behind = "[ $count ](bold fg:black bg:#73a942)";
         diverged = "[ ](bold fg:88 bg:#73a942)[ נּ ](bold fg:black bg:#73a942)[ $ahead_count ](bold fg:#73a942)[ $behind_count ](bold fg:#73a942)";
       };
-
-      # Language Support
-      golang = {
-        style = "bold fg:black bg:#73a942";
-        format = "[](fg:black bg:#73a942)[$symbol$version]($style)[](fg:#73a942)";
-      };
-
-      java = {
-        style = "bold fg:black bg:#73a942";
-        format = "[](fg:black bg:#73a942)[$symbol$version]($style)[](fg:#73a942)";
-      };
-
-      php = {
-        style = "bold fg:black bg:#73a942";
-        format = "[](fg:black bg:#73a942)[$symbol$version]($style)[](fg:#73a942)";
-      };
-
-      python = {
-        style = " bold fg:black bg:#73a942";
-        format = "[](fg:black bg:#73a942)[$symbol$pyenv_prefix$version$virtualenv]($style)[](fg:#73a942)";
-      };
-
-      package = {
-        disabled = true;
-      };
-
-      rust = {
-        style = "bold fg:black bg:#73a942";
-        format = "[](fg:black bg:#73a942)[$symbol$version]($style)[](fg:#73a942)";
-      };
     };
   };
+
+  # FIXME: Pay respects needs to be configured here when upstreamed https://github.com/nix-community/home-manager/issues/6204
 
   programs.fzf = {
     enable = true;
