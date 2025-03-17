@@ -246,6 +246,65 @@ with lib.hm.gvariant;
     enable = true;
     enableCompletion = true;
     history.size = 10000;
+
+    syntaxHighlighting.enable = true;
+    autosuggestion.enable = true;
+  };
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = false;
+
+      format = "$crystal$golang$java$nodejs$php$python$rust$directory$git_branch$git_commit$git_state$git_status$character";
+      character = {
+        success_symbol = "[ ➤]($bold fg:#f8f8f2)";
+        error_symbol = "[ ➤]($bold fg:#fb4934)";
+      };
+
+      directory = {
+        disabled = false;
+        format = "[ $path](bold fg:#ff79c6)";
+        truncate_to_repo = false;
+      };
+
+      git_branch = {
+        format = " [ $branch](bold fg:#8be9fd)";
+      };
+
+      git_status = {
+        format = " ([$all_status$ahead_behind](bold fg:#8be9fd))";
+        staged = "• ";
+        modified = "~ ";
+        untracked = "+ ";
+        deleted = "x ";
+      };
+
+      # Language Support
+      crystal = {
+        format = "🔮 ";
+      };
+
+      golang = {
+        format = "🐭 ";
+      };
+
+      java = {
+        format = "🍵 ";
+      };
+
+      php = {
+        format = "🐘 ";
+      };
+
+      python = {
+        format = "🐍 [$pyenv_prefix($version)(\($virtualenv\))](bold fg:yellow) ";
+      };
+
+      rust = {
+        format = "🦀 ";
+      };
+    };
   };
 
   programs.fzf = {
