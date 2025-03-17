@@ -249,6 +249,23 @@ with lib.hm.gvariant;
 
     syntaxHighlighting.enable = true;
     autosuggestion.enable = true;
+
+    shellAliases = {
+      ls = "lsd -l";
+      lsa = "lsd -la";
+      co = "rustup update";
+      # gc="gcverify";
+      # gcn="gcnoverify";
+      # gp="gpfred";
+      ng = "nvim ~/GitHub";
+      ngs = "nvim ~/Github/sdre-hub";
+      ngf = "nvim ~/GitHub/freminal";
+      ngc = "nvim_custom";
+      na = "nvim ~/GitHub/docker-acarshub";
+      n = "nvim";
+      # rds="remove_dsstore";
+      cat = "bat --color always";
+    };
   };
 
   programs.zoxide = {
