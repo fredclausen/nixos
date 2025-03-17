@@ -107,6 +107,10 @@ with lib.hm.gvariant;
       clock-format = "24h";
     };
 
+    "org.gnome.desktop.calendar" = {
+      show-weekdate = true;
+    };
+
     "org/gnome/shell/extensions/user-theme" = {
       name = "Flat-Remix-Grey-Dark";
     };
