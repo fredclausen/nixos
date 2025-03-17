@@ -255,29 +255,89 @@ with lib.hm.gvariant;
     enable = true;
     settings = {
       add_newline = false;
+      right_format = "$time";
 
-      format = "$crystal$golang$java$nodejs$php$python$rust$directory$git_branch$git_commit$git_state$git_status$character";
+      time = {
+        disabled = false;
+        style = "#939594";
+        format = "[$time]($style)";
+      };
+
+      cmd_duration = {
+        style = "#f9a600";
+        format = "[](fg:black bg:#f9a600)[祥$duration](bg:$style fg:black)[](fg:$style)";
+      };
+
+      #format = "$crystal$golang$java$nodejs$php$python$rust$directory$git_branch$git_commit$git_state$git_status$character";
       character = {
         success_symbol = "[ ➤]($bold fg:#f8f8f2)";
         error_symbol = "[ ➤]($bold fg:#fb4934)";
       };
 
+      hostname = {
+        ssh_only = false;
+        style = "#c05303";
+        format = "[](fg:black bg:$style)[$hostname](fg:black bg:$style)[](fg:$style)";
+      };
+
+      username = {
+        style_user = "#0370C0";
+        style_root = "#C00311";
+        format = "[](fg:black bg:$style)[$user](fg:black bg:$style)";
+        show_always = true;
+      };
+
       directory = {
         disabled = false;
-        format = "[ $path](bold fg:#ff79c6)";
+        style = "#c05303";
+        format = "[](fg:black bg:#c05303)[$path[$read_only](bg:$style fg:black)](bg:$style fg:black)[](fg:$style)";
+        read_only = " ";
         truncate_to_repo = false;
       };
 
       git_branch = {
-        format = " [ $branch](bold fg:#8be9fd)";
+        style = "#d8712c";
+        format = "[](fg:black bg:$style)[ $symbol$branch](fg:black bg:$style)[](fg:$style)";
+      };
+
+      git_commit = {
+        style = "#d8712c";
+        format = "[](fg:black bg:$style)[\\($hash$tag\\)](fg:black bg:$style)[](fg:$style)";
+      };
+
+      git_state = {
+        style = "#d8712c";
+        format = "[[](fg:black bg:$style))[ \\($state( $progress_current/$progress_total)\\)](fg:black bg:$style)[](fg:$style)";
       };
 
       git_status = {
-        format = " ([$all_status$ahead_behind](bold fg:#8be9fd))";
-        staged = "• ";
-        modified = "~ ";
-        untracked = "+ ";
-        deleted = "x ";
+        style = "#d8712c";
+        format = "([](bg:$style fg:black)$conflicted$staged$modified$renamed$deleted$untracked$stashed$ahead_behind[](fg:$style))";
+        conflicted = "[ ](bold fg:88 bg:#d8712c)[  $count ](fg:black bg:#d8712c)";
+        staged = "[ $count ](fg:black bg:#d8712c)";
+        modified = "[🌓︎ $count ](fg:black bg:#d8712c)";
+        renamed = "[ $count ](fg:black bg:#d8712c)";
+        deleted = "[ $count ](fg:black bg:#d8712c)";
+        untracked = "[?$count ](fg:black bg:#d8712c)";
+        stashed = "[ $count ](fg:black bg:#d8712c)";
+        ahead = "[ $count ](fg:#523333 bg:#d8712c)";
+        behind = "[ $count ](fg:black bg:#d8712c)";
+        diverged = "[ ](fg:88 bg:#d8712c)[ נּ ](fg:black bg:#d8712c)[ $ahead_count ](fg:black bg:#d8712c)[ $behind_count ](fg:black bg:#d8712c)";
+      };
+
+      shell = {
+        fish_indicator = "";
+        bash_indicator = "bash ";
+        zsh_indicator = "zsh ";
+        powershell_indicator = "";
+        format = "[$indicator](fg:#ad4007)";
+        disabled = false;
+      };
+      shlvl = {
+        symbol = " ";
+        style = "fg:black bg:#ad4007";
+        format = "[](fg:black bg:#ad4007)[$symbol$shlvl]($style)[](fg:#ad4007)";
+        disabled = false;
       };
 
       # Language Support
@@ -298,11 +358,17 @@ with lib.hm.gvariant;
       };
 
       python = {
-        format = "🐍 [$pyenv_prefix($version)(\($virtualenv\))](bold fg:yellow) ";
+        style = "fg:black bg:#eb9606";
+        format = "[](fg:black bg:#eb9606)[$symbol$pyenv_prefix$version$virtualenv]($style)[](fg:#eb9606)";
+      };
+
+      package = {
+        disabled = true;
       };
 
       rust = {
-        format = "🦀 ";
+        style = "fg:black bg:#eb9606";
+        format = "[](fg:black bg:#eb9606)[$symbol$version]($style)[](fg:#eb9606)";
       };
     };
   };
