@@ -102,6 +102,9 @@ with lib.hm.gvariant;
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
       enable-hot-corners = false;
+      clock-show-seconds = true;
+      clock-show-weekday = true;
+      clock-format = "24h";
     };
 
     "org/gnome/shell/extensions/user-theme" = {
