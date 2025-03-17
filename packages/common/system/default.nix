@@ -9,6 +9,7 @@
       pkgs.file
       pkgs.lsd
       pkgs.zip
+      pkgs.btop
     ];
 
     xdg.portal = {
