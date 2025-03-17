@@ -534,6 +534,52 @@ with lib.hm.gvariant;
     enableZshIntegration = true;
   };
 
+  programs.ghostty = {
+    enable = true;
+
+    settings = {
+      font-family = "MesloLGS Nerd Font Mono";
+      font-size = 10;
+      theme = "Wez";
+    };
+  };
+
+  programs.wezterm = {
+    enable = true;
+
+    extraConfig = ''
+      -- Pull in the wezterm API
+      local wezterm = require("wezterm")
+
+      -- This will hold the configuration.
+      local config = wezterm.config_builder()
+      local mux = wezterm.mux
+
+      -- This is where you actually apply your config choices
+
+      config.font = wezterm.font("MesloLGS Nerd Font Mono")
+      config.font_size = 10
+      config.enable_wayland = false
+
+      local act = wezterm.action
+      config.keys = {
+        { mods = "OPT", key = "LeftArrow", action = act.SendKey({ mods = "ALT", key = "b" }) },
+        { mods = "OPT", key = "RightArrow", action = act.SendKey({ mods = "ALT", key = "f" }) },
+        { mods = "CMD", key = "LeftArrow", action = act.SendKey({ mods = "CTRL", key = "a" }) },
+        { mods = "CMD", key = "RightArrow", action = act.SendKey({ mods = "CTRL", key = "e" }) },
+        { mods = "CMD", key = "Backspace", action = act.SendKey({ mods = "CTRL", key = "u" }) },
+        { mods = "CMD|OPT", key = "LeftArrow", action = act.ActivateTabRelative(-1) },
+        { mods = "CMD|OPT", key = "RightArrow", action = act.ActivateTabRelative(1) },
+        { mods = "CMD|SHIFT", key = "LeftArrow", action = act.ActivateTabRelative(-1) },
+        { mods = "CMD|SHIFT", key = "RightArrow", action = act.ActivateTabRelative(1) },
+      }
+
+      return config
+
+      -- 1512x854
+    '';
+  };
+
   home = {
     username = "${username}";
     homeDirectory = "/home/${username}";
