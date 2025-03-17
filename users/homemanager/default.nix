@@ -86,6 +86,7 @@ with lib.hm.gvariant;
 
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
+        "org.gnome.Calendar.desktop"
         "org.gnome.Geary.desktop"
         "discord.desktop"
         "code.desktop"
