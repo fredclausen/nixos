@@ -255,111 +255,96 @@ with lib.hm.gvariant;
     enable = true;
     settings = {
       add_newline = false;
-      right_format = "$time";
+      right_format = "$cmd_duration $time";
+      format = "$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$c$cmake$java$lua$nodejs$python$rust$zig$nix_shell$sudo$line_break[└─](bold white)$jobs$battery$status$character";
 
       time = {
         disabled = false;
-        style = "#939594";
-        format = "[$time]($style)";
+        style = "#ffffff";
+        format = "[$time](bold $style)";
       };
 
       cmd_duration = {
-        style = "#f9a600";
-        format = "[](fg:black bg:#f9a600)[祥$duration](bg:$style fg:black)[](fg:$style)";
+        style = "#ffffff";
+        format = "[$duration](bold bg:black fg:white)";
       };
 
       #format = "$crystal$golang$java$nodejs$php$python$rust$directory$git_branch$git_commit$git_state$git_status$character";
       character = {
-        success_symbol = "[ ➤]($bold fg:#f8f8f2)";
-        error_symbol = "[ ➤]($bold fg:#fb4934)";
+        success_symbol = "[❯](bold green)";
+        error_symbol = "[❯](bold red)";
       };
 
       hostname = {
         ssh_only = false;
-        style = "#c05303";
-        format = "[](fg:black bg:$style)[$hostname](fg:black bg:$style)[](fg:$style)";
+        style = "#73a942";
+        format = "[](fg:black bg:$style)[$hostname](bold fg:black bg:$style)[](fg:$style)";
       };
 
       username = {
-        style_user = "#0370C0";
+        style_user = "#73a942";
         style_root = "#C00311";
-        format = "[](fg:black bg:$style)[$user](fg:black bg:$style)";
+        format = "[](fg:black bg:$style)[$user](bold fg:black bg:$style)[](fg:$style)";
         show_always = true;
       };
 
       directory = {
         disabled = false;
-        style = "#c05303";
-        format = "[](fg:black bg:#c05303)[$path[$read_only](bg:$style fg:black)](bg:$style fg:black)[](fg:$style)";
+        style = "#9863ba";
+        format = "[](fg:black bg:$style)[$path[$read_only](bold bg:$style fg:black)](bold bg:$style fg:white)[](fg:$style)";
         read_only = " ";
         truncate_to_repo = false;
       };
 
       git_branch = {
-        style = "#d8712c";
-        format = "[](fg:black bg:$style)[ $symbol$branch](fg:black bg:$style)[](fg:$style)";
+        style = "#73a942";
+        format = "[](fg:black bg:$style)[ $symbol$branch](bold fg:black bg:$style)[](fg:$style)";
       };
 
       git_commit = {
-        style = "#d8712c";
-        format = "[](fg:black bg:$style)[\\($hash$tag\\)](fg:black bg:$style)[](fg:$style)";
+        style = "#73a942";
+        format = "[](fg:black bg:$style)[\\($hash$tag\\)](bold fg:black bg:$style)[](fg:$style)";
       };
 
       git_state = {
-        style = "#d8712c";
-        format = "[[](fg:black bg:$style))[ \\($state( $progress_current/$progress_total)\\)](fg:black bg:$style)[](fg:$style)";
+        style = "#73a942";
+        format = "[[](fg:black bg:$style))[ \\($state( $progress_current/$progress_total)\\)](bold fg:black bg:$style)[](fg:$style)";
       };
 
       git_status = {
-        style = "#d8712c";
+        style = "#73a942";
         format = "([](bg:$style fg:black)$conflicted$staged$modified$renamed$deleted$untracked$stashed$ahead_behind[](fg:$style))";
-        conflicted = "[ ](bold fg:88 bg:#d8712c)[  $count ](fg:black bg:#d8712c)";
-        staged = "[ $count ](fg:black bg:#d8712c)";
-        modified = "[🌓︎ $count ](fg:black bg:#d8712c)";
-        renamed = "[ $count ](fg:black bg:#d8712c)";
-        deleted = "[ $count ](fg:black bg:#d8712c)";
-        untracked = "[?$count ](fg:black bg:#d8712c)";
-        stashed = "[ $count ](fg:black bg:#d8712c)";
-        ahead = "[ $count ](fg:#523333 bg:#d8712c)";
-        behind = "[ $count ](fg:black bg:#d8712c)";
-        diverged = "[ ](fg:88 bg:#d8712c)[ נּ ](fg:black bg:#d8712c)[ $ahead_count ](fg:black bg:#d8712c)[ $behind_count ](fg:black bg:#d8712c)";
-      };
-
-      shell = {
-        fish_indicator = "";
-        bash_indicator = "bash ";
-        zsh_indicator = "zsh ";
-        powershell_indicator = "";
-        format = "[$indicator](fg:#ad4007)";
-        disabled = false;
-      };
-      shlvl = {
-        symbol = " ";
-        style = "fg:black bg:#ad4007";
-        format = "[](fg:black bg:#ad4007)[$symbol$shlvl]($style)[](fg:#ad4007)";
-        disabled = false;
+        conflicted = "[ ](bold fg:88 bg:#73a942)[  $count ](bold fg:black bg:#73a942)";
+        staged = "[ $count ](bold fg:black bg:#73a942)";
+        modified = "[🌓︎ $count ](bold fg:black bg:#73a942)";
+        renamed = "[ $count ](bold fg:black bg:#73a942)";
+        deleted = "[ $count ](bold fg:black bg:#73a942)";
+        untracked = "[?$count ](bold fg:black bg:#73a942)";
+        stashed = "[ $count ](bold fg:black bg:#73a942)";
+        ahead = "[ $count ](bold fg:#523333 bg:#73a942)";
+        behind = "[ $count ](bold fg:black bg:#73a942)";
+        diverged = "[ ](bold fg:88 bg:#73a942)[ נּ ](bold fg:black bg:#73a942)[ $ahead_count ](bold fg:#73a942)[ $behind_count ](bold fg:#73a942)";
       };
 
       # Language Support
-      crystal = {
-        format = "🔮 ";
-      };
-
       golang = {
-        format = "🐭 ";
+        style = "bold fg:black bg:#73a942";
+        format = "[](fg:black bg:#73a942)[$symbol$version]($style)[](fg:#73a942)";
       };
 
       java = {
-        format = "🍵 ";
+        style = "bold fg:black bg:#73a942";
+        format = "[](fg:black bg:#73a942)[$symbol$version]($style)[](fg:#73a942)";
       };
 
       php = {
-        format = "🐘 ";
+        style = "bold fg:black bg:#73a942";
+        format = "[](fg:black bg:#73a942)[$symbol$version]($style)[](fg:#73a942)";
       };
 
       python = {
-        style = "fg:black bg:#eb9606";
-        format = "[](fg:black bg:#eb9606)[$symbol$pyenv_prefix$version$virtualenv]($style)[](fg:#eb9606)";
+        style = " bold fg:black bg:#73a942";
+        format = "[](fg:black bg:#73a942)[$symbol$pyenv_prefix$version$virtualenv]($style)[](fg:#73a942)";
       };
 
       package = {
@@ -367,8 +352,8 @@ with lib.hm.gvariant;
       };
 
       rust = {
-        style = "fg:black bg:#eb9606";
-        format = "[](fg:black bg:#eb9606)[$symbol$version]($style)[](fg:#eb9606)";
+        style = "bold fg:black bg:#73a942";
+        format = "[](fg:black bg:#73a942)[$symbol$version]($style)[](fg:#73a942)";
       };
     };
   };
