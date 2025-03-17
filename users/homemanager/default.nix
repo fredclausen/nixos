@@ -115,7 +115,7 @@ with lib.hm.gvariant;
       name = "Flat-Remix-Grey-Dark";
     };
 
-    "org/gnome/extensions/arcmenu" = {
+    "org/gnome/shell/extensions/arcmenu" = {
       menu-button-appears = "Icon";
       menu-layout = "Plasma";
     };
