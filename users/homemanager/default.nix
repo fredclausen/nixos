@@ -242,6 +242,17 @@ with lib.hm.gvariant;
   #   };
   # };
 
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    history.size = 10000;
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   home = {
     username = "${username}";
     homeDirectory = "/home/${username}";
