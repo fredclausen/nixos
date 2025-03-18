@@ -39,8 +39,8 @@ repos:
       - id: shellcheck
         exclude: |
           (?x)^(
-              stow_home/fred/.oh-my-zsh/custom/aliases.zsh|
-              stow_home/fred/.zshrc
+              dotfiles/fred/.oh-my-zsh/custom/aliases.zsh|
+              dotfiles/fred/.zshrc
           )
 
   - repo: https://github.com/NixOS/nixfmt
