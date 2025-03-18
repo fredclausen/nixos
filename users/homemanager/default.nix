@@ -8,7 +8,6 @@ with lib.hm.gvariant;
     ./xdg.nix
     ./gnome.nix
     ./shell.nix
-    ./terminals.nix
   ];
 
   # programs.git = {

@@ -12,11 +12,8 @@
   imports = [
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.default
-    ../../packages/common
-    ../../packages/desktop
+    ../../packages
     ../../users
-    ../../users/fred_gui
-    ../../packages/develop
   ];
 
   nix.settings.experimental-features = [

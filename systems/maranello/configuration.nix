@@ -15,7 +15,6 @@
     ../../packages
     ../../users
     ../../users/fred_extra
-    ../../users/fred_gui
   ];
 
   nix.settings.experimental-features = [
