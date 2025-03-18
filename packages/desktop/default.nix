@@ -11,7 +11,7 @@ in
 {
   options.desktop = {
     enable = mkOption {
-      description = "Install Brave browser.";
+      description = "Enable desktop environment.";
       default = false;
     };
   };
@@ -20,8 +20,13 @@ in
     ./firefox
     ./brave
     ./fonts
+    ./githubdesktop
     ./gnome
     ./print
+    ./sqlitebrowser
+    ./sublimetext
+    ./vscode
+    ./1password
   ];
 
   config = mkIf cfg.enable {
@@ -30,5 +35,10 @@ in
     desktop.fonts.enable = true;
     desktop.gnome.enable = true;
     desktop.print.enable = true;
+    desktop.githubdesktop.enable = true;
+    desktop.vscode.enable = true;
+    desktop.onepassword.enable = true;
+    desktop.sqlitebrowser.enable = true;
+    desktop.sublimetext.enable = true;
   };
 }
