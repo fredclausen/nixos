@@ -14,13 +14,15 @@
     inputs.home-manager.nixosModules.default
     ../../packages
     ../../users
-    ../../users/fred_extra
   ];
 
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
+
+  # extra options
+  desktop.enable_extra = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

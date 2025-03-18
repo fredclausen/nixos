@@ -14,11 +14,17 @@ in
       description = "Enable desktop environment.";
       default = false;
     };
+
+    enable_extra = mkOption {
+      description = "Enable extra desktop applications. This will turn on packages that do not work on arm64.";
+      default = false;
+    };
   };
 
   imports = [
     ./firefox
     ./brave
+    ./discord
     ./fonts
     ./githubdesktop
     ./ghostty
@@ -26,6 +32,7 @@ in
     ./print
     ./sqlitebrowser
     ./sublimetext
+    ./tradingview
     ./vscode
     ./1password
     ./wezterm
@@ -44,5 +51,8 @@ in
     desktop.sqlitebrowser.enable = true;
     desktop.sublimetext.enable = true;
     desktop.wezterm.enable = true;
+
+    desktop.discord.enable = if cfg.enable_extra then true else false;
+    desktop.tradingview.enable = if cfg.enable_extra then true else false;
   };
 }

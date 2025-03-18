@@ -21,6 +21,9 @@
     "flakes"
   ];
 
+  # extra options
+  desktop.enable_extra = false;
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
