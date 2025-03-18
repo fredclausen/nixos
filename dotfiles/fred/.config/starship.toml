@@ -8,67 +8,72 @@ $directory\
 $git_branch\
 $git_commit\
 $git_state\
-$git_metrics\
 $git_status\
 $line_break\
-[└─](bold white)\
-$jobs\
-$battery\
+[└──](white)\
 $status\
 $character"""
 
 [time]
 style = "#ffffff"
-format = "[$time](bold bg:black fg:white)"
+format = "[$time](bg:black fg:white)"
 
 [cmd_duration]
 style = "#ffffff"
-format = "[$duration](bold bg:black fg:white)"
-
-[character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
-
-[hostname]
-ssh_only = false
-style = "#73a942"
-format = "[$hostname](bold fg:black bg:$style)[](fg:#73a942 bg:#9863ba)"
+format = "[$duration](bg:black fg:white)"
 
 [username]
 style_user = "#73a942"
 style_root = "#C00311"
-format = "[$user](bold fg:black bg:$style)[@](bold fg:black bg:$style)"
+format = "[$user](fg:black bg:$style)[@](fg:black bg:$style)"
 show_always = true
+
+[hostname]
+ssh_only = false
+style = "#73a942"
+format = "[$hostname](fg:black bg:$style)[](fg:#73a942 bg:#9863ba)"
 
 [directory]
 disabled = false
 style = "#9863ba"
-format = "[](bg:#9863ba fg:$style)[$path[$read_only](bold bg:$style fg:white)](bold bg:$style fg:white)[](fg:$style)"
+format = "[](bg:#9863ba fg:$style)[$path[$read_only](bg:$style fg:white)](bg:$style fg:white)[](fg:$style)"
 read_only = " "
 truncate_to_repo = false
 
 [git_branch]
 style = "#73a942"
-format = "[](fg:black bg:$style)[ $symbol$branch](bold fg:black bg:$style)[](fg:$style)"
+format = "[](fg:black bg:$style)[ $symbol$branch](fg:black bg:$style)[](fg:$style)"
 
 [git_commit]
 style = "#73a942"
-format = "[](fg:black bg:$style)[\\($hash$tag\\)](bold fg:black bg:$style)[](fg:$style)"
+format = "[](fg:black bg:$style)[\\($hash$tag\\)](fg:black bg:$style)[](fg:$style)"
 
 [git_state]
 style = "#73a942"
-format = "[[](fg:black bg:$style))[ \\($state( $progress_current/$progress_total)\\)](bold fg:black bg:$style)[](fg:$style)"
+format = "[[](fg:black bg:$style))[ \\($state( $progress_current/$progress_total)\\)](fg:black bg:$style)[](fg:$style)"
 
 [git_status]
 style = "#73a942"
 format = "([](bg:$style fg:black)$conflicted$staged$modified$renamed$deleted$untracked$stashed$ahead_behind[](fg:$style))"
 conflicted = "[ ](bold fg:88 bg:#73a942)[  $count ](bold fg:black bg:#73a942)"
-staged = "[ $count ](bold fg:black bg:#73a942)"
-modified = "[🌓︎ $count ](bold fg:black bg:#73a942)"
-renamed = "[ $count ](bold fg:black bg:#73a942)"
-deleted = "[ $count ](bold fg:black bg:#73a942)"
-untracked = "[?$count ](bold fg:black bg:#73a942)"
-stashed = "[ $count ](bold fg:black bg:#73a942)"
-ahead = "[ $count ](bold fg:#523333 bg:#73a942)"
-behind = "[ $count ](bold fg:black bg:#73a942)"
+staged = "[ $count ](fg:black bg:#73a942)"
+modified = "[🌓︎ $count ](fg:black bg:#73a942)"
+renamed = "[ $count ](fg:black bg:#73a942)"
+deleted = "[ $count ](fg:black bg:#73a942)"
+untracked = "[?$count ](fg:black bg:#73a942)"
+stashed = "[ $count ](fg:black bg:#73a942)"
+ahead = "[ $count ](fg:#523333 bg:#73a942)"
+behind = "[ $count ](fg:black bg:#73a942)"
 diverged = "[ ](bold fg:88 bg:#73a942)[ נּ ](bold fg:black bg:#73a942)[ $ahead_count ](bold fg:#73a942)[ $behind_count ](bold fg:#73a942)"
+
+[status]
+style = 'bg:black fg:white'
+symbol = '🔴'
+success_symbol = '🟢'
+format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style)'
+map_symbol = true
+disabled = false
+
+[character]
+success_symbol = "[──❯](white)"
+error_symbol = "[──❯](white)"
