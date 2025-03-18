@@ -29,7 +29,8 @@ repos:
         exclude: |
           (?x)^(
               stow_home/fred/.config/sublime-text/Local/Session.sublime_session|
-              pkglist-native.txt
+              pkglist-native.txt|
+                flake.lock
           )$
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
