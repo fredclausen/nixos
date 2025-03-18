@@ -25,11 +25,12 @@
     }:
     let
       user = "fred";
+      hmlib = home-manager.lib;
     in
     {
       nixosConfigurations = {
         nebula = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs hmlib; };
           modules = [
             ./systems/nebula/configuration.nix
             nixos-cosmic.nixosModules.default
@@ -38,13 +39,20 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = import ./users/homemanager;
-              home-manager.extraSpecialArgs = { inherit inputs self user; };
+              home-manager.extraSpecialArgs = {
+                inherit
+                  inputs
+                  self
+                  user
+                  hmlib
+                  ;
+              };
             }
           ];
         };
 
         maranello = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs hmlib; };
           modules = [
             ./systems/maranello/configuration.nix
             nixos-cosmic.nixosModules.default
@@ -53,13 +61,20 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = import ./users/homemanager;
-              home-manager.extraSpecialArgs = { inherit inputs self user; };
+              home-manager.extraSpecialArgs = {
+                inherit
+                  inputs
+                  self
+                  user
+                  hmlib
+                  ;
+              };
             }
           ];
         };
 
         vm = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs hmlib; };
           modules = [
             ./systems/vm/configuration.nix
             home-manager.nixosModules.home-manager
@@ -67,7 +82,14 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = import ./users/homemanager;
-              home-manager.extraSpecialArgs = { inherit inputs self user; };
+              home-manager.extraSpecialArgs = {
+                inherit
+                  inputs
+                  self
+                  user
+                  hmlib
+                  ;
+              };
             }
           ];
         };
