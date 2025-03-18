@@ -10,7 +10,7 @@ $git_commit\
 $git_state\
 $git_status\
 $line_break\
-[└──](white)\
+[╰──](white)\
 $status\
 $character"""
 
