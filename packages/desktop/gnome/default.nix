@@ -1,6 +1,22 @@
-{ config, pkgs, ... }:
 {
-  config = {
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+with lib;
+let
+  cfg = config.desktop.gnome;
+in
+{
+  options.desktop.gnome = {
+    enable = mkOption {
+      description = "Install GNOME desktop environment.";
+      default = false;
+    };
+  };
+
+  config = mkIf cfg.enable {
     environment.systemPackages = [
       pkgs.gnomeExtensions.caffeine
       pkgs.gnomeExtensions.vitals
