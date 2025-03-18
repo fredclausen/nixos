@@ -104,6 +104,9 @@ function ua() {
     if [ -d /home/fred/ ]; then
       echo "Updating oh-my-posh...."
       curl -s https://ohmyposh.dev/install.sh | bash -s
+
+      echo "Updating ZSH...."
+      uz
     fi
   else
     echo "NixOS detected, skipping oh-my-posh update"
@@ -117,8 +120,6 @@ function ua() {
     co
     cargo install-update -a
   fi
-  echo "Updating ZSH...."
-  uz
   echo "Updating Git...."
   ugh
   echo "Installing pre-commit hooks...."

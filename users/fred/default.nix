@@ -16,7 +16,6 @@
         gh
         fzf
         fd
-        oh-my-posh
         stow
         pay-respects
         lazygit
