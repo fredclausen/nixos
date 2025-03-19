@@ -12,12 +12,11 @@
 
       packages = with pkgs; [
         gh
-        fd
         stow
         pay-respects
         rtl-sdr-librtlsdr
         rrdtool
-        dconf2nix
+        # dconf2nix don't want but for now we'll leave it commented out. Useful to dump dconf settings to nix, but the nix package is old and broke
       ];
     };
   };

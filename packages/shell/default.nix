@@ -3,6 +3,7 @@
     ./bat
     ./eza
     ./fastfetch
+    ./fd
     ./fzf
     ./lazygit
     ./ohmyzsh
