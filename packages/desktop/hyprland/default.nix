@@ -54,6 +54,15 @@ in
           "$mainMod" = "SUPER";
           "$fileManager" = "yazi";
           "$terminal" = "ghostty";
+
+          general = {
+            "gaps_in" = 2;
+            "gaps_out" = 2;
+            "border_size" = 2;
+            "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+            "col.inactive_border" = "rgba(595959aa)";
+          };
+
           bind = [
             "$mainMod, F, exec, firefox"
             "$mainMod, Q, exec, $terminal"
