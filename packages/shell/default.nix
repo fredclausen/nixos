@@ -5,6 +5,7 @@
     ./fastfetch
     ./fzf
     ./lazygit
+    ./starship
     ./yazi
   ];
 
