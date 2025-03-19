@@ -12,7 +12,6 @@
 
       packages = with pkgs; [
         fastfetch
-        bat
         gh
         fzf
         fd
