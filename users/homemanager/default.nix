@@ -6,7 +6,6 @@ with lib.hm.gvariant;
 {
   imports = [
     ./xdg.nix
-    ./shell.nix
   ];
 
   # programs.git = {

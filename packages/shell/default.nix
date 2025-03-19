@@ -5,6 +5,7 @@
     ./fastfetch
     ./fzf
     ./lazygit
+    ./ohmyzsh
     ./starship
     ./yazi
     ./zoxide
