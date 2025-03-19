@@ -63,6 +63,21 @@ in
             "col.inactive_border" = "rgba(595959aa)";
           };
 
+          input = {
+            kb_layout = "us";
+            follow_mouse = 1;
+            numlock_by_default = true;
+            repeat_delay = 250;
+            repeat_rate = 35;
+
+            touchpad = {
+              natural_scroll = "yes";
+              disable_while_typing = true;
+              clickfinger_behavior = true;
+              scroll_factor = 0.5;
+            };
+          };
+
           decoration = {
             "rounding" = 10;
             blur = {
