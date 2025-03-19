@@ -19,7 +19,6 @@
         rtl-sdr-librtlsdr
         rrdtool
         dconf2nix
-        eza
       ];
     };
   };
