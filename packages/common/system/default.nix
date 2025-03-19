@@ -10,6 +10,7 @@
       pkgs.lsd
       pkgs.zip
       pkgs.btop
+      pkgs.toybox
     ];
 
     xdg.portal = {
