@@ -12,7 +12,6 @@
 
       packages = with pkgs; [
         gh
-        fzf
         fd
         stow
         pay-respects
