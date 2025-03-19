@@ -22,6 +22,7 @@ in
   };
 
   imports = [
+    ./alacritty
     ./firefox
     ./brave
     ./discord
@@ -51,6 +52,7 @@ in
     desktop.sqlitebrowser.enable = true;
     desktop.sublimetext.enable = true;
     desktop.wezterm.enable = true;
+    desktop.alacritty.enable = true;
 
     desktop.discord.enable = if cfg.enable_extra then true else false;
     desktop.tradingview.enable = if cfg.enable_extra then true else false;
