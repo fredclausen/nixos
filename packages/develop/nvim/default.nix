@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 {
   config = {
-    users.users.fred = {
-      packages = with pkgs; [
+    home-manager.users.fred = {
+      home.packages = with pkgs; [
         neovim
         # packages needed for my nvim config to work
         lua51Packages.lua
@@ -39,6 +39,10 @@
         copilot-node-server
         nil
       ];
+
+      xdg.configFile = {
+        "nvim/".source = ../../../dotfiles/fred/.config/nvim;
+      };
     };
   };
 }
