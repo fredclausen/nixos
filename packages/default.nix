@@ -3,5 +3,6 @@
     ./common
     ./desktop
     ./develop
+    ./other
   ];
 }

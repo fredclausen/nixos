@@ -19,7 +19,6 @@
         stow
         pay-respects
         lazygit
-        yazi
         rtl-sdr-librtlsdr
         rrdtool
         dconf2nix
