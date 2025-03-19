@@ -11,7 +11,6 @@
       ];
 
       packages = with pkgs; [
-        fastfetch
         gh
         fzf
         fd

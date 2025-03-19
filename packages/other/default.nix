@@ -1,6 +1,7 @@
 {
   imports = [
     ./bat
+    ./fastfetch
     ./lazygit
     ./yazi
   ];

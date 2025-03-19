@@ -195,4 +195,4 @@ function gcnoverify() {
   popd 1> /dev/null
 }
 
-fastfetch -c paleofetch.jsonc
+fastfetch
