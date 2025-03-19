@@ -24,3 +24,4 @@ gui:
   authorColors:
     "*": "#b4befe"
     "Fred Clausen": "#ffa500"
+    "github[bot]": "#800080"
