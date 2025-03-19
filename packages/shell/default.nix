@@ -3,6 +3,7 @@
     ./bat
     ./eza
     ./fastfetch
+    ./fzf
     ./lazygit
     ./yazi
   ];

@@ -3,6 +3,6 @@
     ./common
     ./desktop
     ./develop
-    ./other
+    ./shell
   ];
 }
