@@ -18,7 +18,6 @@
         fd
         stow
         pay-respects
-        lazygit
         rtl-sdr-librtlsdr
         rrdtool
         dconf2nix
