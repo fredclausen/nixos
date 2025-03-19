@@ -15,6 +15,7 @@
         enable = true;
         settings = {
           gui = {
+            nerdFontsVersion = "3";
             theme = {
               activeBorderColor = [
                 "#a6d189"
