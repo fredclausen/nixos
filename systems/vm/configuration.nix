@@ -68,13 +68,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  programs.hyprland = {
-    # Install the packages from nixpkgs
-    enable = true;
-    # Whether to enable XWayland
-    xwayland.enable = true;
-  };
-
   services.pcscd.enable = true;
   programs.gnupg.agent = {
     enable = true;

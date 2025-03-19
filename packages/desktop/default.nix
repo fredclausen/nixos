@@ -37,6 +37,7 @@ in
     ./vscode
     ./1password
     ./wezterm
+    ./hyprland
   ];
 
   config = mkIf cfg.enable {
@@ -53,6 +54,7 @@ in
     desktop.sublimetext.enable = true;
     desktop.wezterm.enable = true;
     desktop.alacritty.enable = true;
+    desktop.hyprland.enable = true;
 
     desktop.discord.enable = if cfg.enable_extra then true else false;
     desktop.tradingview.enable = if cfg.enable_extra then true else false;
