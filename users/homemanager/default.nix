@@ -4,10 +4,6 @@ let
 in
 with lib.hm.gvariant;
 {
-  imports = [
-    ./xdg.nix
-  ];
-
   # programs.git = {
   #   enable = true;
   #   userName = "Fred Clausen";
@@ -22,6 +18,18 @@ with lib.hm.gvariant;
   #     skipSmudge = true;
   #   };
   # };
+
+  xdg = {
+    enable = true;
+    userDirs = {
+      enable = true;
+      createDirectories = false;
+    };
+
+    mimeApps = {
+      enable = true;
+    };
+  };
 
   home = {
     username = "${username}";

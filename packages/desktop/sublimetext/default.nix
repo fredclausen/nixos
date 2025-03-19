@@ -22,5 +22,19 @@ in
         sublime4
       ];
     };
+
+    home-manager.users.fred.xdg = {
+      mimeApps = {
+        associations.added = {
+          "text/plain" = [ "sublime_text.desktop" ];
+          "application/x-zerosize" = [ "sublime_text.desktop" ];
+        };
+
+        defaultApplications = {
+          "text/plain" = [ "sublime_text.desktop" ];
+          "application/x-zerosize" = [ "sublime_text.desktop" ];
+        };
+      };
+    };
   };
 }

@@ -26,6 +26,14 @@ in
         enable = true;
         extraConfig = builtins.readFile ../../../dotfiles/fred/.wezterm.lua;
       };
+
+      xdg = {
+        mimeApps = {
+          associations.added = {
+            "x-terminal-emulator" = [ "wezterm.desktop" ];
+          };
+        };
+      };
     };
   };
 }

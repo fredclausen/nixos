@@ -31,6 +31,18 @@ in
           theme = "Wez";
         };
       };
+
+      xdg = {
+        mimeApps = {
+          associations.added = {
+            "x-terminal-emulator" = [ "ghostty.desktop" ];
+          };
+
+          defaultApplications = {
+            "x-terminal-emulator" = [ "ghostty.desktop" ];
+          };
+        };
+      };
     };
   };
 }
