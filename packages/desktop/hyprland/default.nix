@@ -17,7 +17,13 @@ in
     };
   };
 
+  imports = [
+    ./modules
+  ];
+
   config = mkIf cfg.enable {
+    desktop.hyprland.modules.enable = true;
+
     # Enable the X11 windowing system.
     services.xserver.enable = true;
 
@@ -27,7 +33,7 @@ in
     users.users.fred = {
       packages = with pkgs; [
         hyprpolkitagent
-        pamixer
+
         grim
         slurp
         swaybg
