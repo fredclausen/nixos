@@ -74,7 +74,26 @@ in
             };
 
             battery = {
-              format = "󰁹 {}%";
+              "format" = "<span font='Font Awesome 5 Free 11'>{icon}</span>  {capacity}% - {time}";
+              "format-icons" = [
+                ""
+                ""
+                ""
+                ""
+                ""
+              ];
+              "format-time" = "{H}h{M}m";
+              "format-charging" =
+                "<span font='Font Awesome 5'></span>  <span font='Font Awesome 5 11'>{icon}</span>  {capacity}% - {time}";
+              "format-full" =
+                "<span font='Font Awesome 5'></span>  <span font='Font Awesome 5 11'>{icon}</span>  Charged";
+              "interval" = 30;
+              "states" = {
+                "warning" = 25;
+                "critical" = 10;
+              };
+              "tooltip" = false;
+              "on-click" = "2";
             };
             clock = {
               format = " {:%H:%M   %m/%d} ";
