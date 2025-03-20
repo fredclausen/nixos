@@ -16,7 +16,8 @@ The `flake.nix` is the jumping in point for the configuration. It has a few syst
 | Maranello   | Home Workstation              | Desktop + Extra Packages + Development |
 | VM          | A virtual machine for testing | Desktop + Development                  |
 
-- note: the desktop stuff in the packages directory is enabled for all systems right now. However, once I add in servers the option to configure it will make sense.
+> [!NOTE]
+> the desktop stuff in the packages directory is enabled for all systems right now. However, once I add in servers the option to configure it will make sense.
 
 ## Do you want to use this?
 
@@ -56,6 +57,8 @@ In your `system/<system name>/configuration.nix` the following options can be se
 
 > [!WARNING]
 > There are a few non-nixy things here. For instance, development packages are installed system wide. This is done to make lazygit work, as well as a few other random things that needed access to system development packages.
+>
+> Additionally, all of those optional steps (or most of them, anyway) probably should be automagically configured declaratively. I mean, that's why we're using Nix.
 
 ## Provided Packages
 
@@ -111,8 +114,8 @@ This is an incomplete list, but here are some of the packages that are provided:
 
 ## TODO
 
-- [ ] Document all packages
-- [ ] Readme documentation in case anyone is crazy enough to want to use my stuff
+- [x] Document all packages
+- [x] Readme documentation in case anyone is crazy enough to want to use my stuff
 - [x] Move to home-manager
   - [x] nvim config
   - [x] ZSH config
