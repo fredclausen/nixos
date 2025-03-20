@@ -28,6 +28,8 @@ in
       packages = with pkgs; [
         hyprpolkitagent
         pamixer
+        grim
+        slurp
       ];
     };
 
@@ -295,6 +297,9 @@ in
             "$mainMod, right, movefocus, r"
             "$mainMod, up, movefocus, u"
             "$mainMod, down, movefocus, d"
+
+            ", Print, exec, grim"
+            "$mainMod, Print, exec, grim -g \"$(slurp)\""
 
             # Switch workspaces with mainMod + [0-9]
             "$mainMod, 1, workspace, 1"
