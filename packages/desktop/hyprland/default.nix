@@ -205,6 +205,7 @@ in
 
           env = [
             "QT_QPA_PLATFORMTHEME,qt6ct"
+            "XCURSOR_SIZE, 24"
           ];
 
           exec = [
@@ -215,6 +216,7 @@ in
           exec-once = [
             "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &"
             "waybar"
+            "hyprctl setcursor Adwaita 24"
           ];
 
           general = {
