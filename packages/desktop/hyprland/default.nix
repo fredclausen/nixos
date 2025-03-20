@@ -50,21 +50,6 @@ in
     };
 
     home-manager.users.fred = {
-      programs.fuzzel = {
-        enable = true;
-        settings = {
-          colors = {
-            background = "282a36dd";
-            text = "f8f8f2ff";
-            match = "8be9fdff";
-            selection-match = "8be9fdff";
-            selection = "44475add";
-            selection-text = "f8f8f2ff";
-            border = "bd93f9ff";
-          };
-        };
-      };
-
       programs.waybar = {
         enable = true;
 
@@ -323,7 +308,7 @@ in
             "$mainMod, F, exec, firefox"
             "$mainMod, Q, exec, $terminal"
             "$mainMod, E, exec, nautilus"
-            "$mainMod, SPACE, exec, fuzzel"
+            "ALT, SPACE, exec, fuzzel"
             "$mainMod, C, killactive"
             "$mainMod, M, exit"
             # Move focus with mainMod + arrow keys
