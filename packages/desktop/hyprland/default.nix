@@ -30,6 +30,7 @@ in
         pamixer
         grim
         slurp
+        swaybg
       ];
     };
 
@@ -217,6 +218,7 @@ in
             "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &"
             "waybar"
             "hyprctl setcursor Adwaita 24"
+            "swaybg -o \"*\" -i \"/home/fred/GitHub/fred-config/lewis.jpg\" &"
           ];
 
           general = {
