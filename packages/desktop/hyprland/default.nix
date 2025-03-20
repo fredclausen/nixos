@@ -31,6 +31,8 @@ in
         grim
         slurp
         swaybg
+        wlogout
+        networkmanagerapplet
       ];
     };
 
@@ -78,10 +80,10 @@ in
 
             "modules-right" = [
               "tray"
-              "network"
               "battery"
               "pulseaudio"
               "clock"
+              "custom/power"
             ];
 
             "wlr/taskbar" = {
@@ -112,10 +114,6 @@ in
               "max-length" = 128;
             };
 
-            network = {
-              format = "󰖩 {essid}";
-              format-disconnected = "󰖪 disconnected";
-            };
             battery = {
               format = "󰁹 {}%";
             };
@@ -126,7 +124,7 @@ in
                 <tt><small>{calendar}</small></tt>'';
             };
             pulseaudio = {
-              format = "{icon} {volume}%";
+              format = "{icon}   {volume}%";
               tooltip = false;
               format-muted = " Muted";
               on-click = "pamixer -t";
@@ -146,6 +144,12 @@ in
                   ""
                 ];
               };
+            };
+
+            "custom/power" = {
+              "format" = " ⏻ ";
+              "tooltip" = false;
+              "on-click" = "wlogout --protocol layer-shell";
             };
 
             "tray" = {
@@ -229,6 +233,7 @@ in
             "waybar"
             "hyprctl setcursor Adwaita 24"
             "swaybg -o \"*\" -i \"/home/fred/GitHub/fred-config/lewis.jpg\" &"
+            "nm-applet --indicator"
           ];
 
           general = {
