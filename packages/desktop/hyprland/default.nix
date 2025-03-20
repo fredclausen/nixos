@@ -57,9 +57,10 @@ in
 
         settings = {
           general = {
+            before_sleep_cmd = "loginctl lock-session"; # lock before suspend.
             after_sleep_cmd = "hyprctl dispatch dpms on";
             ignore_dbus_inhibit = false;
-            lock_cmd = "hyprlock";
+            lock_cmd = "pidof hyprlock || hyprlock";
           };
 
           listener = [
@@ -69,7 +70,7 @@ in
             }
             {
               timeout = 1200;
-              on-timeout = "hyprctl dispatch dpms off";
+              on-timeout = "hyprctl dispatch dpms off && systemctl suspend";
               on-resume = "hyprctl dispatch dpms on";
             }
           ];
@@ -82,7 +83,7 @@ in
         settings = {
           general = {
             disable_loading_bar = true;
-            grace = 5;
+            grace = 0;
             hide_cursor = true;
             no_fade_in = false;
           };
