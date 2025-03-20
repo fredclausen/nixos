@@ -24,6 +24,12 @@ in
     # Enable the GNOME Desktop Environment.
     services.xserver.displayManager.gdm.enable = true;
 
+    users.users.fred = {
+      packages = with pkgs; [
+        hyprpolkitagent
+      ];
+    };
+
     programs.hyprland = {
       # Install the packages from nixpkgs
       enable = true;
@@ -54,6 +60,10 @@ in
           "$mainMod" = "SUPER";
           "$fileManager" = "yazi";
           "$terminal" = "ghostty";
+
+          exec-once = [
+            "systemctl --user start hyprpolkitagent"
+          ];
 
           general = {
             "gaps_in" = 2;
