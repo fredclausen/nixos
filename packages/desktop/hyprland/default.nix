@@ -139,6 +139,10 @@ in
             "nm-applet --indicator"
             "1password --silent &"
             "hypridle"
+            "[workspace 1 silent] firefox"
+            "[workspace 2 silent] discord"
+            "[workspace 3 silent] code"
+            "[workspace 4 silent] ghostty"
           ];
 
           general = {
@@ -271,6 +275,11 @@ in
             # Move/resize windows with mainMod + LMB/RMB and dragging
             "$mainMod, mouse:272, movewindow"
             "$mainMod, mouse:273, resizewindow"
+          ];
+
+          bindl = [
+            # Lock lid on close
+            ",switch:off:Lid Switch, exec, hyprlock --immediate"
           ];
         };
       };
