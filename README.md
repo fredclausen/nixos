@@ -20,7 +20,7 @@ The `flake.nix` is the jumping in point for the configuration. It has a few syst
 
 ## Do you want to use this?
 
-It's a good starting point for your nix journey. If you want to use this, follow the steps below:
+It's a good starting point for your nix journey, but see [Caveats](#caveats). If you want to use this, follow the steps below:
 
 1. Install NixOs using a graphical installer. I suggest gnome.
 2. Clone this repo to your home directory.
@@ -51,6 +51,11 @@ In your `system/<system name>/configuration.nix` the following options can be se
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------- |
 | desktop.enable       | Enable desktop environment                                                                                             | false   |
 | desktop.enable_extra | Enable extra packages. These are gated because on my VM there are a handful of packages that will not work on aarch64. | false   |
+
+## Caveats
+
+[!WARNING]
+There are a few non-nixy things here. For instance, development packages are installed system wide. This is done to make lazygit work, as well as a few other random things that needed access to system development packages.
 
 ## Provided Packages
 
