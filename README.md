@@ -27,12 +27,13 @@ It's a good starting point for your nix journey. If you want to use this, follow
 5. Rename the `system/maranello` directory to `system/<system name>`
 6. Copy your `/etc/nixos/hardware-configuration.nix` to `system/<system name>/hardware-configuration.nix`
 7. Search the code base for `fred` and replace it with your username
-8. In `system/configuration.nix` replace `maranello` with your system name
-9. In the cloned directory, run `sudo nixos-rebuild switch --flake .#<system name>`
-10. (optional, if you use github) Log in with github (`gh auth login`)
-11. (optional), if you have special dot files, clone them and run `stow -vt ~ *`
-12. (optional) If you have ssh keys, add them to `~/.ssh` and `ssh-add`
-13. (optional) to make VS code work correctly add:
+8. If you also replace any pathing to dot files, make sure you rename `dotfiles/fred` to `dotfiles/<your username>`
+9. In `system/configuration.nix` replace `maranello` with your system name
+10. In the cloned directory, run `sudo nixos-rebuild switch --flake .#<system name>`
+11. (optional, if you use github) Log in with github (`gh auth login`)
+12. (optional), if you have special dot files, clone them and run `stow -vt ~ *`
+13. (optional) If you have ssh keys, add them to `~/.ssh` and `ssh-add`
+14. (optional) to make VS code work correctly add:
 
     ```json
     "password-store": "gnome"
@@ -40,7 +41,7 @@ It's a good starting point for your nix journey. If you want to use this, follow
 
     to your `~/.vscode/argv.json`
 
-14. (optional) In nvim, for github copilot, run `:Copilot auth`
+15. (optional) In nvim, for github copilot, run `:Copilot auth`
 
 In your `system/<system name>/configuration.nix` the following options can be set:
 
