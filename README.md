@@ -1,5 +1,7 @@
 # nixos
 
+![Hyprland](hyprland.png "NixOS with Hyprland")
+
 ## What is this?
 
 My personal NixOS configuration. It uses home manager to manage user package configuration. However, I have some systems (like MacOS) that are not running NixOS, so for programs that are common I have NixOS import the configuration for those apps directly from a common dot file in this repo.
