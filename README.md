@@ -54,8 +54,7 @@ In your `system/<system name>/configuration.nix` the following options can be se
 
 ## Caveats
 
-[!WARNING]
-There are a few non-nixy things here. For instance, development packages are installed system wide. This is done to make lazygit work, as well as a few other random things that needed access to system development packages.
+[!WARNING]There are a few non-nixy things here. For instance, development packages are installed system wide. This is done to make lazygit work, as well as a few other random things that needed access to system development packages.
 
 ## Provided Packages
 
