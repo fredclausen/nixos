@@ -53,6 +53,12 @@ in
         };
       };
 
+      programs.waybar = {
+        enable = true;
+
+        settings = builtins.fromJSON (builtins.readFile ../../../dotfiles/fred/.config/waybar/config);
+      };
+
       wayland.windowManager.hyprland = {
         enable = true;
 
@@ -63,14 +69,18 @@ in
 
           exec-once = [
             "systemctl --user start hyprpolkitagent"
+            "waybar"
           ];
 
           general = {
             "gaps_in" = 2;
             "gaps_out" = 2;
-            "border_size" = 2;
-            "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-            "col.inactive_border" = "rgba(595959aa)";
+            "col.active_border" = "rgb(44475a) rgb(bd93f9) 90deg";
+            "col.inactive_border" = "rgba(44475aaa)";
+
+            "col.nogroup_border_active" = "rgb(bd93f9) rgb(44475a) 90deg";
+            no_border_on_floating = false;
+            border_size = 2;
           };
 
           input = {
@@ -100,17 +110,14 @@ in
           };
 
           decoration = {
-            "rounding" = 10;
-            blur = {
+            shadow = {
               enabled = true;
-              size = 3;
-              passes = 1;
+              range = 60;
+              offset = "1 2";
+              color = "rgba(1E202966)";
+              render_power = 3;
+              scale = 0.97;
             };
-
-            # drop_shadow = "yes";
-            # shadow_range = 4;
-            # shadow_render_power = 3;
-            # "col.shadow" = "rgba(1a1a1aee)";
           };
 
           animations = {
@@ -128,11 +135,19 @@ in
             ];
           };
 
+          group = {
+            groupbar = {
+              "col.active" = "rgb(bd93f9) rgb(44475a) 90deg";
+              "col.inactive" = "rgba(282a36dd)";
+            };
+          };
+
           binds = {
             scroll_event_delay = 0;
           };
 
-          #windowrulev2 = "nomaximizerequest, class:.*";
+          windowrulev2 = "bordercolor rgb(ff5555),xwayland:1";
+          # check if window is xwayland
 
           bind = [
             "$mainMod, F, exec, firefox"
