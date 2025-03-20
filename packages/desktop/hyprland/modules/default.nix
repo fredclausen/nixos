@@ -19,10 +19,12 @@ in
   imports = [
     ./fuzzel
     ./pamixer
+    ./waybar
   ];
 
   config = mkIf cfg.enable {
     desktop.hyprland.modules.pamixer.enable = true;
     desktop.hyprland.modules.fuzzel.enable = true;
+    desktop.hyprland.modules.waybar.enable = true;
   };
 }
