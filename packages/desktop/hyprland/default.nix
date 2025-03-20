@@ -203,6 +203,15 @@ in
           "$fileManager" = "yazi";
           "$terminal" = "ghostty";
 
+          env = [
+            "QT_QPA_PLATFORMTHEME,qt6ct"
+          ];
+
+          exec = [
+            "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
+            "gsettings set org.gnome.desktop.interface gtk-theme \"adw-gtk3\""
+          ];
+
           exec-once = [
             "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &"
             "waybar"

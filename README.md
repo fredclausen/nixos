@@ -8,6 +8,13 @@
 - Clone your dot files and run `stow -vt ~ *`
 - In nvim, for github copilot, run `:Copilot auth`
 - If you have ssh keys, add them and `ssh-add`
+- to make VS code work correctly add:
+
+  ```json
+  "password-store": "gnome"
+  ```
+
+  to your `~.vscode/argv.json`
 
 ## TODO
 
