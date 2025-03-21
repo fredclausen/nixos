@@ -116,6 +116,26 @@ in
         };
       };
 
+      services.mako = {
+        enable = true;
+
+        extraConfig = ''
+                  background-color=#282a36
+          text-color=#44475a
+          border-color=#282a36
+
+          [urgency=low]
+          border-color=#282a36
+
+          [urgency=normal]
+          border-color=#f1fa8c
+
+          [urgency=high]
+          border-color=#ff5555'';
+
+        defaultTimeout = 10000;
+      };
+
       wayland.windowManager.hyprland = {
         enable = true;
 
