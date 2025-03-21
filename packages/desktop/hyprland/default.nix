@@ -41,6 +41,8 @@ in
         networkmanagerapplet
         hypridle
         hyprlock
+
+        libnotify
       ];
     };
 
