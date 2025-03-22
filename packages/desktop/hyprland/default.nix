@@ -120,8 +120,8 @@ in
         enable = true;
 
         extraConfig = ''
-                  background-color=#282a36
-          text-color=#44475a
+          background-color=#282a36
+          text-color=#cad3f5
           border-color=#282a36
 
           [urgency=low]
