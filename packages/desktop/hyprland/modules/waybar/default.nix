@@ -30,6 +30,7 @@ in
 
             "modules-left" = [
               "hyprland/workspaces"
+              "custom/separator"
               "wlr/taskbar"
             ];
 
@@ -39,6 +40,7 @@ in
 
             "modules-right" = [
               "tray"
+              "custom/separator"
               "battery"
               "pulseaudio"
               "clock"
@@ -59,14 +61,14 @@ in
               "on-click" = "activate";
               "on-scroll-up" = "hyprctl dispatch workspace e-1";
               "on-scroll-down" = "hyprctl dispatch workspace e+1";
-              # "format-icons" = {
-              #   "1" = "";
-              #   "2" = "";
-              #   "3" = "";
-              #   "4" = "";
-              #   "5" = "";
-              #   "6" = "";
-              # };
+              "format-icons" = {
+                "1" = "🦊";
+                "2" = "🗨️";
+                "3" = "📝";
+                "4" = "🖥️";
+                # "5" = "";
+                # "6" = "";
+              };
             };
 
             "hyprland/window" = {
@@ -130,6 +132,12 @@ in
               "on-click" = "wlogout --protocol layer-shell";
             };
 
+            "custom/separator" = {
+              "format" = "|";
+              "interval" = "once";
+              "tooltip" = false;
+            };
+
             "tray" = {
               "spacing" = 4;
             };
@@ -184,6 +192,10 @@ in
           #clock {
               padding: 0 4px;
               background: @background;
+          }
+          #custom-separator {
+            color: @pink;
+            margin: 0 3px;
           }
         '';
       };
