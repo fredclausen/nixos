@@ -142,7 +142,7 @@ in
         settings = {
           "$mainMod" = "SUPER";
           "$fileManager" = "yazi";
-          "$terminal" = "ghostty";
+          "$terminal" = "wezterm";
 
           env = [
             "QT_QPA_PLATFORMTHEME,qt6ct"

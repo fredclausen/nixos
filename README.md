@@ -84,8 +84,8 @@ This is an incomplete list, but here are some of the packages that are provided:
 #### Terminals
 
 - Alacritty
-- Ghostty (default)
-- Wezterm
+- Ghostty
+- Wezterm (default)
 
 #### Editors
 

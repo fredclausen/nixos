@@ -31,6 +31,8 @@ with lib.hm.gvariant;
     };
   };
 
+  fonts.fontconfig.enable = true;
+
   home = {
     username = "${username}";
     homeDirectory = "/home/${username}";

@@ -31,8 +31,11 @@ in
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
+      noto-fonts-extra
+      twemoji-color-font
     ];
 
+    fonts.enableDefaultPackages = true;
     fonts.fontconfig.useEmbeddedBitmaps = true;
   };
 }
