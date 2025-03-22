@@ -17,10 +17,22 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [
-      pkgs.nerdfonts
-      pkgs.fira-code
-      pkgs.fira-code-symbols
+    # environment.systemPackages = [
+    #   pkgs.nerdfonts
+    #   pkgs.fira-code
+    #   pkgs.fira-code-symbols
+    # ];
+
+    fonts.packages = with pkgs; [
+      nerdfonts
+      fira-code
+      fira-code-symbols
+      font-awesome
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
     ];
+
+    fonts.fontconfig.useEmbeddedBitmaps = true;
   };
 }
