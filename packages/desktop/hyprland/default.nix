@@ -165,7 +165,7 @@ in
             "[workspace 1 silent] firefox"
             "[workspace 2 silent] discord"
             "[workspace 3 silent] code"
-            "[workspace 4 silent] ghostty"
+            "[workspace 4 silent] wezterm"
           ];
 
           general = {
