@@ -137,7 +137,7 @@ in
       };
 
       "org/gnome/desktop/peripherals/mouse" = {
-        speed = mkDouble "-0.3023255813953488";
+        speed = hmlib.hm.gvariant.mkDouble "-0.3023255813953488";
       };
 
       "org/gnome/desktop/interface" = {

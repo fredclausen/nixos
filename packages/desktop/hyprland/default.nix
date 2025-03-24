@@ -302,7 +302,13 @@ in
 
           bindl = [
             # Lock lid on close
-            ",switch:off:Lid Switch, exec, hyprlock --immediate"
+            ",switch:off:Lid Swit1ch, exec, hyprlock --immediate"
+          ];
+
+          monitor = [
+            "DP-1, highrr, 0x0, 1"
+            "DP-2, highrr, -2560x0, 1"
+            "HDMI-A-1, preferred, -1920x-1080, 1"
           ];
         };
       };
