@@ -163,9 +163,9 @@ in
             "1password --silent &"
             "hypridle"
             "[workspace 1 silent] firefox"
-            "[workspace 2 silent] discord"
-            "[workspace 3 silent] code"
-            "[workspace 4 silent] wezterm"
+            "[workspace 2 silent] code"
+            "[workspace 2 silent] wezterm"
+            "[workspace 3 silent] discord"
           ];
 
           general = {
@@ -309,6 +309,12 @@ in
             "DP-1, highrr, 0x0, 1"
             "DP-2, highrr, -2560x0, 1"
             "HDMI-A-1, preferred, -1920x-1080, 1"
+          ];
+
+          workspace = [
+            "1, monitor:DP-1"
+            "2, monitor:DP-2"
+            "3, monitor:HDMI-A-1"
           ];
         };
       };
