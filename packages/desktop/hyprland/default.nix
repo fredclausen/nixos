@@ -154,6 +154,7 @@ in
           "$mainMod" = "SUPER";
           "$fileManager" = "yazi";
           "$terminal" = "wezterm";
+          "$email" = "geary -n";
 
           env = [
             "QT_QPA_PLATFORMTHEME,qt6ct"
@@ -258,8 +259,9 @@ in
 
           bind = [
             "$mainMod, F, exec, firefox"
-            "$mainMod, Q, exec, $terminal"
-            "$mainMod, E, exec, nautilus"
+            "$mainMod, E, exec, $email"
+            "$mainMod, T, exec, $terminal"
+            "$mainMod, A, exec, nautilus"
             "ALT, SPACE, exec, fuzzel"
             "$mainMod, C, killactive"
             "$mainMod, M, exit"
