@@ -53,7 +53,18 @@ in
       xwayland.enable = true;
     };
 
+    home-manager.users.gdm = {
+      home = {
+        username = "gdm";
+        stateVersion = "24.11";
+
+        file.".config/monitors.xml".text = builtins.readFile ./monitors.xml;
+      };
+    };
+
     home-manager.users.fred = {
+      home.file.".config/monitors.xml".text = builtins.readFile ./monitors.xml;
+
       services.hypridle = {
         enable = true;
 
