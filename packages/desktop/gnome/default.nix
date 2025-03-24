@@ -37,7 +37,7 @@ in
 
     programs.nautilus-open-any-terminal = {
       enable = true;
-      terminal = "ghostty";
+      terminal = "wezterm";
     };
 
     # Enable the X11 windowing system.
@@ -127,13 +127,17 @@ in
           "org.gnome.Geary.desktop"
           "discord.desktop"
           "code.desktop"
-          "com.mitchellh.ghostty.desktop"
+          "org.wezfurlong.wezterm.desktop"
           "firefox.desktop"
         ];
       };
 
       "org.gnome.desktop.default-applications.terminal" = {
-        exec = "ghostty";
+        exec = "wezterm";
+      };
+
+      "org/gnome/desktop/peripherals/mouse" = {
+        speed = mkDouble "-0.3023255813953488";
       };
 
       "org/gnome/desktop/interface" = {
