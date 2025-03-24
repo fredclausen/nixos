@@ -38,6 +38,7 @@ in
     ./1password
     ./wezterm
     ./hyprland
+    ./steam
   ];
 
   config = mkIf cfg.enable {
@@ -58,5 +59,6 @@ in
 
     desktop.discord.enable = if cfg.enable_extra then true else false;
     desktop.tradingview.enable = if cfg.enable_extra then true else false;
+    desktop.steam.enable = if cfg.enable_extra then true else false;
   };
 }
