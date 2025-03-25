@@ -115,7 +115,7 @@ in
             "swaybg -o \"*\" -i \"/home/fred/GitHub/fred-config/lewis.jpg\" &"
             "nm-applet --indicator"
             "1password --silent &"
-            "~/.config/hyprextra/scripts/sleep.sh"
+            "~/.config/hyprextra/scripts/sleep"
             "sway-audio-idle-inhibit"
             "[workspace 1 silent] firefox"
             "[workspace 2 silent] code"
