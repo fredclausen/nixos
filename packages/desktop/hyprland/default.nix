@@ -41,8 +41,10 @@ in
         networkmanagerapplet
         hypridle
         hyprlock
-
+        wev
+        playerctl
         libnotify
+        brightnessctl
       ];
     };
 
@@ -294,6 +296,22 @@ in
             # Scroll through existing workspaces with mainMod + scroll
             "$mainMod, mouse_down, workspace, e+1"
             "$mainMod, mouse_up, workspace, e-1"
+            "$mainMod, mouse_down, workspace, e-1"
+            "$mainMod, mouse_up, workspace, e+1"
+          ];
+
+          binde = [
+            ", XF86AudioRaiseVolume, exec, ~/.config/hyprextra/scripts/volume --inc "
+            ", XF86AudioLowerVolume, exec, ~/.config/hyprextra/scripts/volume --dec "
+            ", XF86AudioMute, exec, ~/.config/hypr/scripts/volume --toggle"
+            ", XF86AudioPlay, exec, playerctl play-pause"
+            ", XF86AudioPause, exec, playerctl play-pause"
+            ", XF86AudioNext, exec, playerctl next"
+            ", XF86AudioPrev, exec, playerctl previous"
+            ", XF86MonBrightnessUp, exec, ~/.config/hyprextra/scripts/backlight --inc"
+            ", XF86MonBrightnessDown, exec, ~/.config/hyprextra/scripts/backlight --dec"
+            ", XKB_KEY_XF86KbdBrightnessUp, exec, ~/.config/hyprextra/scripts/kbbacklight --inc"
+            ", XKB_KEY_XF86KbdBrightnessDown, exec, ~/.config/hyprextra/scripts/kbbacklight --dec"
           ];
 
           bindm = [

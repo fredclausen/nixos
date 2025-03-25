@@ -19,12 +19,14 @@ in
   imports = [
     ./clipboard
     ./fuzzel
+    ./hyprlandextra
     ./pamixer
     ./waybar
   ];
 
   config = mkIf cfg.enable {
     desktop.hyprland.modules.clipboard.enable = true;
+    desktop.hyprland.modules.hyprlandextra.enable = true;
     desktop.hyprland.modules.pamixer.enable = true;
     desktop.hyprland.modules.fuzzel.enable = true;
     desktop.hyprland.modules.waybar.enable = true;
