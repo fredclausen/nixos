@@ -53,18 +53,7 @@ in
       xwayland.enable = true;
     };
 
-    home-manager.users.gdm = {
-      home = {
-        username = "gdm";
-        stateVersion = "24.11";
-
-        file.".config/monitors.xml".text = builtins.readFile ./monitors.xml;
-      };
-    };
-
     home-manager.users.fred = {
-      home.file.".config/monitors.xml".text = builtins.readFile ./monitors.xml;
-
       services.hypridle = {
         enable = true;
 
@@ -316,18 +305,6 @@ in
           bindl = [
             # Lock lid on close
             ",switch:off:Lid Swit1ch, exec, hyprlock --immediate"
-          ];
-
-          monitor = [
-            "DP-1, highrr, 0x0, 1"
-            "DP-2, highrr, -2560x0, 1"
-            "HDMI-A-1, preferred, -1920x-1080, 1"
-          ];
-
-          workspace = [
-            "1, monitor:DP-1"
-            "2, monitor:DP-2"
-            "3, monitor:HDMI-A-1"
           ];
         };
       };
