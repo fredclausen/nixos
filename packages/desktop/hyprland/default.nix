@@ -208,6 +208,7 @@ in
             "ALT, SPACE, exec, fuzzel"
             "$mainMod, C, killactive"
             "$mainMod, M, exit"
+            "$mainMod, L, exec, playerctl pause && swaylock -f -c 000000"
             # Move focus with mainMod + arrow keys
             "$mainMod, left, movefocus, l"
             "$mainMod, right, movefocus, r"
@@ -274,7 +275,7 @@ in
 
           bindl = [
             # Lock lid on close
-            ",switch:off:Lid Swit1ch, exec, hyprlock --immediate"
+            ",switch:off:Lid Swit1ch, exec, playerctl pause && swaylock -f -c 000000"
           ];
         };
       };
