@@ -39,6 +39,7 @@ in
     ./wezterm
     ./hyprland
     ./steam
+    ./stockfish
   ];
 
   config = mkIf cfg.enable {
@@ -56,6 +57,7 @@ in
     desktop.wezterm.enable = true;
     desktop.alacritty.enable = true;
     desktop.hyprland.enable = true;
+    desktop.stockfish.enable = true;
 
     desktop.discord.enable = if cfg.enable_extra then true else false;
     desktop.tradingview.enable = if cfg.enable_extra then true else false;
