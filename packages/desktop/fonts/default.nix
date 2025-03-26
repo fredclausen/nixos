@@ -23,6 +23,13 @@ in
     #   pkgs.fira-code-symbols
     # ];
 
+    nixpkgs.config.allowUnfreePredicate =
+      pkg:
+      builtins.elem (lib.getName pkg) [
+        "joypixels"
+      ];
+    nixpkgs.config.joypixels.acceptLicense = true;
+
     fonts.packages = with pkgs; [
       nerdfonts
       fira-code
@@ -33,6 +40,18 @@ in
       noto-fonts-emoji
       noto-fonts-extra
       twemoji-color-font
+      noto-fonts-color-emoji
+      corefonts
+      cifs-utils
+      dina-font
+      liberation_ttf
+      mplus-outline-fonts.githubRelease
+      powerline-fonts
+      proggyfonts
+      ubuntu_font_family
+      unifont
+      unifont_upper
+      joypixels
     ];
 
     fonts.enableDefaultPackages = true;

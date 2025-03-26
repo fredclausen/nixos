@@ -109,28 +109,6 @@
             "command": "nautilus /home/fred/Pictures"
           }
         ]
-      },
-      "menu#screencast-buttons": {
-        "label": "",
-        "position": "left",
-        "actions": [
-          {
-            "label": "   Entire screen",
-            "command": "swaync-client -cp && sleep 1 && recording.sh toggle fullscreen"
-          },
-          {
-            "label": "   Select a region",
-            "command": "swaync-client -cp && sleep 1 && recording.sh toggle region"
-          },
-          {
-            "label": "   Stop",
-            "command": "swaync-client -cp && recording.sh stop"
-          },
-          {
-            "label": "   Open screencast folder",
-            "command": "$XDG_VIDEOS_DIR/Screencasts"
-          }
-        ]
       }
     },
     "buttons-grid": {
