@@ -295,3 +295,65 @@
 .widget-mpris-subtitle {
   font-size: 1.1rem;
 }
+
+.widget-menubar > box {
+  padding: 8px 0px 4px;
+  margin: 0px 8px;
+  border-radius: 4px 4px 0px 0px;
+  background-color: @background;
+}
+
+.widget-menubar > box > .menu-button-bar > button {
+  border: 1px solid @accent;
+  background: @background;
+  color: @foreground;
+  border-radius: 4px;
+  margin: 4px 12px;
+}
+
+.widget-buttons-grid {
+  padding: 0px 8px 8px;
+  margin: 0px 8px 8px;
+  border-radius: 0px 0px 4px 4px;
+  background-color: @background;
+  font-size: 14px;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button {
+  background: @background;
+  color: @foreground;
+  border-radius: 4px;
+  border: 1px solid @accent;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button:hover {
+  background: @background;
+  color: @foreground;
+}
+
+.screenshot-buttons,
+.screencast-buttons,
+.powermode-buttons,
+.power-buttons {
+  border-radius: 4px;
+  color: @foreground;
+}
+
+.screenshot-buttons > button,
+.screencast-buttons > button,
+.powermode-buttons > button,
+.power-buttons > button {
+  background: @background;
+  padding: 2px 0px;
+  margin: 5px 70px 3px;
+  border: 1px solid @accent;
+  color: @foreground;
+}
+
+.screenshot-buttons > button:hover,
+.screencast-buttons > button:hover,
+.powermode-buttons > button:hover,
+.power-buttons > button:hover {
+  background: @background;
+  color: @foreground;
+}
