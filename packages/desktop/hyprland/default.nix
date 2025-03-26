@@ -48,6 +48,10 @@ in
         sway-audio-idle-inhibit
         swaynotificationcenter
         blueman
+        hyprpicker
+        udiskie
+        udisks
+        libappindicator-gtk3
       ];
     };
 
@@ -110,6 +114,7 @@ in
             "swaybg -o \"*\" -i \"/home/fred/GitHub/fred-config/lewis.jpg\" &"
             "nm-applet --indicator"
             "1password --silent &"
+            "udiskie --appindicator -t &"
             "[workspace 1 silent] firefox"
             "[workspace 2 silent] code"
             "[workspace 2 silent] wezterm"
