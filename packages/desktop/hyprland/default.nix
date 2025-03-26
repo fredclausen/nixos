@@ -46,6 +46,7 @@ in
         libnotify
         brightnessctl
         sway-audio-idle-inhibit
+        swaynotificationcenter
       ];
     };
 
@@ -68,24 +69,12 @@ in
         };
       };
 
-      services.mako = {
+      services.swaync = {
         enable = true;
-
-        extraConfig = ''
-          background-color=#282a36
-          text-color=#cad3f5
-          border-color=#282a36
-
-          [urgency=low]
-          border-color=#282a36
-
-          [urgency=normal]
-          border-color=#f1fa8c
-
-          [urgency=high]
-          border-color=#ff5555'';
-
-        defaultTimeout = 10000;
+        settings = (
+          builtins.fromJSON (builtins.readFile ../../../dotfiles/fred/.config/swaync/config.json)
+        );
+        style = builtins.readFile ../../../dotfiles/fred/.config/swaync/style.css;
       };
 
       wayland.windowManager.hyprland = {
@@ -121,6 +110,7 @@ in
             "[workspace 2 silent] code"
             "[workspace 2 silent] wezterm"
             "[workspace 3 silent] discord"
+            "swaync"
           ];
 
           general = {
