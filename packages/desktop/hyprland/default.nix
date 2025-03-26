@@ -220,11 +220,18 @@ in
             "$mainMod, C, killactive"
             "$mainMod, M, exit"
             "$mainMod, L, exec, playerctl pause && swaylock -f -c 000000"
-            # Move focus with mainMod + arrow keys
-            "$mainMod, left, movefocus, l"
-            "$mainMod, right, movefocus, r"
-            "$mainMod, up, movefocus, u"
-            "$mainMod, down, movefocus, d"
+
+            # Move windows with mainMod + arrow keys
+            "$mainMod, left, movewindow, l"
+            "$mainMod, right, movewindow, r"
+            "$mainMod, up, movewindow, u"
+            "$mainMod, down, movewindow, d"
+
+            # Move focus with mainMod + SHIFT + arrow keys
+            "$mainMod SHIFT, left, movefocus, l"
+            "$mainMod SHIFT, right, movefocus, r"
+            "$mainMod SHIFT, up, movefocus, u"
+            "$mainMod SHIFT, down, movefocus, d"
 
             ", Print, exec, grim"
             "$mainMod, Print, exec, grim -g \"$(slurp)\""
