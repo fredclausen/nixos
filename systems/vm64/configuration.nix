@@ -23,13 +23,13 @@
 
   # extra options
   desktop.enable = true;
-  desktop.enable_extra = true;
+  desktop.enable_extra = false;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "maranello"; # Define your hostname.
+  networking.hostName = "vm64"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
@@ -46,15 +46,13 @@
     variant = "";
   };
 
-  services.desktopManager.cosmic.enable = false;
-
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
-    # alsa.support32Bit = true;
+    alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
@@ -116,50 +114,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
-
-  # specific monitor stuff for this system
-
-  home-manager.users.gdm = {
-    home = {
-      username = "gdm";
-      stateVersion = "24.11";
-
-      file.".config/monitors.xml".text = builtins.readFile ./monitors.xml;
-    };
-  };
-
-  virtualisation.virtualbox = {
-    host = {
-      enable = true;
-      enableExtensionPack = true;
-    };
-
-    guest = {
-      enable = true;
-    };
-  };
-
-  users.users.fred = {
-    extraGroups = [ "vboxusers" ];
-  };
-
-  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
-
-  home-manager.users.fred = {
-    home.file.".config/monitors.xml".text = builtins.readFile ./monitors.xml;
-
-    wayland.windowManager.hyprland.settings = {
-      monitor = [
-        "DP-1, highrr, 0x0, 1"
-        "DP-2, highrr, -2560x0, 1"
-        "HDMI-A-1, preferred, -1920x-1080, 1"
-      ];
-
-      workspace = [
-        "1, monitor:DP-1"
-        "2, monitor:DP-2"
-        "3, monitor:HDMI-A-1"
-      ];
-    };
-  };
 }

@@ -43,6 +43,7 @@ in
               "custom/separator"
               "battery"
               "custom/audio_idle_inhibitor"
+              "temperature"
               "pulseaudio"
               "clock"
               "custom/notification"
@@ -145,6 +146,10 @@ in
                   ""
                 ];
               };
+            };
+
+            "temperature" = {
+              "format" = "{temperatureC}°C ";
             };
 
             "custom/separator" = {

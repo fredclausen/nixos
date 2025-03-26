@@ -93,6 +93,27 @@
             }
           ];
         };
+
+        vm64 = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs hmlib; };
+          modules = [
+            ./systems/vm64/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.fred = import ./users/homemanager;
+              home-manager.extraSpecialArgs = {
+                inherit
+                  inputs
+                  self
+                  user
+                  hmlib
+                  ;
+              };
+            }
+          ];
+        };
       };
     };
 }
