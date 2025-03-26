@@ -41,16 +41,16 @@ in
       noto-fonts-extra
       twemoji-color-font
       noto-fonts-color-emoji
-      corefonts
-      cifs-utils
-      dina-font
-      liberation_ttf
-      mplus-outline-fonts.githubRelease
-      powerline-fonts
-      proggyfonts
-      ubuntu_font_family
-      unifont
-      unifont_upper
+      # corefonts
+      # cifs-utils
+      # dina-font
+      # liberation_ttf
+      # mplus-outline-fonts.githubRelease
+      # powerline-fonts
+      # proggyfonts
+      # ubuntu_font_family
+      # unifont
+      # unifont_upper
       joypixels
     ];
 

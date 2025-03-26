@@ -62,11 +62,11 @@
           },
           {
             "label": "   Lock",
-            "command": "swaylock.sh"
+            "command": "playerctl pause && swaylock -f -c 000000"
           },
           {
             "label": "   Logout",
-            "command": "loginctl terminate-session ${XDG_SESSION_ID-}"
+            "command": "exit"
           },
           {
             "label": "   Shut down",

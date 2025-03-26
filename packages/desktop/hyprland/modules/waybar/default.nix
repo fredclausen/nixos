@@ -45,7 +45,6 @@ in
               "custom/audio_idle_inhibitor"
               "pulseaudio"
               "clock"
-              "custom/power"
               "custom/notification"
             ];
 
@@ -99,11 +98,31 @@ in
               "tooltip" = false;
               "on-click" = "2";
             };
-            clock = {
-              format = " {:%H:%M   %m/%d} ";
-              tooltip-format = ''
-                <big>{:%Y %B}</big>
-                <tt><small>{calendar}</small></tt>'';
+            "clock" = {
+              "format" = "{:%H:%M}  ";
+              "format-alt" = "{:%A, %B %d, %Y (%R)} 📅︎ ";
+              "tooltip-format" = "<tt><small>{calendar}</small></tt>";
+              "calendar" = {
+                "mode" = "year";
+                "mode-mon-col" = 3;
+                "weeks-pos" = "right";
+                "on-scroll" = 1;
+                "on-click-right" = "mode";
+                "format" = {
+                  "months" = "<span color='#ffead3'><b>{}</b></span>";
+                  "days" = "<span color='#ecc6d9'><b>{}</b></span>";
+                  "weeks" = "<span color='#99ffdd'><b>W{}</b></span>";
+                  "weekdays" = "<span color='#ffcc66'><b>{}</b></span>";
+                  "today" = "<span color='#ff6699'><b><u>{}</u></b></span>";
+                };
+              };
+              "actions" = {
+                "on-click-right" = "mode";
+                "on-click-forward" = "tz_up";
+                "on-click-backward" = "tz_down";
+                "on-scroll-up" = "shift_up";
+                "on-scroll-down" = "shift_down";
+              };
             };
             pulseaudio = {
               format = "{icon}   {volume}%";
@@ -126,12 +145,6 @@ in
                   ""
                 ];
               };
-            };
-
-            "custom/power" = {
-              "format" = " ⏻ ";
-              "tooltip" = false;
-              "on-click" = "wlogout --protocol layer-shell";
             };
 
             "custom/separator" = {
@@ -206,9 +219,7 @@ in
               color: @foreground;
               border-bottom: 2px solid @background;
           }
-          .modules-right:last-child {
-              margin-right: 20px;
-          }
+
           #workspaces button {
               padding: 0 10px;
               background: @background;
@@ -230,7 +241,8 @@ in
           }
           #clock {
               padding: 0 4px;
-              background: @background;
+              background: @background-darker;
+              color: @foreground;
           }
           #custom-separator {
             color: @pink;

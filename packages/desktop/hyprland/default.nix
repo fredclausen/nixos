@@ -38,7 +38,6 @@ in
         hyprshot
         slurp
         swaybg
-        wlogout
         networkmanagerapplet
         swayidle
         swaylock
@@ -94,25 +93,26 @@ in
           ];
 
           exec = [
-            "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
-            "gsettings set org.gnome.desktop.interface gtk-theme \"adw-gtk3\""
+
           ];
 
           exec-once = [
             "polkit-agent-helper-1"
-            "systemctl start --user polkit-gnome-authentication-agent-1"
-            "waybar"
+            "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
+            "gsettings set org.gnome.desktop.interface gtk-theme \"adw-gtk3\""
             "hyprctl setcursor Adwaita 24"
+            "systemctl start --user polkit-gnome-authentication-agent-1"
+            "systemctl start --user waybar"
+            "systemctl start --user swaync"
+            "~/.config/hyprextra/scripts/sleep"
+            "sway-audio-idle-inhibit"
             "swaybg -o \"*\" -i \"/home/fred/GitHub/fred-config/lewis.jpg\" &"
             "nm-applet --indicator"
             "1password --silent &"
-            "~/.config/hyprextra/scripts/sleep"
-            "sway-audio-idle-inhibit"
-            "[workspace 1 silent] firefox"
-            "[workspace 2 silent] code"
-            "[workspace 2 silent] wezterm"
-            "[workspace 3 silent] discord"
-            "swaync"
+            "[workspace 1 silent] sleep 4 && firefox"
+            "[workspace 2 silent] sleep 4 && code"
+            "[workspace 2 silent] sleep 4 && wezterm"
+            "[workspace 3 silent] sleep 4 && discord"
           ];
 
           general = {
@@ -197,6 +197,7 @@ in
             "$mainMod, E, exec, $email"
             "$mainMod, T, exec, $terminal"
             "$mainMod, A, exec, nautilus"
+            "$mainMod, S, exec, code"
             "ALT, SPACE, exec, fuzzel"
             "$mainMod, C, killactive"
             "$mainMod, M, exit"
