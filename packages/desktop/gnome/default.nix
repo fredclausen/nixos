@@ -167,7 +167,7 @@ in
 
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
-        gtk-theme = "Adwaita:dark";
+        gtk-theme = "adw-gtk3-dark";
         enable-hot-corners = false;
         clock-show-seconds = true;
         clock-show-weekday = true;
