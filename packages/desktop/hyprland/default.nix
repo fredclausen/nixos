@@ -90,6 +90,7 @@ in
           env = [
             "QT_QPA_PLATFORMTHEME,qt6ct"
             "XCURSOR_SIZE, 24"
+            "GTK_THEME, Adwaita:dark"
           ];
 
           exec = [
@@ -99,7 +100,7 @@ in
           exec-once = [
             "polkit-agent-helper-1"
             "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
-            "gsettings set org.gnome.desktop.interface gtk-theme \"adw-gtk3\""
+            "gsettings set org.gnome.desktop.interface gtk-theme \"Adwaita:dark\""
             "hyprctl setcursor Adwaita 24"
             "systemctl start --user polkit-gnome-authentication-agent-1"
             "systemctl start --user waybar"
@@ -109,10 +110,15 @@ in
             "swaybg -o \"*\" -i \"/home/fred/GitHub/fred-config/lewis.jpg\" &"
             "nm-applet --indicator"
             "1password --silent &"
-            "[workspace 1 silent] sleep 4 && firefox"
-            "[workspace 2 silent] sleep 4 && code"
-            "[workspace 2 silent] sleep 4 && wezterm"
-            "[workspace 3 silent] sleep 4 && discord"
+            "[workspace 1 silent] firefox"
+            "[workspace 2 silent] code"
+            "[workspace 2 silent] wezterm"
+            "[workspace 3 silent] discord"
+          ];
+
+          exec-shutdown = [
+            "systemctl stop --user waybar"
+            "systemctl stop --user swaync"
           ];
 
           general = {

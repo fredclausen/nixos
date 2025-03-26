@@ -27,7 +27,6 @@ in
       pkgs.gnomeExtensions.arcmenu
       pkgs.gnomeExtensions.search-light
       pkgs.gnomeExtensions.weather-or-not
-      pkgs.flat-remix-gnome
       pkgs.wl-clipboard
       pkgs.dconf-editor
       pkgs.gthumb
@@ -162,6 +161,7 @@ in
 
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
+        gtk-theme = "Adwaita:dark";
         enable-hot-corners = false;
         clock-show-seconds = true;
         clock-show-weekday = true;
@@ -173,7 +173,7 @@ in
       };
 
       "org/gnome/shell/extensions/user-theme" = {
-        name = "Flat-Remix-Grey-Dark";
+        name = "Adwaita:dark";
       };
 
       "org/gnome/shell/extensions/arcmenu" = {

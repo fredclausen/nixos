@@ -62,11 +62,11 @@
           },
           {
             "label": "   Lock",
-            "command": "playerctl pause && swaylock -f -c 000000"
+            "command": "/home/fred/.config/hyprextra/scripts/lock"
           },
           {
             "label": "   Logout",
-            "command": "exit"
+            "command": "/home/fred/.config/hyprextra/scripts/logout"
           },
           {
             "label": "   Shut down",
