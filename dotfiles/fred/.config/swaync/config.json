@@ -8,7 +8,7 @@
   "control-center-margin-right": 20,
   "control-center-margin-left": 0,
   "control-center-width": 380,
-  "fit-to-screen": false,
+  "fit-to-screen": true,
 
   "layer": "top",
   "cssPriority": "user",
@@ -75,7 +75,7 @@
         ]
       },
       "menu#powermode-buttons": {
-        "label": "",
+        "label": "🖳",
         "position": "right",
         "actions": [
           {
@@ -93,24 +93,20 @@
         ]
       },
       "menu#screenshot-buttons": {
-        "label": "",
+        "label": "✂︎",
         "position": "left",
         "actions": [
           {
-            "label": "   Entire screen",
+            "label": "✂︎   Entire screen",
             "command": "swaync-client -cp && sleep 1 && hyprshot -m output"
           },
           {
-            "label": "   Select a region",
+            "label": "✂︎   Select a region",
             "command": "swaync-client -cp && sleep 1 && hyprshot -m region"
           },
           {
-            "label": "   Open screenshot menu",
-            "command": "swaync-client -cp && rofi-screenshot"
-          },
-          {
-            "label": "   Open screenshot folder",
-            "command": "exo-open $HYPRSHOT_DIR"
+            "label": "✂︎   Open screenshot folder",
+            "command": "nautilus /home/fred/Pictures"
           }
         ]
       },
@@ -148,24 +144,8 @@
           "command": "blueman"
         },
         {
-          "label": "",
-          "command": "nwg-look"
-        },
-        {
-          "label": "",
-          "command": "exo-open ~/ConfigHub"
-        },
-        {
-          "label": "",
-          "command": "ymuse"
-        },
-        {
           "label": "",
-          "command": "orage"
-        },
-        {
-          "label": "",
-          "command": "pamac-manager"
+          "command": "gnome-calendar"
         },
         {
           "label": "",

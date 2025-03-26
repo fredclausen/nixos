@@ -206,6 +206,9 @@ in
               color: @foreground;
               border-bottom: 2px solid @background;
           }
+          .modules-right:last-child {
+              margin-right: 20px;
+          }
           #workspaces button {
               padding: 0 10px;
               background: @background;

@@ -35,6 +35,7 @@ in
         hyprpolkitagent
 
         grim
+        hyprshot
         slurp
         swaybg
         wlogout
@@ -47,6 +48,7 @@ in
         brightnessctl
         sway-audio-idle-inhibit
         swaynotificationcenter
+        blueman
       ];
     };
 
