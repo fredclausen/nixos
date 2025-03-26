@@ -80,6 +80,10 @@
 
   # List services that you want to enable:
 
+  users.users.fred = {
+    extraGroups = [ "vboxsf" ];
+  };
+
   nixpkgs.config.permittedInsecurePackages = [
     "openssl-1.1.1w"
   ];
