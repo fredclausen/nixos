@@ -83,6 +83,12 @@ in
       '';
     };
 
+    home-manager.users.fred = {
+      home.packages = with pkgs; [
+        adw-gtk3
+      ];
+    };
+
     home-manager.users.fred.xdg = {
       mimeApps = {
         associations.added = {

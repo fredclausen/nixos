@@ -38,7 +38,6 @@ in
         hyprshot
         slurp
         swaybg
-        networkmanagerapplet
         swayidle
         swaylock
         wev
@@ -63,6 +62,12 @@ in
     };
 
     home-manager.users.fred = {
+      home.packages = with pkgs; [
+        networkmanagerapplet
+        adw-gtk3
+      ];
+
+      services.network-manager-applet.enable = true;
       services.hypridle = {
         enable = true;
 
@@ -94,7 +99,7 @@ in
           env = [
             "QT_QPA_PLATFORMTHEME,qt6ct"
             "XCURSOR_SIZE, 24"
-            "GTK_THEME, Adwaita:dark"
+            "GTK_THEME, adw-gtk3-dark"
           ];
 
           exec = [
@@ -104,11 +109,12 @@ in
           exec-once = [
             "polkit-agent-helper-1"
             "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
-            "gsettings set org.gnome.desktop.interface gtk-theme \"Adwaita:dark\""
+            "gsettings set org.gnome.desktop.interface gtk-theme \"adw-gtk3-dark\""
             "hyprctl setcursor Adwaita 24"
             "systemctl start --user polkit-gnome-authentication-agent-1"
             "systemctl start --user waybar"
             "systemctl start --user swaync"
+            "systemctl start --user network-manager-applet"
             "~/.config/hyprextra/scripts/sleep"
             "sway-audio-idle-inhibit"
             "swaybg -o \"*\" -i \"/home/fred/GitHub/fred-config/lewis.jpg\" &"
@@ -124,6 +130,7 @@ in
           exec-shutdown = [
             "systemctl stop --user waybar"
             "systemctl stop --user swaync"
+            "systemctl stop --user network-manager-applet"
           ];
 
           general = {
