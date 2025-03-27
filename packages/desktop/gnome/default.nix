@@ -27,6 +27,8 @@ in
       pkgs.gnomeExtensions.arcmenu
       pkgs.gnomeExtensions.search-light
       pkgs.gnomeExtensions.weather-or-not
+      pkgs.gnome-themes-extra
+      pkgs.flat-remix-gnome
       pkgs.wl-clipboard
       pkgs.dconf-editor
       pkgs.gthumb
@@ -179,7 +181,7 @@ in
       };
 
       "org/gnome/shell/extensions/user-theme" = {
-        name = "Adwaita:dark";
+        name = "Flat-Remix-Grey-Dark";
       };
 
       "org/gnome/shell/extensions/arcmenu" = {
