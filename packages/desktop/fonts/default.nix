@@ -31,7 +31,7 @@ in
     nixpkgs.config.joypixels.acceptLicense = true;
 
     fonts.packages = with pkgs; [
-      nerdfonts
+      nerd-fonts.meslo-lg
       fira-code
       fira-code-symbols
       font-awesome

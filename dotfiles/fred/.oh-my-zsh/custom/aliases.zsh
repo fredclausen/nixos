@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 alias cd="z"
-eval "$(pay-respects zsh --alias)"
+# eval "$(pay-respects zsh --alias)"
 
 bindkey '^[[F' end-of-line
 bindkey '^[[H' beginning-of-line
