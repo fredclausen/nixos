@@ -22,7 +22,7 @@
   ];
 
   # extra options
-  desktop.enable = true;
+  desktop.enable = false;
   desktop.enable_extra = false;
 
   # Bootloader.
