@@ -43,6 +43,7 @@ in
     ./libreoffice
     ./vlc
     ./multiviewer
+    ./missioncenter
   ];
 
   config = mkIf cfg.enable {
@@ -64,6 +65,7 @@ in
     desktop.libreoffice.enable = true;
     desktop.vlc.enable = true;
     desktop.multiviewer.enable = true;
+    desktop.missioncenter.enable = true;
 
     desktop.discord.enable = if cfg.enable_extra then true else false;
     desktop.tradingview.enable = if cfg.enable_extra then true else false;

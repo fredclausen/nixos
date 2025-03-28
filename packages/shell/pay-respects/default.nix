@@ -11,9 +11,9 @@
         pay-respects
       ];
 
-      programs.pay-respects = {
-        enable = true;
-      };
+      # programs.pay-respects = {
+      #   enable = true;
+      # };
     };
   };
 }
