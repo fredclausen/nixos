@@ -41,6 +41,8 @@ in
     ./steam
     ./stockfish
     ./libreoffice
+    ./vlc
+    ./multiviewer
   ];
 
   config = mkIf cfg.enable {
@@ -60,6 +62,8 @@ in
     desktop.hyprland.enable = true;
     desktop.stockfish.enable = true;
     desktop.libreoffice.enable = true;
+    desktop.vlc.enable = true;
+    desktop.multiviewer.enable = true;
 
     desktop.discord.enable = if cfg.enable_extra then true else false;
     desktop.tradingview.enable = if cfg.enable_extra then true else false;
