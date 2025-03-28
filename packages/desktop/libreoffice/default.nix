@@ -16,6 +16,8 @@ in
     };
   };
 
+  # FIXME: mime types
+
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       libreoffice-qt
