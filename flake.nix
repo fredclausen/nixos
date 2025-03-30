@@ -8,11 +8,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -20,7 +15,6 @@
       self,
       nixpkgs,
       home-manager,
-      nixos-cosmic,
       ...
     }:
     let
@@ -33,7 +27,6 @@
           specialArgs = { inherit inputs hmlib; };
           modules = [
             ./systems/nebula/configuration.nix
-            nixos-cosmic.nixosModules.default
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -55,7 +48,6 @@
           specialArgs = { inherit inputs hmlib; };
           modules = [
             ./systems/maranello/configuration.nix
-            nixos-cosmic.nixosModules.default
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

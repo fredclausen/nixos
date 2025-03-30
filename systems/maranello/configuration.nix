@@ -46,8 +46,6 @@
     variant = "";
   };
 
-  services.desktopManager.cosmic.enable = false;
-
   # Enable sound with pipewire.
   # service.pulseaudio.enable = false;
   security.rtkit.enable = true;
