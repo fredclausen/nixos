@@ -11,6 +11,7 @@
       pkgs.zip
       pkgs.btop
       pkgs.toybox
+      pkgs.nix-index
     ];
 
     xdg.portal = {
