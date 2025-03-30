@@ -6,6 +6,7 @@
     ./fd
     ./fzf
     ./lazygit
+    ./lsd
     ./ohmyzsh
     # FIXME: pay respects appears to be fucked. It kills the terminal
     ./pay-respects

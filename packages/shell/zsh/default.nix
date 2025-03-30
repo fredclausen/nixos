@@ -16,6 +16,7 @@
         autosuggestion.enable = true;
 
         shellAliases = {
+          ls = lib.mkForce "${pkgs.lsd}/bin/lsd -la";
         };
 
         initExtra = builtins.readFile ../../../dotfiles/fred/.oh-my-zsh/custom/aliases.zsh;

@@ -126,22 +126,22 @@
     };
   };
 
-  virtualisation.virtualbox = {
-    host = {
-      enable = true;
-      enableExtensionPack = true;
-    };
+  # virtualisation.virtualbox = {
+  #   host = {
+  #     enable = true;
+  #     enableExtensionPack = true;
+  #   };
 
-    guest = {
-      enable = true;
-    };
-  };
+  #   guest = {
+  #     enable = true;
+  #   };
+  # };
 
-  users.users.fred = {
-    extraGroups = [ "vboxusers" ];
-  };
+  # users.users.fred = {
+  #   extraGroups = [ "vboxusers" ];
+  # };
 
-  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+  # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
   home-manager.users.fred = {
     home.file.".config/monitors.xml".text = builtins.readFile ./monitors.xml;
