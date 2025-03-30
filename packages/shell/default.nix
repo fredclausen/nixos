@@ -8,7 +8,7 @@
     ./lazygit
     ./ohmyzsh
     # FIXME: pay respects appears to be fucked. It kills the terminal
-    # ./pay-respects
+    ./pay-respects
     ./starship
     ./yazi
     ./zoxide
