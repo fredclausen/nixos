@@ -214,6 +214,7 @@ in
             "$mainMod, F, exec, firefox"
             "$mainMod, E, exec, $email"
             "$mainMod, T, exec, $terminal"
+            "$mainMod SHIFT, T, exec, $terminal start -- bash"
             "$mainMod, A, exec, nautilus"
             "$mainMod, S, exec, code"
             "ALT, SPACE, exec, fuzzel"
