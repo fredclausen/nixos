@@ -161,6 +161,7 @@ in
                 "⚠️"
                 "❗"
               ];
+              "tooltip" = false;
             };
 
             "custom/separator" = {
@@ -184,6 +185,7 @@ in
                 "output-input" = "▶️  🎤";
                 "none" = "✅";
               };
+              "tooltip" = false;
             };
 
             "custom/notification" = {
