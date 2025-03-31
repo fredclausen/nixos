@@ -11,5 +11,6 @@
     ./rust
     ./make
     ./ninja
+    ./typos
   ];
 }
