@@ -41,8 +41,7 @@ elif [ -d /Users/fred ]; then
   alias ub="~/GitHub/fred-config/update-brew.sh"
 fi
 
-alias ls="lsd -l"
-alias lsa="lsd -la"
+alias ls="lsd -la"
 alias co="rustup update"
 alias gc="gcverify"
 alias gcn="gcnoverify"
