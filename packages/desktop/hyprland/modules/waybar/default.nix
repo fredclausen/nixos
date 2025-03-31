@@ -149,7 +149,18 @@ in
             };
 
             "temperature" = {
-              "format" = "{temperatureC}°C ";
+              "format" = "{icon} {temperatureC}°C";
+              "format-critical" = "{icon} {temperatureC}°C";
+              "hwmon-path" = "/sys/class/hwmon/hwmon2/temp1_input";
+              "warning-threshold" = 70;
+              "critical-threshold" = 85;
+              "format-icons" = [
+                ""
+                ""
+                ""
+                "⚠️"
+                "❗"
+              ];
             };
 
             "custom/separator" = {
@@ -252,6 +263,12 @@ in
           #custom-separator {
             color: @pink;
             margin: 0 3px;
+          }
+          #temperature {
+            color: green
+          }
+          #temperature.critical {
+            color: @red;
           }
         '';
       };
