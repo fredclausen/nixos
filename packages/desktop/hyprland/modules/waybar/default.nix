@@ -18,6 +18,10 @@ in
 
   config = mkIf cfg.enable {
     home-manager.users.fred = {
+      home.packages = with pkgs; [
+        wttrbar
+      ];
+
       programs.waybar = {
         enable = true;
 
@@ -40,6 +44,7 @@ in
 
             "modules-right" = [
               "tray"
+              "custom/weather"
               "custom/separator"
               "battery"
               "custom/audio_idle_inhibitor"
@@ -207,6 +212,14 @@ in
               "on-click" = "sleep 0.1 && swaync-client -t -sw";
               "on-click-right" = "sleep 0.1 && swaync-client -d -sw";
               escape = true;
+            };
+
+            "custom/weather" = {
+              "format" = "{}°";
+              "tooltip" = true;
+              "interval" = 3600;
+              "exec" = "wttrbar --mph --location Albuquerque --date-format %d-%m-%Y";
+              "return-type" = "json";
             };
           };
         };
