@@ -19,6 +19,11 @@ in
       description = "Enable extra desktop applications. This will turn on packages that do not work on arm64.";
       default = false;
     };
+
+    enable_games = mkOption {
+      description = "Enable games.";
+      default = false;
+    };
   };
 
   imports = [
@@ -69,6 +74,6 @@ in
 
     desktop.discord.enable = if cfg.enable_extra then true else false;
     desktop.tradingview.enable = if cfg.enable_extra then true else false;
-    desktop.steam.enable = if cfg.enable_extra then true else false;
+    desktop.steam.enable = if cfg.enable_games then true else false;
   };
 }
