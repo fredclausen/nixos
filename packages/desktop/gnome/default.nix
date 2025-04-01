@@ -174,6 +174,7 @@ in
         clock-show-seconds = true;
         clock-show-weekday = true;
         clock-format = "24h";
+        show-battery-percentage = true;
       };
 
       "org.gnome.desktop.calendar" = {
@@ -181,7 +182,7 @@ in
       };
 
       "org/gnome/shell/extensions/user-theme" = {
-        name = "Flat-Remix-Grey-Dark";
+        name = "Default";
       };
 
       "org/gnome/shell/extensions/arcmenu" = {
