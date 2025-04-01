@@ -102,6 +102,14 @@
     });
   '';
 
+  home-manager.users.fred = {
+    wayland.windowManager.hyprland.settings = {
+      monitor = [
+        ",highres,auto,1"
+      ];
+    };
+  };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
