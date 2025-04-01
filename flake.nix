@@ -44,7 +44,7 @@
           ];
         };
 
-        datyona = nixpkgs.lib.nixosSystem {
+        daytona = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs hmlib; };
           modules = [
             ./systems/daytona/configuration.nix
