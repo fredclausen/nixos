@@ -10,11 +10,10 @@ My personal NixOS configuration. It uses home manager to manage user package con
 
 The `flake.nix` is the jumping in point for the configuration. It has a few systems defined:
 
-| System Name | Description                   | "Profile"                              |
-| ----------- | ----------------------------- | -------------------------------------- |
-| Nebula      | My personal laptop            | Desktop + Extra Packages + Development |
-| Maranello   | Home Workstation              | Desktop + Extra Packages + Development |
-| VM          | A virtual machine for testing | Desktop + Development                  |
+| System Name | Description        | "Profile"                              |
+| ----------- | ------------------ | -------------------------------------- |
+| Nebula      | My personal laptop | Desktop + Extra Packages + Development |
+| Maranello   | Home Workstation   | Desktop + Extra Packages + Development |
 
 > [!NOTE]
 > the desktop stuff in the packages directory is enabled for all systems right now. However, once I add in servers the option to configure it will make sense.
