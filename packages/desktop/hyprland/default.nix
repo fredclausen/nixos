@@ -220,7 +220,7 @@ in
             "ALT, SPACE, exec, fuzzel"
             "$mainMod, C, killactive"
             "$mainMod, M, exit"
-            "$mainMod, L, exec, playerctl pause && swaylock -f -c 000000"
+            "$mainMod, L, exec, ~/.config/hyprextra/scripts/pauseandsleep"
 
             # Move windows with mainMod + arrow keys
             "$mainMod, left, movewindow, l"
@@ -284,6 +284,9 @@ in
             ", XKB_KEY_XF86KbdBrightnessUp, exec, ~/.config/hyprextra/scripts/kbbacklight --inc"
             ", XKB_KEY_XF86KbdBrightnessDown, exec, ~/.config/hyprextra/scripts/kbbacklight --dec"
             ", XF86SelectiveScreenshot, exec, grim -g \"$(slurp)\""
+            ", XF86Display, exec, ~/.config/hyprextra/scripts/pauseandsleep"
+            ", code:248, exec, $terminal"
+            ", XF86Favorites, exec, fuzzel"
           ];
 
           bindm = [
