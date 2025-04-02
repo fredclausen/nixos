@@ -117,6 +117,11 @@
       monitor = [
         ",highres,auto,1"
       ];
+
+      binde = [
+        ", XF86MonBrightnessUp, exec, ~/.config/hyprextra/scripts/backlight 255 --inc"
+        ", XF86MonBrightnessDown, exec, ~/.config/hyprextra/scripts/backlight 255 --dec"
+      ];
     };
   };
 
