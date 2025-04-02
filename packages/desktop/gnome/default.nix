@@ -27,6 +27,7 @@ in
       pkgs.gnomeExtensions.arcmenu
       pkgs.gnomeExtensions.search-light
       pkgs.gnomeExtensions.weather-or-not
+      pkgs.gnomeExtensions.forge
       pkgs.gnome-themes-extra
       pkgs.flat-remix-gnome
       pkgs.wl-clipboard
@@ -146,6 +147,7 @@ in
           "impatience@gfxmonk.net"
           "search-light@icedman.github.com"
           "weatherornot@somepaulo.github.io"
+          "forge@jmmaranan.com"
         ];
 
         favorite-apps = [

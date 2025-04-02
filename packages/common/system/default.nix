@@ -29,5 +29,6 @@
       persistent = true;
     };
     nix.settings.auto-optimise-store = true;
+    services.fwupd.enable = true;
   };
 }
