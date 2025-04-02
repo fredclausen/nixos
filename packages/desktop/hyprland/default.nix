@@ -297,7 +297,7 @@ in
 
           bindl = [
             # Lock lid on close
-            ",switch:off:Lid Switch, exec, playerctl pause && swaylock -f -c 000000 && sleep 1 && systemctl suspend"
+            ",switch:off:Lid Switch, exec, ~/.config/hyprextra/scripts/pauseandsleep && sleep 1 && systemctl suspend"
           ];
         };
       };
