@@ -13,6 +13,7 @@
       pkgs.toybox
       pkgs.nix-index
       pkgs.lm_sensors
+      pkgs.dig
     ];
 
     xdg.portal = {
