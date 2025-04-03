@@ -51,6 +51,7 @@ In your `system/<system name>/configuration.nix` the following options can be se
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------- |
 | desktop.enable       | Enable desktop environment                                                                                             | false   |
 | desktop.enable_extra | Enable extra packages. These are gated because on my VM there are a handful of packages that will not work on aarch64. | false   |
+| desktop.enable_games | Install steam.                                                                                                         | false   |
 
 ## Caveats
 
