@@ -25,7 +25,19 @@ get_icon() {
 
 # Notify
 notify_user() {
-	notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$icon" "Keyboard Brightness : $(brightnessctl -d '*::kbd_backlight' g)"
+	bright=$(brightnessctl -d '*::kbd_backlight' g)
+	if [[ "$bright" -eq 0 ]]; then
+		icon="$iDIR/brightness-0.png"
+		bright="0%"
+	elif [[ "$bright" -eq 1 ]]; then
+		icon="$iDIR/brightness-40.png"
+		bright="50%"
+	else
+		icon="$iDIR/brightness-100.png"
+		bright="100%"
+	fi
+
+	notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$icon" "Keyboard Brightness : $bright"
 }
 
 # Increase brightness

@@ -41,8 +41,14 @@ dec_volume() {
 toggle_mute() {
 	if [ "$(pamixer --get-mute)" == "false" ]; then
 		pamixer -m && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/volume-mute.png" "Volume Switched OFF"
+		if [[ -d "/sys/class/leds/platform::mute" ]]; then
+			brightnessctl --device="platform::mute" set 1
+		fi
 	elif [ "$(pamixer --get-mute)" == "true" ]; then
 		pamixer -u && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume Switched ON"
+		if [[ -d "/sys/class/leds/platform::mute" ]]; then
+			brightnessctl --device="platform::mute" set 0
+		fi
 	fi
 }
 
@@ -50,8 +56,14 @@ toggle_mute() {
 toggle_mic() {
 	if [ "$(pamixer --default-source --get-mute)" == "false" ]; then
 		pamixer --default-source -m && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/microphone-mute.png" "Microphone Switched OFF"
+		if [[ -d "/sys/class/leds/platform::micmute" ]]; then
+			brightnessctl --device="platform::micmute" set 1
+		fi
 	elif [ "$(pamixer --default-source --get-mute)" == "true" ]; then
 		pamixer -u --default-source u && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/microphone.png" "Microphone Switched ON"
+		if [[ -d "/sys/class/leds/platform::micmute" ]]; then
+			brightnessctl --device="platform::micmute" set 0
+		fi
 	fi
 }
 # Get icons

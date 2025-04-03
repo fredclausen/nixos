@@ -287,6 +287,8 @@ in
             ", XF86Display, exec, ~/.config/hyprextra/scripts/pauseandsleep"
             ", code:248, exec, $terminal"
             ", XF86Favorites, exec, fuzzel"
+            "$mainMod, XF86MonBrightnessUp, exec, ~/.config/hyprextra/scripts/kbbacklight --inc"
+            "$mainMod, XF86MonBrightnessDown, exec, ~/.config/hyprextra/scripts/kbbacklight --dec"
           ];
 
           bindm = [
