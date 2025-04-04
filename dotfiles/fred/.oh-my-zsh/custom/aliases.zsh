@@ -2,7 +2,7 @@ alias cd="z"
 # eval "$(pay-respects zsh --alias)"
 
 command_not_found_handler() {
-  env _PR_LAST_COMMAND="$@" _PR_SHELL="zsh" _PR_MODE="cnf" pay-respects
+  env _PR_LAST_COMMAND="$@" _PR_SHELL="zsh" _PR_MODE="cnf" _PR_ALIAS="`alias`" pay-respects
 }
 
 alias f='eval $(_PR_LAST_COMMAND="$(fc -ln -1)" _PR_ALIAS="`alias`" _PR_SHELL="zsh" "pay-respects")'
