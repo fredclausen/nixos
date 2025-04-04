@@ -22,6 +22,7 @@ in
     ./hyprlandextra
     ./pamixer
     ./waybar
+    ./swaync
   ];
 
   config = mkIf cfg.enable {
@@ -30,5 +31,6 @@ in
     desktop.hyprland.modules.pamixer.enable = true;
     desktop.hyprland.modules.fuzzel.enable = true;
     desktop.hyprland.modules.waybar.enable = true;
+    desktop.hyprland.modules.swaync.enable = true;
   };
 }

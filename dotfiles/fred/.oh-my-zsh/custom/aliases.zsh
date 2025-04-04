@@ -27,20 +27,11 @@ show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head
 export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
-if [ -d /home/fred/ ]; then
-  alias uz="~/GitHub/fred-config/update-zsh-stuff.sh"
-  alias ugh="~/GitHub/fred-config/update-all-git.sh ~/GitHub"
-  alias ipc="~/GitHub/fred-config/install-all-precommit.sh ~/GitHub"
-  alias scr="~/GitHub/fred-config/sync-compose.sh"
-  alias ub="~/GitHub/fred-config/update-brew.sh"
-elif [ -d /Users/fred ]; then
-  alias uz="~/GitHub/fred-config/update-zsh-stuff.sh"
-  alias ugh="~/GitHub/fred-config/update-all-git.sh ~/GitHub"
-  alias ipc="~/GitHub/fred-config/install-all-precommit.sh ~/GitHub"
-  alias scr="~/GitHub/fred-config/sync-compose.sh"
-  alias ub="~/GitHub/fred-config/update-brew.sh"
-fi
-
+alias uz="~/GitHub/fred-config/update-zsh-stuff.sh"
+alias ugh="~/GitHub/fred-config/update-all-git.sh ~/GitHub"
+alias ipc="~/GitHub/fred-config/install-all-precommit.sh ~/GitHub"
+alias scr="~/GitHub/fred-config/sync-compose.sh"
+alias ub="~/GitHub/fred-config/update-brew.sh"
 alias ls="lsd -la"
 alias co="rustup update"
 alias gc="gcverify"

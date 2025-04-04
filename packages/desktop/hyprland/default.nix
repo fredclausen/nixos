@@ -79,14 +79,6 @@ in
       #   };
       # };
 
-      services.swaync = {
-        enable = true;
-        settings = (
-          builtins.fromJSON (builtins.readFile ../../../dotfiles/fred/.config/swaync/config.json)
-        );
-        style = builtins.readFile ../../../dotfiles/fred/.config/swaync/style.css;
-      };
-
       wayland.windowManager.hyprland = {
         enable = true;
 
