@@ -68,16 +68,16 @@ in
       ];
 
       services.network-manager-applet.enable = true;
-      services.hypridle = {
-        enable = true;
+      # services.hypridle = {
+      #   enable = true;
 
-        settings = {
-          general = {
-            ignore_dbus_inhibit = false;
-            ignore_systemd_inhibit = false;
-          };
-        };
-      };
+      #   settings = {
+      #     general = {
+      #       ignore_dbus_inhibit = false;
+      #       ignore_systemd_inhibit = false;
+      #     };
+      #   };
+      # };
 
       services.swaync = {
         enable = true;
@@ -299,7 +299,7 @@ in
 
           bindl = [
             # Lock lid on close
-            ",switch:off:Lid Switch, exec, ~/.config/hyprextra/scripts/pauseandsleep && sleep 1 && systemctl suspend"
+            ",switch:off:Lid Switch, exec, ~/.config/hyprextra/scripts/pauseandsleep"
           ];
         };
       };
