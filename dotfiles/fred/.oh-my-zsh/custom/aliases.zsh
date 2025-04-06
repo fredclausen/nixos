@@ -27,11 +27,11 @@ show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head
 export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
-alias uz="~/GitHub/fred-config/update-zsh-stuff.sh"
-alias ugh="~/GitHub/fred-config/update-all-git.sh ~/GitHub"
-alias ipc="~/GitHub/fred-config/install-all-precommit.sh ~/GitHub"
-alias scr="~/GitHub/fred-config/sync-compose.sh"
-alias ub="~/GitHub/fred-config/update-brew.sh"
+alias uz="~/.config/scripts/update-zsh-stuff.sh"
+alias ugh="~/.config/scripts/update-all-git.sh ~/GitHub"
+alias ipc="~/.config/scripts/install-all-precommit.sh ~/GitHub"
+alias scr="~/.config/scripts/sync-compose.sh"
+alias ub="~/.config/scripts/update-brew.sh"
 alias ls="lsd -la"
 alias co="rustup update"
 alias gc="gcverify"
@@ -73,8 +73,8 @@ function remove_dsstore() {
 
   # now find the script for removing .DS_Store files
 
-  if [ -f ~/GitHub/fred-config/remove_dsstore.sh ]; then
-    ~/GitHub/fred-config/remove_dsstore.sh
+  if [ -f ~/.config/scripts/remove_dsstore.sh ]; then
+    ~/.config/scripts/remove_dsstore.sh
   elif [ -f ~/GitHub/fred/remove_dsstore.sh ]; then
     ~/GitHub/fred/fred-config/remove_dsstore.sh
   else

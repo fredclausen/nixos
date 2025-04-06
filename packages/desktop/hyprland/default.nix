@@ -109,7 +109,7 @@ in
             "systemctl start --user network-manager-applet"
             "~/.config/hyprextra/scripts/sleep"
             "sway-audio-idle-inhibit"
-            "swaybg -o \"*\" -i \"/home/fred/GitHub/fred-config/lewis.jpg\" &"
+            "swaybg -o \"*\" -i \"/home/fred/.config/backgrounds/lewis.jpg\" &"
             "nm-applet --indicator"
             "1password --silent &"
             "udiskie --appindicator -t &"

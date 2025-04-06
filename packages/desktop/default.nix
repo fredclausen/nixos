@@ -77,5 +77,12 @@ in
     desktop.discord.enable = if cfg.enable_extra then true else false;
     desktop.tradingview.enable = if cfg.enable_extra then true else false;
     desktop.steam.enable = if cfg.enable_games then true else false;
+
+    home-manager.users.fred = {
+      home.file.".config/backgrounds/" = {
+        source = ../../dotfiles/fred/.config/backgrounds;
+        recursive = true;
+      };
+    };
   };
 }
