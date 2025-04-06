@@ -68,7 +68,7 @@
       monitor = [
         "DP-1, highrr, 0x0, 1"
         "DP-2, highrr, -2560x0, 1"
-        "HDMI-A-1, preferred, -1920x-1080, 1"
+        "HDMI-A-1, highrr, -2560x-1440, 1"
       ];
 
       workspace = [

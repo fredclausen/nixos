@@ -8,20 +8,20 @@
       <monitor>
         <monitorspec>
           <connector>HDMI-1</connector>
-          <vendor>ACR</vendor>
-          <product>R240HY</product>
-          <serial>T4BAA0012411</serial>
+          <vendor>AUS</vendor>
+          <product>VG27A</product>
+          <serial>SALMQS105747</serial>
         </monitorspec>
         <mode>
-          <width>1920</width>
-          <height>1080</height>
-          <rate>60.000</rate>
+          <width>2560</width>
+          <height>1440</height>
+          <rate>144.006</rate>
         </mode>
       </monitor>
     </logicalmonitor>
     <logicalmonitor>
       <x>0</x>
-      <y>1080</y>
+      <y>1440</y>
       <scale>1</scale>
       <monitor>
         <monitorspec>
@@ -39,7 +39,7 @@
     </logicalmonitor>
     <logicalmonitor>
       <x>2560</x>
-      <y>1080</y>
+      <y>1440</y>
       <scale>1</scale>
       <primary>yes</primary>
       <monitor>
