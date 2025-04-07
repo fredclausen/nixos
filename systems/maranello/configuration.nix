@@ -25,6 +25,7 @@
   desktop.enable = true;
   desktop.enable_extra = true;
   desktop.enable_games = true;
+  desktop.enable_streaming = true;
 
   networking.hostName = "maranello"; # Define your hostname.
 

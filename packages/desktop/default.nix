@@ -24,6 +24,11 @@ in
       description = "Enable games.";
       default = false;
     };
+
+    enable_streaming = mkOption {
+      description = "Enable streaming applications.";
+      default = false;
+    };
   };
 
   imports = [
@@ -50,6 +55,7 @@ in
     ./multiviewer
     ./missioncenter
     ./audio
+    ./obs
   ];
 
   config = mkIf cfg.enable {
@@ -77,6 +83,7 @@ in
     desktop.discord.enable = if cfg.enable_extra then true else false;
     desktop.tradingview.enable = if cfg.enable_extra then true else false;
     desktop.steam.enable = if cfg.enable_games then true else false;
+    desktop.obs.enable = if cfg.enable_streaming then true else false;
 
     home-manager.users.fred = {
       home.file.".config/backgrounds/" = {
