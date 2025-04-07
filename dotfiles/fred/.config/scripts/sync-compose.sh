@@ -263,9 +263,9 @@ if [[ -z $2 ]]; then
   echo "Should be either all, adsbhub, brandon or vps"
   exit 1
 else
-  if [[ $2 != "all" && $2 != "adsbhub" && $2 != "brandon" && $2 != "vps" && $2 != "hfdlhub-1" && $2 != "hfdlhub-2" ]]; then
+  if [[ $2 != "all" && $2 != "adsbhub" && $2 != "brandon" && $2 != "vps" && $2 != "hfdlhub-1" && $2 != "hfdlhub-2" && $2 != "acarshub" && $2 != "vdlmhub" ]]; then
     echo "Second parameter sync target is invalid"
-    echo "Should be either all, adsbhub, brandon or vps"
+    echo "Should be either all, adsbhub, acarshub, brandon, vdlmhub, or vps"
     exit 1
   fi
 
@@ -286,6 +286,16 @@ if [[ $sync_direction == "remote" ]]; then
   if [[ $sync_target == "all" || $sync_target == "hfdlhub-2" ]]; then
     echo "Backing up HFDL Hub 2"
     sync_compose_remote_to_local "192.168.31.17" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/hfdlhub-2/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/hfdlhub-2/.env 22 fred
+  fi
+
+  if [[ $sync_target == "all" || $sync_target == "acarshub" ]]; then
+    echo "Backing up ACARS Hub"
+    sync_compose_remote_to_local "192.168.31.24" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/acarshub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/acarshub/.env 22 fred
+  fi
+
+  if [[ $sync_target == "all" || $sync_target == "vdlmhub" ]]; then
+    echo "Backing up VDL Hub"
+    sync_compose_remote_to_local "192.168.31.23" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/vdlmhub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/vdlmhub/.env 22 fred
   fi
 
   if [[ $sync_target == "all" || $sync_target == "vps" ]]; then
@@ -313,8 +323,19 @@ elif [[ $sync_direction == "local" ]]; then
     sync_compose_local_to_remote "192.168.31.17" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/hfdlhub-2/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/hfdlhub-2/.env 22 fred
   fi
 
+  if [[ $sync_target == "all" || $sync_target == "acarshub" ]]; then
+    echo "Pushing ACARS Hub"
+    sync_compose_local_to_remote "192.168.31.24" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/acarshub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/acarshub/.env 22 fred
+  fi
+
+  if [[ $sync_target == "all" || $sync_target == "vdlmhub" ]]; then
+    echo "Pushing VDL Hub"
+    sync_compose_local_to_remote "192.168.31.23" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/vdlmhub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/vdlmhub/.env 22 fred
+  fi
+
   if [[ $sync_target == "all" || $sync_target == "vps" ]]; then
     echo "Pushing fredclausen.com"
+    sync_compose_local_to_remote "fredclausen.com" /home/fred/docker-compose.yaml /home/fred/.env $HOME_DIR/GitHub/adsb-compose/vps/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/vps/.env 22 fred
   fi
 
   if [[ $sync_target == "all" || $sync_target == "brandon" ]]; then
