@@ -22,6 +22,11 @@ local enable_ai = function()
       cmd = "Copilot",
       build = ":Copilot auth",
       event = "InsertEnter",
+      -- FIXME: Remove this opts once lazyvim is updated https://github.com/LazyVim/LazyVim/pull/5900
+      opts = function()
+        require("copilot.api").status = require("copilot.status")
+      end,
+
       config = function()
         require("copilot").setup({
           panel = {
