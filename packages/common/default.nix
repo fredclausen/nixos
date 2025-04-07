@@ -6,5 +6,6 @@
     ./locale
     ./system
     ./boot
+    ./trash
   ];
 }
