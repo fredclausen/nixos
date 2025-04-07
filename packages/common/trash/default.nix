@@ -3,6 +3,7 @@
   config = {
     environment.systemPackages = [
       pkgs.autotrash
+      pkgs.gtrash
     ];
 
     home-manager.users.fred = {
