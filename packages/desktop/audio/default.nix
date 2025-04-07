@@ -17,6 +17,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      pavucontrol
+    ];
+
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;

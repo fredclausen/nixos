@@ -23,6 +23,7 @@ in
         obs-studio
         obs-studio-plugins.wlrobs
         obs-studio-plugins.obs-vkcapture
+        streamcontroller
       ];
     };
   };
