@@ -1,8 +1,11 @@
+#!/usr/bin/env bash
+
 alias cd="z"
 # eval "$(pay-respects zsh --alias)"
 
 command_not_found_handler() {
-  env _PR_LAST_COMMAND="$@" _PR_SHELL="zsh" _PR_MODE="cnf" _PR_ALIAS="`alias`" pay-respects
+  # shellcheck disable=SC2145
+  env _PR_LAST_COMMAND="$@" _PR_SHELL="zsh" _PR_MODE="cnf" _PR_ALIAS="$(alias)" pay-respects
 }
 
 alias f='eval $(_PR_LAST_COMMAND="$(fc -ln -1)" _PR_ALIAS="`alias`" _PR_SHELL="zsh" "pay-respects")'
@@ -26,6 +29,41 @@ show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head
 
 export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+
+# Advanced customization of fzf options via _fzf_comprun function
+# - The first argument to the function is the name of the command.
+# - You should make sure to pass the rest of the arguments to fzf.
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
+    export|unset) fzf --preview "eval 'echo \${}'"         "$@" ;;
+    ssh)          fzf --preview 'dig {}'                   "$@" ;;
+    *)            fzf --preview "$show_file_or_dir_preview" "$@" ;;
+  esac
+}
+
+# Use fd (https://github.com/sharkdp/fd) for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  fd --hidden --exclude .git . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type=d --hidden --exclude .git . "$1"
+}
+
+_widgets=$(zle -la)
+if [[ -n "${_widgets[(r)down-line-or-beginning-search]}" ]]; then
+  bindkey '^[[B' down-line-or-beginning-search
+fi
+if [[ -n "${_widgets[(r)up-line-or-beginning-search]}" ]]; then
+  bindkey '^[[A' up-line-or-beginning-search
+fi
 
 alias uz="~/.config/scripts/update-zsh-stuff.sh"
 alias ugh="~/.config/scripts/update-all-git.sh ~/GitHub"
@@ -53,9 +91,9 @@ function nvim_custom () {
   fi
 
   if [ -d /home/fred/ ]; then
-    nvim ~/GitHub/$1
+    nvim ~/GitHub/"$1"
   elif [ -d /Users/fred ]; then
-    nvim ~/GitHub/$1
+    nvim ~/GitHub/"$1"
   else
     echo "No user directory found"
   fi
@@ -63,9 +101,9 @@ function nvim_custom () {
 
 function remove_dsstore() {
   if [ -d /home/fred/ ]; then
-    pushd /home/fred/GitHub/$1 1> /dev/null
+    pushd /home/fred/GitHub/"$1" 1> /dev/null || exit
   elif [ -d /Users/fred ]; then
-    pushd /Users/fred/GitHub/$1 1> /dev/null
+    pushd /Users/fred/GitHub/"$1" 1> /dev/null || exit
   else
     echo "No user directory found"
     return
@@ -81,35 +119,33 @@ function remove_dsstore() {
     echo "No script found"
   fi
 
-  popd 1> /dev/null
+  popd 1> /dev/null || exit
 }
 
 function gpfred() {
   sign
   if [ -d /home/fred/ ]; then
-    pushd /home/fred/GitHub/$1 1> /dev/null
+    pushd /home/fred/GitHub/"$1" 1> /dev/null || exit
   elif [ -d /Users/fred ]; then
-    pushd /Users/fred/GitHub/$1 1> /dev/null
+    pushd /Users/fred/GitHub/"$1" 1> /dev/null || exit
   else
     echo "No user directory found"
     return
   fi
 
   git push
-  popd 1> /dev/null
+  popd 1> /dev/null || exit
 }
 
 function ua() {
   echo "Updating all"
-  # if we're on linux, we want to update oh-my-posh
-  if !command -v nixos-rebuild &> /dev/null; then
-    if [ -d /home/fred/ ]; then
+  # if we're not on linux, we want to update oh-my-posh
+  if [ -d /home/fred ]; then
       echo "Updating oh-my-posh...."
       curl -s https://ohmyposh.dev/install.sh | bash -s
 
       echo "Updating ZSH...."
       uz
-    fi
   else
     echo "NixOS detected, skipping oh-my-posh update"
   fi
@@ -147,10 +183,10 @@ function scal() {
 
 function sign() {
   mkdir -p ~/tmp/
-  pushd ~/tmp/ 1> /dev/null
+  pushd ~/tmp/ 1> /dev/null || exit
   touch a.txt
   gpg --sign a.txt
-  popd 1> /dev/null
+  popd 1> /dev/null || exit
   rm -rf ~/tmp/
 }
 
@@ -163,16 +199,16 @@ function gcverify() {
 
   sign
   if [ -d /home/fred/ ]; then
-    pushd /home/fred/GitHub/$1 1> /dev/null
+    pushd /home/fred/GitHub/"$1" 1> /dev/null || exit
   elif [ -d /Users/fred ]; then
-    pushd /Users/fred/GitHub/$1 1> /dev/null
+    pushd /Users/fred/GitHub/"$1" 1> /dev/null || exit
   else
     echo "No user directory found"
     return
   fi
   git add .
-  gcam $2
-  popd 1> /dev/null
+  gcam "$2"
+  popd 1> /dev/null || exit
 }
 
 function gcnoverify() {
@@ -185,16 +221,16 @@ function gcnoverify() {
   sign
 
   if [ -d /home/fred/ ]; then
-    pushd /home/fred/GitHub/$1 1> /dev/null
+    pushd /home/fred/GitHub/"$1" 1> /dev/null || exit
   elif [ -d /Users/fred ]; then
-    pushd /Users/fred/GitHub/$1 1> /dev/null
+    pushd /Users/fred/GitHub/"$1" 1> /dev/null || exit
   else
     echo "No user directory found"
     return
   fi
   git add .
-  git commit --all --no-verify -m $2
-  popd 1> /dev/null
+  git commit --all --no-verify -m "$2"
+  popd 1> /dev/null || exit
 }
 
 fastfetch
