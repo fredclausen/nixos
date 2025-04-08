@@ -91,16 +91,16 @@ alias rebootsystem="rebootsystem_ansible"
 
 function updatedocker_ansible() {
   echo "Running Ansible playbook for Docker updates..."
-  pushd ~/.ansible || return
+  pushd ~/.ansible 1> /dev/null || return
   ansible-playbook -i inventory.yaml update_docker.yaml
-  popd || return
+  popd 1> /dev/null || return
 }
 
 function updatesystems_ansible() {
   echo "Running Ansible playbook for system updates..."
-  pushd ~/.ansible || return
+  pushd ~/.ansible 1> /dev/null || return
   ansible-playbook -i inventory.yaml update_servers.yaml --ask-become-pass
-  popd || return
+  popd 1> /dev/null || return
 }
 
 function rebootsystem_ansible() {
@@ -111,9 +111,9 @@ function rebootsystem_ansible() {
   fi
 
   echo "Running Ansible playbook for system reboot on $1..."
-  pushd ~/.ansible || return
+  pushd ~/.ansible 1> /dev/null || return
   ansible-playbook -i inventory.yaml -e "target_hosts=$1" reboot_systems.yaml --ask-become-pass
-  popd || return
+  popd 1> /dev/null || return
 }
 
 function nvim_custom () {
