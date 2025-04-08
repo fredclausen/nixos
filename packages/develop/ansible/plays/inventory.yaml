@@ -1,0 +1,60 @@
+---
+ubuntu:
+  hosts:
+    192.168.31.17:
+      vars:
+        docker_config: /home/fred/GitHub/adsb-compose/hfdlhub-2/docker-compose.yaml
+        docker_env: /home/fred/GitHub/adsb-compose/hfdlhub-2/.env
+        docker_path: /opt/adsb
+        slow_start: true
+    192.168.31.19:
+      vars:
+        docker_config: /home/fred/GitHub/adsb-compose/hfdlhub-1/docker-compose.yaml
+        docker_env: /home/fred/GitHub/adsb-compose/hfdlhub-1/.env
+        docker_path: /opt/adsb
+        slow_start: true
+    192.168.31.20:
+      vars:
+        docker_config: /home/fred/GitHub/adsb-compose/adsbhub/docker-compose.yaml
+        docker_env: /home/fred/GitHub/adsb-compose/adsbhub/.env
+        docker_path: /opt/adsb
+        slow_start: false
+    fredclausen.com:
+      vars:
+        docker_config: /home/fred/GitHub/adsb-compose/vps/docker-compose.yaml
+        docker_env: /home/fred/GitHub/adsb-compose/vps/.env
+        docker_path: /home/fred
+        slow_start: false
+    73.242.200.187:
+      ansible_port: 3222
+      vars:
+        docker_config: /home/fred/GitHub/adsb-compose/brandon/docker-compose.yaml
+        docker_env: /home/fred/GitHub/adsb-compose/brandon/.env
+        docker_path: /opt/adsb
+        slow_start: false
+
+nixos:
+  hosts:
+    192.168.31.23:
+      vars:
+        docker_config: /home/fred/GitHub/adsb-compose/vdlmhub/docker-compose.yaml
+        docker_env: /home/fred/GitHub/adsb-compose/vdlmhub/.env
+        docker_path: /opt/adsb
+        slow_start: false
+    192.168.31.24:
+      vars:
+        docker_config: /home/fred/GitHub/adsb-compose/acarshub/docker-compose.yaml
+        docker_env: /home/fred/GitHub/adsb-compose/acarshub/.env
+        docker_path: /opt/adsb
+        slow_start: false
+
+adsb:
+  children:
+    ubuntu:
+    nixos:
+
+all:
+  vars:
+    ansible_user: fred
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
+    ansible_connection: ssh
