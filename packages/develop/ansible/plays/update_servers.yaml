@@ -1,4 +1,5 @@
-- name: Network Getting Started First Playbook
+---
+- name: Update NixOS Systems
   connection: ansible.netcommon.network_cli
   gather_facts: false
   hosts: nixos
@@ -19,3 +20,18 @@
       args:
         chdir: /home/fred/GitHub/nixos
       when: git_result.changed
+
+- name: Update Ubuntu Systems
+  connection: ansible.netcommon.network_cli
+  gather_facts: false
+  hosts: ubuntu
+  tasks:
+    - name: Update apt cache
+      become: yes
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+    - name: Upgrade all packages
+      become: yes
+      apt:
+        upgrade: dist

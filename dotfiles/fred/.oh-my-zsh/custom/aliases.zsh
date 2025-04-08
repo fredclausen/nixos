@@ -86,11 +86,19 @@ alias cat="bat --color always"
 alias c="code ."
 
 alias updatedocker="updatedocker_ansible"
+alias updatesystems="updatesystems_ansible"
 
 function updatedocker_ansible() {
   echo "Running Ansible playbook for Docker updates..."
   pushd ~/.ansible || exit 69
   ansible-playbook -i inventory.yaml update_docker.yaml
+  popd || exit 69
+}
+
+function updatesystems_ansible() {
+  echo "Running Ansible playbook for system updates..."
+  pushd ~/.ansible || exit 69
+  ansible-playbook -i inventory.yaml update_systems.yaml --ask-become-pass
   popd || exit 69
 }
 
