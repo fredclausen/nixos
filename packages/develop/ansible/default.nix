@@ -6,5 +6,12 @@
         ansible
       ];
     };
+
+    home-manager.users.fred = {
+      home.file.".ansible" = {
+        source = ./plays;
+        recursive = true;
+      };
+    };
   };
 }

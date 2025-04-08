@@ -85,6 +85,15 @@ alias rds="remove_dsstore"
 alias cat="bat --color always"
 alias c="code ."
 
+alias updatedocker="updatedocker_ansible"
+
+function updatedocker_ansible() {
+  echo "Running Ansible playbook for Docker updates..."
+  pushd ~/.ansible || exit 69
+  ansible-playbook -i inventory.yaml update_docker.yaml
+  popd || exit 69
+}
+
 function nvim_custom () {
   if [ -z "$1" ]; then
     echo "Please provide a file to edit"

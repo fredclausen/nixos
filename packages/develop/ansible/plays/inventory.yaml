@@ -41,12 +41,14 @@ nixos:
         docker_env: /home/fred/GitHub/adsb-compose/vdlmhub/.env
         docker_path: /opt/adsb
         slow_start: false
+        nix_name: vdlmhub
     192.168.31.24:
       vars:
         docker_config: /home/fred/GitHub/adsb-compose/acarshub/docker-compose.yaml
         docker_env: /home/fred/GitHub/adsb-compose/acarshub/.env
         docker_path: /opt/adsb
         slow_start: false
+        nix_name: acarshub
 
 adsb:
   children:

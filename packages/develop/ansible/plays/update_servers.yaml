@@ -1,0 +1,21 @@
+- name: Network Getting Started First Playbook
+  connection: ansible.netcommon.network_cli
+  gather_facts: false
+  hosts: nixos
+  tasks:
+    - name: Update nixos source
+      become: no
+      git:
+        repo: https://github.com/fredclausen/nixos.git
+        dest: /home/fred/GitHub/nixos
+        version: main
+        update: yes
+        clone: no
+        force: no
+      register: git_result
+    - name: Update system if repo is changed
+      become: yes
+      command: nixos-rebuild switch --flake .#{{ hostvars[inventory_hostname]['vars']['nix_name'] }}
+      args:
+        chdir: /home/fred/GitHub/nixos
+      when: git_result.changed
