@@ -83,6 +83,7 @@ alias na="nvim ~/GitHub/docker-acarshub"
 alias n="nvim"
 alias rds="remove_dsstore"
 alias cat="bat --color always"
+alias c="code ."
 
 function nvim_custom () {
   if [ -z "$1" ]; then
