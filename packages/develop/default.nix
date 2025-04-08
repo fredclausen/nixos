@@ -1,16 +1,17 @@
 {
   imports = [
-    ./node
-    ./python
+    ./ansible
     ./clang
     ./gcc
-    ./shellcheck
     ./hadolint
-    ./nvim
-    ./pre-commit
-    ./rust
     ./make
     ./ninja
+    ./node
+    ./nvim
+    ./pre-commit
+    ./python
+    ./rust
+    ./shellcheck
     ./typos
   ];
 }

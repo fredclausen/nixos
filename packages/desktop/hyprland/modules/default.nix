@@ -21,8 +21,8 @@ in
     ./fuzzel
     ./hyprlandextra
     ./pamixer
-    ./waybar
     ./swaync
+    ./waybar
   ];
 
   config = mkIf cfg.enable {

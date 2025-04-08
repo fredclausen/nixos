@@ -1,11 +1,11 @@
 {
   imports = [
-    ./docker
-    ./shell
-    ./openssh
-    ./locale
-    ./system
     ./boot
+    ./docker
+    ./locale
+    ./openssh
+    ./shell
+    ./system
     ./trash
   ];
 }

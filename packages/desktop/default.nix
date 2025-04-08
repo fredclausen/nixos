@@ -32,30 +32,30 @@ in
   };
 
   imports = [
+    ./1password
     ./alacritty
-    ./firefox
+    ./audio
     ./brave
     ./discord
+    ./firefox
     ./fonts
-    ./githubdesktop
     ./ghostty
+    ./githubdesktop
     ./gnome
+    ./hyprland
+    ./libreoffice
+    ./missioncenter
+    ./multiviewer
+    ./obs
     ./print
     ./sqlitebrowser
-    ./sublimetext
-    ./tradingview
-    ./vscode
-    ./1password
-    ./wezterm
-    ./hyprland
     ./steam
     ./stockfish
-    ./libreoffice
+    ./sublimetext
+    ./tradingview
     ./vlc
-    ./multiviewer
-    ./missioncenter
-    ./audio
-    ./obs
+    ./vscode
+    ./wezterm
   ];
 
   config = mkIf cfg.enable {
