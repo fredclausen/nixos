@@ -41,6 +41,7 @@ in
       noto-fonts-extra
       twemoji-color-font
       noto-fonts-color-emoji
+      google-fonts
       # corefonts
       # cifs-utils
       # dina-font
@@ -52,6 +53,7 @@ in
       # unifont
       # unifont_upper
       joypixels
+      font-manager
     ];
 
     fonts.enableDefaultPackages = true;
