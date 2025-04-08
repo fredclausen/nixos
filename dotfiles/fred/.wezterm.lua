@@ -10,6 +10,7 @@ local mux = wezterm.mux
 config.font = wezterm.font("MesloLGS Nerd Font Mono")
 config.font_size = 10
 config.enable_wayland = false
+config.term = "wezterm"
 
 local act = wezterm.action
 config.keys = {
