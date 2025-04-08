@@ -87,19 +87,33 @@ alias c="code ."
 
 alias updatedocker="updatedocker_ansible"
 alias updatesystems="updatesystems_ansible"
+alias rebootsystem="rebootsystem_ansible"
 
 function updatedocker_ansible() {
   echo "Running Ansible playbook for Docker updates..."
-  pushd ~/.ansible || exit 69
+  pushd ~/.ansible || return
   ansible-playbook -i inventory.yaml update_docker.yaml
-  popd || exit 69
+  popd || return
 }
 
 function updatesystems_ansible() {
   echo "Running Ansible playbook for system updates..."
-  pushd ~/.ansible || exit 69
+  pushd ~/.ansible || return
   ansible-playbook -i inventory.yaml update_servers.yaml --ask-become-pass
-  popd || exit 69
+  popd || return
+}
+
+function rebootsystem_ansible() {
+  # we need a system name passed in
+  if [ -z "$1" ]; then
+    echo "Please provide a system name to reboot"
+    return
+  fi
+
+  echo "Running Ansible playbook for system reboot on $1..."
+  pushd ~/.ansible || return
+  ansible-playbook -i inventory.yaml -e "target_hosts=$1" reboot_systems.yaml --ask-become-pass
+  popd || return
 }
 
 function nvim_custom () {

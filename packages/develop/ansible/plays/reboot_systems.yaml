@@ -1,0 +1,15 @@
+---
+- name: Reboot Host
+  connection: ansible.netcommon.network_cli
+  gather_facts: false
+  hosts: "{{ target_hosts }}"
+  tasks:
+    - name: Rebooting Machine
+      become: yes
+      reboot:
+        msg: "Rebooting {{ target_hosts }}"
+        pre_reboot_delay: 0
+        post_reboot_delay: 0
+        connect_timeout: 5
+        reboot_timeout: 300
+      when: target_hosts is defined
