@@ -82,7 +82,17 @@ alias ngc="nvim_custom"
 alias na="nvim ~/GitHub/docker-acarshub"
 alias n="nvim"
 alias rds="remove_dsstore"
+
+# FIXME: I would like to just programmatically detect this
+if [[ -d /home/fred ]]; then
+  alias ogcat="/run/current-system/sw/bin/cat"
+else
+  # FIXME: verify this is the correct MacOS path
+  alias ogcat="/usr/bin/cat"
+fi
+
 alias cat="bat --color always"
+
 alias c="code ."
 
 alias updatedocker="updatedocker_ansible"
