@@ -15,6 +15,8 @@ The `flake.nix` is the jumping in point for the configuration. It has a few syst
 | Daytona     | My personal laptop | Desktop + Extra Packages + Development         |
 | Nebula      | My personal laptop | Desktop + Extra Packages + Development         |
 | Maranello   | Home Workstation   | Desktop + Extra Packages + Games + Development |
+| acarshub    | Server             | Server + Development                           |
+| vdlmhub     | Server             | Server + Development                           |
 
 > [!NOTE]
 > the desktop stuff in the packages directory is enabled for all systems right now. However, once I add in servers the option to configure it will make sense.
@@ -48,11 +50,12 @@ It's a good starting point for your nix journey, but see [Caveats](#caveats). If
 
 In your `system/<system name>/configuration.nix` the following options can be set:
 
-| Option               | Description                                                                                                            | Default |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------- |
-| desktop.enable       | Enable desktop environment                                                                                             | false   |
-| desktop.enable_extra | Enable extra packages. These are gated because on my VM there are a handful of packages that will not work on aarch64. | false   |
-| desktop.enable_games | Install steam.                                                                                                         | false   |
+| Option                   | Description                                                                                                            | Default |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------- | ------- |
+| desktop.enable           | Enable desktop environment                                                                                             | false   |
+| desktop.enable_extra     | Enable extra packages. These are gated because on my VM there are a handful of packages that will not work on aarch64. | false   |
+| desktop.enable_games     | Install steam.                                                                                                         | false   |
+| desktop.enable_streaming | Install OBS and other streaming packages.                                                                              | false   |
 
 ## Caveats
 
