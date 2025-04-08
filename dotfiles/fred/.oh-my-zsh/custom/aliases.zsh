@@ -98,7 +98,7 @@ function updatedocker_ansible() {
 function updatesystems_ansible() {
   echo "Running Ansible playbook for system updates..."
   pushd ~/.ansible || exit 69
-  ansible-playbook -i inventory.yaml update_systems.yaml --ask-become-pass
+  ansible-playbook -i inventory.yaml update_servers.yaml --ask-become-pass
   popd || exit 69
 }
 
