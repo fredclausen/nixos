@@ -4,6 +4,12 @@
   gather_facts: false
   hosts: "{{ target_hosts }}"
   tasks:
+    - name: Docker compose down
+      command: docker compose -f {{ hostvars[inventory_hostname]['vars']['docker_path'] }}/docker-compose.yaml down
+      args:
+        chdir: "{{ hostvars[inventory_hostname]['vars']['docker_path'] }}"
+      when: target_hosts is defined
+
     - name: Rebooting Machine
       become: yes
       reboot:
@@ -12,4 +18,10 @@
         post_reboot_delay: 0
         connect_timeout: 5
         reboot_timeout: 300
+      when: target_hosts is defined
+
+    - name: Docker compose up
+      command: docker compose -f {{ hostvars[inventory_hostname]['vars']['docker_path'] }}/docker-compose.yaml up -d
+      args:
+        chdir: "{{ hostvars[inventory_hostname]['vars']['docker_path'] }}"
       when: target_hosts is defined
