@@ -35,3 +35,13 @@
       become: yes
       apt:
         upgrade: dist
+    - name: check if reboot is needed
+      stat:
+        path: /var/run/reboot-required
+      register: check_reboot
+    - meta: end_host
+      when: not check_reboot.stat.exists
+    - name: System needs reboot
+      debug:
+        msg: "System needs reboot"
+      when: check_reboot.stat.exists
