@@ -1,0 +1,19 @@
+[files]
+extend-exclude = [
+    ".git/",               # Version control files
+    "res/",                # Resource files
+    "freminal/Cargo.lock",
+    "speed_tests/*",
+    ".dictionary.txt",
+    "**.lua",
+    "typos.toml",
+]
+ignore-hidden = false
+
+[default]
+locale = "en-us"
+extend-ignore-identifiers-re = [ # NDK - Native  Development Kit
+    "nd",
+    # nixos has a typo in their configs
+    "optimise",
+]

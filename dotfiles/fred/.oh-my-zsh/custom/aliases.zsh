@@ -89,6 +89,31 @@ alias updatedocker="updatedocker_ansible"
 alias updatesystems="updatesystems_ansible"
 alias rebootsystem="rebootsystem_ansible"
 
+# nix aliases
+alias nr="updatenix"
+alias nd="garbagecollect"
+
+function garbagecollect() {
+  sudo nix-collect-garbage -d
+  nix-collect-garbage -d
+  updatenix
+}
+
+function updatenix() {
+  # only push if we're not in /home/fred/GitHub/nixos
+  if [ "$(pwd)" != "/home/fred/GitHub/nixos" ]; then
+    pushd /home/fred/GitHub/nixos > /dev/null || return
+    pushed=true
+  else
+    pushed=false
+  fi
+  pushd /home/fred/GitHub/nixos > /dev/null || return
+  sudo nixos-rebuild switch --flake .#"$(hostname)"
+  if [ "$pushed" = true ]; then
+    popd > /dev/null || return
+  fi
+}
+
 function updatedocker_ansible() {
   echo "Running Ansible playbook for Docker updates..."
   pushd ~/.ansible 1> /dev/null || return

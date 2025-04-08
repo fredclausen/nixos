@@ -30,7 +30,7 @@ repos:
           (?x)^(
               stow_home/fred/.config/sublime-text/Local/Session.sublime_session|
               pkglist-native.txt|
-                flake.lock
+                flake.lock|typos.toml|packages/typos.toml
           )$
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
