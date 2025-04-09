@@ -22,6 +22,7 @@
       pkgs.nix-index
       pkgs.lm_sensors
       pkgs.dig
+      pkgs.nethogs
     ];
 
     xdg.portal = {
