@@ -207,7 +207,7 @@ function gpfred() {
 function ua() {
   echo "Updating all"
   # if we're not on linux, we want to update oh-my-posh
-  if [ -d /home/fred ]; then
+  if [ -d /Users/fred ]; then
       echo "Updating oh-my-posh...."
       curl -s https://ohmyposh.dev/install.sh | bash -s
 
