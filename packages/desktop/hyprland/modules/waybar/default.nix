@@ -33,9 +33,9 @@ in
             "spacing" = 4;
 
             "modules-left" = [
-              "hyprland/workspaces"
-              "custom/separator"
-              "wlr/taskbar"
+              "temperature"
+              "custom/weather"
+              "tray"
             ];
 
             "modules-center" = [
@@ -43,12 +43,8 @@ in
             ];
 
             "modules-right" = [
-              "tray"
-              "custom/weather"
-              "custom/separator"
+              "network"
               "battery"
-              "custom/audio_idle_inhibitor"
-              "temperature"
               "pulseaudio"
               "clock"
               "custom/notification"
@@ -179,20 +175,6 @@ in
               "spacing" = 4;
             };
 
-            "custom/audio_idle_inhibitor" = {
-              "format" = "{icon}";
-              "exec" = "sway-audio-idle-inhibit --dry-print-both-waybar";
-              "exec-if" = "which sway-audio-idle-inhibit";
-              "return-type" = "json";
-              "format-icons" = {
-                "output" = "▶️";
-                "input" = "🎤";
-                "output-input" = "▶️  🎤";
-                "none" = "✅";
-              };
-              "tooltip" = false;
-            };
-
             "custom/notification" = {
               tooltip = false;
               format = "{} {icon}";
@@ -220,6 +202,14 @@ in
               "interval" = 3600;
               "exec" = "wttrbar --mph --location Albuquerque --date-format %d-%m-%Y";
               "return-type" = "json";
+            };
+
+            "network" = {
+              "format-wifi" = "<span size='13000' foreground='#f5e0dc'>  </span>{essid}";
+              "format-ethernet" = "<span size='13000' foreground='#f5e0dc'>󰤭  </span> Disconnected";
+              "format-linked" = "{ifname} (No IP) ";
+              "format-disconnected" = "<span size='13000' foreground='#f5e0dc'>  </span>Disconnected";
+              "tooltip-format-wifi" = "Signal Strength: {signalStrength}%";
             };
           };
         };
@@ -320,6 +310,7 @@ in
           #network,
           #mode,
           #custom-notification,
+          #custom-weather,
           #scratchpad {
             margin-top: 2px;
             margin-bottom: 2px;
@@ -332,6 +323,15 @@ in
           #temperature {
               color: @sky;
               border-bottom: 2px solid @sky;
+          }
+          #custom-weather {
+              color: @teal;
+              border-bottom: 2px solid @teal;
+          }
+
+          #tray {
+              color: @blue;
+              border-bottom: 2px solid @blue;
           }
 
           #clock {
