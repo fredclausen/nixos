@@ -225,66 +225,171 @@ in
         };
 
         style = ''
-          @define-color background-darker rgba(30, 31, 41, 230);
-          @define-color background #282a36;
-          @define-color selection #44475a;
-          @define-color foreground #f8f8f2;
-          @define-color comment #6272a4;
-          @define-color cyan #8be9fd;
-          @define-color green #50fa7b;
-          @define-color orange #ffb86c;
-          @define-color pink #ff79c6;
-          @define-color purple #bd93f9;
-          @define-color red #ff5555;
-          @define-color yellow #f1fa8c;
+          @define-color rosewater #f5e0dc;
+          @define-color flamingo #f2cdcd;
+          @define-color pink #f5c2e7;
+          @define-color mauve #cba6f7;
+          @define-color red #f38ba8;
+          @define-color maroon #eba0ac;
+          @define-color peach #fab387;
+          @define-color yellow #f9e2af;
+          @define-color green #a6e3a1;
+          @define-color teal #94e2d5;
+          @define-color sky #89dceb;
+          @define-color sapphire #74c7ec;
+          @define-color blue #89b4fa;
+          @define-color lavender #b4befe;
+          @define-color text #cdd6f4;
+          @define-color subtext1 #bac2de;
+          @define-color subtext0 #a6adc8;
+          @define-color overlay2 #9399b2;
+          @define-color overlay1 #7f849c;
+          @define-color overlay0 #6c7086;
+          @define-color surface2 #585b70;
+          @define-color surface1 #45475a;
+          @define-color surface0 #313244;
+          @define-color base #1e1e2e;
+          @define-color mantle #181825;
+          @define-color crust #11111b;
+
+
           * {
+              font-family: "MesloLGS Nerd Font Mono Bold";
+              font-size: 16px;
+              min-height: 0;
+              font-weight: bold;
+          }
+
+          window#waybar {
+              background: transparent;
+              background-color: @crust;
+              color: @overlay0;
+              transition-property: background-color;
+              transition-duration: 0.1s;
+              border-bottom: 1px solid @overlay1;
+          }
+
+          #window {
+              margin: 8px;
+              padding-left: 8;
+              padding-right: 8;
+          }
+
+          button {
+              box-shadow: inset 0 -3px transparent;
               border: none;
               border-radius: 0;
-              font-family: Iosevka;
-              font-size: 11pt;
-              min-height: 0;
           }
-          window#waybar {
-              opacity: 0.9;
-              background: @background-darker;
-              color: @foreground;
-              border-bottom: 2px solid @background;
+
+          button:hover {
+              background: inherit;
+              color: @mauve;
+              border-top: 2px solid @mauve;
           }
 
           #workspaces button {
-              padding: 0 10px;
-              background: @background;
-              color: @foreground;
-          }
-          #workspaces button:hover {
-              box-shadow: inherit;
-              text-shadow: inherit;
-              background-image: linear-gradient(0deg, @selection, @background-darker);
-          }
-          #workspaces button.active {
-              background-image: linear-gradient(0deg, @purple, @selection);
-          }
-          #workspaces button.urgent {
-              background-image: linear-gradient(0deg, @red, @background-darker);
-          }
-          #taskbar button.active {
-              background-image: linear-gradient(0deg, @selection, @background-darker);
-          }
-          #clock {
               padding: 0 4px;
-              background: @background-darker;
-              color: @foreground;
           }
-          #custom-separator {
-            color: @pink;
-            margin: 0 3px;
+
+          #workspaces button.focused {
+              background-color: rgba(0, 0, 0, 0.3);
+              color: @rosewater;
+              border-top: 2px solid @rosewater;
           }
+
+          #workspaces button.active {
+              background-color: rgba(0, 0, 0, 0.3);
+              color: @mauve;
+              border-top: 2px solid @mauve;
+          }
+
+          #workspaces button.urgent {
+              background-color: #eb4d4b;
+          }
+
+          #pulseaudio,
+          #clock,
+          #battery,
+          #cpu,
+          #memory,
+          #disk,
+          #temperature,
+          #backlight,
+          #wireplumber,
+          #tray,
+          #network,
+          #mode,
+          #custom-notification,
+          #scratchpad {
+            margin-top: 2px;
+            margin-bottom: 2px;
+            margin-left: 4px;
+            margin-right: 4px;
+            padding-left: 4px;
+            padding-right: 4px;
+          }
+
           #temperature {
-            color: green
+              color: @sky;
+              border-bottom: 2px solid @sky;
           }
-          #temperature.critical {
-            color: @red;
+
+          #clock {
+              color: @maroon;
+              border-bottom: 2px solid @maroon;
           }
+
+          #clock.date {
+              color: @mauve;
+              border-bottom: 2px solid @mauve;
+          }
+
+          #pulseaudio {
+              color: @blue;
+              border-bottom: 2px solid @blue;
+          }
+
+          #network {
+              color: @yellow;
+              border-bottom: 2px solid @yellow;
+          }
+
+          #custom-notification {
+              color: @pink;
+              border-bottom: 2px solid @pink;
+          }
+
+          #idle_inhibitor {
+              margin-right: 12px;
+              color: #7cb342;
+          }
+
+          #idle_inhibitor.activated {
+              color: @red;
+          }
+
+          #battery {
+              color: @green;
+              border-bottom: 2px solid @green;
+          }
+
+          /* If workspaces is the leftmost module, omit left margin */
+          .modules-left>widget:first-child>#workspaces {
+              margin-left: 0;
+          }
+
+          /* If workspaces is the rightmost module, omit right margin */
+          .modules-right>widget:last-child>#workspaces {
+              margin-right: 0;
+          }
+
+          #custom-vpn {
+              color: @lavender;
+              border-radius: 15px;
+              padding-left: 6px;
+              padding-right: 6px;
+          }
+
         '';
       };
     };
