@@ -15,6 +15,8 @@
         enable = true;
         enableZshIntegration = true;
       };
+
+      catppuccin.fzf.enable = true;
     };
   };
 }

@@ -90,6 +90,8 @@ in
         source = ../../dotfiles/fred/.config/backgrounds;
         recursive = true;
       };
+
+      catppuccin.cursors.enable = true;
     };
   };
 }

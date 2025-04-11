@@ -22,5 +22,13 @@ in
         brave
       ];
     };
+
+    home-manager.users.fred = {
+      programs.brave = {
+        enable = true;
+      };
+
+      catppuccin.brave.enable = true;
+    };
   };
 }
