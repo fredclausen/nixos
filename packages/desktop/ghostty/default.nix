@@ -26,9 +26,10 @@ in
         enable = true;
 
         settings = {
-          font-family = "MesloLGS Nerd Font Mono";
-          font-size = 10;
-          theme = "Wez";
+          font-family = "Caskaydia Cove Nerd Font";
+          font-size = 12;
+          theme = "catppuccin-mocha";
+          background-opacity = 0.95;
         };
       };
 

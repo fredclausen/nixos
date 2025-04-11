@@ -26,6 +26,10 @@
         enable = true;
         theme = (builtins.fromTOML (builtins.readFile ../../../dotfiles/fred/.config/yazi/theme.toml));
       };
+
+      home.file.".config/yazi/Catppuccin-mocha.tmTheme" = {
+        source = ../../../dotfiles/fred/.config/yazi/Catppuccin-mocha.tmTheme;
+      };
     };
   };
 }

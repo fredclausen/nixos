@@ -11,6 +11,8 @@ config.font = wezterm.font("Caskaydia Cove Nerd Font")
 config.font_size = 12
 config.enable_wayland = false
 config.term = "wezterm"
+config.color_scheme = "Catppuccin Mocha"
+config.window_background_opacity = 0.95
 
 local act = wezterm.action
 config.keys = {

@@ -13,6 +13,14 @@ blur = true
 option_as_alt = "Both"
 
 [font]
-normal.family = "MesloLGS Nerd Font Mono"
+normal.family = "Caskaydia Cove Nerd Font"
 
-size = 10
+size = 12
+
+[general]
+import = [
+    #"~/.config/alacritty/catppuccin-latte.toml",
+    # "~/.config/alacritty/catppuccin-frappe.toml"
+    # "~/.config/alacritty/catppuccin-macchiato.toml"
+    "~/.config/alacritty/catppuccin-mocha.toml",
+]
