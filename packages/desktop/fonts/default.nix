@@ -32,6 +32,9 @@ in
 
     fonts.packages = with pkgs; [
       nerd-fonts.meslo-lg
+      cascadia-code
+      nerd-fonts.caskaydia-mono
+      nerd-fonts.caskaydia-cove
       fira-code
       fira-code-symbols
       font-awesome

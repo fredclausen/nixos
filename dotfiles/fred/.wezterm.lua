@@ -7,8 +7,8 @@ local mux = wezterm.mux
 
 -- This is where you actually apply your config choices
 
-config.font = wezterm.font("MesloLGS Nerd Font Mono")
-config.font_size = 10
+config.font = wezterm.font("Caskaydia Cove Nerd Font")
+config.font_size = 12
 config.enable_wayland = false
 config.term = "wezterm"
 
