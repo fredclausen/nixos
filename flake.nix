@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
+    catppuccin.url = "github:catppuccin/nix";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,6 +14,7 @@
     inputs@{
       self,
       nixpkgs,
+      catppuccin,
       home-manager,
       ...
     }:
@@ -28,6 +29,7 @@
           modules = [
             ./systems/nebula/configuration.nix
             home-manager.nixosModules.home-manager
+            catppuccin.nixosModules.catppuccin
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -49,16 +51,24 @@
           modules = [
             ./systems/daytona/configuration.nix
             home-manager.nixosModules.home-manager
+            catppuccin.nixosModules.catppuccin
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.fred = import ./users/homemanager;
+              home-manager.users.fred = {
+                imports = [
+                  ./users/homemanager
+                  catppuccin.homeModules.catppuccin
+                ];
+              };
+
               home-manager.extraSpecialArgs = {
                 inherit
                   inputs
                   self
                   user
                   hmlib
+                  catppuccin
                   ;
               };
             }

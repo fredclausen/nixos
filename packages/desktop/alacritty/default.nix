@@ -27,9 +27,7 @@ in
         settings = (builtins.fromTOML (builtins.readFile ../../../dotfiles/fred/.config/alacritty.toml));
       };
 
-      home.file.".config/alacritty/theme/catppuccin-mocha.toml" = {
-        source = ../../../dotfiles/fred/.config/alacritty/theme/catppuccin-mocha.toml;
-      };
+      catppuccin.alacritty.enable = true;
     };
   };
 }

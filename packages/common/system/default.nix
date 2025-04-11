@@ -69,5 +69,12 @@
         }
       })
     '';
+
+    home-manager.users.fred = {
+      programs.btop = {
+        enable = true;
+      };
+      catppuccin.btop.enable = true;
+    };
   };
 }

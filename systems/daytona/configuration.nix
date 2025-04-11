@@ -25,7 +25,7 @@
   desktop.enable = true;
   desktop.enable_extra = true;
   desktop.enable_games = false;
-
+  catppuccin.flavor = "mocha";
   networking.hostName = "Daytona"; # Define your hostname.
 
   environment.systemPackages = with pkgs; [
