@@ -90,6 +90,21 @@ in
       home.packages = with pkgs; [
         adw-gtk3
       ];
+
+      gtk = {
+        enable = true;
+        gtk3.extraConfig = {
+          gtk-application-prefer-dark-theme = 1;
+        };
+
+        gtk4.extraConfig = {
+          gtk-application-prefer-dark-theme = 1;
+        };
+      };
+
+      catppuccin.gtk.enable = true;
+      catppuccin.gtk.gnomeShellTheme = true;
+      catppuccin.gtk.icon.enable = true;
     };
 
     home-manager.users.fred.xdg = {
@@ -171,7 +186,7 @@ in
 
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
-        gtk-theme = "adw-gtk3-dark";
+        # gtk-theme = "adw-gtk3-dark";
         enable-hot-corners = false;
         clock-show-seconds = true;
         clock-show-weekday = true;
@@ -183,9 +198,9 @@ in
         show-weekdate = true;
       };
 
-      "org/gnome/shell/extensions/user-theme" = {
-        name = "Default";
-      };
+      # "org/gnome/shell/extensions/user-theme" = {
+      #   name = "Default";
+      # };
 
       "org/gnome/shell/extensions/arcmenu" = {
         menu-button-appears = "Icon";

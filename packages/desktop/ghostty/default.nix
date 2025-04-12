@@ -28,10 +28,11 @@ in
         settings = {
           font-family = "Caskaydia Cove Nerd Font";
           font-size = 12;
-          theme = "catppuccin-mocha";
           background-opacity = 0.95;
         };
       };
+
+      catppuccin.ghostty.enable = true;
 
       xdg = {
         mimeApps = {

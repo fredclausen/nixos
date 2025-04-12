@@ -67,6 +67,8 @@ in
         adw-gtk3
       ];
 
+      catppuccin.hyprland.enable = true;
+
       services.network-manager-applet.enable = true;
       # services.hypridle = {
       #   enable = true;
@@ -91,7 +93,7 @@ in
           env = [
             "QT_QPA_PLATFORMTHEME,qt6ct"
             "XCURSOR_SIZE, 24"
-            "GTK_THEME, adw-gtk3-dark"
+            # "GTK_THEME, adw-gtk3-dark"
           ];
 
           exec = [
@@ -100,9 +102,9 @@ in
 
           exec-once = [
             "polkit-agent-helper-1"
-            "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
-            "gsettings set org.gnome.desktop.interface gtk-theme \"adw-gtk3-dark\""
-            "hyprctl setcursor Adwaita 24"
+            # "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
+            # "gsettings set org.gnome.desktop.interface gtk-theme \"adw-gtk3-dark\""
+            # "hyprctl setcursor Adwaita 24"
             "systemctl start --user polkit-gnome-authentication-agent-1"
             "systemctl start --user waybar"
             "systemctl start --user swaync"
