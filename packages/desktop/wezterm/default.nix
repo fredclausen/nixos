@@ -27,6 +27,9 @@ in
         extraConfig = builtins.readFile ../../../dotfiles/fred/.wezterm.lua;
       };
 
+      catppuccin.wezterm.enable = true;
+      catppuccin.wezterm.apply = true;
+
       xdg = {
         mimeApps = {
           associations.added = {

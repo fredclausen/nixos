@@ -11,6 +11,8 @@
         enable = true;
         enableAliases = true;
       };
+
+      catppuccin.lsd.enable = true;
     };
   };
 }

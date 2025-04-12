@@ -2,7 +2,7 @@
 local wezterm = require("wezterm")
 
 -- This will hold the configuration.
-local config = wezterm.config_builder()
+-- local config = wezterm.config_builder()
 local mux = wezterm.mux
 
 -- This is where you actually apply your config choices
@@ -11,7 +11,7 @@ config.font = wezterm.font("Caskaydia Cove Nerd Font")
 config.font_size = 12
 config.enable_wayland = false
 config.term = "wezterm"
-config.color_scheme = "Catppuccin Mocha"
+-- config.color_scheme = "Catppuccin Mocha"
 config.window_background_opacity = 0.95
 
 local act = wezterm.action

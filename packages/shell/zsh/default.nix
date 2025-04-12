@@ -21,6 +21,8 @@
 
         initExtra = builtins.readFile ../../../dotfiles/fred/.oh-my-zsh/custom/aliases.zsh;
       };
+
+      catppuccin.zsh-syntax-highlighting.enable = true;
     };
   };
 }

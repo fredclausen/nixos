@@ -26,5 +26,18 @@ in
         streamcontroller
       ];
     };
+
+    home-manager.users.fred = {
+      programs.obs = {
+        enable = true;
+        enablePlugins = true;
+        enableStreamlabs = true;
+        enableVulkanCapture = true;
+        enableWebcam = true;
+        enableStreamController = true;
+      };
+
+      catppuccin.obs.enable = true;
+    };
   };
 }

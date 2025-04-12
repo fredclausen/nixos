@@ -15,6 +15,8 @@
         enable = true;
         settings = (builtins.fromTOML (builtins.readFile ../../../dotfiles/fred/.config/starship.toml));
       };
+
+      catppuccin.starship.enable = true;
     };
   };
 }
