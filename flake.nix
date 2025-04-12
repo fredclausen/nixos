@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # https://github.com/catppuccin/nix
     catppuccin.url = "github:catppuccin/nix";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -33,7 +34,12 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.fred = import ./users/homemanager;
+              home-manager.users.fred = {
+                imports = [
+                  ./users/homemanager
+                  catppuccin.homeModules.catppuccin
+                ];
+              };
               home-manager.extraSpecialArgs = {
                 inherit
                   inputs
@@ -80,10 +86,16 @@
           modules = [
             ./systems/maranello/configuration.nix
             home-manager.nixosModules.home-manager
+            catppuccin.nixosModules.catppuccin
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.fred = import ./users/homemanager;
+              home-manager.users.fred = {
+                imports = [
+                  ./users/homemanager
+                  catppuccin.homeModules.catppuccin
+                ];
+              };
               home-manager.extraSpecialArgs = {
                 inherit
                   inputs
@@ -101,10 +113,16 @@
           modules = [
             ./systems/acarshub/configuration.nix
             home-manager.nixosModules.home-manager
+            catppuccin.nixosModules.catppuccin
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.fred = import ./users/homemanager;
+              home-manager.users.fred = {
+                imports = [
+                  ./users/homemanager
+                  catppuccin.homeModules.catppuccin
+                ];
+              };
               home-manager.extraSpecialArgs = {
                 inherit
                   inputs
@@ -122,52 +140,16 @@
           modules = [
             ./systems/vdlmhub/configuration.nix
             home-manager.nixosModules.home-manager
+            catppuccin.nixosModules.catppuccin
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.fred = import ./users/homemanager;
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  self
-                  user
-                  hmlib
-                  ;
+              home-manager.users.fred = {
+                imports = [
+                  ./users/homemanager
+                  catppuccin.homeModules.catppuccin
+                ];
               };
-            }
-          ];
-        };
-
-        vm = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs hmlib; };
-          modules = [
-            ./systems/vm/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.fred = import ./users/homemanager;
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  self
-                  user
-                  hmlib
-                  ;
-              };
-            }
-          ];
-        };
-
-        vm64 = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs hmlib; };
-          modules = [
-            ./systems/vm64/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.fred = import ./users/homemanager;
               home-manager.extraSpecialArgs = {
                 inherit
                   inputs

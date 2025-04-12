@@ -25,8 +25,14 @@
   desktop.enable = true;
   desktop.enable_extra = true;
   desktop.enable_games = false;
-  catppuccin.flavor = "mocha";
-  catppuccin.accent = "lavender";
+  desktop.enable_streaming = false;
+
+  catppuccin = {
+    flavor = "mocha";
+    accent = "lavender";
+    enable = true;
+  };
+
   networking.hostName = "Daytona"; # Define your hostname.
 
   environment.systemPackages = with pkgs; [

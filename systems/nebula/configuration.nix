@@ -24,6 +24,14 @@
   # extra options
   desktop.enable = true;
   desktop.enable_extra = true;
+  desktop.enable_games = false;
+  desktop.enable_streaming = false;
+
+  catppuccin = {
+    flavor = "mocha";
+    accent = "lavender";
+    enable = true;
+  };
 
   networking.hostName = "nebula"; # Define your hostname.
 

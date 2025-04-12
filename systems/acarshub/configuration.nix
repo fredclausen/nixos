@@ -27,6 +27,12 @@
   desktop.enable_games = false;
   desktop.enable_streaming = false;
 
+  catppuccin = {
+    flavor = "mocha";
+    accent = "lavender";
+    enable = true;
+  };
+
   networking.hostName = "acarshub"; # Define your hostname.
 
   environment.systemPackages = with pkgs; [

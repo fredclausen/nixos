@@ -27,6 +27,12 @@
   desktop.enable_games = true;
   desktop.enable_streaming = true;
 
+  catppuccin = {
+    flavor = "mocha";
+    accent = "lavender";
+    enable = true;
+  };
+
   networking.hostName = "maranello"; # Define your hostname.
 
   environment.systemPackages = with pkgs; [
