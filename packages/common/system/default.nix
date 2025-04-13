@@ -75,6 +75,33 @@
         enable = true;
       };
       catppuccin.btop.enable = true;
+
+      programs.git = {
+        enable = true;
+        userName = "Fred Clausen";
+        userEmail = "43556888+fredclausen@users.noreply.github.com";
+
+        diff-so-fancy.enable = true;
+        signing = {
+          signer = "${pkgs.gnupg}/bin/gpg";
+          signByDefault = true;
+          key = "F406B080289FEC21";
+        };
+
+        extraConfig = {
+          "credential \"https://github.com\"" = {
+            helper = "!/etc/profiles/per-user/fred/bin/gh auth git-credential";
+          };
+          "credential \"https://gist.github.com\"" = {
+            helper = "!/etc/profiles/per-user/fred/bin/gh auth git-credential";
+          };
+        };
+
+        lfs = {
+          enable = true;
+          skipSmudge = false;
+        };
+      };
     };
   };
 }
