@@ -21,7 +21,12 @@ in
       services.swaync = {
         enable = true;
         settings = (builtins.fromJSON (builtins.readFile ./config.json));
-        style = builtins.readFile ./style.css;
+        # style = builtins.readFile ./style.css;
+      };
+
+      catppuccin.swaync = {
+        enable = true;
+        font = "SFProDisplay Nerd Font";
       };
     };
   };
