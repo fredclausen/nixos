@@ -1,5 +1,5 @@
 {
-  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "$schema": "https://raw.githubusercontent.com/ErikReider/SwayNotificationCenter/f55b433e05bf2f7d9772b86a9f613571efc3ae34/src/configSchema.json",
 
   "positionX": "right",
   "positionY": "top",
@@ -48,8 +48,7 @@
       "text": "Label Text"
     },
     "mpris": {
-      "image-size": 96,
-      "image-radius": 12
+      "image-size": 96
     },
     "menubar": {
       "menu#power-buttons": {
@@ -110,26 +109,6 @@
           }
         ]
       }
-    },
-    "buttons-grid": {
-      "actions": [
-        {
-          "label": "",
-          "command": "nm-connection-editor"
-        },
-        {
-          "label": "",
-          "command": "blueman"
-        },
-        {
-          "label": "",
-          "command": "gnome-calendar"
-        },
-        {
-          "label": "",
-          "command": "firefox"
-        }
-      ]
     }
   }
 }
