@@ -219,7 +219,7 @@ in
 
         style = ''
           * {
-              font-family: "Caskaydia Cove Nerd Font";
+              font-family: "Caskaydia Code";
               font-size: 16px;
               min-height: 0;
               font-weight: bold;

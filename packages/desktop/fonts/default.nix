@@ -30,36 +30,63 @@ in
       ];
     nixpkgs.config.joypixels.acceptLicense = true;
 
-    fonts.packages = with pkgs; [
-      nerd-fonts.meslo-lg
-      cascadia-code
-      nerd-fonts.caskaydia-mono
-      nerd-fonts.caskaydia-cove
-      fira-code
-      fira-code-symbols
-      font-awesome
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
-      noto-fonts-extra
-      twemoji-color-font
-      noto-fonts-color-emoji
-      google-fonts
-      # corefonts
-      # cifs-utils
-      # dina-font
-      # liberation_ttf
-      # mplus-outline-fonts.githubRelease
-      # powerline-fonts
-      # proggyfonts
-      # ubuntu_font_family
-      # unifont
-      # unifont_upper
-      joypixels
-      font-manager
-    ];
+    fonts = {
+      packages = with pkgs; [
+        nerd-fonts.meslo-lg
+        cascadia-code
+        nerd-fonts.caskaydia-mono
+        nerd-fonts.caskaydia-cove
+        fira-code
+        fira-code-symbols
+        font-awesome
+        noto-fonts
+        noto-fonts-cjk-sans
+        noto-fonts-emoji
+        noto-fonts-extra
+        twemoji-color-font
+        noto-fonts-color-emoji
+        google-fonts
+        # corefonts
+        # cifs-utils
+        # dina-font
+        # liberation_ttf
+        # mplus-outline-fonts.githubRelease
+        # powerline-fonts
+        # proggyfonts
+        ubuntu_font_family
+        # unifont
+        # unifont_upper
+        joypixels
+        font-manager
+      ];
 
-    fonts.enableDefaultPackages = true;
-    fonts.fontconfig.useEmbeddedBitmaps = true;
+      fontconfig = {
+        defaultFonts = {
+          # serif = [
+          #   "Liberation Serif"
+          #   "Vazirmatn"
+          # ];
+          # sansSerif = [
+          #   "Ubuntu"
+          #   "Vazirmatn"
+          # ];
+
+          # FIXME: do we want Cascadia Code NF instead of Caskaydia Cove?
+          monospace = [
+            "Caskaydia Cove Nerd Font"
+            "Cascadia Code"
+            "MesloLGS Nerd Font Mono"
+            "Ubuntu Mono"
+          ];
+          emoji = [
+            "Noto Color Emoji"
+            "JoyPixels"
+          ];
+        };
+      };
+
+      enableDefaultPackages = true;
+      fontconfig.useEmbeddedBitmaps = true;
+    };
   };
 }
