@@ -219,7 +219,7 @@ in
 
         style = ''
           * {
-              font-family: "Caskaydia Code";
+              font-family: "SFProDisplay Nerd Font";
               font-size: 16px;
               min-height: 0;
               font-weight: bold;

@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # https://github.com/catppuccin/nix
     catppuccin.url = "github:catppuccin/nix";
+    apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,6 +18,7 @@
       nixpkgs,
       catppuccin,
       home-manager,
+      apple-fonts,
       ...
     }:
     let
@@ -46,6 +48,7 @@
                   self
                   user
                   hmlib
+                  apple-fonts
                   ;
               };
             }
@@ -75,6 +78,7 @@
                   user
                   hmlib
                   catppuccin
+                  apple-fonts
                   ;
               };
             }
@@ -102,6 +106,7 @@
                   self
                   user
                   hmlib
+                  apple-fonts
                   ;
               };
             }
@@ -129,6 +134,7 @@
                   self
                   user
                   hmlib
+                  apple-fonts
                   ;
               };
             }
@@ -156,6 +162,7 @@
                   self
                   user
                   hmlib
+                  apple-fonts
                   ;
               };
             }

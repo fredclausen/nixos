@@ -2,6 +2,8 @@
   lib,
   pkgs,
   config,
+  apple-fonts,
+  inputs,
   ...
 }:
 with lib;
@@ -46,6 +48,7 @@ in
         twemoji-color-font
         noto-fonts-color-emoji
         google-fonts
+        inputs.apple-fonts.packages.${pkg.system}.sf-pro-nerd
         # corefonts
         # cifs-utils
         # dina-font
@@ -66,10 +69,10 @@ in
           #   "Liberation Serif"
           #   "Vazirmatn"
           # ];
-          # sansSerif = [
-          #   "Ubuntu"
-          #   "Vazirmatn"
-          # ];
+          sansSerif = [
+            "SFProDisplay Nerd Font"
+            "Ubuntu"
+          ];
 
           # FIXME: do we want Cascadia Code NF instead of Caskaydia Cove?
           monospace = [
