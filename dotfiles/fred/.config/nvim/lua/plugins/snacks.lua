@@ -10,7 +10,7 @@ return  {
             }
         },
         keys = {
-            { "<leader>zz", function() Snacks.lazygit() end, desc = "Lazygit Log (cwd)" },
+            { "<leader>zz", function() Snacks.lazygit() end, desc = "Lazygit" },
         }
     }
 }
