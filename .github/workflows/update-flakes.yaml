@@ -4,7 +4,9 @@ on:
     - cron: "0 */4 * * *"
   workflow_dispatch:
 
-permissions: {}
+permissions:
+  contents: write
+  pull-requests: write
 
 # https://github.com/bbigras/nix-config
 
