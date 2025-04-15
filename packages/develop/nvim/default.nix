@@ -39,6 +39,7 @@
           yaml-language-server
           copilot-node-server
           nil
+          ansible-language-server
         ];
 
         home.file."./.config/nvim".source =

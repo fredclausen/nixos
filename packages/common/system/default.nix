@@ -23,6 +23,7 @@
       pkgs.lm_sensors
       pkgs.dig
       pkgs.nethogs
+      pkgs.inotify-tools
     ];
 
     xdg.portal = {
