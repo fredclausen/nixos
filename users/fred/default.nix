@@ -14,6 +14,7 @@
         "wheel"
         "docker"
         "plugdev"
+        "wireshark"
       ];
 
       packages = with pkgs; [

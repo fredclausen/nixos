@@ -58,6 +58,7 @@ in
     ./vlc
     ./vscode
     ./wezterm
+    ./wireshark
   ];
 
   config = mkIf cfg.enable {
@@ -81,6 +82,7 @@ in
     desktop.multiviewer.enable = true;
     desktop.missioncenter.enable = true;
     desktop.audio.enable = true;
+    desktop.wireshark.enable = true;
     desktop.music.enable = if cfg.enable_extra then true else false;
     desktop.appimage.enable = if cfg.enable_extra then true else false;
 
