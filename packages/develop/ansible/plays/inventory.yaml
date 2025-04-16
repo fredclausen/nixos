@@ -1,12 +1,6 @@
 ---
 ubuntu:
   hosts:
-    192.168.31.17:
-      vars:
-        docker_config: /home/fred/GitHub/adsb-compose/hfdlhub-2/docker-compose.yaml
-        docker_env: /home/fred/GitHub/adsb-compose/hfdlhub-2/.env
-        docker_path: /opt/adsb
-        slow_start: true
     192.168.31.19:
       vars:
         docker_config: /home/fred/GitHub/adsb-compose/hfdlhub-1/docker-compose.yaml
@@ -35,6 +29,13 @@ ubuntu:
 
 nixos:
   hosts:
+    192.168.31.17:
+      vars:
+        docker_config: /home/fred/GitHub/adsb-compose/hfdlhub-2/docker-compose.yaml
+        docker_env: /home/fred/GitHub/adsb-compose/hfdlhub-2/.env
+        docker_path: /opt/adsb
+        slow_start: true
+        nix_name: hfdlhub2
     192.168.31.23:
       vars:
         docker_config: /home/fred/GitHub/adsb-compose/vdlmhub/docker-compose.yaml
