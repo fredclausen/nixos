@@ -33,7 +33,7 @@
     enable = true;
   };
 
-  networking.hostName = "hfdlhub-2"; # Define your hostname.
+  networking.hostName = "hfdlhub2"; # Define your hostname.
 
   environment.systemPackages = with pkgs; [
   ];
