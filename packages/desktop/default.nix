@@ -34,6 +34,7 @@ in
   imports = [
     ./1password
     ./alacritty
+    ./appimage
     ./audio
     ./brave
     ./discord
@@ -46,6 +47,7 @@ in
     ./libreoffice
     ./missioncenter
     ./multiviewer
+    ./music
     ./obs
     ./print
     ./sqlitebrowser
@@ -79,6 +81,8 @@ in
     desktop.multiviewer.enable = true;
     desktop.missioncenter.enable = true;
     desktop.audio.enable = true;
+    desktop.music.enable = if cfg.enable_extra then true else false;
+    desktop.appimage.enable = if cfg.enable_extra then true else false;
 
     desktop.discord.enable = if cfg.enable_extra then true else false;
     desktop.tradingview.enable = if cfg.enable_extra then true else false;
