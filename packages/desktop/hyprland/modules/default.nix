@@ -22,6 +22,7 @@ in
     ./hyprlandextra
     ./pamixer
     ./swaync
+    ./ulauncher
     ./waybar
   ];
 
@@ -32,5 +33,6 @@ in
     desktop.hyprland.modules.fuzzel.enable = true;
     desktop.hyprland.modules.waybar.enable = true;
     desktop.hyprland.modules.swaync.enable = true;
+    desktop.hyprland.modules.ulauncher.enable = true;
   };
 }
