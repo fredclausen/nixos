@@ -169,6 +169,34 @@
           ];
         };
 
+        hfdlhub1 = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs hmlib; };
+          modules = [
+            ./systems/hfdlhub1/configuration.nix
+            home-manager.nixosModules.home-manager
+            catppuccin.nixosModules.catppuccin
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.fred = {
+                imports = [
+                  ./users/homemanager
+                  catppuccin.homeModules.catppuccin
+                ];
+              };
+              home-manager.extraSpecialArgs = {
+                inherit
+                  inputs
+                  self
+                  user
+                  hmlib
+                  apple-fonts
+                  ;
+              };
+            }
+          ];
+        };
+
         hfdlhub2 = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs hmlib; };
           modules = [
