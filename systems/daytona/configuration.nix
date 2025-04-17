@@ -27,6 +27,12 @@
   desktop.enable_games = false;
   desktop.enable_streaming = false;
 
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_14;
+
   catppuccin = {
     flavor = "mocha";
     accent = "lavender";
