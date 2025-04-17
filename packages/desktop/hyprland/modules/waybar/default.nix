@@ -93,8 +93,7 @@ in
               "format-time" = "{H}h{M}m";
               "format-charging" =
                 "<span font='Font Awesome 5 11'></span>  <span font='Font Awesome 5 11'>{icon}</span>  {capacity}% - {time}";
-              "format-full" =
-                "<span font='Font Awesome 5 11'></span>  <span font='Font Awesome 5 11'>{icon}</span>  Charged";
+              "format-full" = "<span font='Font Awesome 5 11'></span>  Charged";
               "interval" = 30;
               "states" = {
                 "warning" = 25;
