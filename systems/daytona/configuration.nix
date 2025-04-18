@@ -40,6 +40,7 @@
   };
 
   networking.hostName = "Daytona"; # Define your hostname.
+  networking.networkmanager.wifi.scanRandMacAddress = false;
 
   environment.systemPackages = with pkgs; [
   ];
