@@ -49,6 +49,7 @@ in
         noto-fonts-color-emoji
         google-fonts
         inputs.apple-fonts.packages.${pkg.system}.sf-pro-nerd
+        inputs.apple-fonts.packages.${pkg.system}.ny-nerd
         # corefonts
         # cifs-utils
         # dina-font
@@ -65,10 +66,9 @@ in
 
       fontconfig = {
         defaultFonts = {
-          # serif = [
-          #   "Liberation Serif"
-          #   "Vazirmatn"
-          # ];
+          serif = [
+            "NewYork Nerd Font"
+          ];
           sansSerif = [
             "SFProDisplay Nerd Font"
             "Ubuntu"
