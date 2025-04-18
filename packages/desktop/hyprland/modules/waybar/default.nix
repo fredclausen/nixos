@@ -226,7 +226,7 @@ in
 
           window#waybar {
               background: transparent;
-              background-color: @crust;
+              /* background-color: @crust; */
               color: @overlay0;
               transition-property: background-color;
               transition-duration: 0.1s;
@@ -234,9 +234,16 @@ in
           }
 
           #window {
-              margin: 8px;
-              padding-left: 8;
-              padding-right: 8;
+              margin-top: 2px;
+              margin-bottom: 2px;
+              margin-left: 4px;
+              margin-right: 4px;
+              padding-left: 4px;
+              padding-right: 4px;
+              background-color: @crust;
+              border-radius: 10px;
+              color: @mauve;
+              border: 2px solid @mauve;
           }
 
           button {
@@ -249,6 +256,10 @@ in
               background: inherit;
               color: @mauve;
               border-top: 2px solid @mauve;
+          }
+
+          #workspaces {
+              border-radius: 20px;
           }
 
           #workspaces button {
@@ -292,45 +303,47 @@ in
             margin-right: 4px;
             padding-left: 4px;
             padding-right: 4px;
+            background-color: @crust;
+            border-radius: 10px;
           }
 
           #temperature {
               color: @sky;
-              border-bottom: 2px solid @sky;
+              border: 2px solid @sky;
           }
           #custom-weather {
               color: @teal;
-              border-bottom: 2px solid @teal;
+              border: 2px solid @teal;
           }
 
           #tray {
               color: @blue;
-              border-bottom: 2px solid @blue;
+              border: 2px solid @blue;
           }
 
           #clock {
               color: @maroon;
-              border-bottom: 2px solid @maroon;
+              border: 2px solid @maroon;
           }
 
           #clock.date {
               color: @mauve;
-              border-bottom: 2px solid @mauve;
+              border: 2px solid @mauve;
           }
 
           #pulseaudio {
               color: @blue;
-              border-bottom: 2px solid @blue;
+              border: 2px solid @blue;
           }
 
           #network {
               color: @yellow;
-              border-bottom: 2px solid @yellow;
+              border: 2px solid @yellow;
           }
 
           #custom-notification {
               color: @pink;
-              border-bottom: 2px solid @pink;
+              border: 2px solid @pink;
           }
 
           #idle_inhibitor {
@@ -344,7 +357,7 @@ in
 
           #battery {
               color: @green;
-              border-bottom: 2px solid @green;
+              border: 2px solid @green;
           }
 
           /* If workspaces is the leftmost module, omit left margin */
