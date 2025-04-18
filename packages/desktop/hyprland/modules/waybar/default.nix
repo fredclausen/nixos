@@ -113,11 +113,11 @@ in
                 "on-scroll" = 1;
                 "on-click-right" = "mode";
                 "format" = {
-                  "months" = "<span color='#ffead3'><b>{}</b></span>";
-                  "days" = "<span color='#ecc6d9'><b>{}</b></span>";
-                  "weeks" = "<span color='#99ffdd'><b>W{}</b></span>";
-                  "weekdays" = "<span color='#ffcc66'><b>{}</b></span>";
-                  "today" = "<span color='#ff6699'><b><u>{}</u></b></span>";
+                  "months" = "<span color='#fab387'><b>{}</b></span>";
+                  "days" = "<span color='#cdd6f4'><b>{}</b></span>";
+                  "weeks" = "<span color='#f5c2e7'><b>W{}</b></span>";
+                  "weekdays" = "<span color='#f9e2af'><b>{}</b></span>";
+                  "today" = "<span color='#f38ba8'><b>{}</b></span>";
                 };
               };
               "actions" = {
