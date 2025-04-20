@@ -44,6 +44,6 @@ repos:
         #   )
 
   - repo: https://github.com/fredclausen/nixfmt
-    rev: 2c611acc3a6ce6466fc6d13ea8b60e243686a526  # frozen: v0.7.1
+    rev: 2c611acc3a6ce6466fc6d13ea8b60e243686a526 # frozen: v0.7.1
     hooks:
       - id: nixfmt
