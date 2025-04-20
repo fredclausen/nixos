@@ -263,9 +263,9 @@ if [[ -z $2 ]]; then
   echo "Should be either all, adsbhub, brandon or vps"
   exit 1
 else
-  if [[ $2 != "all" && $2 != "adsbhub" && $2 != "brandon" && $2 != "vps" && $2 != "hfdlhub-1" && $2 != "hfdlhub-2" && $2 != "acarshub" && $2 != "vdlmhub" ]]; then
+  if [[ $2 != "all" && $2 != "sdrhub" && $2 != "brandon" && $2 != "vps" && $2 != "hfdlhub-1" && $2 != "hfdlhub-2" && $2 != "acarshub" && $2 != "vdlmhub" ]]; then
     echo "Second parameter sync target is invalid"
-    echo "Should be either all, adsbhub, acarshub, brandon, vdlmhub, or vps"
+    echo "Should be either all, sdrhub, acarshub, brandon, vdlmhub, or vps"
     exit 1
   fi
 
@@ -273,9 +273,9 @@ else
 fi
 
 if [[ $sync_direction == "remote" ]]; then
-  if [[ $sync_target == "all" || $sync_target == "adsbhub" ]]; then
-    echo "Backing up ADSB Hub"
-    sync_compose_remote_to_local "192.168.31.20" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/adsbhub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/adsbhub/.env 22 fred
+  if [[ $sync_target == "all" || $sync_target == "sdrhub" ]]; then
+    echo "Backing up SDR Hub"
+    sync_compose_remote_to_local "192.168.31.20" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/sdrhub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/sdrhub/.env 22 fred
   fi
 
   if [[ $sync_target == "all" || $sync_target == "hfdlhub-1" ]]; then
@@ -308,9 +308,9 @@ if [[ $sync_direction == "remote" ]]; then
     sync_compose_remote_to_local "73.242.200.187" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/brandon/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/brandon/.env "3222" fred true
   fi
 elif [[ $sync_direction == "local" ]]; then
-  if [[ $sync_target == "all" || $sync_target == "adsbhub" ]]; then
-    echo "Pushing ADSB Hub"
-    sync_compose_local_to_remote "192.168.31.20" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/adsbhub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/adsbhub/.env 22 fred
+  if [[ $sync_target == "all" || $sync_target == "sdrhub" ]]; then
+    echo "Pushing sdr Hub"
+    sync_compose_local_to_remote "192.168.31.20" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/sdrhub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/sdrhub/.env 22 fred
   fi
 
   if [[ $sync_target == "all" || $sync_target == "hfdlhub-1" ]]; then

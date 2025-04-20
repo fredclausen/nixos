@@ -33,7 +33,7 @@
     enable = true;
   };
 
-  networking.hostName = "hub"; # Define your hostname.
+  networking.hostName = "sdrhub"; # Define your hostname.
 
   environment.systemPackages = with pkgs; [
   ];
