@@ -114,6 +114,9 @@
 
   services.nginx = {
     enable = true;
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
     virtualHosts.localhost = {
       locations."/" = {
         return = "200 '<html><body>It works</body></html>'";
@@ -121,6 +124,9 @@
           default_type text/html;
         '';
       };
+
+      locations."dozzle" = {
+        proxyPass = "http://192.168.31.20:9999/dozzle";
     };
   };
 
