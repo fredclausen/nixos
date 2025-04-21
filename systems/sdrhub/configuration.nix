@@ -121,8 +121,10 @@
   };
 
   networking.firewall.allowedTCPPorts = [
-    53
     80
+  ];
+  networking.firewall.allowedUDPPorts = [
+    53
   ];
 
   services.nginx = {
