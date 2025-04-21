@@ -2,6 +2,11 @@
 <html>
   <head>
     <title>Fred's ADSB Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
     <style>
       body {
         background-color: #1e1e2e;
@@ -16,7 +21,8 @@
         color: #cdd6f4;
       }
       li::marker {
-        content: "● ";
+        content: "\f00c"; /* FontAwesome Unicode */
+        font-family: FontAwesome;
         color: #a6e3a1;
       }
       li::before {
