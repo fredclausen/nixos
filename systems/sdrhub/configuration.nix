@@ -120,7 +120,7 @@
     recommendedOptimisation = true;
     recommendedProxySettings = true;
     virtualHosts.localhost = {
-      root = ./index.html;
+      root = ./html;
       locations."/" = {
         index = "index.html";
       };
