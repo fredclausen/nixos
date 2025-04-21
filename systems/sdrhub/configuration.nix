@@ -125,7 +125,7 @@
         index = "index.html";
       };
 
-      locations."/dozzle" = {
+      locations."/dozzle/" = {
         proxyPass = "http://192.168.31.20:9999/dozzle";
       };
 
@@ -137,7 +137,7 @@
         '';
       };
 
-      locations."/dump978" = {
+      locations."/dump978/" = {
         proxyPass = "http://192.168.31.20:8083/";
 
         extraConfig = ''
@@ -145,7 +145,7 @@
         '';
       };
 
-      locations."/graphs" = {
+      locations."/graphs/" = {
         proxyPass = "http://192.168.31.20:8080/graphs1090/";
       };
     };
