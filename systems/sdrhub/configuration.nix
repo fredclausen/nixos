@@ -168,7 +168,7 @@
 
       #FIXME: this should be a proxy pass
       locations."/planefinder/" = {
-        return = "http://192.168.31.20:8087/";
+        return = "http://192.168.31.20:8087";
 
         #extraConfig = ''
         #  proxy_redirect / /planefinder/;
