@@ -113,6 +113,7 @@
         "@@||instagram.c10r.instagram.com^"
         "@@||instagram.com^"
         "@@||i.instagram.com^"
+        "@@||cdninstagram.com^"
       ];
 
       # The following notation uses map
