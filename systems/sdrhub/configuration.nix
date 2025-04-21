@@ -114,6 +114,8 @@
     80
   ];
 
+  systemd.services.nginx.serviceConfig.ProtectHome = "read-only";
+
   services.nginx = {
     enable = true;
     recommendedGzipSettings = true;
