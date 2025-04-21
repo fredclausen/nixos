@@ -86,6 +86,10 @@
           "127.0.0.1:5335"
         ];
         enable_dnssec = true;
+        rate_limit = 0;
+        edns_client_subnet = {
+          enabled = true;
+        };
       };
       filtering = {
         protection_enabled = true;
@@ -96,6 +100,11 @@
           enabled = false; # Enforcing "Safe search" option for search engines, when possible.
         };
       };
+
+      user_rules = [
+        "@@||mask.icloud.com^"
+        "@@||mask-h2.icloud.com^"
+      ];
 
       # The following notation uses map
       # to not have to manually create {enabled = true; url = "";} for every filter
