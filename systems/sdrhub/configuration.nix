@@ -133,11 +133,8 @@
         proxyPass = "http://192.168.31.20:8080/";
       };
 
-      locations."dump978" = {
+      locations."/dump978" = {
         proxyPass = "http://192.168.31.20:8083/";
-        extraConfig = ''
-          proxy_redirect / /dump978/;
-        '';
       };
     };
   };
