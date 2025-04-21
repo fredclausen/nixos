@@ -114,7 +114,7 @@
     80
   ];
 
-  systemd.services.nginx.serviceConfig.ProtectHome = false;
+  systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/home/fred/.html" ];
 
   services.nginx = {
     enable = true;
