@@ -152,6 +152,18 @@
       locations."/fr24/" = {
         return = "http://192.168.31.20:8082/";
       };
+
+      locations."/fr24" = {
+        return = "http://192.168.31.20:8082/";
+      };
+
+      locations."/piaware/" = {
+        proxyPass = "http://192.168.31.20:8084/";
+
+        extraConfig = ''
+          proxy_redirect / /piaware/;
+        '';
+      };
     };
   };
 
