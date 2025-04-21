@@ -130,7 +130,7 @@
       };
 
       locations."/tar1090" = {
-        proxyPass = "http://192.168.31.20:8080";
+        proxyPass = "http://192.168.31.20:8080/";
       };
     };
   };
