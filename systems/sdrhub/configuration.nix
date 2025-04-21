@@ -164,6 +164,14 @@
           proxy_redirect / /piaware/;
         '';
       };
+
+      locations."/planefinder/" = {
+        proxyPass = "http://192.168.31.20:8087/";
+
+        extraConfig = ''
+          proxy_redirect / /planefinder/;
+        '';
+      };
     };
   };
 
