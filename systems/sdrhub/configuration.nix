@@ -149,6 +149,7 @@
         proxyPass = "http://192.168.31.20:8080/graphs1090/";
       };
 
+      # FIXME: this should be a proxy pass
       locations."/fr24/" = {
         return = "http://192.168.31.20:8082/";
       };
@@ -165,12 +166,13 @@
         '';
       };
 
+      #FIXME: this should be a proxy pass
       locations."/planefinder/" = {
-        proxyPass = "http://192.168.31.20:8087/";
+        return = "http://192.168.31.20:8087/";
 
-        extraConfig = ''
-          proxy_redirect / /planefinder/;
-        '';
+        #extraConfig = ''
+        #  proxy_redirect / /planefinder/;
+        #'';
       };
     };
   };
