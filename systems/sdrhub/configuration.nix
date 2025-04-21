@@ -151,9 +151,6 @@
 
       locations."/fr24/" = {
         proxyPass = "http://192.168.31.20:8082/";
-        extraConfig = ''
-          rewrite /(.*) /fr24/$1 break;
-        '';
       };
     };
   };
