@@ -85,6 +85,9 @@
         upstream_dns = [
           "127.0.0.1:5335"
         ];
+        edns_client_subnet = true;
+        enable_dnssec = true;
+        ratelimit = 0;
       };
       filtering = {
         protection_enabled = true;
@@ -95,9 +98,7 @@
           enabled = false; # Enforcing "Safe search" option for search engines, when possible.
         };
       };
-      edns_client_subnet = true;
-      enable_dnssec = true;
-      ratelimit = 0;
+
       # The following notation uses map
       # to not have to manually create {enabled = true; url = "";} for every filter
       # This is, however, fully optional
