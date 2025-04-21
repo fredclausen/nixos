@@ -151,10 +151,6 @@
 
       locations."/fr24/" = {
         proxyPass = "http://192.168.31.20:8082/";
-
-        extraConfig = ''
-          proxy_redirect / /fr24/;
-        '';
       };
     };
   };
