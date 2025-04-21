@@ -127,6 +127,7 @@
 
       locations."dozzle" = {
         proxyPass = "http://192.168.31.20:9999/dozzle";
+      };
     };
   };
 
