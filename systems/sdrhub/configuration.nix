@@ -53,6 +53,7 @@
         use-caps-for-id = false;
         prefetch = true;
         edns-buffer-size = 1232;
+        tls-system-cert = true;
 
         # Custom settings
         hide-identity = true;
