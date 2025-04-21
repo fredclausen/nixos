@@ -121,7 +121,7 @@
     recommendedProxySettings = true;
     virtualHosts.localhost = {
       root = "/home/fred/.html";
-      locations."." = {
+      locations."/" = {
         index = "index.html";
       };
 
