@@ -190,7 +190,7 @@
               </ul>
           </body>
 
-          </html>'';
+          </html>;'';
         extraConfig = ''
           default_type text/html;
         '';
