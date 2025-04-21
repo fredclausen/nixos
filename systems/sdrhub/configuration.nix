@@ -122,7 +122,7 @@
     virtualHosts.localhost = {
       locations."/" = {
         return =
-          "200 '<!DOCTYPE html>
+          "200 ''<!DOCTYPE html>
 <html>
 
 <head>
@@ -190,7 +190,7 @@
     </ul>
 </body>
 
-</html>'";
+</html>''";
         extraConfig = ''
           default_type text/html;
         '';
