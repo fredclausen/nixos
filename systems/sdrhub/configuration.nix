@@ -114,7 +114,7 @@
     80
   ];
 
-  systemd.services.nginx.serviceConfig.ProtectHome = "read-only";
+  systemd.services.nginx.serviceConfig.ProtectHome = false;
 
   services.nginx = {
     enable = true;
