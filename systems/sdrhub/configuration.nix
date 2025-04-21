@@ -54,6 +54,7 @@
         prefetch = true;
         edns-buffer-size = 1232;
         tls-system-cert = true;
+        tls-use-sni = true;
 
         # Custom settings
         hide-identity = true;
