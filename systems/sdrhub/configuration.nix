@@ -174,6 +174,18 @@
         #  proxy_redirect / /planefinder/;
         #'';
       };
+
+      locations."/planefinder" = {
+        return = "http://192.168.31.20:8087";
+      };
+
+      locations."/acarshub/" = {
+        proxyPass = "http://192.168.31.20:8085/";
+
+        extraConfig = ''
+          proxy_redirect / /acarshub/;
+        '';
+      };
     };
   };
 
