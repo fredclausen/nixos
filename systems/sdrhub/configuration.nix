@@ -121,6 +121,10 @@
     recommendedProxySettings = true;
     virtualHosts.localhost = {
       root = "/home/fred/.html";
+      locations."." = {
+        index = "index.html";
+      };
+
       locations."/dozzle" = {
         proxyPass = "http://192.168.31.20:9999/dozzle";
       };
