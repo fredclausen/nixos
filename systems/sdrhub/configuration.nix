@@ -152,7 +152,10 @@
       };
 
       locations."/dozzle/" = {
-        proxyPass = "http://192.168.31.20:9999/dozzle";
+        proxyPass = "http://192.168.31.20:9999";
+        extraConfig = ''
+          proxy_redirect / /dozzle/;
+        '';
       };
 
       locations."/tar1090/" = {
