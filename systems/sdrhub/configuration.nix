@@ -95,6 +95,9 @@
           enabled = false; # Enforcing "Safe search" option for search engines, when possible.
         };
       };
+      edns_client_subnet = true;
+      enable_dnssec = true;
+      ratelimit = 0;
       # The following notation uses map
       # to not have to manually create {enabled = true; url = "";} for every filter
       # This is, however, fully optional
@@ -107,15 +110,7 @@
           [
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt" # The Big List of Hacked Malware Web Sites
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt" # malicious url blocklist
-            "https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt"
-            "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/MobileFilter/sections/specific_app.txt"
-            "https://adaway.org/hosts.txt"
-            "https://someonewhocares.org/hosts/zero/hosts"
-            "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt"
-            "https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/adguard.txt"
-            "https://raw.githubusercontent.com/mitchellkrogza/The-Big-List-of-Hacked-Malware-Web-Sites/master/hosts"
-            "https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-agh.txt"
-            "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareAdGuardHome.txt"
+            "https://github.com/ppfeufer/adguard-filter-list/blob/master/blocklist?raw=true"
           ];
     };
   };
