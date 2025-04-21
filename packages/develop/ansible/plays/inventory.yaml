@@ -33,8 +33,8 @@ nixos:
         nix_name: hfdlhub1
     192.168.31.20:
       vars:
-        docker_config: /home/fred/GitHub/adsb-compose/adsbhub/docker-compose.yaml
-        docker_env: /home/fred/GitHub/adsb-compose/adsbhub/.env
+        docker_config: /home/fred/GitHub/adsb-compose/sdrhub/docker-compose.yaml
+        docker_env: /home/fred/GitHub/adsb-compose/sdrhub/.env
         docker_path: /opt/adsb
         slow_start: false
         nix_name: sdrhub
