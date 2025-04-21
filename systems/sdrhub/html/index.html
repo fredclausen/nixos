@@ -21,14 +21,16 @@
           color: #cdd6f4;
         }
         li::marker {
+          /* content: "\f072 "; FontAwesome Unicode */
+          /* font-family: FontAwesome; */
+          color: #a6e3a1;
+        }
+        li::before {
           content: "\f072 "; /* FontAwesome Unicode */
           font-family: FontAwesome;
           color: #a6e3a1;
         }
-        li::before {
-          color: #a6e3a1;
-        }
-        .ad li::marker {
+        li.ad::before {
           content: "\f641 "; /* FontAwesome Unicode */
           font-family: FontAwesome;
           color: #a6e3a1;
