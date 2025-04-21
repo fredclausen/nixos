@@ -85,6 +85,7 @@
         upstream_dns = [
           "127.0.0.1:5335"
         ];
+        enable_dnssec = true;
       };
       filtering = {
         protection_enabled = true;
