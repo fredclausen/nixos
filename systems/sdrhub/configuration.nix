@@ -75,6 +75,7 @@
 
   services.adguardhome = {
     enable = true;
+    openFirewall = true;
     settings = {
       http = {
         # You can select any ip and port, just make sure to open firewalls where needed
