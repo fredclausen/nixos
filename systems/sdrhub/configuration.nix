@@ -104,6 +104,13 @@
       user_rules = [
         "@@||mask.icloud.com^"
         "@@||mask-h2.icloud.com^"
+        "@@||mask-canary.icloud.com^"
+        "@@||s.youtube.com^"
+        "@@||video-stats.l.google.com^"
+        "@@||facebook.com^"
+        "@@||instagram.c10r.instagram.com^"
+        "@@||instagram.com^"
+        "@@||i.instagram.com^"
       ];
 
       # The following notation uses map
