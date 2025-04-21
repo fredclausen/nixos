@@ -8,34 +8,50 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     />
     <style>
-        body {
-          background-color: #1e1e2e;
-          width: 35em;
-          margin: 0 auto;
-          font-family: Tahoma, Verdana, Arial, sans-serif;
-          color: #cdd6f4;
-        }
-        a,
-        a:visited {
-          text-decoration: none;
-          color: #cdd6f4;
-        }
-        li::marker {
-          /* content: "\f072 "; FontAwesome Unicode */
-          /* font-family: FontAwesome; */
-          color: #a6e3a1;
-        }
-        li::before {
-          content: "\f072 "; /* FontAwesome Unicode */
-          font-family: FontAwesome;
-          color: #a6e3a1;
-        }
-        li.ad::before {
-          content: "\f641 "; /* FontAwesome Unicode */
-          font-family: FontAwesome;
-          color: #a6e3a1;
-        }
+          body {
+            background-color: #1e1e2e;
+            width: 35em;
+            margin: 0 auto;
+            font-family: Tahoma, Verdana, Arial, sans-serif;
+            color: #cdd6f4;
+          }
+          a,
+          a:visited {
+            text-decoration: none;
+            color: #cdd6f4;
+          }
+          li::marker {
+            /* content: "\f072 "; FontAwesome Unicode */
+            /* font-family: FontAwesome; */
+            color: #a6e3a1;
+          }
+          li::before {
+            content: "\f072 "; /* FontAwesome Unicode */
+            font-family: FontAwesome;
+            color: #a6e3a1;
+          }
+          li.ad::before {
+            content: "\f641 "; /* FontAwesome Unicode */
+            font-family: FontAwesome;
+            color: #a6e3a1;
+          }
+          li.computer::before {
+            content: "\e4e5 "; /* FontAwesome Unicode */
+            font-family: FontAwesome;
+            color: #a6e3a1;
+          }
+          li.history::before {
+            content: "\f1da "; /* FontAwesome Unicode */
+            font-family: FontAwesome;
+            color: #a6e3a1;
+          }
+          li.tower::before {
+            content: "\f519 "; /* FontAwesome Unicode */
+            font-family: FontAwesome;
+            color: #a6e3a1;
+          }
       }
+        }
     </style>
   </head>
 
@@ -48,10 +64,14 @@
       <li><a href="http://192.168.31.20/fr24">Flight Radar 24</a></li>
       <li><a href="http://192.168.31.20/piaware">PiAware</a></li>
       <li><a href="http://192.168.31.20/planefinder">Plane Finder</a></li>
-      <li><a href="http://192.168.31.20/acarshub">ACARS Hub</a></li>
-      <li><a href="http://192.168.31.20/dozzle">Dozzle</a></li>
+      <li class="tower">
+        <a href="http://192.168.31.20/acarshub">ACARS Hub</a>
+      </li>
+      <li class="history"><a href="http://192.168.31.20/dozzle">Dozzle</a></li>
       <li class="ad"><a href="http://192.168.31.20:3000">Ad Guard Home</a></li>
-      <li><a href="http://192.168.31.20/rackstation">Rackstation</a></li>
+      <li class="computer">
+        <a href="http://192.168.31.20/rackstation">Rackstation</a>
+      </li>
       <li>
         <a href="http://fredclausen.com/tar1090"
           >Fred Clausen's Combined Tar1090</a
