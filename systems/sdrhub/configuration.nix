@@ -140,6 +140,10 @@
           proxy_redirect / /dump978/;
         '';
       };
+
+      locations."/graphs" = {
+        proxyPass = "http://192.168.31.20:8080/graphs1090/";
+      };
     };
   };
 
