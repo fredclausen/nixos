@@ -114,7 +114,7 @@
     80
   ];
 
-  systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/home/fred/.html" ];
+  systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/home/fred/.config/html" ];
 
   services.nginx = {
     enable = true;
@@ -122,7 +122,7 @@
     recommendedOptimisation = true;
     recommendedProxySettings = true;
     virtualHosts.localhost = {
-      root = "/home/fred/.html";
+      root = "/home/fred/.config/html";
       locations."/" = {
         index = "index.html";
       };
