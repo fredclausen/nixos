@@ -85,9 +85,6 @@
         upstream_dns = [
           "127.0.0.1:5335"
         ];
-        edns_client_subnet = true;
-        enable_dnssec = true;
-        ratelimit = 0;
       };
       filtering = {
         protection_enabled = true;
