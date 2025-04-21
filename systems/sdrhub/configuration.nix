@@ -112,7 +112,6 @@
 
   networking.firewall.allowedTCPPorts = [
     80
-    9999
   ];
 
   services.nginx = {
