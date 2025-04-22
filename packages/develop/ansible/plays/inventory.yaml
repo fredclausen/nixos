@@ -5,6 +5,7 @@ ubuntu:
       vars:
         docker_config: /home/fred/GitHub/adsb-compose/vps/docker-compose.yaml
         docker_env: /home/fred/GitHub/adsb-compose/vps/.env
+        docker_data: /home/fred/GitHub/adsb-compose/vps/data
         docker_path: /home/fred
         slow_start: false
     73.242.200.187:
@@ -12,6 +13,7 @@ ubuntu:
       vars:
         docker_config: /home/fred/GitHub/adsb-compose/brandon/docker-compose.yaml
         docker_env: /home/fred/GitHub/adsb-compose/brandon/.env
+        docker_data: /home/fred/GitHub/adsb-compose/brandon/data
         docker_path: /opt/adsb
         slow_start: false
 
@@ -21,6 +23,7 @@ nixos:
       vars:
         docker_config: /home/fred/GitHub/adsb-compose/hfdlhub-2/docker-compose.yaml
         docker_env: /home/fred/GitHub/adsb-compose/hfdlhub-2/.env
+        docker_data: /home/fred/GitHub/adsb-compose/hfdlhub-2/data
         docker_path: /opt/adsb
         slow_start: true
         nix_name: hfdlhub2
@@ -28,6 +31,7 @@ nixos:
       vars:
         docker_config: /home/fred/GitHub/adsb-compose/hfdlhub-1/docker-compose.yaml
         docker_env: /home/fred/GitHub/adsb-compose/hfdlhub-1/.env
+        docker_data: /home/fred/GitHub/adsb-compose/hfdlhub-1/data
         docker_path: /opt/adsb
         slow_start: true
         nix_name: hfdlhub1
@@ -35,6 +39,7 @@ nixos:
       vars:
         docker_config: /home/fred/GitHub/adsb-compose/sdrhub/docker-compose.yaml
         docker_env: /home/fred/GitHub/adsb-compose/sdrhub/.env
+        docker_data: /home/fred/GitHub/adsb-compose/sdrhub/data
         docker_path: /opt/adsb
         slow_start: false
         nix_name: sdrhub
@@ -42,6 +47,7 @@ nixos:
       vars:
         docker_config: /home/fred/GitHub/adsb-compose/vdlmhub/docker-compose.yaml
         docker_env: /home/fred/GitHub/adsb-compose/vdlmhub/.env
+        docker_data: /home/fred/GitHub/adsb-compose/vdlmhub/data
         docker_path: /opt/adsb
         slow_start: false
         nix_name: vdlmhub
@@ -49,6 +55,7 @@ nixos:
       vars:
         docker_config: /home/fred/GitHub/adsb-compose/acarshub/docker-compose.yaml
         docker_env: /home/fred/GitHub/adsb-compose/acarshub/.env
+        docker_data: /home/fred/GitHub/adsb-compose/acarshub/data
         docker_path: /opt/adsb
         slow_start: false
         nix_name: acarshub

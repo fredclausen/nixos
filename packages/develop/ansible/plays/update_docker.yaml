@@ -16,6 +16,12 @@
         path: "{{ hostvars[inventory_hostname]['vars']['docker_env'] }}"
       register: docker_env
 
+    - name: Check if data exists
+      delegate_to: localhost
+      stat:
+        path: "{{ hostvars[inventory_hostname]['vars']['docker_data'] }}"
+      register: docker_data
+
     - name: Fail if dockerfile does not exist
       delegate_to: localhost
       fail:
@@ -40,10 +46,17 @@
         dest: "{{ hostvars[inventory_hostname]['vars']['docker_path'] }}/.env"
       register: env_changed
 
+    - name: Copy data if exists
+      copy:
+        src: "{{ hostvars[inventory_hostname]['vars']['docker_data'] }}/"
+        dest: "{{ hostvars[inventory_hostname]['vars']['docker_path'] }}"
+      when: docker_data.stat.exists == true
+      register: data_changed
+
     - name: Docker compose up
       command: docker compose -f {{ hostvars[inventory_hostname]['vars']['docker_path'] }}/docker-compose.yaml up -d
       args:
         chdir: "{{ hostvars[inventory_hostname]['vars']['docker_path'] }}"
       when:
-        - (docker_changed.changed or env_changed.changed)
+        - (docker_changed.changed or env_changed.changed or data_changed.changed)
         #and hostvars[inventory_hostname]['vars']['slow_start'] != true
