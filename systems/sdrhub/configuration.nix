@@ -117,6 +117,7 @@
         "@@||i.instagram.com^"
         "@@||cdninstagram.com^"
         "@@||fonts.gstatic.com^$important"
+        "@@||analysis.chess.com^"
       ];
 
       # The following notation uses map

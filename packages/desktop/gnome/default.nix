@@ -35,6 +35,7 @@ in
       pkgs.gimp
       pkgs.sushi
       pkgs.polkit_gnome
+      pkgs.gparted
     ];
 
     programs.nautilus-open-any-terminal = {
