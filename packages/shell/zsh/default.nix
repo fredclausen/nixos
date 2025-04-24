@@ -19,7 +19,7 @@
           ls = lib.mkForce "${pkgs.lsd}/bin/lsd -la";
         };
 
-        initExtra = builtins.readFile ../../../dotfiles/fred/.oh-my-zsh/custom/aliases.zsh;
+        initContent = builtins.readFile ../../../dotfiles/fred/.oh-my-zsh/custom/aliases.zsh;
       };
 
       catppuccin.zsh-syntax-highlighting.enable = true;
