@@ -29,6 +29,7 @@
   "widgets": [
     "title",
     "dnd",
+    "volume",
     "menubar",
     "buttons-grid",
     "mpris",
@@ -42,6 +43,9 @@
     },
     "dnd": {
       "text": "Do Not Disturb"
+    },
+    "volume": {
+      "label": ""
     },
     "label": {
       "max-lines": 5,
