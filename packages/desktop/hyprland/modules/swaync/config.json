@@ -29,6 +29,8 @@
   "widgets": [
     "title",
     "dnd",
+    "backlight",
+    "backlight#KB",
     "volume",
     "menubar",
     "buttons-grid",
@@ -43,6 +45,16 @@
     },
     "dnd": {
       "text": "Do Not Disturb"
+    },
+    "backlight": {
+      "label": "💻︎",
+      "device": "amdgpu_bl1",
+      "min": 10
+    },
+    "backlight#KB": {
+      "label": " ",
+      "device": "tpacpi::kbd_backlight",
+      "subsystem": "leds"
     },
     "volume": {
       "label": ""
