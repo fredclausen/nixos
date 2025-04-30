@@ -19,6 +19,7 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       pavucontrol
+      helvum
     ];
 
     security.rtkit.enable = true;
