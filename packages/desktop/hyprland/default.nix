@@ -115,6 +115,7 @@ in
             "nm-applet --indicator"
             "1password --silent &"
             "udiskie --appindicator -t &"
+            "geary --gapplication-service"
             "[workspace 1 silent] firefox"
             "[workspace 2 silent] code"
             "[workspace 2 silent] wezterm"
