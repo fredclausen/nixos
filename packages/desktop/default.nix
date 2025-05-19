@@ -37,6 +37,7 @@ in
     ./appimage
     ./audio
     ./brave
+    ./cosmic
     ./discord
     ./firefox
     ./fonts
@@ -63,6 +64,7 @@ in
 
   config = mkIf cfg.enable {
     desktop.brave.enable = true;
+    desktop.cosmic.enable = true;
     desktop.firefox.enable = true;
     desktop.fonts.enable = true;
     desktop.ghostty.enable = true;
