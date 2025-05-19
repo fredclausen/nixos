@@ -17,6 +17,11 @@ in
     };
   };
 
+  # FIXME: We need to replace the GTK cattpuccin theme for gtk/gnome because it's borked. This is a good option
+  # https://github.com/NixOS/nixpkgs/pull/323898
+  # https://github.com/Fausto-Korpsvart/Catppuccin-GTK-Theme
+  # https://github.com/Weathercold/nixfiles/blob/master/home/modules/themes/catppuccin/gtk.nix
+
   config = mkIf cfg.enable {
     environment.systemPackages = [
       pkgs.gnomeExtensions.caffeine
