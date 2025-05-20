@@ -116,10 +116,10 @@ in
             "1password --silent &"
             "udiskie --appindicator -t &"
             "geary --gapplication-service"
+            "gnome-calendar --gapplication-service"
             "[workspace 1 silent] firefox"
-            "[workspace 2 silent] code"
-            "[workspace 2 silent] wezterm"
-            "[workspace 3 silent] discord"
+            "[workspace 2 silent] discord"
+            "[workspace 3 silent] wezterm"
           ];
 
           exec-shutdown = [
