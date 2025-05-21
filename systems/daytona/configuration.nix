@@ -31,7 +31,8 @@
     enable = true;
     enable32Bit = true;
   };
-  #boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_14;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_14;
+  hardware.firmware = [ pkgs.linux-firmware ]; # FIXME: Remove this when the firmware is fixed. Bad version is 20250509
 
   catppuccin = {
     flavor = "mocha";
