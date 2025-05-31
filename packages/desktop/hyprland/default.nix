@@ -28,7 +28,7 @@ in
     services.xserver.enable = true;
 
     # Enable the GNOME Desktop Environment.
-    services.xserver.displayManager.gdm.enable = true;
+    services.displayManager.gdm.enable = true;
 
     users.users.fred = {
       packages = with pkgs; [
