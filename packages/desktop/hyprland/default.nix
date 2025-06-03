@@ -24,9 +24,6 @@ in
   config = mkIf cfg.enable {
     desktop.hyprland.modules.enable = true;
 
-    # Enable the X11 windowing system.
-    services.xserver.enable = true;
-
     # Enable the GNOME Desktop Environment.
     services.displayManager.gdm.enable = true;
 
@@ -64,7 +61,6 @@ in
     home-manager.users.fred = {
       home.packages = with pkgs; [
         networkmanagerapplet
-        adw-gtk3
       ];
 
       catppuccin.hyprland.enable = true;
@@ -77,6 +73,29 @@ in
       #     general = {
       #       ignore_dbus_inhibit = false;
       #       ignore_systemd_inhibit = false;
+      #     };
+      #   };
+      # };
+
+      # gtk = {
+      #   enable = true;
+      #   gtk3.extraConfig = {
+      #     gtk-application-prefer-dark-theme = 1;
+      #   };
+
+      #   gtk4.extraConfig = {
+      #     gtk-application-prefer-dark-theme = 1;
+      #   };
+
+      #   theme = {
+      #     name = "Catppuccin-GTK-Purple-Dark";
+      #     # + optionalString (cfg.gtk.size == "compact") "-Compact"
+      #     # + optionalString (flavorTweak != "") (mkSuffix flavorTweak);
+      #     package = pkgs.magnetic-catppuccin-gtk.override {
+      #       accent = [ "purple" ];
+      #       shade = "dark";
+      #       # inherit (cfg.gtk) size;
+      #       # tweaks = cfg.gtk.tweaks ++ optional (flavorTweak != "") flavorTweak;
       #     };
       #   };
       # };
@@ -102,8 +121,8 @@ in
 
           exec-once = [
             "polkit-agent-helper-1"
-            # "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
-            # "gsettings set org.gnome.desktop.interface gtk-theme \"adw-gtk3-dark\""
+            "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
+            "gsettings set org.gnome.desktop.interface gtk-theme \"Catppuccin-GTK-Purple-Dark\""
             # "hyprctl setcursor Adwaita 24"
             "systemctl start --user polkit-gnome-authentication-agent-1"
             "systemctl start --user waybar"

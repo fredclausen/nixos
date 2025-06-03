@@ -23,6 +23,21 @@ in
   # https://github.com/Weathercold/nixfiles/blob/master/home/modules/themes/catppuccin/gtk.nix
 
   config = mkIf cfg.enable {
+    # nixpkgs.overlays = [
+    #   (final: prev: {
+    #     magnetic-catppuccin-gtk = prev.magnetic-catppuccin-gtk.overrideAttrs (old: rec {
+    #       version = "0-unstable-2025-04-25";
+
+    #       src = prev.fetchFromGitHub {
+    #         owner = "Fausto-Korpsvart";
+    #         repo = "Catppuccin-GTK-Theme";
+    #         rev = "c961826d027ed93fae12a9a309616e36d140e6b8";
+    #         hash = "sha256-QItHmYZpe7BiPC+2CtFwiRXyMTG7+ex0sJTs63xmkAo=";
+    #       };
+    #     });
+    #   })
+    # ];
+
     environment.systemPackages = [
       pkgs.gnomeExtensions.caffeine
       pkgs.gnomeExtensions.vitals
@@ -32,6 +47,7 @@ in
       pkgs.gnomeExtensions.arcmenu
       pkgs.gnomeExtensions.search-light
       pkgs.gnomeExtensions.weather-or-not
+      pkgs.gnomeExtensions.user-themes
       pkgs.gnome-themes-extra
       pkgs.flat-remix-gnome
       pkgs.wl-clipboard
@@ -49,7 +65,7 @@ in
     };
 
     # Enable the X11 windowing system.
-    services.xserver.enable = true;
+    services.xserver.enable = false;
 
     # Enable the GNOME Desktop Environment.
     services.displayManager.gdm.enable = true;
@@ -92,10 +108,6 @@ in
     };
 
     home-manager.users.fred = {
-      home.packages = with pkgs; [
-        adw-gtk3
-      ];
-
       gtk = {
         enable = true;
         gtk3.extraConfig = {
@@ -105,10 +117,22 @@ in
         gtk4.extraConfig = {
           gtk-application-prefer-dark-theme = 1;
         };
+
+        theme = {
+          name = "Catppuccin-GTK-Purple-Dark";
+          # + optionalString (cfg.gtk.size == "compact") "-Compact"
+          # + optionalString (flavorTweak != "") (mkSuffix flavorTweak);
+          package = pkgs.magnetic-catppuccin-gtk.override {
+            accent = [ "purple" ];
+            shade = "dark";
+            # inherit (cfg.gtk) size;
+            # tweaks = cfg.gtk.tweaks ++ optional (flavorTweak != "") flavorTweak;
+          };
+        };
       };
 
-      catppuccin.gtk.enable = true;
-      catppuccin.gtk.gnomeShellTheme = true;
+      # catppuccin.gtk.enable = true;
+      # catppuccin.gtk.gnomeShellTheme = true;
       catppuccin.gtk.icon.enable = true;
     };
 
@@ -202,9 +226,9 @@ in
         show-weekdate = true;
       };
 
-      # "org/gnome/shell/extensions/user-theme" = {
-      #   name = "Default";
-      # };
+      "org/gnome/shell/extensions/user-theme" = {
+        name = "Catppuccin-GTK-Purple-Dark";
+      };
 
       "org/gnome/shell/extensions/arcmenu" = {
         menu-button-appears = "Icon";
