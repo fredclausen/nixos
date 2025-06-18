@@ -89,7 +89,7 @@
             ./systems/daytona/configuration.nix
             home-manager.nixosModules.home-manager
             catppuccin.nixosModules.catppuccin
-            (import ./firmware.nix) # FIXME: this is a workaround until the firmware is fixed. Bad version is 20250509
+
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
