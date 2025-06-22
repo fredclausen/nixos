@@ -45,6 +45,7 @@ in
     ./githubdesktop
     ./gnome
     ./hyprland
+    ./ladybird
     ./libreoffice
     ./missioncenter
     ./multiviewer
@@ -85,6 +86,7 @@ in
     desktop.missioncenter.enable = true;
     desktop.audio.enable = true;
     desktop.wireshark.enable = true;
+    desktop.ladybird.enable = true;
     desktop.music.enable = if cfg.enable_extra then true else false;
     desktop.appimage.enable = if cfg.enable_extra then true else false;
 
