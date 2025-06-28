@@ -7,7 +7,7 @@
           neovim
           # packages needed for my nvim config to work
           lua51Packages.lua
-          luajitPackages.luarocks_bootstrap
+          lua51Packages.luarocks-nix
           tree-sitter
           # packages needed for lsp
           rust-analyzer-unwrapped
