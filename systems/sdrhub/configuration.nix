@@ -118,6 +118,7 @@
         "@@||cdninstagram.com^"
         "@@||fonts.gstatic.com^$important"
         "@@||analysis.chess.com^"
+        "@@||stunnel.org^"
       ];
 
       # The following notation uses map
