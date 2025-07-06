@@ -6,6 +6,7 @@
     ./fastfetch
     ./fd
     ./fzf
+    ./lazydocker
     ./lazygit
     ./lsd
     ./ohmyzsh
