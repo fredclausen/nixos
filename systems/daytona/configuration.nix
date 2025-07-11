@@ -31,7 +31,7 @@
     enable = true;
     enable32Bit = true;
   };
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_14;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_testing;
 
   catppuccin = {
     flavor = "mocha";
