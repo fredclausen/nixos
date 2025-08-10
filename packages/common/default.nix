@@ -4,6 +4,7 @@
     ./docker
     ./locale
     ./openssh
+    ./openvpn
     ./shell
     ./system
     ./trash
