@@ -47,10 +47,10 @@
 
   services.logind = {
 
-    extraConfig = "HandlePowerKey=suspend";
-
-    lidSwitch = "suspend";
-
+    settings = {
+      HandleLidSwitch = "suspend";
+      HandlePowerKey = "suspend";
+    };
   };
 
   powerManagement.enable = true;
