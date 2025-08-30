@@ -46,10 +46,11 @@
   ];
 
   services.logind = {
-
     settings = {
-      HandleLidSwitch = "suspend";
-      HandlePowerKey = "suspend";
+      Login = {
+        HandleLidSwitch = "suspend";
+        HandlePowerKey = "suspend";
+      };
     };
   };
 
