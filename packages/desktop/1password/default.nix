@@ -17,10 +17,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.users.fred = {
-      packages = with pkgs; [
-        _1password-gui
-      ];
+    programs._1password.enable = true;
+    programs._1password-gui = {
+      enable = true;
+      polkitPolicyOwners = [ "fred" ];
     };
   };
 }
