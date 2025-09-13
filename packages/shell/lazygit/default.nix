@@ -9,6 +9,7 @@
     home-manager.users.fred = {
       home.packages = with pkgs; [
         lazygit
+        gmp
       ];
 
       programs.lazygit = {

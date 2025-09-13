@@ -3,7 +3,7 @@
   config = {
     users.users.fred = {
       packages = with pkgs; [
-        python3Full
+        python3
       ];
     };
   };
