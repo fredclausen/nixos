@@ -48,6 +48,6 @@ repos:
   #   hooks:
   #     - id: nixfmt
   - repo: https://github.com/NixOS/nixfmt
-    rev: v1.0.0
+    rev: 1f2589cb7198529c6c1eec9699eccd4d507d3600  # frozen: v1.0.0
     hooks:
       - id: nixfmt
