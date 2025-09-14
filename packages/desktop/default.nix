@@ -46,6 +46,7 @@ in
     ./gnome
     ./hyprland
     ./ladybird
+    ./ledger-live
     ./libreoffice
     ./missioncenter
     ./multiviewer
@@ -94,6 +95,7 @@ in
     desktop.tradingview.enable = if cfg.enable_extra then true else false;
     desktop.steam.enable = if cfg.enable_games then true else false;
     desktop.obs.enable = if cfg.enable_streaming then true else false;
+    desktop.ledger.enable = if cfg.enable_extra then true else false;
 
     home-manager.users.fred = {
       home.file.".config/backgrounds/" = {

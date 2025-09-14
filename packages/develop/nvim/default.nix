@@ -14,7 +14,7 @@
           bash-language-server
           black
           docker-compose-language-service
-          dockerfile-language-server-nodejs
+          dockerfile-language-server
           eslint_d
           gitui
           hadolint
