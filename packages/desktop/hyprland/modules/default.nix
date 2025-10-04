@@ -33,7 +33,6 @@ in
     desktop.hyprland.modules.fuzzel.enable = true;
     desktop.hyprland.modules.waybar.enable = true;
     desktop.hyprland.modules.swaync.enable = true;
-    # FIXME: ulauncher needs an update to move to libsoup3
-    desktop.hyprland.modules.ulauncher.enable = false;
+    desktop.hyprland.modules.ulauncher.enable = true;
   };
 }
