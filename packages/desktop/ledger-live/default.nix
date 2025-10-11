@@ -17,6 +17,15 @@ in
   };
 
   config = mkIf cfg.enable {
+    hardware.ledger.enable = true;
+
+    services = {
+      udev.packages = with pkgs; [
+        ledger-udev-rules
+        # potentially even more if you need them
+      ];
+    };
+
     users.users.fred = {
       packages = with pkgs; [
         ledger-live-desktop
