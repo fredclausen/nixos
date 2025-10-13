@@ -27,10 +27,9 @@
   desktop.enable_games = false;
   desktop.enable_streaming = false;
 
-  boot.kernel.sysctl = {
-    "dev.iio.buffer.memory_mb" = 1000;
-    "dev.iio.buffer.usbfs_memory_mb" = 1000;
-  };
+  boot.kernelParams = [
+    "usbfs_memory_mb=1000"
+  ];
 
   catppuccin = {
     flavor = "mocha";
