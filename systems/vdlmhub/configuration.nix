@@ -28,7 +28,7 @@
   desktop.enable_streaming = false;
 
   boot.kernelParams = [
-    "usbfs_memory_mb=1000"
+    "usbcore.usbfs_memory_mb=1000"
   ];
 
   catppuccin = {
