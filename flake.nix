@@ -10,6 +10,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -19,6 +21,7 @@
       catppuccin,
       home-manager,
       apple-fonts,
+      nix-darwin,
       ...
     }:
     let
@@ -26,6 +29,16 @@
       hmlib = home-manager.lib;
     in
     {
+      darwinConfigurations.Freds-MacBook-Pro = nix-darwin.lib.darwinSystem {
+        pkgs = import nixpkgs {
+          system = "aarch64-darwin";
+          config.allowUnfree = true;
+        };
+        modules = [
+          ./systems/macos/configuration.nix
+        ];
+      };
+
       nixosConfigurations = {
         sdrhub = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs hmlib; };

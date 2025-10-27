@@ -1,0 +1,96 @@
+# For setting up nixos
+
+# curl -fsSL https://install.determinate.systems/nix | sh -s -- install
+# ^^^ say no to determinate
+# sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .
+
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
+  #   imports = [
+  #     inputs.home-manager.nixosModules.default
+  #     ../../packages
+  #     ../../users
+  #   ];
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
+  nixpkgs.hostPlatform = "aarch64-darwin";
+
+  # extra options
+  #   desktop.enable = true;
+  #   desktop.enable_extra = true;
+  #   desktop.enable_games = true;
+  #   desktop.enable_streaming = true;
+
+  #   catppuccin = {
+  #     flavor = "mocha";
+  #     accent = "lavender";
+  #     enable = true;
+  #   };
+
+  networking.hostName = "Freds-MacBook-Pro"; # Define your hostname.
+
+  environment.systemPackages = with pkgs; [
+  ];
+
+  system.stateVersion = 6;
+
+  # specific monitor stuff for this system
+
+  #   home-manager.users.gdm = {
+  #     home = {
+  #       username = "gdm";
+  #       stateVersion = "24.11";
+
+  #       file.".config/monitors.xml".text = builtins.readFile ./monitors.xml;
+  #     };
+  #   };
+
+  # virtualisation.virtualbox = {
+  #   host = {
+  #     enable = true;
+  #     enableExtensionPack = true;
+  #   };
+
+  #   guest = {
+  #     enable = true;
+  #   };
+  # };
+
+  # users.users.fred = {
+  #   extraGroups = [ "vboxusers" ];
+  # };
+
+  # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+
+  #   home-manager.users.fred = {
+  #     home.file.".config/monitors.xml".text = builtins.readFile ./monitors.xml;
+
+  #     wayland.windowManager.hyprland.settings = {
+  #       monitor = [
+  #         "DP-1, highrr, 0x0, 1"
+  #         "DP-2, highrr, -2560x0, 1"
+  #         "HDMI-A-1, highrr, -2560x-1440, 1"
+  #       ];
+
+  #       workspace = [
+  #         "1, monitor:DP-1"
+  #         "2, monitor:DP-2"
+  #         "3, monitor:HDMI-A-1"
+  #       ];
+
+  #       binde = [
+  #         ", XF86MonBrightnessUp, exec, ~/.config/hyprextra/scripts/backlight 255 --inc"
+  #         ", XF86MonBrightnessDown, exec, ~/.config/hyprextra/scripts/backlight 255 --dec"
+  #       ];
+  #     };
+  #   };
+}
