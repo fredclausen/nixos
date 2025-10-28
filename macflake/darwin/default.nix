@@ -13,7 +13,7 @@
   '';
 
   system = {
-    #     primaryUser = "fred";
+    primaryUser = "fred";
     #     keyboard = {
     #       enableKeyMapping = true;
     #       remapCapsLockToEscape = true;
@@ -58,10 +58,13 @@
   #   fonts.packages = [ pkgs.nerd-fonts.meslo-lg ];
   #   ids.gids.nixbld = 350;
 
-  #   homebrew = {
-  #     enable = true;
-  #     caskArgs.no_quarantine = true;
-  #     # use home brew to install packages for spotlight to work
-  #     casks = [ "raycast" "ghostty" "flameshot" ];
-  #   };
+  homebrew = {
+    enable = true;
+    caskArgs.no_quarantine = true;
+    # use home brew to install packages for spotlight to work
+    casks = [
+      "ghostty"
+      "wezterm"
+    ];
+  };
 }

@@ -18,10 +18,6 @@ in
 
   config = mkIf cfg.enable {
     home-manager.users.fred = {
-      home.packages = with pkgs; [
-        wezterm
-      ];
-
       programs.wezterm = {
         enable = true;
         extraConfig = builtins.readFile ../../../dotfiles/fred/.wezterm.lua;

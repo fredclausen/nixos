@@ -18,7 +18,9 @@ in
 
   home = {
     stateVersion = "25.05";
+
     packages = with pkgs; [
+
       #   awscli2
       #   ko
       #   go
