@@ -47,6 +47,14 @@
                 ./home-manager
                 catppuccin.homeModules.catppuccin
               ];
+
+              users.fred = {
+                catppuccin = {
+                  flavor = "mocha";
+                  accent = "lavender";
+                  enable = true;
+                };
+              };
             };
             home-manager.extraSpecialArgs = {
               inherit inputs;

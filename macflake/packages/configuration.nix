@@ -11,7 +11,6 @@
 {
   imports = [
     inputs.home-manager.darwinModules.default
-    ../../packages/shell/zsh
+    ../../packages/shell
   ];
-
 }
