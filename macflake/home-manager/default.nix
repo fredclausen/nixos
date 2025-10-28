@@ -1,5 +1,5 @@
 # https://nix-community.github.io/home-manager/options.html
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   #   pkl-neovim = pkgs.vimUtils.buildVimPlugin {
   #     name = "pkl-neovim";
@@ -12,6 +12,10 @@ let
   #   };
 in
 {
+  imports = [
+    #inputs.home-manager.darwinModules.default
+  ];
+
   home = {
     stateVersion = "25.05";
     packages = with pkgs; [

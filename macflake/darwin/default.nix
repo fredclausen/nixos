@@ -13,7 +13,7 @@
   '';
 
   system = {
-    #     primaryUser = "hendry";
+    #     primaryUser = "fred";
     #     keyboard = {
     #       enableKeyMapping = true;
     #       remapCapsLockToEscape = true;

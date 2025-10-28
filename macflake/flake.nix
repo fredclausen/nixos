@@ -13,13 +13,14 @@
     # https://daiderd.com/nix-darwin/manual/
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-
+    catppuccin.url = "github:catppuccin/nix";
   };
   outputs =
     inputs@{
       nixpkgs,
       home-manager,
       darwin,
+      catppuccin,
       ...
     }:
     let
@@ -31,16 +32,26 @@
     in
     {
       darwinConfigurations.Freds-MacBook-Pro = darwin.lib.darwinSystem {
-        inherit system pkgs;
+        inherit system pkgs inputs;
+        specialArgs = { inherit inputs; };
+
         modules = [
           ./darwin
+          ./packages/configuration.nix
           home-manager.darwinModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.fred.imports = [ ./home-manager ];
+              users.fred.imports = [
+                ./home-manager
+                catppuccin.homeModules.catppuccin
+              ];
             };
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+            };
+
             nix = {
               optimise.automatic = true;
               settings = {
