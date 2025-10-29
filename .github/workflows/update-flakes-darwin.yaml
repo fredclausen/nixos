@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   get-flake-inputs:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     outputs:
       flake-inputs: ${{ steps.get-flake-inputs.outputs.flake-inputs }}
     steps:
@@ -25,7 +25,7 @@ jobs:
           echo "flake-inputs=${flake_inputs}" >> "$GITHUB_OUTPUT"
   update-flake:
     name: update-${{ matrix.flake }}
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     needs: get-flake-inputs
     strategy:
       fail-fast: false
