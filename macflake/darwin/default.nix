@@ -62,9 +62,38 @@
     enable = true;
     caskArgs.no_quarantine = true;
     # use home brew to install packages for spotlight to work
+    brews = [
+      "gcc"
+    ];
+
     casks = [
       "ghostty"
       "wezterm"
+      "vlc"
+      "firefox"
+      "iterm2"
+      "raycast"
+      "visual-studio-code"
+      "visual-studio"
+      "hiddenbar"
+      "alacritty"
+      "sublime-text"
+      "tradingview"
+      "macupdater"
+      "istat-menus"
+      "github"
+      "discord"
+      "docker-desktop"
+      "brave-browser"
+      "balenaetcher"
+      "streamlabs"
+      "ledger-live"
+      "elgato-stream-deck"
+      "db-browser-for-sqlite"
+      "angry-ip-scanner"
+      "font-fira-code"
+      "font-hack-nerd-font"
+      "font-meslo-lg-nerd-font"
     ];
   };
 }
