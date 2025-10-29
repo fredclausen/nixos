@@ -21,18 +21,28 @@
     ../../packages/develop/ninja
     ../../packages/develop/node
     ../../packages/develop/pre-commit
-    # ../../packages/develop/nvim
+    ../../packages/develop/nvim
     ../../packages/develop/python
-    # ../../packages/develop/rust
+    ../../packages/develop/rust
     ../../packages/develop/shellcheck
     ../../packages/develop/typos
   ];
 
-  fonts = {
-    packages = with pkgs; [
-      cascadia-code
-      nerd-fonts.caskaydia-mono
-      nerd-fonts.caskaydia-cove
-    ];
+  config = {
+    home-manager.users.fred =
+      { config, pkgs, ... }:
+      {
+        home.file."./.config/nvim".source =
+          config.lib.file.mkOutOfStoreSymlink "/Users/fred/GitHub/nixos/dotfiles/fred/.config/nvim";
+
+      };
+    fonts = {
+      packages = with pkgs; [
+        cascadia-code
+        nerd-fonts.caskaydia-mono
+        nerd-fonts.caskaydia-cove
+      ];
+    };
   };
+
 }

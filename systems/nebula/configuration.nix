@@ -33,6 +33,9 @@
     enable = true;
   };
 
+  home.file."./.config/nvim".source =
+    config.lib.file.mkOutOfStoreSymlink "/home/fred/GitHub/nixos/dotfiles/fred/.config/nvim";
+
   networking.hostName = "nebula"; # Define your hostname.
 
   # List packages installed in system profile. To search, run:

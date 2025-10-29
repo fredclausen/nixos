@@ -10,13 +10,13 @@
           lua51Packages.luarocks-nix
           tree-sitter
           # packages needed for lsp
-          rust-analyzer-unwrapped
+          # rust-analyzer-unwrapped
           bash-language-server
           black
           docker-compose-language-service
           dockerfile-language-server
           eslint_d
-          gitui
+          # gitui
           hadolint
           lua-language-server
           luajitPackages.luacheck
@@ -40,9 +40,6 @@
           copilot-node-server
           nil
         ];
-
-        home.file."./.config/nvim".source =
-          config.lib.file.mkOutOfStoreSymlink "/home/fred/GitHub/nixos/dotfiles/fred/.config/nvim";
       };
   };
 }
