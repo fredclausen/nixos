@@ -110,17 +110,34 @@ function garbagecollect() {
 }
 
 function updatenix() {
-  # only push if we're not in /home/fred/GitHub/nixos
-  if [ "$(pwd)" != "/home/fred/GitHub/nixos" ]; then
-    pushd /home/fred/GitHub/nixos > /dev/null || return
-    pushed=true
+  # check if we're on nixos or mac
+  if [ ! -d /home/fred ]; then
+    if [ "$(pwd)" != "/Users/fred/GitHub/nixos/macflake" ]; then
+      pushd /Users/fred/GitHub/nixos/macflake > /dev/null || return
+      pushed=true
+    else
+      pushed=false
+    fi
+
+    sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .
+
+    if [ "$pushed" = true ]; then
+      popd > /dev/null || return
+    fi
   else
-    pushed=false
-  fi
-  pushd /home/fred/GitHub/nixos > /dev/null || return
-  sudo nixos-rebuild switch --flake .#"$(hostname)"
-  if [ "$pushed" = true ]; then
-    popd > /dev/null || return
+    # only push if we're not in /home/fred/GitHub/nixos
+    if [ "$(pwd)" != "/home/fred/GitHub/nixos" ]; then
+      pushd /home/fred/GitHub/nixos > /dev/null || return
+      pushed=true
+    else
+      pushed=false
+    fi
+
+    sudo nixos-rebuild switch --flake .#"$(hostname)"
+
+    if [ "$pushed" = true ]; then
+      popd > /dev/null || return
+    fi
   fi
 }
 

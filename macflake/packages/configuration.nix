@@ -35,9 +35,23 @@
   config = {
     desktop.wezterm.enable = true;
     desktop.alacritty.enable = true;
+
     home-manager.users.fred =
       { config, pkgs, ... }:
       {
+        home.packages = with pkgs; [
+          wget
+          unzip
+          file
+          lsd
+          zip
+          toybox
+          dig
+          jq
+        ];
+
+        programs.firefox.enable = true;
+
         home.file."./.config/nvim".source =
           config.lib.file.mkOutOfStoreSymlink "/Users/fred/GitHub/nixos/dotfiles/fred/.config/nvim";
         programs.wezterm = {

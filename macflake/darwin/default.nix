@@ -69,7 +69,6 @@
     casks = [
       "ghostty"
       "vlc"
-      "firefox"
       "iterm2"
       "raycast"
       "visual-studio-code"
