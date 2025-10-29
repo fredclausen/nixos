@@ -55,9 +55,9 @@
                   enable = true;
                 };
 
-                # home.file.".wezterm.lua" = {
-                #   source = ../dotfiles/fred/.wezterm_darwin.lua;
-                # };
+                home.file.".gitconfig" = {
+                  source = ../dotfiles/fred/.gitconfig;
+                };
               };
             };
             home-manager.extraSpecialArgs = {
