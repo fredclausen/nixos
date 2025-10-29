@@ -1,4 +1,4 @@
-name: update-flakes
+name: update-flakes-darwin
 on:
   schedule:
     - cron: "0 */4 * * *"
@@ -21,7 +21,7 @@ jobs:
           sparse-checkout: macflake/flake.lock
       - id: get-flake-inputs
         run: |
-          flake_inputs="$(jq -c '.nodes.root.inputs | {flake: keys}' flake.lock)"
+          flake_inputs="$(jq -c '.nodes.root.inputs | {flake: keys}' macflake/flake.lock)"
           echo "flake-inputs=${flake_inputs}" >> "$GITHUB_OUTPUT"
   update-flake:
     name: update-${{ matrix.flake }}
