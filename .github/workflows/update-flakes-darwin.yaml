@@ -49,4 +49,4 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-branch-prefix: update-
           automerge: true
-          path: macflake/flake.lock
+          path: macflake
