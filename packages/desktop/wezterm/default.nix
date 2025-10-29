@@ -20,7 +20,6 @@ in
     home-manager.users.fred = {
       programs.wezterm = {
         enable = true;
-        extraConfig = builtins.readFile ../../../dotfiles/fred/.wezterm.lua;
       };
 
       catppuccin.wezterm.enable = true;

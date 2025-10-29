@@ -41,6 +41,9 @@
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
                 ];
+                programs.wezterm = {
+                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
+                };
               };
               home-manager.extraSpecialArgs = {
                 inherit
@@ -69,6 +72,9 @@
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
                 ];
+                programs.wezterm = {
+                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
+                };
               };
               home-manager.extraSpecialArgs = {
                 inherit
@@ -98,6 +104,10 @@
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
                 ];
+
+                programs.wezterm = {
+                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
+                };
               };
 
               home-manager.extraSpecialArgs = {
@@ -128,6 +138,10 @@
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
                 ];
+
+                programs.wezterm = {
+                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
+                };
               };
               home-manager.extraSpecialArgs = {
                 inherit
@@ -156,6 +170,10 @@
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
                 ];
+
+                programs.wezterm = {
+                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
+                };
               };
               home-manager.extraSpecialArgs = {
                 inherit
@@ -184,6 +202,10 @@
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
                 ];
+
+                programs.wezterm = {
+                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
+                };
               };
               home-manager.extraSpecialArgs = {
                 inherit
@@ -212,6 +234,10 @@
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
                 ];
+
+                programs.wezterm = {
+                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
+                };
               };
               home-manager.extraSpecialArgs = {
                 inherit
@@ -240,6 +266,10 @@
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
                 ];
+
+                programs.wezterm = {
+                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
+                };
               };
               home-manager.extraSpecialArgs = {
                 inherit

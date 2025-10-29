@@ -46,11 +46,6 @@
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
 
-    programs.gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
-
     security.polkit.enable = true;
     security.polkit.extraConfig = ''
       polkit.addRule(function(action, subject) {

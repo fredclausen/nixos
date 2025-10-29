@@ -68,7 +68,6 @@
 
     casks = [
       "ghostty"
-      "wezterm"
       "vlc"
       "firefox"
       "iterm2"
@@ -76,7 +75,6 @@
       "visual-studio-code"
       "visual-studio"
       "hiddenbar"
-      "alacritty"
       "sublime-text"
       "tradingview"
       "macupdater"

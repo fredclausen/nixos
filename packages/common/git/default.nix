@@ -4,7 +4,13 @@
     environment.systemPackages = [
       pkgs.git
       pkgs.gh
+      pkgs.gnupg
     ];
+
+    programs.gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
 
     home-manager.users.fred = {
       programs.diff-so-fancy = {

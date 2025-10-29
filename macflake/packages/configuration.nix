@@ -12,8 +12,6 @@
   imports = [
     inputs.home-manager.darwinModules.default
     ../../packages/shell
-    ../../packages/desktop/ghostty
-    ../../packages/desktop/wezterm
     ../../packages/develop/ansible
     ../../packages/develop/clang
     ../../packages/develop/hadolint
@@ -28,15 +26,23 @@
     ../../packages/develop/typos
     ../../packages/common/btop
     ../../packages/common/git
+    ../../packages/desktop/alacritty
+    ../../packages/desktop/githubdesktop
+    ../../packages/desktop/ghostty
+    ../../packages/desktop/wezterm
   ];
 
   config = {
+    desktop.wezterm.enable = true;
+    desktop.alacritty.enable = true;
     home-manager.users.fred =
       { config, pkgs, ... }:
       {
         home.file."./.config/nvim".source =
           config.lib.file.mkOutOfStoreSymlink "/Users/fred/GitHub/nixos/dotfiles/fred/.config/nvim";
-
+        programs.wezterm = {
+          extraConfig = builtins.readFile ../../dotfiles/fred/.wezterm_darwin.lua;
+        };
       };
     fonts = {
       packages = with pkgs; [
