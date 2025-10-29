@@ -26,6 +26,8 @@
     ../../packages/develop/rust
     ../../packages/develop/shellcheck
     ../../packages/develop/typos
+    ../../packages/common/btop
+    ../../packages/common/git
   ];
 
   config = {
