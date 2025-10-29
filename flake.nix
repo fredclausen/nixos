@@ -44,6 +44,10 @@
                 programs.wezterm = {
                   extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
                 };
+
+                programs.alacritty = {
+                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
+                };
               };
               home-manager.extraSpecialArgs = {
                 inherit
@@ -74,6 +78,9 @@
                 ];
                 programs.wezterm = {
                   extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
+                };
+                programs.alacritty = {
+                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
                 };
               };
               home-manager.extraSpecialArgs = {
@@ -107,6 +114,9 @@
 
                 programs.wezterm = {
                   extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
+                };
+                programs.alacritty = {
+                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
                 };
               };
 
@@ -142,6 +152,9 @@
                 programs.wezterm = {
                   extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
                 };
+                programs.alacritty = {
+                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
+                };
               };
               home-manager.extraSpecialArgs = {
                 inherit
@@ -173,6 +186,9 @@
 
                 programs.wezterm = {
                   extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
+                };
+                programs.alacritty = {
+                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
                 };
               };
               home-manager.extraSpecialArgs = {
@@ -206,6 +222,9 @@
                 programs.wezterm = {
                   extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
                 };
+                programs.alacritty = {
+                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
+                };
               };
               home-manager.extraSpecialArgs = {
                 inherit
@@ -238,6 +257,9 @@
                 programs.wezterm = {
                   extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
                 };
+                programs.alacritty = {
+                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
+                };
               };
               home-manager.extraSpecialArgs = {
                 inherit
@@ -269,6 +291,9 @@
 
                 programs.wezterm = {
                   extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
+                };
+                programs.alacritty = {
+                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
                 };
               };
               home-manager.extraSpecialArgs = {

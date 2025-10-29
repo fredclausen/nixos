@@ -24,7 +24,6 @@ in
 
       programs.alacritty = {
         enable = true;
-        settings = (builtins.fromTOML (builtins.readFile ../../../dotfiles/fred/.config/alacritty.toml));
       };
 
       catppuccin.alacritty.enable = true;
