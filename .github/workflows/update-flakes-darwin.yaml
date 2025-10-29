@@ -17,8 +17,8 @@ jobs:
       flake-inputs: ${{ steps.get-flake-inputs.outputs.flake-inputs }}
     steps:
       - uses: actions/checkout@v5.0.0
-        with:
-          sparse-checkout: macflake/flake.lock
+        # with:
+        #   sparse-checkout: macflake/flake.lock
       - id: get-flake-inputs
         run: |
           flake_inputs="$(jq -c '.nodes.root.inputs | {flake: keys}' macflake/flake.lock)"
@@ -41,7 +41,7 @@ jobs:
       - run: git config --global user.name "github[bot]"
       - uses: cpcloud/flake-update-action@v2.0.1
         with:
-          dependency: macflake/${{ matrix.flake }}
+          dependency: ${{ matrix.flake }}
           pull-request-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-author: github[bot] <noreply@github.com>
           delete-branch: true
