@@ -22,7 +22,7 @@ jobs:
       - id: get-flake-inputs
         run: |
           flake_inputs="$(jq -c '.nodes.root.inputs | {flake: keys}' macflake/flake.lock)"
-          echo "flake-inputs=${flake_inputs}" >> "$GITHUB_OUTPUT"
+          echo "flake-inputs=macflake\/${flake_inputs}" >> "$GITHUB_OUTPUT"
   update-flake:
     name: update-${{ matrix.flake }}
     runs-on: macos-latest
