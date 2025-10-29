@@ -40,7 +40,7 @@ jobs:
       - run: git config --global user.email "noreply@github.com"
       - run: git config --global user.name "github[bot]"
       # - uses: cpcloud/flake-update-action@v2.0.1
-      - uses: fredclausen/flake-update-action
+      - uses: fredclausen/flake-update-action/@main
         with:
           dependency: ${{ matrix.flake }}
           pull-request-token: ${{ secrets.GITHUB_TOKEN }}
