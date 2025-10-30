@@ -48,6 +48,14 @@
           toybox
           dig
           jq
+          socat
+          nmap
+          delta
+          dateutils
+          gnuplot
+          cargo-watch
+          zeromq
+          rrdtool
         ];
 
         programs.firefox.enable = true;

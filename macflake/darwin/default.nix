@@ -62,8 +62,17 @@
     enable = true;
     caskArgs.no_quarantine = true;
     # use home brew to install packages for spotlight to work
+    taps = [
+      "pothosware/pothos"
+    ];
+
     brews = [
       "gcc"
+      "telnet"
+      "vttest"
+      "trunk"
+      "cargo-make"
+      "diesel"
     ];
 
     casks = [
@@ -91,6 +100,8 @@
       "font-fira-code"
       "font-hack-nerd-font"
       "font-meslo-lg-nerd-font"
+      "multiviewer"
+      "mono-mdk-for-visual-studio"
     ];
   };
 }
