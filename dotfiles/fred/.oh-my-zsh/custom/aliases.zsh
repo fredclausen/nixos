@@ -221,27 +221,14 @@ function gpfred() {
   popd 1> /dev/null || exit
 }
 
-function ua() {
-  echo "Updating all"
-  # if we're not on linux, we want to update oh-my-posh
-  if [ -d /Users/fred ]; then
-      echo "Updating oh-my-posh...."
-      curl -s https://ohmyposh.dev/install.sh | bash -s
-
-      echo "Updating ZSH...."
-      uz
-  else
-    echo "NixOS detected, skipping oh-my-posh update"
-  fi
-
-  # if .skipcargo exists, don't update cargo
-  if [ -f ~/.skipcargo ]; then
-    echo "Skipping cargo update"
-  else
-    echo "Updating cargo...."
-    co
-    cargo install-update -a
-  fi
+function ua() {  # if .skipcargo exists, don't update cargo
+  # if [ -f ~/.skipcargo ]; then
+  #   echo "Skipping cargo update"
+  # else
+  #   echo "Updating cargo...."
+  #   co
+  #   cargo install-update -a
+  # fi
   echo "Updating Git...."
   ugh
   echo "Installing pre-commit hooks...."
