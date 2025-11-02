@@ -43,8 +43,8 @@ in
         font-awesome
         noto-fonts
         noto-fonts-cjk-sans
-        noto-fonts-emoji
-        noto-fonts-extra
+        # noto-fonts-emoji
+        # noto-fonts-extra
         twemoji-color-font
         noto-fonts-color-emoji
         google-fonts
@@ -57,7 +57,7 @@ in
         # mplus-outline-fonts.githubRelease
         # powerline-fonts
         # proggyfonts
-        ubuntu_font_family
+        ubuntu-classic
         # unifont
         # unifont_upper
         joypixels
