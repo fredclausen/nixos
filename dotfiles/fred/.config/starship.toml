@@ -4,7 +4,9 @@ format = """
 [](surface0)\
 $os\
 $username\
-[](bg:peach fg:surface0)\
+[](bg:sapphire fg:surface0)\
+$hostname\
+[](bg:peach fg:sapphire)\
 $directory\
 [](fg:peach bg:green)\
 $git_branch\
@@ -188,3 +190,8 @@ vimcmd_symbol = '[](bold fg:green)'
 vimcmd_replace_one_symbol = '[](bold fg:purple)'
 vimcmd_replace_symbol = '[](bold fg:purple)'
 vimcmd_visual_symbol = '[](bold fg:lavender)'
+
+[hostname]
+ssh_only = false
+style = "bg:sapphire fg:base"
+format = "[ $hostname ]($style)"
