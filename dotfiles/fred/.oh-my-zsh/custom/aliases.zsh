@@ -88,7 +88,7 @@ if [[ -d /home/fred ]]; then
   alias ogcat="/run/current-system/sw/bin/cat"
 else
   # FIXME: verify this is the correct MacOS path
-  alias ogcat="/usr/bin/cat"
+  alias ogcat="/etc/profiles/per-user/fred/bin/cat"
 fi
 
 alias cat="bat --color always"
