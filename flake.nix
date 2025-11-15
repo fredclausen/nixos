@@ -37,6 +37,10 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = {
+                home.file.".gitconfig" = {
+                  source = ./dotfiles/fred/.gitconfig;
+                };
+
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
@@ -72,6 +76,10 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = {
+                home.file.".gitconfig" = {
+                  source = ./dotfiles/fred/.gitconfig;
+                };
+
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
@@ -107,6 +115,10 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = {
+                home.file.".gitconfig" = {
+                  source = ./dotfiles/fred/.gitconfig;
+                };
+
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
@@ -144,6 +156,10 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = {
+                home.file.".gitconfig" = {
+                  source = ./dotfiles/fred/.gitconfig;
+                };
+
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
@@ -179,6 +195,10 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = {
+                home.file.".gitconfig" = {
+                  source = ./dotfiles/fred/.gitconfig;
+                };
+
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
@@ -214,6 +234,10 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = {
+                home.file.".gitconfig" = {
+                  source = ./dotfiles/fred/.gitconfig;
+                };
+
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
@@ -249,6 +273,10 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = {
+                home.file.".gitconfig" = {
+                  source = ./dotfiles/fred/.gitconfig;
+                };
+
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
@@ -284,6 +312,10 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = {
+                home.file.".gitconfig" = {
+                  source = ./dotfiles/fred/.gitconfig;
+                };
+
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
