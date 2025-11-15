@@ -178,6 +178,9 @@
                     "buffer"
                     "path"
                     "snippets"
+                    "copilot"
+                    "emoji"
+                    "spell"
                   ];
                   providers = {
                     buffer = {
@@ -189,6 +192,22 @@
                       enabled = true;
                       score_offset = 10;
                     };
+                    emoji = {
+                      name = "Emoji";
+                      module = "blink-emoji";
+                      score_offset = 1;
+                    };
+                    spell = {
+                      name = "Spell";
+                      module = "blink-cmp-spell";
+                      score_offset = 1;
+                    };
+                    copilot = {
+                      name = "copilot";
+                      module = "blink-copilot";
+                      async = true;
+                      score_offset = 100;
+                    };
                   };
                 };
               };
@@ -196,6 +215,10 @@
 
             # Compatibility layer for using nvim-cmp sources on blink.cmp
             blink-compat.enable = true;
+            blink-copilot.enable = true;
+            blink-emoji.enable = true;
+            blink-indent.enable = true;
+            blink-cmp-spell.enable = true;
             # Lightweight yet powerful formatter plugin for Neovim.
             conform-nvim = {
               enable = true;
@@ -327,7 +350,6 @@
             };
 
             none-ls.sources.formatting.black.enable = true;
-            # oil.enable = true;
             snacks = {
               enable = true;
               settings = {
