@@ -19,7 +19,15 @@
           ls = lib.mkForce "${pkgs.lsd}/bin/lsd -la";
         };
 
-        initContent = builtins.readFile ../../../dotfiles/fred/.oh-my-zsh/custom/aliases.zsh;
+        initContent = ''
+          # --- Auto-start tmux ---
+          if [[ -z "$TMUX" && -n "$PS1" ]]; then
+            exec tmux new-session -A -s main
+          fi
+
+          # --- Your aliases file ---
+          ${(builtins.readFile ../../../dotfiles/fred/.oh-my-zsh/custom/aliases.zsh)}
+        '';
       };
 
       catppuccin.zsh-syntax-highlighting.enable = true;
