@@ -154,7 +154,25 @@
           };
 
           plugins = {
-            bufferline.enable = true;
+            bufferline = {
+              enable = true;
+
+              settings = {
+                options = {
+                  separator_style = "thin";
+                  offsets = [
+                    {
+                      filetype = "snacks_layout_box";
+                      text = "󰙅  File Explorer";
+                      separator = false;
+                      text_align = "center";
+                      highlight = "Directory";
+                    }
+                  ];
+                };
+              };
+            };
+
             # Performant, batteries-included completion plugin for Neovim.
             blink-cmp = {
               enable = true;
