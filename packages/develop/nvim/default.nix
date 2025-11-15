@@ -206,10 +206,25 @@
                   json = [ "prettier" ];
                   lua = [ "stylua" ];
                   markdown = [ "prettier" ];
-                  nix = [ "alejandra" ];
+                  nix = [ "nixfmt" ];
                   python = [ "black" ];
                   ruby = [ "rubyfmt" ];
                   yaml = [ "yamlfmt" ];
+                  typescript = [
+                    [
+                      "prettierd"
+                      "prettier"
+                    ]
+                  ];
+                  bash = [ "shfmt" ];
+                  sh = [ "shfmt" ];
+                  javascript = [
+                    [
+                      "prettierd"
+                      "prettier"
+                    ]
+                  ];
+                  rust = [ "rustfmt" ];
                 };
               };
             };
@@ -233,8 +248,27 @@
 
             lsp = {
               enable = true;
+              inlayHints = true;
               servers = {
                 bashls.enable = true;
+                # Spellcheck
+                harper_ls = {
+                  enable = true;
+                  settings.settings = {
+                    "harper-ls" = {
+                      linters = {
+                        boring_words = true;
+                        linking_verbs = true;
+                        # Rarely useful with coding
+                        sentence_capitalization = false;
+                        spell_check = false;
+                      };
+                      codeActions = {
+                        forceStable = true;
+                      };
+                    };
+                  };
+                };
                 jsonls.enable = true;
                 lua_ls = {
                   enable = true;
@@ -277,6 +311,18 @@
                   };
                 };
                 yamlls.enable = true;
+                # Rust
+                rust_analyzer = {
+                  enable = true;
+                  installRustc = true;
+                  installCargo = true;
+                };
+
+                ts_ls.enable = true; # TS/JS
+                cssls.enable = true; # CSS
+                html.enable = true; # HTML
+                dockerls.enable = true; # Docker
+                markdown_oxide.enable = true; # Markdown
               };
             };
 
