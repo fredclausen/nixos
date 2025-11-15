@@ -42,14 +42,13 @@
 
   # specific monitor stuff for this system
 
-  home-manager.users.gdm = {
-    home = {
-      username = "gdm";
-      stateVersion = "24.11";
+  systemd.tmpfiles.rules = [
+    # Ensure the target directory exists
+    "d /var/lib/gdm/.config 0755 gdm gdm -"
 
-      file.".config/monitors.xml".text = builtins.readFile ./monitors.xml;
-    };
-  };
+    # Install the monitors.xml
+    "f /var/lib/gdm/.config/monitors.xml 0644 gdm gdm - ${./monitors.xml}"
+  ];
 
   # virtualisation.virtualbox = {
   #   host = {

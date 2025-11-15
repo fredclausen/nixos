@@ -7,10 +7,15 @@
     services.udev.packages = [ pkgs.rtl-sdr ]; # (there might be other packages that require udev here too)
 
     home-manager.users.fred =
-      { config, pkgs, ... }:
       {
-        home.file."./.config/nvim".source =
-          config.lib.file.mkOutOfStoreSymlink "/home/fred/GitHub/nixos/dotfiles/fred/.config/nvim";
+        config,
+        pkgs,
+        lib,
+        ...
+      }:
+      {
+        # home.file."./.config/nvim".source =
+        #   config.lib.file.mkOutOfStoreSymlink "/home/fred/GitHub/nixos/dotfiles/fred/.config/nvim";
       };
 
     users.users.fred = {
