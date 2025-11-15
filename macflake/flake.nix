@@ -14,6 +14,10 @@
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.url = "github:catppuccin/nix";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     inputs@{
@@ -46,6 +50,7 @@
               users.fred.imports = [
                 ./home-manager
                 catppuccin.homeModules.catppuccin
+                nixvim.homeModules.nixvim
               ];
 
               users.fred = {

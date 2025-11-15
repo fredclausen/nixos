@@ -61,6 +61,7 @@
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
+                  nixvim.homeModules.nixvim
                 ];
                 programs.wezterm = {
                   extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
@@ -100,6 +101,7 @@
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
+                  nixvim.homeModules.nixvim
                 ];
                 programs.wezterm = {
                   extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
@@ -139,6 +141,7 @@
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
+                  nixvim.homeModules.nixvim
                 ];
 
                 programs.wezterm = {
@@ -221,6 +224,7 @@
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
+                  nixvim.homeModules.nixvim
                 ];
 
                 programs.wezterm = {
@@ -260,6 +264,7 @@
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
+                  nixvim.homeModules.nixvim
                 ];
 
                 programs.wezterm = {
@@ -299,6 +304,7 @@
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
+                  nixvim.homeModules.nixvim
                 ];
 
                 programs.wezterm = {
@@ -338,6 +344,7 @@
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
+                  nixvim.homeModules.nixvim
                 ];
 
                 programs.wezterm = {

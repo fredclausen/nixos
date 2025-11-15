@@ -60,8 +60,6 @@
 
         programs.firefox.enable = true;
 
-        home.file."./.config/nvim".source =
-          config.lib.file.mkOutOfStoreSymlink "/Users/fred/GitHub/nixos/dotfiles/fred/.config/nvim";
         programs.wezterm = {
           extraConfig = builtins.readFile ../../dotfiles/fred/.wezterm_darwin.lua;
         };
