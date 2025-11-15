@@ -84,13 +84,6 @@
               options.desc = "Find references";
             }
 
-            # File navigation
-            {
-              action = "<cmd>Oil<CR>";
-              key = "<leader>-";
-              options.desc = "Open Oil file manager";
-            }
-
             # Telescope
             {
               action = "<cmd>Telescope find_files<CR>";
@@ -118,6 +111,22 @@
               action.__raw = ''function() Snacks.lazygit() end'';
               options.desc = "Open LazyGit";
             }
+
+            {
+              key = "<leader>-";
+              action.__raw = ''function() Snacks.picker.explorer() end'';
+              options.desc = "Toggle Snacks Explorer";
+            }
+
+            {
+              key = "<leader>rn";
+              action.__raw = ''
+                function()
+                  return ":IncRename " .. vim.fn.expand("<cword>")
+                end'';
+              options.desc = "Incremental Rename";
+              options.expr = true;
+            }
           ];
 
           opts = {
@@ -135,6 +144,7 @@
           };
 
           plugins = {
+            bufferline.enable = true;
             # Performant, batteries-included completion plugin for Neovim.
             blink-cmp = {
               enable = true;
@@ -365,6 +375,9 @@
                 lazygit = {
                   enabled = true;
                 };
+                notifier = {
+                  enabled = true;
+                };
               };
             };
             # telescope.enable = true;
@@ -377,6 +390,18 @@
             which-key = {
               enable = true;
               settings.preset = "helix";
+            };
+
+            inc-rename.enable = true;
+            noice = {
+              enable = true;
+              settings = {
+                presets = {
+                  long_message_to_split = true;
+                  command_palette = true;
+                  inc_rename = true;
+                };
+              };
             };
           };
           viAlias = true;
