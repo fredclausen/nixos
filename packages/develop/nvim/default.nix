@@ -16,23 +16,11 @@
 
           extraPlugins = with pkgs.vimPlugins; [
             direnv-vim
-            oxocarbon-nvim
             zellij-nvim
             nvim-lspconfig
           ];
 
           extraConfigLua = ''
-            -- Provider switching function with visual feedback
-            local function switch_provider_with_feedback(provider, display_name)
-              return function()
-                vim.cmd("AvanteSwitchProvider " .. provider)
-                vim.notify("Switched to: " .. display_name, vim.log.levels.INFO, {
-                  title = "Avante Provider",
-                  timeout = 1500,
-                })
-              end
-            end
-
             -- Configure blink-cmp formatting with lspkind
             require('blink.cmp').setup({
               appearance = {
@@ -124,6 +112,12 @@
               key = "<leader>fh";
               options.desc = "Help tags";
             }
+
+            {
+              key = "<leader>zz";
+              action.__raw = ''function() Snacks.lazygit() end'';
+              options.desc = "Open LazyGit";
+            }
           ];
 
           opts = {
@@ -141,6 +135,7 @@
           };
 
           plugins = {
+            # Performant, batteries-included completion plugin for Neovim.
             blink-cmp = {
               enable = true;
               setupLspCapabilities = true;
@@ -199,7 +194,9 @@
               };
             };
 
+            # Compatibility layer for using nvim-cmp sources on blink.cmp
             blink-compat.enable = true;
+            # Lightweight yet powerful formatter plugin for Neovim.
             conform-nvim = {
               enable = true;
               settings = {
@@ -217,16 +214,21 @@
               };
             };
 
+            # VS Code-like pictograms for Neovim LSP completion items.
             lspkind = {
               enable = true;
               # not blink-cmp
               cmp.enable = false;
             };
-            dressing.enable = true;
+            # premier Vim plugin for Git management.
             fugitive.enable = true;
+            # powered fuzzy finder for Neovim written in Lua.
             fzf-lua.enable = true;
+            # A plugin to visualize and resolve merge conflicts in neovim.
             git-conflict.enable = true;
+            # A blazing fast and easy to configure neovim statusline written in lua.
             lualine.enable = true;
+            # Snippet Engine for Neovim.
             luasnip.enable = true;
 
             lsp = {
@@ -279,8 +281,25 @@
             };
 
             none-ls.sources.formatting.black.enable = true;
-            oil.enable = true;
-            telescope.enable = true;
+            # oil.enable = true;
+            snacks = {
+              enable = true;
+              settings = {
+                picker = {
+                  enabled = true;
+                  hidden = true;
+                };
+
+                explorer = {
+                  enabled = true;
+                };
+
+                lazygit = {
+                  enabled = true;
+                };
+              };
+            };
+            # telescope.enable = true;
             treesitter = {
               enable = true;
               folding = false;
