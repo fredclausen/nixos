@@ -6,13 +6,13 @@
     "os",
     {
       "type": "host",
-      "format": "{/2}{-}{/}{2}{?3} {3}{?}"
+      "format": "{/2}{-}{/}{2}{?3} {3}{?}",
     },
     "kernel",
     "uptime",
     {
       "type": "battery",
-      "format": "{/4}{-}{/}{4}{?5} [{5}]{?}"
+      "format": "{/4}{-}{/}{4}{?5} [{5}]{?}",
     },
     "break",
     "packages",
@@ -23,10 +23,10 @@
     "cpu",
     {
       "type": "gpu",
-      "key": "GPU"
+      "key": "GPU",
     },
     "memory",
     "break",
-    "colors"
-  ]
+    "colors",
+  ],
 }

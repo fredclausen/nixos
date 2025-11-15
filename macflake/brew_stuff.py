@@ -1,5 +1,7 @@
-# read in Brewfile to an array, skip lines that start with tap and vscode. Only valid lines will start with brew or cask
+# read in Brewfile to an array, skip lines that
+# start with tap and vscode. Only valid lines will start with brew or cask
 # read the brews in to a list, and casks in another list
+
 
 def get_brews_and_casks():
     brews = []
@@ -15,8 +17,10 @@ def get_brews_and_casks():
                 casks.append(cask_name.strip().strip('"'))
     return brews, casks
 
+
 # function to read in darwin.nix
 # extract the casks from the casks array
+
 
 def get_casks_from_darwin_nix():
     casks = []
@@ -33,6 +37,7 @@ def get_casks_from_darwin_nix():
                 cask_name = line.strip().strip('"')
                 casks.append(cask_name)
     return casks
+
 
 # function to read in darwin.nix and extract brews
 def get_brews_from_darwin_nix():
@@ -51,6 +56,7 @@ def get_brews_from_darwin_nix():
                 brews.append(brew_name)
     return brews
 
+
 if __name__ == "__main__":
     brews, casks = get_brews_and_casks()
     nix_casks = get_casks_from_darwin_nix()
@@ -61,10 +67,10 @@ if __name__ == "__main__":
     if missing_casks:
         print("\nCasks in Brewfile but not in darwin.nix:")
         for cask in missing_casks:
-            print(f"\"{cask}\"")
+            print(f'"{cask}"')
 
     missing_brews = set(brews) - set(nix_brews)
     if missing_brews:
         print("\nBrews in Brewfile but not in darwin.nix:")
         for brew in missing_brews:
-            print(f"\"{brew}\"")
+            print(f'"{brew}"')
