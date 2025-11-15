@@ -127,6 +127,16 @@
               options.desc = "Incremental Rename";
               options.expr = true;
             }
+            {
+              key = "<leader>uc";
+              action = "<cmd>Crates update_all_crates<CR>";
+              options.desc = "Update all crates";
+            }
+            {
+              key = "<leader>cu";
+              action = "<cmd>Crates update_crate<CR>";
+              options.desc = "Update crate on current line";
+            }
           ];
 
           opts = {
@@ -262,6 +272,19 @@
               };
             };
 
+            crates = {
+              enable = true;
+              settings = {
+                completion = {
+                  crates = {
+                    enabled = true;
+                    max_results = 8;
+                    min_chars = 3;
+                  };
+                };
+              };
+            };
+
             # VS Code-like pictograms for Neovim LSP completion items.
             lspkind = {
               enable = true;
@@ -359,6 +382,15 @@
               };
             };
 
+            mini = {
+              enable = true;
+              modules = {
+                animate = {
+                  enable = true;
+                };
+              };
+            };
+
             none-ls.sources.formatting.black.enable = true;
             snacks = {
               enable = true;
@@ -402,6 +434,10 @@
                   inc_rename = true;
                 };
               };
+            };
+
+            package-info = {
+              enable = true;
             };
           };
           viAlias = true;

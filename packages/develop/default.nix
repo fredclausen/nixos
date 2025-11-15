@@ -12,6 +12,7 @@
     ./python
     ./rust
     ./shellcheck
+    ./tmux
     ./typos
   ];
 }
