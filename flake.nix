@@ -13,6 +13,10 @@
     git-hooks.url = "github:cachix/git-hooks.nix";
     git-hooks.inputs.nixpkgs.follows = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -24,6 +28,7 @@
       apple-fonts,
       git-hooks,
       flake-utils,
+      nixvim,
       ...
     }:
     let
@@ -175,6 +180,7 @@
                 imports = [
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
+                  nixvim.homeModules.nixvim
                 ];
 
                 programs.wezterm = {
@@ -191,6 +197,7 @@
                   user
                   hmlib
                   apple-fonts
+                  nixvim
                   ;
               };
             }
