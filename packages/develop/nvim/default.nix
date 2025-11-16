@@ -7,6 +7,7 @@
           defaultEditor = true;
           enable = true;
 
+          colorscheme = "catppuccin";
           colorschemes.catppuccin = {
             enable = true;
             settings = {
@@ -21,29 +22,62 @@
           ];
 
           extraConfigLua = ''
-            -- Configure blink-cmp formatting with lspkind
-            require('blink.cmp').setup({
-              appearance = {
-                use_nvim_cmp_as_default = true,
-              },
-              completion = {
-                formatting = {
-                  format = require("lspkind").cmp_format({
-                    mode = "symbol_text",
-                    maxwidth = 50,
-                    ellipsis_char = "...",
-                  }),
-                },
-              },
+                              -- Configure blink-cmp formatting with lspkind
+                              require('blink.cmp').setup({
+                                appearance = {
+                                  use_nvim_cmp_as_default = true,
+                                },
+                                completion = {
+                                  formatting = {
+                                    format = require("lspkind").cmp_format({
+                                      mode = "symbol_text",
+                                      maxwidth = 50,
+                                      ellipsis_char = "...",
+                                    }),
+                                  },
+                                },
+                              })
+
+
+            -- Consider a "normal" buffer as: loaded, listed, and not special buftype
+            local function has_normal_buffer()
+              for _, b in ipairs(vim.api.nvim_list_bufs()) do
+                if vim.api.nvim_buf_is_loaded(b) and vim.fn.buflisted(b) == 1 then
+                  local bt = vim.api.nvim_get_option_value("buftype", { buf = b })
+                  if bt == "" then
+                    return true
+                  end
+                end
+              end
+              return false
+            end
+
+            local function ensure_normal_buffer()
+              -- Don't interfere while Neovim is exiting
+              if vim.v.exiting ~= vim.NIL and vim.v.exiting ~= 0 then
+                return
+              end
+
+              vim.schedule(function()
+                if not has_normal_buffer() then
+                  vim.cmd("enew")
+                end
+              end)
+            end
+
+            vim.api.nvim_create_autocmd({ "BufDelete", "BufWipeout" }, {
+              callback = ensure_normal_buffer,
             })
 
-            -- Fix for zellij.nvim health check
-            vim.health = vim.health or {}
-            vim.health.report_start = vim.health.report_start or function() end
-            vim.health.report_ok = vim.health.report_ok or function() end
-            vim.health.report_warn = vim.health.report_warn or function() end
-            vim.health.report_error = vim.health.report_error or function() end
-            vim.health.report_info = vim.health.report_info or function() end
+
+
+                              -- Fix for zellij.nvim health check
+                              vim.health = vim.health or {}
+                              vim.health.report_start = vim.health.report_start or function() end
+                              vim.health.report_ok = vim.health.report_ok or function() end
+                              vim.health.report_warn = vim.health.report_warn or function() end
+                              vim.health.report_error = vim.health.report_error or function() end
+                              vim.health.report_info = vim.health.report_info or function() end
           '';
 
           globals = {
@@ -427,6 +461,42 @@
                 };
                 notifier = {
                   enabled = true;
+                };
+                dashboard = {
+                  enable = true;
+                  header = "
+                                             
+      ████ ██████           █████      ██
+     ███████████             █████ 
+     █████████ ███████████████████ ███   ███████████
+    █████████  ███    █████████████ █████ ██████████████
+   █████████ ██████████ █████████ █████ █████ ████ █████
+ ███████████ ███    ███ █████████ █████ █████ ████ █████
+██████  █████████████████████ ████ █████ █████ ████ ██████";
+                  sections = [
+                    { section = "header"; }
+                    {
+                      icon = " ";
+                      title = "Keymaps";
+                      section = "keys";
+                      indent = 2;
+                      padding = 1;
+                    }
+                    {
+                      icon = " ";
+                      title = "Recent Files";
+                      section = "recent_files";
+                      indent = 2;
+                      padding = 1;
+                    }
+                    {
+                      icon = " ";
+                      title = "Projects";
+                      section = "projects";
+                      indent = 2;
+                      padding = 1;
+                    }
+                  ];
                 };
               };
             };
