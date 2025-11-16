@@ -124,29 +124,6 @@
               key = "gr";
               options.desc = "Find references";
             }
-
-            # Telescope
-            {
-              action = "<cmd>Telescope find_files<CR>";
-              key = "<leader>ff";
-              options.desc = "Find files";
-            }
-            {
-              action = "<cmd>Telescope live_grep<CR>";
-              key = "<leader>fg";
-              options.desc = "Live grep";
-            }
-            {
-              action = "<cmd>Telescope buffers<CR>";
-              key = "<leader>fb";
-              options.desc = "Find buffers";
-            }
-            {
-              action = "<cmd>Telescope help_tags<CR>";
-              key = "<leader>fh";
-              options.desc = "Help tags";
-            }
-
             {
               key = "<leader>zz";
               action.__raw = ''function() Snacks.lazygit() end'';
