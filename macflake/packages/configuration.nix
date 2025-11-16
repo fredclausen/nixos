@@ -30,6 +30,7 @@
     ../../packages/desktop/githubdesktop
     ../../packages/desktop/ghostty
     ../../packages/desktop/wezterm
+    ../../packages/develop/tmux
   ];
 
   config = {

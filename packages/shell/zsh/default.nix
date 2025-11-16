@@ -24,7 +24,6 @@
           if [[ -z "$TMUX" && -n "$PS1" ]]; then
             exec tmux new-session -A -s main
           fi
-
           # --- Your aliases file ---
           ${(builtins.readFile ../../../dotfiles/fred/.oh-my-zsh/custom/aliases.zsh)}
         '';
