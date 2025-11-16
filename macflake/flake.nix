@@ -33,6 +33,18 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+
+        # FIXME: https://github.com/NixOS/nixpkgs/pull/462090
+        # https://github.com/NixOS/nixpkgs/issues/461406
+        # Phase 2: overlays
+        overlays = [
+          # TEMP FIX for fish regression
+          (final: prev: {
+            fish = prev.fish.overrideAttrs (_: {
+              doCheck = false;
+            });
+          })
+        ];
       };
     in
     {
