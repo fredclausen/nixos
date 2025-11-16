@@ -466,14 +466,14 @@
               };
             };
 
-            mini = {
-              enable = true;
-              modules = {
-                animate = {
-                  enable = true;
-                };
-              };
-            };
+            # mini = {
+            #  enable = true;
+            #  modules = {
+            #    animate = {
+            #      enable = true;
+            #    };
+            #  };
+            #};
 
             none-ls.sources.formatting.black.enable = true;
             snacks = {
