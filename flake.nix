@@ -36,7 +36,10 @@
       hmlib = home-manager.lib;
 
       # Adjust this list if you want devShells/checks for more systems
-      supportedSystems = [ "x86_64-linux" ];
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
     in
     {
