@@ -3,6 +3,12 @@
     home-manager.users.fred =
       { config, pkgs, ... }:
       {
+        # install ripgrep via pkgs
+
+        home.packages = with pkgs; [
+          ripgrep
+        ];
+
         programs.nixvim = {
           defaultEditor = true;
           enable = true;
@@ -68,6 +74,7 @@
             vim.api.nvim_create_autocmd({ "BufDelete", "BufWipeout" }, {
               callback = ensure_normal_buffer,
             })
+            vim.api.nvim_create_user_command("Qa", "qa", {})
 
 
 
@@ -346,7 +353,55 @@
             # premier Vim plugin for Git management.
             fugitive.enable = true;
             # powered fuzzy finder for Neovim written in Lua.
-            fzf-lua.enable = true;
+            fzf-lua = {
+              enable = true;
+              keymaps = {
+                "<leader>sb" = {
+                  action = "grep_curbuf";
+                  options.desc = "Search Current Buffer";
+                };
+                "<leader>/" = {
+                  action = "live_grep";
+                  options.desc = "Live Grep";
+                };
+                "<leader>," = {
+                  action = "buffers";
+                  options.desc = "Switch Buffer";
+                  settings = {
+                    sort_mru = true;
+                    sort_lastused = true;
+                  };
+                };
+                "<leader>gc" = {
+                  action = "git_commits";
+                  options.desc = "Git Commits";
+                };
+                "<leader>gs" = {
+                  action = "git_status";
+                  options.desc = "Git Status";
+                };
+                "<leader>s\"" = {
+                  action = "registers";
+                  options.desc = "Registers";
+                };
+                "<leader>sd" = {
+                  action = "diagnostics_document";
+                  options.desc = "Document Diagnostics";
+                };
+                "<leader>sD" = {
+                  action = "diagnostics_workspace";
+                  options.desc = "Workspace Diagnostics";
+                };
+                "<leader>sh" = {
+                  action = "help_tags";
+                  options.desc = "Help Pages";
+                };
+                "<leader>sk" = {
+                  action = "keymaps";
+                  options.desc = "Key Maps";
+                };
+              };
+            };
             # A plugin to visualize and resolve merge conflicts in neovim.
             git-conflict.enable = true;
             # A blazing fast and easy to configure neovim statusline written in lua.
