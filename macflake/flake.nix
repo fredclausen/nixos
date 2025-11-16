@@ -25,6 +25,7 @@
       home-manager,
       darwin,
       catppuccin,
+      nixvim,
       ...
     }:
     let

@@ -1,7 +1,12 @@
 {
   config = {
     home-manager.users.fred =
-      { config, pkgs, ... }:
+      {
+        config,
+        pkgs,
+        lib,
+        ...
+      }:
       {
         # install ripgrep via pkgs
 
