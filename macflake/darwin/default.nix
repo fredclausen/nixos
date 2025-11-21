@@ -93,7 +93,7 @@
       "brave-browser"
       "balenaetcher"
       "streamlabs"
-      "ledger-live"
+      "ledger-wallet"
       "elgato-stream-deck"
       "db-browser-for-sqlite"
       "angry-ip-scanner"
