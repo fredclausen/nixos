@@ -51,6 +51,7 @@ in
     ./missioncenter
     ./multiviewer
     ./music
+    ./niri
     ./obs
     ./print
     ./sqlitebrowser
@@ -81,6 +82,7 @@ in
     desktop.wezterm.enable = true;
     desktop.alacritty.enable = true;
     desktop.hyprland.enable = true;
+    desktop.niri.enable = true;
     desktop.stockfish.enable = true;
     desktop.libreoffice.enable = true;
     desktop.vlc.enable = true;
