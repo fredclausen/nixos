@@ -1,5 +1,5 @@
 {
-  description = "Nixos config flake";
+  description = "Fred's NixOS config flake";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -57,8 +57,6 @@
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
     in
     {
-      overlays = import ./overlays { inherit inputs outputs; };
-
       ##########################################################################
       ## NixOS configurations (TOP LEVEL, like before)                       ##
       ##########################################################################
@@ -143,13 +141,16 @@
         };
 
         Daytona = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs hmlib; };
+          specialArgs = { inherit inputs hmlib niri; };
+
           modules = [
             ./systems/daytona/configuration.nix
             home-manager.nixosModules.home-manager
             catppuccin.nixosModules.catppuccin
-
             {
+              nixpkgs.overlays = [
+                inputs.niri.overlays.niri
+              ];
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = {
@@ -161,6 +162,7 @@
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
                   nixvim.homeModules.nixvim
+                  niri.homeModules.niri
                 ];
 
                 programs.wezterm = {
@@ -179,6 +181,7 @@
                   hmlib
                   catppuccin
                   apple-fonts
+                  niri
                   ;
               };
             }

@@ -57,6 +57,20 @@
   powerManagement.enable = true;
 
   home-manager.users.fred = {
+    programs.niri.settings = {
+      outputs = {
+        "eDP-1" = {
+          scale = 1.0;
+
+          mode = {
+            width = 1920;
+            height = 1200;
+            refresh = 60.0;
+          };
+        };
+      };
+    };
+
     wayland.windowManager.hyprland.settings = {
       monitor = [
         ",highres,auto,1"
