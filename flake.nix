@@ -5,7 +5,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     catppuccin.url = "github:catppuccin/nix";
-
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
 
     home-manager = {
@@ -35,8 +34,8 @@
     inputs@{
       self,
       nixpkgs,
-      catppuccin,
       home-manager,
+      catppuccin,
       apple-fonts,
       git-hooks,
       flake-utils,
@@ -44,54 +43,46 @@
       niri,
       ...
     }:
+
     let
-      inherit (self) outputs;
+      # centralize username in one place
       user = "fred";
       hmlib = home-manager.lib;
 
-      # Adjust this list if you want devShells/checks for more systems
       supportedSystems = [
         "x86_64-linux"
         "aarch64-darwin"
       ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+
     in
     {
-      nixosConfigurations = {
-        #########################################################################
-        ## NixOS Configurations desktop                                        ##
-        #########################################################################
-        Daytona = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs hmlib niri; };
+      ##########################################################################
+      ## mkSystem — minimal DRY abstraction
+      ##########################################################################
+
+      lib.mkSystem =
+        {
+          hostName,
+          hmModules ? [ ],
+          extraModules ? [ ],
+        }:
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs user hmlib;
+          };
 
           modules = [
-            ./systems/daytona/configuration.nix
+            ./systems/${hostName}/configuration.nix
+            ./modules/common/system.nix
             home-manager.nixosModules.home-manager
-            catppuccin.nixosModules.catppuccin
             {
-              nixpkgs.overlays = [
-                inputs.niri.overlays.niri
-              ];
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.fred = {
-                home.file.".gitconfig" = {
-                  source = ./dotfiles/fred/.gitconfig;
-                };
 
-                imports = [
-                  ./users/homemanager
-                  catppuccin.homeModules.catppuccin
-                  nixvim.homeModules.nixvim
-                  niri.homeModules.niri
-                ];
-
-                programs.wezterm = {
-                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
-                };
-                programs.alacritty = {
-                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
-                };
+              home-manager.users.${user} = {
+                # shared HM baseline
+                imports = [ ./modules/common/home.nix ] ++ hmModules;
               };
 
               home-manager.extraSpecialArgs = {
@@ -102,257 +93,31 @@
                   hmlib
                   catppuccin
                   apple-fonts
+                  nixvim
                   niri
                   ;
               };
             }
-          ];
+          ]
+          ++ extraModules;
         };
 
-        maranello = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs hmlib; };
-          modules = [
-            ./systems/maranello/configuration.nix
-            home-manager.nixosModules.home-manager
-            catppuccin.nixosModules.catppuccin
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.fred = {
-                home.file.".gitconfig" = {
-                  source = ./dotfiles/fred/.gitconfig;
-                };
+      ##########################################################################
+      ## Actual system definitions — now extremely small
+      ##########################################################################
 
-                imports = [
-                  ./users/homemanager
-                  catppuccin.homeModules.catppuccin
-                  nixvim.homeModules.nixvim
-                  niri.homeModules.niri
-                ];
-
-                programs.wezterm = {
-                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
-                };
-                programs.alacritty = {
-                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
-                };
-              };
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  self
-                  user
-                  hmlib
-                  apple-fonts
-                  nixvim
-                  ;
-              };
-            }
-          ];
+      nixosConfigurations = {
+        Daytona = self.lib.mkSystem "daytona";
+        maranello = self.lib.mkSystem {
+          hostName = "maranello";
+          hmModules = [ ./systems/maranello/home.nix ];
         };
-
-        ##########################################################################
-        ## NixOS Configurations Servers                                         ##
-        ##########################################################################
-        sdrhub = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs hmlib; };
-          modules = [
-            ./systems/sdrhub/configuration.nix
-            home-manager.nixosModules.home-manager
-            catppuccin.nixosModules.catppuccin
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.fred = {
-                home.file.".gitconfig" = {
-                  source = ./dotfiles/fred/.gitconfig;
-                };
-
-                imports = [
-                  ./users/homemanager
-                  catppuccin.homeModules.catppuccin
-                  nixvim.homeModules.nixvim
-                ];
-                programs.wezterm = {
-                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
-                };
-
-                programs.alacritty = {
-                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
-                };
-              };
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  self
-                  user
-                  hmlib
-                  apple-fonts
-                  ;
-              };
-            }
-          ];
-        };
-
-        acarshub = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs hmlib; };
-          modules = [
-            ./systems/acarshub/configuration.nix
-            home-manager.nixosModules.home-manager
-            catppuccin.nixosModules.catppuccin
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.fred = {
-                home.file.".gitconfig" = {
-                  source = ./dotfiles/fred/.gitconfig;
-                };
-
-                imports = [
-                  ./users/homemanager
-                  catppuccin.homeModules.catppuccin
-                  nixvim.homeModules.nixvim
-                ];
-
-                programs.wezterm = {
-                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
-                };
-                programs.alacritty = {
-                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
-                };
-              };
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  self
-                  user
-                  hmlib
-                  apple-fonts
-                  ;
-              };
-            }
-          ];
-        };
-
-        vdlmhub = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs hmlib; };
-          modules = [
-            ./systems/vdlmhub/configuration.nix
-            home-manager.nixosModules.home-manager
-            catppuccin.nixosModules.catppuccin
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.fred = {
-                home.file.".gitconfig" = {
-                  source = ./dotfiles/fred/.gitconfig;
-                };
-
-                imports = [
-                  ./users/homemanager
-                  catppuccin.homeModules.catppuccin
-                  nixvim.homeModules.nixvim
-                ];
-
-                programs.wezterm = {
-                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
-                };
-                programs.alacritty = {
-                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
-                };
-              };
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  self
-                  user
-                  hmlib
-                  apple-fonts
-                  ;
-              };
-            }
-          ];
-        };
-
-        hfdlhub1 = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs hmlib; };
-          modules = [
-            ./systems/hfdlhub1/configuration.nix
-            home-manager.nixosModules.home-manager
-            catppuccin.nixosModules.catppuccin
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.fred = {
-                home.file.".gitconfig" = {
-                  source = ./dotfiles/fred/.gitconfig;
-                };
-
-                imports = [
-                  ./users/homemanager
-                  catppuccin.homeModules.catppuccin
-                  nixvim.homeModules.nixvim
-                ];
-
-                programs.wezterm = {
-                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
-                };
-                programs.alacritty = {
-                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
-                };
-              };
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  self
-                  user
-                  hmlib
-                  apple-fonts
-                  ;
-              };
-            }
-          ];
-        };
-
-        hfdlhub2 = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs hmlib; };
-          modules = [
-            ./systems/hfdlhub2/configuration.nix
-            home-manager.nixosModules.home-manager
-            catppuccin.nixosModules.catppuccin
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.fred = {
-                home.file.".gitconfig" = {
-                  source = ./dotfiles/fred/.gitconfig;
-                };
-
-                imports = [
-                  ./users/homemanager
-                  catppuccin.homeModules.catppuccin
-                  nixvim.homeModules.nixvim
-                ];
-
-                programs.wezterm = {
-                  extraConfig = builtins.readFile ./dotfiles/fred/.wezterm.lua;
-                };
-                programs.alacritty = {
-                  settings = (builtins.fromTOML (builtins.readFile ./dotfiles/fred/.config/alacritty.toml));
-                };
-              };
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  self
-                  user
-                  hmlib
-                  apple-fonts
-                  ;
-              };
-            }
-          ];
-        };
+        sdrhub = self.lib.mkSystem "sdrhub";
+        acarshub = self.lib.mkSystem "acarshub";
+        vdlmhub = self.lib.mkSystem "vdlmhub";
+        hfdlhub1 = self.lib.mkSystem "hfdlhub1";
+        hfdlhub2 = self.lib.mkSystem "hfdlhub2";
+        nebula = self.lib.mkSystem "nebula";
       };
 
       ##########################################################################
