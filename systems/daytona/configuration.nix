@@ -30,12 +30,6 @@
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_testing;
 
-  catppuccin = {
-    flavor = "mocha";
-    accent = "lavender";
-    enable = true;
-  };
-
   networking.hostName = "Daytona";
   networking.networkmanager.wifi.scanRandMacAddress = false;
 
