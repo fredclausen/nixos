@@ -2,10 +2,12 @@
   lib,
   pkgs,
   config,
+  user,
   ...
 }:
 with lib;
 let
+  username = user;
   cfg = config.desktop.environments.modules.clipboard;
 in
 {
@@ -17,14 +19,14 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.users.fred = {
+    users.users.${username} = {
       packages = with pkgs; [
         cliphist
         wl-clipboard
       ];
     };
 
-    home-manager.users.fred.wayland.windowManager.hyprland = {
+    home-manager.users.${username}.wayland.windowManager.hyprland = {
       settings = {
         exec-once = [
           "wl-paste --type text --watch cliphist store"

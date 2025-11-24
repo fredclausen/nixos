@@ -2,11 +2,13 @@
   lib,
   pkgs,
   config,
+  user,
   ...
 }:
 with lib;
 let
   cfg = config.desktop.brave;
+  username = user;
 in
 {
   options.desktop.brave = {
@@ -17,13 +19,13 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.users.fred = {
+    users.users.${username} = {
       packages = with pkgs; [
         brave
       ];
     };
 
-    home-manager.users.fred = {
+    home-manager.users.${username} = {
       programs.brave = {
         enable = true;
       };

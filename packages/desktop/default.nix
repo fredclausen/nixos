@@ -2,11 +2,13 @@
   lib,
   pkgs,
   config,
+  user,
   ...
 }:
 with lib;
 let
   cfg = config.desktop;
+  username = user;
 in
 {
   options.desktop = {
@@ -96,9 +98,9 @@ in
     desktop.ledger.enable = if cfg.enable_extra then true else false;
     desktop.trezor.enable = if cfg.enable_extra then true else false;
 
-    home-manager.users.fred = {
+    home-manager.users.${username} = {
       home.file.".config/backgrounds/" = {
-        source = ../../dotfiles/fred/.config/backgrounds;
+        source = ../../dotfiles/${username}/.config/backgrounds;
         recursive = true;
       };
 

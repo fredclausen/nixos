@@ -1,4 +1,13 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  user,
+  verbose_name,
+  ...
+}:
+let
+  username = user;
+in
 {
   config = {
     environment.systemPackages = [
@@ -6,7 +15,7 @@
       pkgs.gtrash
     ];
 
-    home-manager.users.fred = {
+    home-manager.users.${username} = {
       systemd.user.services = {
         autotrash = {
           Unit = {

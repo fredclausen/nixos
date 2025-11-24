@@ -2,10 +2,12 @@
   lib,
   pkgs,
   config,
+  user,
   ...
 }:
 with lib;
 let
+  username = user;
   cfg = config.desktop.obs;
 in
 {
@@ -18,7 +20,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.users.fred = {
+    users.users.${username} = {
       packages = with pkgs; [
         obs-studio
         obs-studio-plugins.wlrobs
@@ -27,7 +29,7 @@ in
       ];
     };
 
-    home-manager.users.fred = {
+    home-manager.users.${username} = {
       programs.obs-studio = {
         enable = true;
       };

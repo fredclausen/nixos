@@ -4,10 +4,12 @@
   config,
   inputs,
   imports,
+  user,
   ...
 }:
 with lib;
 let
+  username = user;
   cfg = config.desktop.environments.niri;
 in
 {
@@ -19,7 +21,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.users.fred = {
+    users.users.${username} = {
       packages = with pkgs; [
         hyprpolkitagent
 
@@ -53,7 +55,7 @@ in
     # Enable the GNOME Desktop Environment.
     services.displayManager.gdm.enable = true;
 
-    home-manager.users.fred = {
+    home-manager.users.${username} = {
       home.packages = with pkgs; [
         networkmanagerapplet
       ];
@@ -124,7 +126,7 @@ in
               ];
             }
 
-            { command = [ "/home/fred/.config/hyprextra/scripts/sleep" ]; }
+            { command = [ "/home/${username}/.config/hyprextra/scripts/sleep" ]; }
             { command = [ "sway-audio-idle-inhibit" ]; }
 
             {
@@ -133,7 +135,7 @@ in
                 "-o"
                 "*"
                 "-i"
-                "/home/fred/.config/backgrounds/lewis.jpg"
+                "/home/${username}/.config/backgrounds/lewis.jpg"
               ];
             }
 
@@ -266,7 +268,7 @@ in
             # Lock / sleep
             "Mod+L".action = {
               spawn = [
-                "/home/fred/.config/hyprextra/scripts/pauseandsleep"
+                "/home/${username}/.config/hyprextra/scripts/pauseandsleep"
               ];
             };
 

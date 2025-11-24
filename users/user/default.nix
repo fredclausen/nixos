@@ -16,18 +16,6 @@ in
 
     services.udev.packages = [ pkgs.rtl-sdr ]; # (there might be other packages that require udev here too)
 
-    home-manager.users.${username} =
-      {
-        config,
-        pkgs,
-        lib,
-        ...
-      }:
-      {
-        # home.file."./.config/nvim".source =
-        #   config.lib.file.mkOutOfStoreSymlink "/home/fred/GitHub/nixos/dotfiles/fred/.config/nvim";
-      };
-
     users.users.${username} = {
       isNormalUser = true;
       description = "${full_name}";

@@ -2,11 +2,13 @@
   lib,
   pkgs,
   config,
+  user,
   ...
 }:
 with lib;
 let
   cfg = config.desktop.onepassword;
+  username = user;
 in
 {
   options.desktop.onepassword = {
@@ -20,7 +22,7 @@ in
     programs._1password.enable = true;
     programs._1password-gui = {
       enable = true;
-      polkitPolicyOwners = [ "fred" ];
+      polkitPolicyOwners = [ "${username}" ];
     };
   };
 }

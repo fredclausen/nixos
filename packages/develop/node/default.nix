@@ -1,7 +1,15 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  user,
+  ...
+}:
+let
+  username = user;
+in
 {
   config = {
-    users.users.fred = {
+    users.users.${username} = {
       packages = with pkgs; [
         nodePackages_latest.nodejs
         nodePackages.prettier

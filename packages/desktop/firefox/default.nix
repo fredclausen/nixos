@@ -2,10 +2,12 @@
   lib,
   pkgs,
   config,
+  user,
   ...
 }:
 with lib;
 let
+  username = user;
   cfg = config.desktop.firefox;
 in
 {
@@ -20,7 +22,7 @@ in
     # Install firefox.
     programs.firefox.enable = true;
 
-    home-manager.users.fred.xdg = {
+    home-manager.users.${username}.xdg = {
       mimeApps = {
         associations.added = {
           "text/html" = [ "firefox.desktop" ];

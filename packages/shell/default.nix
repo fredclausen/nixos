@@ -1,3 +1,7 @@
+{ user, ... }:
+let
+  username = user;
+in
 {
   imports = [
     ./bat
@@ -19,18 +23,18 @@
     ./zsh
   ];
 
-  home-manager.users.fred = {
+  home-manager.users.${username} = {
     home.file.".config/scripts/" = {
-      source = ../../dotfiles/fred/.config/scripts;
+      source = ../../dotfiles/${username}/.config/scripts;
       recursive = true;
     };
 
     home.file.".config/hadolint.yaml" = {
-      source = ../../dotfiles/fred/.config/hadolint.yaml;
+      source = ../../dotfiles/${username}/.config/hadolint.yaml;
     };
 
     home.file.".markdownlint-cli2.yaml" = {
-      source = ../../dotfiles/fred/.markdownlint-cli2.yaml;
+      source = ../../dotfiles/${username}/.markdownlint-cli2.yaml;
     };
   };
 

@@ -3,10 +3,12 @@
   pkgs,
   config,
   hmlib,
+  user,
   ...
 }:
 with lib;
 let
+  username = user;
   cfg = config.desktop.environments.gnome;
 in
 {
@@ -17,27 +19,7 @@ in
     };
   };
 
-  # FIXME: We need to replace the GTK cattpuccin theme for gtk/gnome because it's borked. This is a good option
-  # https://github.com/NixOS/nixpkgs/pull/323898
-  # https://github.com/Fausto-Korpsvart/Catppuccin-GTK-Theme
-  # https://github.com/Weathercold/nixfiles/blob/master/home/modules/themes/catppuccin/gtk.nix
-
   config = mkIf cfg.enable {
-    # nixpkgs.overlays = [
-    #   (final: prev: {
-    #     magnetic-catppuccin-gtk = prev.magnetic-catppuccin-gtk.overrideAttrs (old: rec {
-    #       version = "0-unstable-2025-04-25";
-
-    #       src = prev.fetchFromGitHub {
-    #         owner = "Fausto-Korpsvart";
-    #         repo = "Catppuccin-GTK-Theme";
-    #         rev = "c961826d027ed93fae12a9a309616e36d140e6b8";
-    #         hash = "sha256-QItHmYZpe7BiPC+2CtFwiRXyMTG7+ex0sJTs63xmkAo=";
-    #       };
-    #     });
-    #   })
-    # ];
-
     environment.systemPackages = [
       pkgs.gnomeExtensions.caffeine
       pkgs.gnomeExtensions.vitals
@@ -110,7 +92,7 @@ in
       # '';
     };
 
-    home-manager.users.fred = {
+    home-manager.users.${username} = {
       gtk = {
         enable = true;
         gtk3.extraConfig = {
@@ -137,227 +119,227 @@ in
       # catppuccin.gtk.enable = true;
       # catppuccin.gtk.gnomeShellTheme = true;
       catppuccin.gtk.icon.enable = true;
-    };
 
-    home-manager.users.fred.xdg = {
-      mimeApps = {
-        associations.added = {
-          "image/bmp" = [ "org.gnome.gThumb.desktop" ];
-          "image/jpeg" = [ "org.gnome.gThumb.desktop" ];
-          "image/gif" = [ "org.gnome.gThumb.desktop" ];
-          "image/png" = [ "org.gnome.gThumb.desktop" ];
-          "image/tiff" = [ "org.gnome.gThumb.desktop" ];
-          "image/x-bmp" = [ "org.gnome.gThumb.desktop" ];
-          "image/x-ico" = [ "org.gnome.gThumb.desktop" ];
-          "image/x-png" = [ "org.gnome.gThumb.desktop" ];
-          "image/x-pcx" = [ "org.gnome.gThumb.desktop" ];
-          "image/x-tga" = [ "org.gnome.gThumb.desktop" ];
-          "image/xpm" = [ "org.gnome.gThumb.desktop" ];
-          "image/svg+xml" = [ "org.gnome.gThumb.desktop" ];
-          "image/webp" = [ "org.gnome.gThumb.desktop" ];
-          "image/jxl" = [ "org.gnome.gThumb.desktop" ];
+      xdg = {
+        mimeApps = {
+          associations.added = {
+            "image/bmp" = [ "org.gnome.gThumb.desktop" ];
+            "image/jpeg" = [ "org.gnome.gThumb.desktop" ];
+            "image/gif" = [ "org.gnome.gThumb.desktop" ];
+            "image/png" = [ "org.gnome.gThumb.desktop" ];
+            "image/tiff" = [ "org.gnome.gThumb.desktop" ];
+            "image/x-bmp" = [ "org.gnome.gThumb.desktop" ];
+            "image/x-ico" = [ "org.gnome.gThumb.desktop" ];
+            "image/x-png" = [ "org.gnome.gThumb.desktop" ];
+            "image/x-pcx" = [ "org.gnome.gThumb.desktop" ];
+            "image/x-tga" = [ "org.gnome.gThumb.desktop" ];
+            "image/xpm" = [ "org.gnome.gThumb.desktop" ];
+            "image/svg+xml" = [ "org.gnome.gThumb.desktop" ];
+            "image/webp" = [ "org.gnome.gThumb.desktop" ];
+            "image/jxl" = [ "org.gnome.gThumb.desktop" ];
+          };
+
+          defaultApplications = {
+            "image/bmp" = [ "org.gnome.gThumb.desktop" ];
+            "image/jpeg" = [ "org.gnome.gThumb.desktop" ];
+            "image/gif" = [ "org.gnome.gThumb.desktop" ];
+            "image/png" = [ "org.gnome.gThumb.desktop" ];
+            "image/tiff" = [ "org.gnome.gThumb.desktop" ];
+            "image/x-bmp" = [ "org.gnome.gThumb.desktop" ];
+            "image/x-ico" = [ "org.gnome.gThumb.desktop" ];
+            "image/x-png" = [ "org.gnome.gThumb.desktop" ];
+            "image/x-pcx" = [ "org.gnome.gThumb.desktop" ];
+            "image/x-tga" = [ "org.gnome.gThumb.desktop" ];
+            "image/xpm" = [ "org.gnome.gThumb.desktop" ];
+            "image/svg+xml" = [ "org.gnome.gThumb.desktop" ];
+            "image/webp" = [ "org.gnome.gThumb.desktop" ];
+            "image/jxl" = [ "org.gnome.gThumb.desktop" ];
+          };
+        };
+      };
+
+      dconf.settings = {
+        # ...
+        "org/gnome/shell" = {
+          disable-user-extensions = false;
+          always-show-log-out = true;
+
+          # `gnome-extensions list` for a list
+          enabled-extensions = [
+            "user-theme@gnome-shell-extensions.gcampax.github.com"
+            "Vitals@CoreCoding.com"
+            "arcmenu@arcmenu.com"
+            "caffeine@patapon.info"
+            "clipboard-indicator@tudmotu.com"
+            "dash-to-panel@jderose9.github.com"
+            "impatience@gfxmonk.net"
+            "search-light@icedman.github.com"
+            "weatherornot@somepaulo.github.io"
+          ];
+
+          favorite-apps = [
+            "org.gnome.Nautilus.desktop"
+            "org.gnome.Calendar.desktop"
+            "org.gnome.Geary.desktop"
+            "discord.desktop"
+            "code.desktop"
+            "org.wezfurlong.wezterm.desktop"
+            "firefox.desktop"
+          ];
         };
 
-        defaultApplications = {
-          "image/bmp" = [ "org.gnome.gThumb.desktop" ];
-          "image/jpeg" = [ "org.gnome.gThumb.desktop" ];
-          "image/gif" = [ "org.gnome.gThumb.desktop" ];
-          "image/png" = [ "org.gnome.gThumb.desktop" ];
-          "image/tiff" = [ "org.gnome.gThumb.desktop" ];
-          "image/x-bmp" = [ "org.gnome.gThumb.desktop" ];
-          "image/x-ico" = [ "org.gnome.gThumb.desktop" ];
-          "image/x-png" = [ "org.gnome.gThumb.desktop" ];
-          "image/x-pcx" = [ "org.gnome.gThumb.desktop" ];
-          "image/x-tga" = [ "org.gnome.gThumb.desktop" ];
-          "image/xpm" = [ "org.gnome.gThumb.desktop" ];
-          "image/svg+xml" = [ "org.gnome.gThumb.desktop" ];
-          "image/webp" = [ "org.gnome.gThumb.desktop" ];
-          "image/jxl" = [ "org.gnome.gThumb.desktop" ];
+        "org.gnome.desktop.default-applications.terminal" = {
+          exec = "wezterm";
         };
-      };
-    };
 
-    home-manager.users.fred.dconf.settings = {
-      # ...
-      "org/gnome/shell" = {
-        disable-user-extensions = false;
-        always-show-log-out = true;
+        "org/gnome/desktop/peripherals/mouse" = {
+          speed = hmlib.hm.gvariant.mkDouble "-0.3023255813953488";
+        };
 
-        # `gnome-extensions list` for a list
-        enabled-extensions = [
-          "user-theme@gnome-shell-extensions.gcampax.github.com"
-          "Vitals@CoreCoding.com"
-          "arcmenu@arcmenu.com"
-          "caffeine@patapon.info"
-          "clipboard-indicator@tudmotu.com"
-          "dash-to-panel@jderose9.github.com"
-          "impatience@gfxmonk.net"
-          "search-light@icedman.github.com"
-          "weatherornot@somepaulo.github.io"
-        ];
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          # gtk-theme = "adw-gtk3-dark";
+          enable-hot-corners = false;
+          clock-show-seconds = true;
+          clock-show-weekday = true;
+          clock-format = "24h";
+          show-battery-percentage = true;
+        };
 
-        favorite-apps = [
-          "org.gnome.Nautilus.desktop"
-          "org.gnome.Calendar.desktop"
-          "org.gnome.Geary.desktop"
-          "discord.desktop"
-          "code.desktop"
-          "org.wezfurlong.wezterm.desktop"
-          "firefox.desktop"
-        ];
-      };
+        "org.gnome.desktop.calendar" = {
+          show-weekdate = true;
+        };
 
-      "org.gnome.desktop.default-applications.terminal" = {
-        exec = "wezterm";
-      };
+        "org/gnome/shell/extensions/user-theme" = {
+          name = "Catppuccin-GTK-Purple-Dark";
+        };
 
-      "org/gnome/desktop/peripherals/mouse" = {
-        speed = hmlib.hm.gvariant.mkDouble "-0.3023255813953488";
-      };
+        "org/gnome/shell/extensions/arcmenu" = {
+          menu-button-appears = "Icon";
+          menu-layout = "Plasma";
+        };
 
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-        # gtk-theme = "adw-gtk3-dark";
-        enable-hot-corners = false;
-        clock-show-seconds = true;
-        clock-show-weekday = true;
-        clock-format = "24h";
-        show-battery-percentage = true;
-      };
+        "org/gnome/desktop/background" = {
+          picture-uri = "file:///home/${username}/.config/backgrounds/lewis.jpg";
+          picture-uri-dark = "file:///home/${username}/.config/backgrounds/lewis.jpg"; # Updated dark background...same as light for now
+        };
 
-      "org.gnome.desktop.calendar" = {
-        show-weekdate = true;
-      };
+        "org/gnome/shell/extensions/dash-to-panel" = {
+          trans-panel-opacity = 0.5;
+          trans-use-custom-panel-opacity = true;
+          panel-element-positions = ''
+            {"0":[{"element":"showAppsButton","visible":false,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":true,"position":"stackedBR"},{"element":"new-element","visible":true,"position":"stackedBR"}]}
+          '';
+        };
 
-      "org/gnome/shell/extensions/user-theme" = {
-        name = "Catppuccin-GTK-Purple-Dark";
-      };
+        "org/gnome/shell/extensions/weatherornot" = {
+          position = "clock-right";
+        };
 
-      "org/gnome/shell/extensions/arcmenu" = {
-        menu-button-appears = "Icon";
-        menu-layout = "Plasma";
-      };
+        "org/gnome/shell/extensions/search-light" = {
+          shortcut-search = [ "<Control>Space" ];
+        };
 
-      "org/gnome/desktop/background" = {
-        picture-uri = "file:///home/fred/.config/backgrounds/lewis.jpg";
-        picture-uri-dark = "file:///home/fred/.config/backgrounds/lewis.jpg"; # Updated dark background...same as light for now
-      };
-
-      "org/gnome/shell/extensions/dash-to-panel" = {
-        trans-panel-opacity = 0.5;
-        trans-use-custom-panel-opacity = true;
-        panel-element-positions = ''
-          {"0":[{"element":"showAppsButton","visible":false,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":true,"position":"stackedBR"},{"element":"new-element","visible":true,"position":"stackedBR"}]}
-        '';
-      };
-
-      "org/gnome/shell/extensions/weatherornot" = {
-        position = "clock-right";
-      };
-
-      "org/gnome/shell/extensions/search-light" = {
-        shortcut-search = [ "<Control>Space" ];
-      };
-
-      "org/gnome/shell/weather" = {
-        automatic-location = true;
-        locations = [
-          (hmlib.hm.gvariant.mkVariant (
-            hmlib.hm.gvariant.mkTuple [
-              (hmlib.hm.gvariant.mkUint32 2)
-              (hmlib.hm.gvariant.mkVariant (
-                hmlib.hm.gvariant.mkTuple [
-                  "Albuquerque"
-                  "KABQ"
-                  true
-                  [
-                    (hmlib.hm.gvariant.mkTuple [
-                      (hmlib.hm.gvariant.mkDouble "0.6115924645374438")
-                      (hmlib.hm.gvariant.mkDouble "-1.8607779299984337")
-                    ])
+        "org/gnome/shell/weather" = {
+          automatic-location = true;
+          locations = [
+            (hmlib.hm.gvariant.mkVariant (
+              hmlib.hm.gvariant.mkTuple [
+                (hmlib.hm.gvariant.mkUint32 2)
+                (hmlib.hm.gvariant.mkVariant (
+                  hmlib.hm.gvariant.mkTuple [
+                    "Albuquerque"
+                    "KABQ"
+                    true
+                    [
+                      (hmlib.hm.gvariant.mkTuple [
+                        (hmlib.hm.gvariant.mkDouble "0.6115924645374438")
+                        (hmlib.hm.gvariant.mkDouble "-1.8607779299984337")
+                      ])
+                    ]
+                    [
+                      (hmlib.hm.gvariant.mkTuple [
+                        (hmlib.hm.gvariant.mkDouble "0.6123398843363179")
+                        (hmlib.hm.gvariant.mkDouble "-1.8614134916455476")
+                      ])
+                    ]
                   ]
-                  [
-                    (hmlib.hm.gvariant.mkTuple [
-                      (hmlib.hm.gvariant.mkDouble "0.6123398843363179")
-                      (hmlib.hm.gvariant.mkDouble "-1.8614134916455476")
-                    ])
+                ))
+              ]
+            ))
+            (hmlib.hm.gvariant.mkVariant (
+              hmlib.hm.gvariant.mkTuple [
+                (hmlib.hm.gvariant.mkUint32 2)
+                (hmlib.hm.gvariant.mkVariant (
+                  hmlib.hm.gvariant.mkTuple [
+                    "Albuquerque International Airport"
+                    "KABQ"
+                    false
+                    [
+                      (hmlib.hm.gvariant.mkTuple [
+                        (hmlib.hm.gvariant.mkDouble "0.6115924645374438")
+                        (hmlib.hm.gvariant.mkDouble "-1.8607779299984337")
+                      ])
+                    ]
+                    (hmlib.hm.gvariant.mkArray "(dd)" [ ])
                   ]
-                ]
-              ))
-            ]
-          ))
-          (hmlib.hm.gvariant.mkVariant (
-            hmlib.hm.gvariant.mkTuple [
-              (hmlib.hm.gvariant.mkUint32 2)
-              (hmlib.hm.gvariant.mkVariant (
-                hmlib.hm.gvariant.mkTuple [
-                  "Albuquerque International Airport"
-                  "KABQ"
-                  false
-                  [
-                    (hmlib.hm.gvariant.mkTuple [
-                      (hmlib.hm.gvariant.mkDouble "0.6115924645374438")
-                      (hmlib.hm.gvariant.mkDouble "-1.8607779299984337")
-                    ])
-                  ]
-                  (hmlib.hm.gvariant.mkArray "(dd)" [ ])
-                ]
-              ))
-            ]
-          ))
-        ];
-      };
+                ))
+              ]
+            ))
+          ];
+        };
 
-      "org/gnome/Weather" = {
-        locations = [
-          (hmlib.hm.gvariant.mkVariant (
-            hmlib.hm.gvariant.mkTuple [
-              (hmlib.hm.gvariant.mkUint32 2)
-              (hmlib.hm.gvariant.mkVariant (
-                hmlib.hm.gvariant.mkTuple [
-                  "Albuquerque"
-                  "KABQ"
-                  true
-                  [
-                    (hmlib.hm.gvariant.mkTuple [
-                      (hmlib.hm.gvariant.mkDouble "0.6115924645374438")
-                      (hmlib.hm.gvariant.mkDouble "-1.8607779299984337")
-                    ])
+        "org/gnome/Weather" = {
+          locations = [
+            (hmlib.hm.gvariant.mkVariant (
+              hmlib.hm.gvariant.mkTuple [
+                (hmlib.hm.gvariant.mkUint32 2)
+                (hmlib.hm.gvariant.mkVariant (
+                  hmlib.hm.gvariant.mkTuple [
+                    "Albuquerque"
+                    "KABQ"
+                    true
+                    [
+                      (hmlib.hm.gvariant.mkTuple [
+                        (hmlib.hm.gvariant.mkDouble "0.6115924645374438")
+                        (hmlib.hm.gvariant.mkDouble "-1.8607779299984337")
+                      ])
+                    ]
+                    [
+                      (hmlib.hm.gvariant.mkTuple [
+                        (hmlib.hm.gvariant.mkDouble "0.6123398843363179")
+                        (hmlib.hm.gvariant.mkDouble "-1.8614134916455476")
+                      ])
+                    ]
                   ]
-                  [
-                    (hmlib.hm.gvariant.mkTuple [
-                      (hmlib.hm.gvariant.mkDouble "0.6123398843363179")
-                      (hmlib.hm.gvariant.mkDouble "-1.8614134916455476")
-                    ])
+                ))
+              ]
+            ))
+            (hmlib.hm.gvariant.mkVariant (
+              hmlib.hm.gvariant.mkTuple [
+                (hmlib.hm.gvariant.mkUint32 2)
+                (hmlib.hm.gvariant.mkVariant (
+                  hmlib.hm.gvariant.mkTuple [
+                    "Albuquerque International Airport"
+                    "KABQ"
+                    false
+                    [
+                      (hmlib.hm.gvariant.mkTuple [
+                        (hmlib.hm.gvariant.mkDouble "0.6115924645374438")
+                        (hmlib.hm.gvariant.mkDouble "-1.8607779299984337")
+                      ])
+                    ]
+                    (hmlib.hm.gvariant.mkArray "(dd)" [ ])
                   ]
-                ]
-              ))
-            ]
-          ))
-          (hmlib.hm.gvariant.mkVariant (
-            hmlib.hm.gvariant.mkTuple [
-              (hmlib.hm.gvariant.mkUint32 2)
-              (hmlib.hm.gvariant.mkVariant (
-                hmlib.hm.gvariant.mkTuple [
-                  "Albuquerque International Airport"
-                  "KABQ"
-                  false
-                  [
-                    (hmlib.hm.gvariant.mkTuple [
-                      (hmlib.hm.gvariant.mkDouble "0.6115924645374438")
-                      (hmlib.hm.gvariant.mkDouble "-1.8607779299984337")
-                    ])
-                  ]
-                  (hmlib.hm.gvariant.mkArray "(dd)" [ ])
-                ]
-              ))
-            ]
-          ))
-        ];
-      };
+                ))
+              ]
+            ))
+          ];
+        };
 
-      "org/gnome/GWeather4" = {
-        temperature-unit = "centigrade";
+        "org/gnome/GWeather4" = {
+          temperature-unit = "centigrade";
+        };
       };
     };
   };

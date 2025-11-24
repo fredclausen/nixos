@@ -48,6 +48,7 @@
       # centralize username in one place
       user = "fred";
       verbose_name = "Fred Clausen";
+      github_email = "43556888+fredclausen@users.noreply.github.com";
       hmlib = home-manager.lib;
 
       supportedSystems = [
@@ -74,6 +75,7 @@
               inputs
               user
               verbose_name
+              github_email
               hmlib
               ;
           };
@@ -98,6 +100,7 @@
                   user
                   verbose_name
                   hmlib
+                  github_email
                   catppuccin
                   apple-fonts
                   nixvim

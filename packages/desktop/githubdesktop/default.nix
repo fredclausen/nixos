@@ -2,10 +2,12 @@
   lib,
   pkgs,
   config,
+  user,
   ...
 }:
 with lib;
 let
+  username = user;
   cfg = config.desktop.githubdesktop;
 in
 {
@@ -17,7 +19,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.users.fred = {
+    users.users.${username} = {
       packages = with pkgs; [
         github-desktop
       ];

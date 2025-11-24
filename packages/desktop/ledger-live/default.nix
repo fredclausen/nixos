@@ -2,10 +2,12 @@
   lib,
   pkgs,
   config,
+  user,
   ...
 }:
 with lib;
 let
+  username = user;
   cfg = config.desktop.ledger;
 in
 {
@@ -26,7 +28,7 @@ in
       ];
     };
 
-    users.users.fred = {
+    users.users.${username} = {
       packages = with pkgs; [
         ledger-live-desktop
       ];

@@ -1,7 +1,15 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  user,
+  ...
+}:
+let
+  username = user;
+in
 {
   config = {
-    users.users.fred = {
+    users.users.${username} = {
       packages = with pkgs; [
         # add cargo and rustup to the path
         # this is needed for the rust-analyzer language server

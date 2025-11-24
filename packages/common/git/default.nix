@@ -1,4 +1,16 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  user,
+  verbose_name,
+  github_email,
+  ...
+}:
+let
+  username = user;
+  full_name = verbose_name;
+  email = github_email;
+in
 {
   config = {
     environment.systemPackages = [
@@ -12,7 +24,7 @@
       enableSSHSupport = true;
     };
 
-    home-manager.users.fred = {
+    home-manager.users.${username} = {
       programs.diff-so-fancy = {
         enable = true;
         enableGitIntegration = true;
@@ -20,15 +32,15 @@
       programs.git = {
         settings = {
           core = {
-            email = "43556888+fredclausen@users.noreply.github.com";
-            name = "Fred Clausen";
+            email = "${email}";
+            name = "${full_name}";
           };
 
           "credential \"https://github.com\"" = {
-            helper = "!/etc/profiles/per-user/fred/bin/gh auth git-credential";
+            helper = "!/etc/profiles/per-user/${username}/bin/gh auth git-credential";
           };
           "credential \"https://gist.github.com\"" = {
-            helper = "!/etc/profiles/per-user/fred/bin/gh auth git-credential";
+            helper = "!/etc/profiles/per-user/${username}/bin/gh auth git-credential";
           };
         };
 

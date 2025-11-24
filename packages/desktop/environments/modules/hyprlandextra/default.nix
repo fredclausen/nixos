@@ -2,10 +2,12 @@
   lib,
   pkgs,
   config,
+  user,
   ...
 }:
 with lib;
 let
+  username = user;
   cfg = config.desktop.environments.modules.hyprlandextra;
 in
 {
@@ -17,7 +19,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.fred = {
+    home-manager.users.${username} = {
       home.file.".config/hyprextra/" = {
         source = ./hyprextra;
         recursive = true;

@@ -1,6 +1,10 @@
+{ user, ... }:
+let
+  username = user;
+in
 {
   config = {
-    home-manager.users.fred =
+    home-manager.users.${username} =
       {
         config,
         pkgs,

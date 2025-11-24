@@ -3,10 +3,12 @@
   pkgs,
   config,
   hmlib,
+  user,
   ...
 }:
 with lib;
 let
+  username = user;
   cfg = config.desktop.environments.hyprland;
 in
 {
@@ -23,7 +25,7 @@ in
     # Enable the GNOME Desktop Environment.
     services.displayManager.gdm.enable = true;
 
-    users.users.fred = {
+    users.users.${username} = {
       packages = with pkgs; [
         hyprpolkitagent
 
@@ -54,7 +56,7 @@ in
       xwayland.enable = true;
     };
 
-    home-manager.users.fred = {
+    home-manager.users.${username} = {
       home.packages = with pkgs; [
         networkmanagerapplet
       ];
@@ -126,7 +128,7 @@ in
             "systemctl start --user network-manager-applet"
             "~/.config/hyprextra/scripts/sleep"
             "sway-audio-idle-inhibit"
-            "swaybg -o \"*\" -i \"/home/fred/.config/backgrounds/lewis.jpg\" &"
+            "swaybg -o \"*\" -i \"/home/${username}/.config/backgrounds/lewis.jpg\" &"
             "nm-applet --indicator"
             "1password --silent &"
             "udiskie --appindicator -t &"

@@ -2,11 +2,13 @@
   lib,
   pkgs,
   config,
+  user,
   ...
 }:
 with lib;
 let
   cfg = config.desktop.appimage;
+  username = user;
 in
 {
   options.desktop.appimage = {
@@ -18,7 +20,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.users.fred = {
+    users.users.${username} = {
       packages = with pkgs; [
         appimage-run
       ];

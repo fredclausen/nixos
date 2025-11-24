@@ -2,10 +2,12 @@
   lib,
   pkgs,
   config,
+  user,
   ...
 }:
 with lib;
 let
+  username = user;
   cfg = config.desktop.sublimetext;
 in
 {
@@ -17,13 +19,13 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.users.fred = {
+    users.users.${username} = {
       packages = with pkgs; [
         sublime4
       ];
     };
 
-    home-manager.users.fred.xdg = {
+    home-manager.users.${username}.xdg = {
       mimeApps = {
         associations.added = {
           "text/plain" = [ "sublime_text.desktop" ];

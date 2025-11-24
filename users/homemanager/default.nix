@@ -1,6 +1,11 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  user,
+  ...
+}:
 let
-  username = "fred";
+  username = user;
 in
 with lib.hm.gvariant;
 {
