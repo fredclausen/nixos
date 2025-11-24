@@ -6,10 +6,10 @@
 }:
 with lib;
 let
-  cfg = config.desktop.cosmic;
+  cfg = config.desktop.environments.cosmic;
 in
 {
-  options.desktop.cosmic = {
+  options.desktop.environments.cosmic = {
     enable = mkOption {
       description = "Enable Cosmic.";
       default = false;

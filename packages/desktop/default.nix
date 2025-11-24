@@ -32,26 +32,24 @@ in
   };
 
   imports = [
+    ./environments
+
     ./1password
     ./alacritty
     ./appimage
     ./audio
     ./brave
-    ./cosmic
     ./discord
     ./firefox
     ./fonts
     ./ghostty
     ./githubdesktop
-    ./gnome
-    ./hyprland
     ./ladybird
     ./ledger-live
     ./libreoffice
     ./missioncenter
     ./multiviewer
     ./music
-    ./niri
     ./obs
     ./print
     ./sqlitebrowser
@@ -67,12 +65,12 @@ in
   ];
 
   config = mkIf cfg.enable {
+    desktop.environments.enable = true;
+
     desktop.brave.enable = true;
-    desktop.cosmic.enable = true;
     desktop.firefox.enable = true;
     desktop.fonts.enable = true;
     desktop.ghostty.enable = true;
-    desktop.gnome.enable = true;
     desktop.print.enable = true;
     desktop.githubdesktop.enable = true;
     desktop.vscode.enable = true;
@@ -81,8 +79,6 @@ in
     desktop.sublimetext.enable = true;
     desktop.wezterm.enable = true;
     desktop.alacritty.enable = true;
-    desktop.hyprland.enable = true;
-    desktop.niri.enable = true;
     desktop.stockfish.enable = true;
     desktop.libreoffice.enable = true;
     desktop.vlc.enable = true;
@@ -93,7 +89,6 @@ in
     desktop.ladybird.enable = true;
     desktop.music.enable = if cfg.enable_extra then true else false;
     desktop.appimage.enable = if cfg.enable_extra then true else false;
-
     desktop.discord.enable = if cfg.enable_extra then true else false;
     desktop.tradingview.enable = if cfg.enable_extra then true else false;
     desktop.steam.enable = if cfg.enable_games then true else false;

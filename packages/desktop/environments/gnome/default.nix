@@ -7,10 +7,10 @@
 }:
 with lib;
 let
-  cfg = config.desktop.gnome;
+  cfg = config.desktop.environments.gnome;
 in
 {
-  options.desktop.gnome = {
+  options.desktop.environments.gnome = {
     enable = mkOption {
       description = "Install GNOME desktop environment.";
       default = false;

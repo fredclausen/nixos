@@ -6,10 +6,10 @@
 }:
 with lib;
 let
-  cfg = config.desktop.hyprland.modules.clipboard;
+  cfg = config.desktop.environments.modules.clipboard;
 in
 {
-  options.desktop.hyprland.modules.clipboard = {
+  options.desktop.environments.modules.clipboard = {
     enable = mkOption {
       description = "Enable clipboard stuff for hyprland.";
       default = false;

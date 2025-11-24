@@ -8,10 +8,10 @@
 }:
 with lib;
 let
-  cfg = config.desktop.niri;
+  cfg = config.desktop.environments.niri;
 in
 {
-  options.desktop.niri = {
+  options.desktop.environments.niri = {
     enable = mkOption {
       description = "Install Niri.";
       default = false;
@@ -48,7 +48,7 @@ in
     };
     programs.xwayland.enable = true;
 
-    desktop.hyprland.modules.enable = true;
+    desktop.environments.modules.enable = true;
 
     # Enable the GNOME Desktop Environment.
     services.displayManager.gdm.enable = true;

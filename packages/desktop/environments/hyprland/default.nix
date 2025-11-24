@@ -7,22 +7,18 @@
 }:
 with lib;
 let
-  cfg = config.desktop.hyprland;
+  cfg = config.desktop.environments.hyprland;
 in
 {
-  options.desktop.hyprland = {
+  options.desktop.environments.hyprland = {
     enable = mkOption {
       description = "Install Hyprland desktop environment.";
       default = false;
     };
   };
 
-  imports = [
-    ./modules
-  ];
-
   config = mkIf cfg.enable {
-    desktop.hyprland.modules.enable = true;
+    desktop.environments.modules.enable = true;
 
     # Enable the GNOME Desktop Environment.
     services.displayManager.gdm.enable = true;

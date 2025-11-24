@@ -6,10 +6,10 @@
 }:
 with lib;
 let
-  cfg = config.desktop.hyprland.modules.fuzzel;
+  cfg = config.desktop.environments.modules.fuzzel;
 in
 {
-  options.desktop.hyprland.modules.fuzzel = {
+  options.desktop.environments.modules.fuzzel = {
     enable = mkOption {
       description = "Enable fuzzel.";
       default = false;

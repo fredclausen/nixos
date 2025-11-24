@@ -6,12 +6,12 @@
 }:
 with lib;
 let
-  cfg = config.desktop.hyprland.modules.pamixer;
+  cfg = config.desktop.environments.modules.ulauncher;
 in
 {
-  options.desktop.hyprland.modules.pamixer = {
+  options.desktop.environments.modules.ulauncher = {
     enable = mkOption {
-      description = "Enable pamixer.";
+      description = "Enable ulauncher.";
       default = false;
     };
   };
@@ -19,7 +19,7 @@ in
   config = mkIf cfg.enable {
     users.users.fred = {
       packages = with pkgs; [
-        pamixer
+        ulauncher
       ];
     };
   };

@@ -6,10 +6,10 @@
 }:
 with lib;
 let
-  cfg = config.desktop.hyprland.modules.swaync;
+  cfg = config.desktop.environments.modules.swaync;
 in
 {
-  options.desktop.hyprland.modules.swaync = {
+  options.desktop.environments.modules.swaync = {
     enable = mkOption {
       description = "Enable swaync.";
       default = false;

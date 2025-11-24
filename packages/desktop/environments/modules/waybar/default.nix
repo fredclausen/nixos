@@ -6,10 +6,10 @@
 }:
 with lib;
 let
-  cfg = config.desktop.hyprland.modules.waybar;
+  cfg = config.desktop.environments.modules.waybar;
 in
 {
-  options.desktop.hyprland.modules.waybar = {
+  options.desktop.environments.modules.waybar = {
     enable = mkOption {
       description = "Enable waybar.";
       default = false;

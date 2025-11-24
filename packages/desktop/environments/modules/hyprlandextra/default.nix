@@ -6,10 +6,10 @@
 }:
 with lib;
 let
-  cfg = config.desktop.hyprland.modules.hyprlandextra;
+  cfg = config.desktop.environments.modules.hyprlandextra;
 in
 {
-  options.desktop.hyprland.modules.hyprlandextra = {
+  options.desktop.environments.modules.hyprlandextra = {
     enable = mkOption {
       description = "Enable extra stuff for hyprland.";
       default = false;
