@@ -8,8 +8,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../packages
-    ../../users
   ];
 
   nix.settings.experimental-features = [
