@@ -33,6 +33,10 @@ in
 
           input = {
             mod-key = "Super";
+            focus-follows-mouse = {
+              enable = true;
+              max-scroll-amount = "25%";
+            };
           };
 
           spawn-at-startup = [
@@ -137,6 +141,43 @@ in
             { command = [ "wezterm" ]; }
           ];
 
+          layout = {
+            # Hyprland gaps → Niri gaps
+            gaps = 2;
+
+            # Border (Hypr: border_size + colors)
+            border = {
+              enable = true;
+              width = 2;
+
+              active.color = "#bd93f9"; # closest match to your gradient
+              inactive.color = "#44475aaa"; # matches rgba(44475aaa)
+            };
+
+            # Niri's focus ring = Hyprland's active border highlight
+            focus-ring = {
+              enable = true;
+              width = 2;
+
+              active.color = "#e0e0e0ff";
+              inactive.color = "#00000000";
+            };
+
+            # Niri doesn't do rounded corners or shadows → ignore Hypr "decoration"
+          };
+
+          overview.backdrop-color = "#0f0f0f";
+
+          switch-events = {
+            "lid-close" = {
+              action = {
+                spawn = [
+                  "~/.config/hyprextra/scripts/pauseandsleep"
+                ];
+              };
+            };
+          };
+
           binds = {
 
             # --- App Launchers ---
@@ -191,7 +232,9 @@ in
 
             # Lock / sleep
             "Mod+L".action = {
-              spawn = [ "/home/fred/.config/hyprextra/scripts/pauseandsleep" ];
+              spawn = [
+                "/home/fred/.config/hyprextra/scripts/pauseandsleep"
+              ];
             };
 
             # --- Move windows (Hypr: movewindow) ---
@@ -206,6 +249,13 @@ in
             };
             "Mod+Down".action = {
               move-window-to-workspace-down = { };
+            };
+
+            "Mod+Equal".action = {
+              set-column-width = "+10%";
+            };
+            "Mod+Minus".action = {
+              set-column-width = "-10%";
             };
 
             # --- Move focus (Hypr: movefocus) ---
@@ -309,8 +359,108 @@ in
               focus-workspace-up = { };
             };
 
-          };
+            "XF86AudioRaiseVolume".action = {
+              spawn = [
+                "~/.config/hyprextra/scripts/volume"
+                "--inc"
+              ];
+            };
 
+            "XF86AudioLowerVolume".action = {
+              spawn = [
+                "~/.config/hyprextra/scripts/volume"
+                "--dec"
+              ];
+            };
+
+            "XF86AudioMute".action = {
+              spawn = [
+                "~/.config/hyprextra/scripts/volume"
+                "--toggle"
+              ];
+            };
+
+            "XF86AudioMicMute".action = {
+              spawn = [
+                "~/.config/hyprextra/scripts/volume"
+                "--toggle-mic"
+              ];
+            };
+
+            "XF86AudioPlay".action = {
+              spawn = [
+                "playerctl"
+                "play-pause"
+              ];
+            };
+
+            "XF86AudioPause".action = {
+              spawn = [
+                "playerctl"
+                "play-pause"
+              ];
+            };
+
+            "XF86AudioNext".action = {
+              spawn = [
+                "playerctl"
+                "next"
+              ];
+            };
+
+            "XF86AudioPrev".action = {
+              spawn = [
+                "playerctl"
+                "previous"
+              ];
+            };
+
+            # "XKB_KEY_XF86KbdBrightnessUp".action = {
+            #   spawn = [
+            #     "~/.config/hyprextra/scripts/kbbacklight"
+            #     "--inc"
+            #   ];
+            # };
+
+            # "XKB_KEY_XF86KbdBrightnessDown".action = {
+            #   spawn = [
+            #     "~/.config/hyprextra/scripts/kbbacklight"
+            #     "--dec"
+            #   ];
+            # };
+
+            "XF86SelectiveScreenshot".action = {
+              spawn = [
+                "grim"
+                "-g"
+                "$(slurp)"
+              ];
+            };
+
+            "XF86Display".action = {
+              spawn = [
+                "~/.config/hyprextra/scripts/pauseandsleep"
+              ];
+            };
+
+            "XF86Favorites".action = {
+              spawn = [ "fuzzel" ];
+            };
+
+            "Mod+XF86MonBrightnessUp".action = {
+              spawn = [
+                "~/.config/hyprextra/scripts/kbbacklight"
+                "--inc"
+              ];
+            };
+
+            "Mod+XF86MonBrightnessDown".action = {
+              spawn = [
+                "~/.config/hyprextra/scripts/kbbacklight"
+                "--dec"
+              ];
+            };
+          };
         };
       };
 

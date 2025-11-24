@@ -69,6 +69,23 @@
           };
         };
       };
+
+      binds = {
+        "XF86MonBrightnessUp".action = {
+          spawn = [
+            "~/.config/hyprextra/scripts/backlight"
+            "64764"
+            "--inc"
+          ];
+        };
+        "XF86MonBrightnessDown".action = {
+          spawn = [
+            "~/.config/hyprextra/scripts/backlight"
+            "64764"
+            "--dec"
+          ];
+        };
+      };
     };
 
     wayland.windowManager.hyprland.settings = {
