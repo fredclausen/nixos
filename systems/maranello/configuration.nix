@@ -33,6 +33,7 @@
     enable = true;
   };
 
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_testing;
   networking.hostName = "maranello"; # Define your hostname.
 
   environment.systemPackages = with pkgs; [
