@@ -70,6 +70,55 @@
   home-manager.users.fred = {
     home.file.".config/monitors.xml".text = builtins.readFile ./monitors.xml;
 
+    programs.niri.settings = {
+      outputs = {
+        "DP-1" = {
+          scale = 1.0;
+
+          mode = {
+            width = 2560;
+            height = 1440;
+            refresh = 144.0;
+          };
+
+          position = {
+            x = 0;
+            y = 0;
+          };
+        };
+
+        "DP-2" = {
+          scale = 1.0;
+
+          mode = {
+            width = 2560;
+            height = 1440;
+            refresh = 144.0;
+          };
+
+          position = {
+            x = -2560;
+            y = 0;
+          };
+        };
+
+        "HDMI-A-1" = {
+          scale = 1.0;
+
+          mode = {
+            width = 2560;
+            height = 1440;
+            refresh = 60.0;
+          };
+
+          position = {
+            x = -2560;
+            y = -1440;
+          };
+        };
+      };
+    };
+
     wayland.windowManager.hyprland.settings = {
       monitor = [
         "DP-1, highrr, 0x0, 1"

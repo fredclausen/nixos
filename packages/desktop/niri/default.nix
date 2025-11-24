@@ -19,12 +19,45 @@ in
   };
 
   config = mkIf cfg.enable {
+    users.users.fred = {
+      packages = with pkgs; [
+        hyprpolkitagent
+
+        grim
+        hyprshot
+        slurp
+        swaybg
+        swayidle
+        swaylock
+        wev
+        playerctl
+        libnotify
+        brightnessctl
+        sway-audio-idle-inhibit
+        swaynotificationcenter
+        blueman
+        hyprpicker
+        udiskie
+        udisks
+        libappindicator-gtk3
+      ];
+    };
+
     programs.niri = {
       enable = true;
     };
     programs.xwayland.enable = true;
 
+    desktop.hyprland.modules.enable = true;
+
+    # Enable the GNOME Desktop Environment.
+    services.displayManager.gdm.enable = true;
+
     home-manager.users.fred = {
+      home.packages = with pkgs; [
+        networkmanagerapplet
+      ];
+
       programs.niri = {
         enable = true;
         settings = {
