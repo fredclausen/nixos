@@ -119,14 +119,21 @@
           hmModules = [ ./systems/maranello/home.nix ];
         };
         sdrhub = self.lib.mkSystem "sdrhub";
-        acarshub = self.lib.mkSystem "acarshub";
+        acarshub = self.lib.mkSystem {
+          hostName = "acarshub";
+          hmModules = [ ];
+        };
+
         vdlmhub = self.lib.mkSystem "vdlmhub";
         hfdlhub1 = self.lib.mkSystem {
           hostName = "hfdlhub1";
           hmModules = [ ];
         };
 
-        hfdlhub2 = self.lib.mkSystem "hfdlhub2";
+        hfdlhub2 = self.lib.mkSystem {
+          hostName = "hfdlhub2";
+          hmModules = [ ];
+        };
       };
 
       ##########################################################################
