@@ -121,7 +121,11 @@
         sdrhub = self.lib.mkSystem "sdrhub";
         acarshub = self.lib.mkSystem "acarshub";
         vdlmhub = self.lib.mkSystem "vdlmhub";
-        hfdlhub1 = self.lib.mkSystem "hfdlhub1";
+        hfdlhub1 = self.lib.mkSystem {
+          hostName = "hfdlhub1";
+          hmModules = [ ];
+        };
+
         hfdlhub2 = self.lib.mkSystem "hfdlhub2";
       };
 
