@@ -252,10 +252,13 @@ in
             };
 
             "Mod+Equal".action = {
-              set-column-width = "+10%";
+              set-column-width = "60%";
             };
             "Mod+Minus".action = {
-              set-column-width = "-10%";
+              set-column-width = "40%";
+            };
+            "Mod+Backspace".action = {
+              set-column-width = "100%";
             };
 
             # --- Move focus (Hypr: movefocus) ---
