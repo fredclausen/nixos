@@ -107,7 +107,13 @@
       ##########################################################################
 
       nixosConfigurations = {
-        Daytona = self.lib.mkSystem "daytona";
+        Daytona = self.lib.mkSystem {
+          hostName = "daytona";
+          hmModules = [
+            ./systems/daytona/home.nix
+          ];
+        };
+
         maranello = self.lib.mkSystem {
           hostName = "maranello";
           hmModules = [ ./systems/maranello/home.nix ];
@@ -117,7 +123,6 @@
         vdlmhub = self.lib.mkSystem "vdlmhub";
         hfdlhub1 = self.lib.mkSystem "hfdlhub1";
         hfdlhub2 = self.lib.mkSystem "hfdlhub2";
-        nebula = self.lib.mkSystem "nebula";
       };
 
       ##########################################################################
