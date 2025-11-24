@@ -124,7 +124,11 @@
           hmModules = [ ];
         };
 
-        vdlmhub = self.lib.mkSystem "vdlmhub";
+        vdlmhub = self.lib.mkSystem {
+          hostName = "vdlmhub";
+          hmModules = [ ];
+        };
+
         hfdlhub1 = self.lib.mkSystem {
           hostName = "hfdlhub1";
           hmModules = [ ];
