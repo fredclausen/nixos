@@ -1,20 +1,32 @@
 {
-  description = "Nixos config flake";
+  description = "Fred's NixOS config flake";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # https://github.com/catppuccin/nix
+
     catppuccin.url = "github:catppuccin/nix";
+
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    git-hooks.url = "github:cachix/git-hooks.nix";
-    git-hooks.inputs.nixpkgs.follows = "nixpkgs";
+
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-utils.url = "github:numtide/flake-utils";
+
     nixvim = {
       url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    niri = {
+      url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -29,9 +41,11 @@
       git-hooks,
       flake-utils,
       nixvim,
+      niri,
       ...
     }:
     let
+      inherit (self) outputs;
       user = "fred";
       hmlib = home-manager.lib;
 
@@ -127,13 +141,16 @@
         };
 
         Daytona = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs hmlib; };
+          specialArgs = { inherit inputs hmlib niri; };
+
           modules = [
             ./systems/daytona/configuration.nix
             home-manager.nixosModules.home-manager
             catppuccin.nixosModules.catppuccin
-
             {
+              nixpkgs.overlays = [
+                inputs.niri.overlays.niri
+              ];
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.fred = {
@@ -145,6 +162,7 @@
                   ./users/homemanager
                   catppuccin.homeModules.catppuccin
                   nixvim.homeModules.nixvim
+                  niri.homeModules.niri
                 ];
 
                 programs.wezterm = {
@@ -163,6 +181,7 @@
                   hmlib
                   catppuccin
                   apple-fonts
+                  niri
                   ;
               };
             }
