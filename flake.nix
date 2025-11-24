@@ -103,7 +103,7 @@
         };
 
       ##########################################################################
-      ## Actual system definitions — now extremely small
+      ## System Definitions                                                  ##
       ##########################################################################
 
       nixosConfigurations = {
@@ -118,7 +118,12 @@
           hostName = "maranello";
           hmModules = [ ./systems/maranello/home.nix ];
         };
-        sdrhub = self.lib.mkSystem "sdrhub";
+
+        sdrhub = self.lib.mkSystem {
+          hostName = "sdrhub";
+          hmModules = [ ];
+        };
+
         acarshub = self.lib.mkSystem {
           hostName = "acarshub";
           hmModules = [ ];
