@@ -1,4 +1,14 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  user,
+  verbose_name,
+  ...
+}:
+let
+  username = user;
+  full_name = verbose_name;
+in
 {
   config = {
     hardware.rtl-sdr.enable = true;
@@ -6,7 +16,7 @@
 
     services.udev.packages = [ pkgs.rtl-sdr ]; # (there might be other packages that require udev here too)
 
-    home-manager.users.fred =
+    home-manager.users.${username} =
       {
         config,
         pkgs,
@@ -18,9 +28,9 @@
         #   config.lib.file.mkOutOfStoreSymlink "/home/fred/GitHub/nixos/dotfiles/fred/.config/nvim";
       };
 
-    users.users.fred = {
+    users.users.${username} = {
       isNormalUser = true;
-      description = "Fred Clausen";
+      description = "${full_name}";
       extraGroups = [
         "networkmanager"
         "wheel"

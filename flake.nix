@@ -47,6 +47,7 @@
     let
       # centralize username in one place
       user = "fred";
+      verbose_name = "Fred Clausen";
       hmlib = home-manager.lib;
 
       supportedSystems = [
@@ -69,7 +70,12 @@
         }:
         nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs user hmlib;
+            inherit
+              inputs
+              user
+              verbose_name
+              hmlib
+              ;
           };
 
           modules = [
@@ -90,6 +96,7 @@
                   inputs
                   self
                   user
+                  verbose_name
                   hmlib
                   catppuccin
                   apple-fonts
