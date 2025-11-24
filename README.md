@@ -1,79 +1,120 @@
-# nixos
+# NixOS Configuration Flake
 
 ![Hyprland](hyprland.png "NixOS with Hyprland")
 
-## What is this?
+## Overview
 
-My personal NixOS configuration. It uses home manager to manage user package configuration. However, I have some systems (like MacOS) that are not running NixOS, so for programs that are common I have NixOS import the configuration for those apps directly from a common dot file in this repo.
+This repository contains **my personal NixOS configuration**, built
+around:
 
-## Jumping in point
+- **Nix Flakes**
+- **Home Manager**
+- **Hyprland / GNOME**
+- A shared set of dotfiles for both **NixOS** and **non-NixOS**
+  machines (e.g., macOS)
 
-The `flake.nix` is the jumping in point for the configuration. It has a few systems defined:
+It is designed primarily for my own systems, but it can serve as a
+**reference or starting point** if you are building your own flake-based
+NixOS setup.
 
-| System Name | Description        | "Profile"                                      |
-| ----------- | ------------------ | ---------------------------------------------- |
-| Daytona     | My personal laptop | Desktop + Extra Packages + Development         |
-| Nebula      | My personal laptop | Desktop + Extra Packages + Development         |
-| Maranello   | Home Workstation   | Desktop + Extra Packages + Games + Development |
-| acarshub    | Server             | Server + Development                           |
-| vdlmhub     | Server             | Server + Development                           |
+## Systems Included
 
-> [!NOTE]
-> the desktop stuff in the packages directory is enabled for all systems right now. However, once I add in servers the option to configure it will make sense.
+The main entry point is [`flake.nix`](./flake.nix).\
+It defines several host configurations:
 
-## Do you want to use this?
+| System Name   | Description      | Profile                                                    |
+| ------------- | ---------------- | ---------------------------------------------------------- |
+| **Daytona**   | Personal laptop  | Desktop + Extra Packages + Development                     |
+| **Maranello** | Home workstation | Desktop + Extra Packages + Games + Streaming + Development |
+| **acarshub**  | Server           | Server + Development                                       |
+| **vdlmhub**   | Server           | Server + Development                                       |
+| **hfdlhub-1** | Server           | Server + Development                                       |
+| **hfdlhub-2** | Server           | Server + Development                                       |
 
-It's a good starting point for your nix journey, but see [Caveats](#caveats). If you want to use this, follow the steps below:
+## Using This Configuration (If You Really Want To)
 
-1. Install NixOs using a graphical installer. I suggest gnome.
-2. Clone this repo to your home directory.
-3. Remove all system configs from `flake.nix` except `maranello`
-4. Rename the system to your system name
-5. Rename the `system/maranello` directory to `system/<system name>`
-6. Copy your `/etc/nixos/hardware-configuration.nix` to `system/<system name>/hardware-configuration.nix`
-7. Search the code base for `fred` and replace it with your username
-8. If you also replace any pathing to dot files, make sure you rename `dotfiles/fred` to `dotfiles/<your username>`
-9. In `system/configuration.nix` replace `maranello` with your system name
-10. In the cloned directory, run `sudo nixos-rebuild switch --flake .#<system name>`
-11. (optional, if you use github) Log in with github (`gh auth login`)
-12. (optional), if you have special dot files, clone them and run `stow -vt ~ *`
-13. (optional) If you have ssh keys, add them to `~/.ssh` and `ssh-add`
-14. (optional) to make VS code work correctly add:
+This is mostly here for my own machines---but if you want to adopt it:
 
-    ```json
-    "password-store": "gnome"
-    ```
+1. Install NixOS (graphical installer recommended --- GNOME works
+   fine).
+2. Clone this repo into your home directory.
+3. In `flake.nix`, remove all systems except **maranello**.
+4. Rename `maranello` to your desired hostname.
+5. Rename `system/maranello` → `system/<your system name>`.
+6. Copy your generated `/etc/nixos/hardware-configuration.nix` into
+   that directory.
+7. Search for the username `fred` and replace with your own.
+8. Update dotfile paths (rename `dotfiles/fred` →
+   `dotfiles/<your username>` if needed).
+9. In your `system/<system>/configuration.nix`, replace `maranello`
+   with your system name.
+10. Build and switch:
 
-    to your `~/.vscode/argv.json`
+```bash
+sudo nixos-rebuild switch --flake .#<system name>
+```
 
-15. (optional) In nvim, for github copilot, run `:Copilot auth`
+### Optional Post-Install Steps
 
-In your `system/<system name>/configuration.nix` the following options can be set:
+- Authenticate GitHub:
 
-| Option                   | Description                                                                                                            | Default |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------- | ------- |
-| desktop.enable           | Enable desktop environment                                                                                             | false   |
-| desktop.enable_extra     | Enable extra packages. These are gated because on my VM there are a handful of packages that will not work on aarch64. | false   |
-| desktop.enable_games     | Install steam.                                                                                                         | false   |
-| desktop.enable_streaming | Install OBS and other streaming packages.                                                                              | false   |
+  ```bash
+  gh auth login
+  ```
+
+- Bring in any extra dotfiles:
+
+  ```bash
+  stow -vt ~ *
+  ```
+
+- Install SSH keys into `~/.ssh` and run `ssh-add`.
+
+- Fix VS Code keyring integration by adding:
+
+  ```json
+  "password-store": "gnome"
+  ```
+
+  to `~/.vscode/argv.json`.
+
+- In Neovim, authenticate GitHub Copilot:
+
+```bash
+      :Copilot auth
+```
+
+## Configurable Options
+
+Each system's `configuration.nix` supports these options:
+
+| Option                     | Description                                             | Default |
+| -------------------------- | ------------------------------------------------------- | ------- |
+| `desktop.enable`           | Enables the desktop environment                         | `false` |
+| `desktop.enable_extra`     | Installs "extra" packages (some may fail on aarch64 VM) | `false` |
+| `desktop.enable_games`     | Installs Steam and related gaming packages              | `false` |
+| `desktop.enable_streaming` | Installs OBS and streaming-related packages             | `false` |
 
 ## Caveats
 
-> [!WARNING]
-> There are a few non-nixy things here. For instance, development packages are installed system wide. This is done to make lazygit work, as well as a few other random things that needed access to system development packages.
+> \[!WARNING\] This is **not** a pure-Nix, perfectly-immutable setup.
 >
-> Additionally, all of those optional steps (or most of them, anyway) probably should be automagically configured declaratively. I mean, that's why we're using Nix.
+> Some development tools are installed **system-wide** to make tools
+> like `lazygit` work cleanly.\
+> Several optional post-install steps are still **imperative**, and
+> should ideally be baked into declarative modules in the future.
+>
+> Treat this as a functional starting point---not an example of strict
+> Nix purity.
 
-## Provided Packages
-
-This is an incomplete list, but here are some of the packages that are provided:
+## Included Packages (Partial List)
 
 ### Graphical Environments
 
-- Gnome
-- hyprland
+- GNOME
+- Hyprland
 
-#### Hyprland
+#### Hyprland Tools
 
 - fuzzel
 - waybar
@@ -89,7 +130,7 @@ This is an incomplete list, but here are some of the packages that are provided:
 
 - Alacritty
 - Ghostty
-- Wezterm (default)
+- WezTerm _(default)_
 
 #### Editors
 
@@ -97,12 +138,12 @@ This is an incomplete list, but here are some of the packages that are provided:
 - VS Code
 - Sublime Text
 
-#### Shells
+### Shells
 
-- Bash
-- ZSH (default)
+- bash
+- Zsh _(default)_
 
-#### Shell Utilities and Programs
+### CLI Tools
 
 - bat
 - eza
