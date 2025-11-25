@@ -2,9 +2,12 @@
   config,
   pkgs,
   inputs,
+  user,
   ...
 }:
-
+let
+  username = user;
+in
 {
   imports = [
     ./hardware-configuration.nix
