@@ -25,13 +25,6 @@ with lib.hm.gvariant;
   fonts.fontconfig.enable = true;
 
   home = {
-    username = "${username}";
-    homeDirectory = "/home/${username}";
     stateVersion = stateVersion;
-
-    packages = with pkgs; [
-      zoxide
-      oh-my-zsh
-    ];
   };
 }

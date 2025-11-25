@@ -28,6 +28,12 @@
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    darwin = {
+      url = "github:lnl7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -41,6 +47,7 @@
       flake-utils,
       nixvim,
       niri,
+      darwin,
       ...
     }:
 
@@ -112,6 +119,76 @@
                   niri
                   stateVersion
                   ;
+              };
+            }
+          ]
+          ++ extraModules;
+        };
+
+      lib.mkDarwinSystem =
+        {
+          hostName,
+          hmModules ? [ ],
+          extraModules ? [ ],
+          stateVersion ? "25.05",
+        }:
+        darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+
+          specialArgs = {
+            inherit
+              inputs
+              user
+              verbose_name
+              github_email
+              github_signing_key
+              hmlib
+              stateVersion
+              ;
+          };
+
+          modules = [
+            ./macflake/darwin/${hostName}.nix
+            ./macflake/packages/configuration.nix
+
+            home-manager.darwinModules.home-manager
+
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+
+              home-manager.users.${user} = {
+                imports = [ ./macflake/home-manager ] ++ hmModules;
+
+                catppuccin = {
+                  enable = true;
+                  flavor = "mocha";
+                  accent = "lavender";
+                };
+              };
+
+              home-manager.extraSpecialArgs = {
+                inherit
+                  inputs
+                  self
+                  user
+                  verbose_name
+                  hmlib
+                  github_email
+                  github_signing_key
+                  catppuccin
+                  nixvim
+                  stateVersion
+                  ;
+              };
+
+              # Darwin Nix settings
+              nix = {
+                optimise.automatic = true;
+                settings.experimental-features = [
+                  "nix-command"
+                  "flakes"
+                ];
               };
             }
           ]
