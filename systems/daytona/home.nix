@@ -14,7 +14,10 @@ in
 
   imports = [
     ../../modules/sync-compose.nix
+    ../../modules/ansible/ansible.nix
   ];
+
+  programs.ansible.enable = true;
 
   programs.sync-compose = {
     enable = true;

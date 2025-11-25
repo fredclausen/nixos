@@ -11,7 +11,10 @@ in
   # Host-specific Home Manager config for maranello
   imports = [
     ../../modules/sync-compose.nix
+    ../../modules/ansible/ansible.nix
   ];
+
+  programs.ansible.enable = true;
 
   # Per-user monitors.xml in $HOME
   home.file.".config/monitors.xml".text = builtins.readFile ./monitors.xml;

@@ -34,14 +34,14 @@ updatenix() {
 updatedocker_ansible() {
   echo "Running Docker update playbook..."
   pushd "$ANSIBLE_DIR" >/dev/null || return
-  ansible-playbook -i inventory.yaml update_docker.yaml
+  ansible-playbook -i inventory.yaml plays/update_docker.yaml
   popd >/dev/null || return
 }
 
 updatesystems_ansible() {
   echo "Running system update playbook..."
   pushd "$ANSIBLE_DIR" >/dev/null || return
-  ansible-playbook -i inventory.yaml update_servers.yaml --ask-become-pass
+  ansible-playbook -i inventory.yaml plays/update_servers.yaml --ask-become-pass
   popd >/dev/null || return
 }
 
@@ -49,7 +49,7 @@ rebootsystem_ansible() {
   [[ -z "$1" ]] && echo "Provide a system name" && return
   echo "Rebooting $1..."
   pushd "$ANSIBLE_DIR" >/dev/null || return
-  ansible-playbook -i inventory.yaml -e "target_hosts=$1" reboot_systems.yaml --ask-become-pass
+  ansible-playbook -i inventory.yaml -e "target_hosts=$1" plays/reboot_systems.yaml --ask-become-pass
   popd >/dev/null || return
 }
 

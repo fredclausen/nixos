@@ -14,12 +14,5 @@ in
         ansible
       ];
     };
-
-    home-manager.users.${username} = {
-      home.file.".ansible" = {
-        source = ./plays;
-        recursive = true;
-      };
-    };
   };
 }
