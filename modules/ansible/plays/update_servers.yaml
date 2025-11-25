@@ -25,7 +25,8 @@
         path: /run/reboot-required
       register: nixos_reboot
 
-    - meta: end_host
+    - name: End host if no reboot needed (NixOS)
+      meta: end_host
       when: not nixos_reboot.stat.exists
 
     - name: System needs reboot (NixOS)
@@ -51,7 +52,8 @@
       stat:
         path: /var/run/reboot-required
       register: check_reboot
-    - meta: end_host
+    - name: End host if no reboot needed (Ubuntu)
+      meta: end_host
       when: not check_reboot.stat.exists
     - name: System needs reboot
       debug:
