@@ -49,6 +49,7 @@
       user = "fred";
       verbose_name = "Fred Clausen";
       github_email = "43556888+fredclausen@users.noreply.github.com";
+      github_signing_key = "F406B080289FEC21";
       hmlib = home-manager.lib;
 
       supportedSystems = [
@@ -76,6 +77,7 @@
               user
               verbose_name
               github_email
+              github_signing_key
               hmlib
               ;
           };
@@ -101,6 +103,7 @@
                   verbose_name
                   hmlib
                   github_email
+                  github_signing_key
                   catppuccin
                   apple-fonts
                   nixvim

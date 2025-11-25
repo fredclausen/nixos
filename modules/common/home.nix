@@ -4,6 +4,9 @@
   lib,
   inputs,
   user,
+  verbose_name,
+  github_email,
+  github_signing_key,
   ...
 }:
 
@@ -44,8 +47,40 @@ in
     inputs.niri.homeModules.niri
   ];
 
-  # dotfiles that every host shares
-  home.file.".gitconfig".source = ../../dotfiles/${user}/.gitconfig;
+  home.file.".gitconfig".text = ''
+    [filter "lfs"]
+            required = true
+            clean = git-lfs clean -- %f
+            smudge = git-lfs smudge -- %f
+            process = git-lfs filter-process
+
+    [user]
+            name = ${verbose_name}
+            email = ${github_email}
+            signingkey = ${github_signing_key}
+
+    [commit]
+            gpgsign = true
+
+    [gpg]
+      program = /run/current-system/sw/bin/gpg
+
+    [core]
+        pager = delta
+
+    [interactive]
+        diffFilter = delta --color-only
+
+    [delta]
+        navigate = true
+        side-by-side = true
+
+    [merge]
+        conflictstyle = diff3
+
+    [diff]
+        colorMoved = default
+  '';
 
   programs.wezterm.extraConfig = builtins.readFile ../../dotfiles/${user}/.wezterm.lua;
 
