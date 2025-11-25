@@ -59,15 +59,6 @@
         ];
 
         programs.firefox.enable = true;
-
-        programs.wezterm = {
-          extraConfig = builtins.readFile ../../dotfiles/fred/.wezterm_darwin.lua;
-        };
-        programs.alacritty = {
-          settings = (
-            builtins.fromTOML (builtins.readFile ../../dotfiles/fred/.config/alacritty_darwin.toml)
-          );
-        };
       };
     fonts = {
       packages = with pkgs; [
