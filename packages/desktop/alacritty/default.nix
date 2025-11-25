@@ -5,18 +5,22 @@
   user,
   ...
 }:
+
 let
   username = user;
   cfg = config.desktop.alacritty;
 
-  isDarwin = pkgs.stdenv.isDarwin;
+  # Pull from the shared terminal module
+  t = config.terminal;
 
-  fontName = if isDarwin then "CaskaydiaCove Nerd Font" else "Caskaydia Cove Nerd Font";
+  isDarwin = pkgs.stdenv.isDarwin;
 in
 {
   options.desktop.alacritty = {
     enable = lib.mkEnableOption "Enable Alacritty terminal emulator";
   };
+
+  imports = [ ../../../modules/terminal/common.nix ];
 
   config = lib.mkIf cfg.enable {
     home-manager.users.${username} = {
@@ -25,7 +29,7 @@ in
       programs.alacritty = {
         enable = true;
 
-        # Full TOML config is generated here via Nix → TOML
+        # TOML config generated via Nix → TOML
         settings = {
           env.TERM = "xterm-256color";
 
@@ -34,21 +38,26 @@ in
               x = 10;
               y = 10;
             };
+
             decorations = "Buttonless";
-            opacity = 1.0;
+
+            # opacity from shared module
+            opacity = t.opacity;
+
             blur = true;
 
-            # macOS only field; harmless on Linux but let's be clean
             option_as_alt = lib.mkIf isDarwin "Both";
           };
 
           font = {
-            normal.family = fontName;
-            size = 12;
+            # shared font family and size
+            normal.family = t.font.family;
+            size = t.font.size;
           };
         };
       };
 
+      # Catppuccin still allowed to inject its theme overrides
       catppuccin.alacritty.enable = true;
     };
   };
