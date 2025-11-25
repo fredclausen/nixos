@@ -1,0 +1,34 @@
+#!/usr/bin/env zsh
+# shellcheck shell=bash disable=SC2139
+
+alias cd="z"
+
+alias uz="${USER_HOME}/.config/scripts/update-zsh-stuff.sh"
+alias ugh="${USER_HOME}/.config/scripts/update-all-git.sh ${GITHUB_DIR}"
+alias ipc="${USER_HOME}/.config/scripts/install-all-precommit.sh ${GITHUB_DIR}"
+alias scr="${USER_HOME}/.config/scripts/sync-compose.sh"
+alias ub="${USER_HOME}/.config/scripts/update-brew.sh"
+
+alias ls="lsd -la"
+alias co="rustup update"
+alias gc="gcverify"
+alias gcn="gcnoverify"
+alias gp="gppush"
+
+alias ng="nvim ${GITHUB_DIR}"
+alias ngf="nvim ${GITHUB_DIR}/freminal"
+alias ngs="nvim ${GITHUB_DIR}/sdre-hub"
+alias ngc="nvim_custom"
+alias na="nvim ${GITHUB_DIR}/docker-acarshub"
+alias n="nvim"
+
+alias rds="remove_dsstore"
+alias cat="bat --color always"
+alias c="code ."
+
+alias updatedocker="updatedocker_ansible"
+alias updatesystems="updatesystems_ansible"
+alias rebootsystem="rebootsystem_ansible"
+
+alias nr="updatenix"
+alias nd="garbagecollect"

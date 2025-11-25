@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-loginctl terminate-user fred
+loginctl terminate-user "$USER"

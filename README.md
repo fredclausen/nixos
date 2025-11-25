@@ -19,7 +19,8 @@ NixOS setup.
 
 ## Systems Included
 
-The main entry point is [`flake.nix`](./flake.nix).\
+The main entry point is [`flake.nix`](./flake.nix).
+
 It defines several host configurations:
 
 | System Name   | Description      | Profile                                                    |
@@ -43,16 +44,23 @@ This is mostly here for my own machines---but if you want to adopt it:
 5. Rename `system/maranello` → `system/<your system name>`.
 6. Copy your generated `/etc/nixos/hardware-configuration.nix` into
    that directory.
-7. Search for the username `fred` and replace with your own.
-8. Update dotfile paths (rename `dotfiles/fred` →
+7. Change the `user`, `verbose_name`, and `github_username` fields in
+   `flake.nix`.
+8. Search for the username `fred` and replace with your own. See the note below.
+9. Update dotfile paths (rename `dotfiles/fred` →
    `dotfiles/<your username>` if needed).
-9. In your `system/<system>/configuration.nix`, replace `maranello`
-   with your system name.
-10. Build and switch:
+10. In your `system/<system>/configuration.nix`, replace `maranello`
+    with your system name.
+11. Build and switch:
 
 ```bash
 sudo nixos-rebuild switch --flake .#<system name>
 ```
+
+> [!IMPORTANT]
+> `fred` as a username is still baked in in quite a few places, namely in the `dotfiles` directory. A lot of my custom scripts just have the `/home/fred` path hardcoded. You will need to change these to your own username or home directory path.
+>
+> Additionally, there are a few other files that have `fred` hardcoded in them. You will need to change these as well.
 
 ### Optional Post-Install Steps
 
