@@ -12,6 +12,16 @@
 
 let
   username = user;
+  isDarwin = pkgs.stdenv.isDarwin;
+
+  weztermConfig =
+    if isDarwin then ../../dotfiles/fred/.wezterm_darwin.lua else ../../dotfiles/fred/.wezterm.lua;
+
+  alacrittyConfig =
+    if isDarwin then
+      ../../dotfiles/fred/.config/alacritty_darwin.toml
+    else
+      ../../dotfiles/fred/.config/alacritty.toml;
 in
 
 {
@@ -82,9 +92,7 @@ in
         colorMoved = default
   '';
 
-  programs.wezterm.extraConfig = builtins.readFile ../../dotfiles/${user}/.wezterm.lua;
+  programs.wezterm.extraConfig = builtins.readFile weztermConfig;
 
-  programs.alacritty.settings = builtins.fromTOML (
-    builtins.readFile ../../dotfiles/${user}/.config/alacritty.toml
-  );
+  programs.alacritty.settings = builtins.fromTOML (builtins.readFile alacrittyConfig);
 }
