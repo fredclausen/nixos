@@ -5,47 +5,38 @@
   user,
   ...
 }:
-with lib;
+
 let
   username = user;
   cfg = config.desktop.ghostty;
+  t = config.terminal;
 in
 {
+  imports = [ ../../../modules/terminal/common.nix ];
+
   options.desktop.ghostty = {
-    enable = mkOption {
-      description = "Enable Ghostty.";
-      default = false;
-    };
+    enable = lib.mkEnableOption "Enable Ghostty terminal emulator";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home-manager.users.${username} = {
-      home.packages = with pkgs; [
-        ghostty
-      ];
+      home.packages = [ pkgs.ghostty ];
 
       programs.ghostty = {
         enable = true;
 
         settings = {
-          font-family = "Caskaydia Cove Nerd Font";
-          font-size = 12;
-          background-opacity = 0.95;
+          font-family = t.font.family;
+          font-size = t.font.size;
+          background-opacity = t.opacity;
         };
       };
 
       catppuccin.ghostty.enable = true;
 
-      xdg = {
-        mimeApps = {
-          associations.added = {
-            "x-terminal-emulator" = [ "ghostty.desktop" ];
-          };
-
-          defaultApplications = {
-            "x-terminal-emulator" = [ "ghostty.desktop" ];
-          };
-        };
+      xdg.mimeApps = {
+        associations.added."x-terminal-emulator" = [ "ghostty.desktop" ];
+        defaultApplications."x-terminal-emulator" = [ "ghostty.desktop" ];
       };
     };
   };
