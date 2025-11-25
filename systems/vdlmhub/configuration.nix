@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  stateVersion,
   ...
 }:
 
@@ -24,5 +25,5 @@
 
   environment.systemPackages = with pkgs; [ ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = stateVersion;
 }

@@ -3,6 +3,7 @@
   pkgs,
   inputs,
   user,
+  stateVersion,
   ...
 }:
 let
@@ -29,7 +30,7 @@ in
 
   environment.systemPackages = with pkgs; [ ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = stateVersion;
 
   systemd.tmpfiles.rules = [
     "d /var/lib/gdm/.config 0755 gdm gdm -"

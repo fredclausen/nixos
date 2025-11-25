@@ -2,6 +2,7 @@
   pkgs,
   lib,
   user,
+  stateVersion,
   ...
 }:
 let
@@ -26,7 +27,7 @@ with lib.hm.gvariant;
   home = {
     username = "${username}";
     homeDirectory = "/home/${username}";
-    stateVersion = "24.11";
+    stateVersion = stateVersion;
 
     packages = with pkgs; [
       zoxide

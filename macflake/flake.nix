@@ -72,10 +72,6 @@
                   accent = "lavender";
                   enable = true;
                 };
-
-                home.file.".gitconfig" = {
-                  source = ../dotfiles/fred/.gitconfig;
-                };
               };
             };
             home-manager.extraSpecialArgs = {

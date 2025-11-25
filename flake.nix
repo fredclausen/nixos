@@ -69,6 +69,7 @@
           hostName,
           hmModules ? [ ],
           extraModules ? [ ],
+          stateVersion ? "24.11",
         }:
         nixpkgs.lib.nixosSystem {
           specialArgs = {
@@ -79,6 +80,7 @@
               github_email
               github_signing_key
               hmlib
+              stateVersion
               ;
           };
 
@@ -108,6 +110,7 @@
                   apple-fonts
                   nixvim
                   niri
+                  stateVersion
                   ;
               };
             }

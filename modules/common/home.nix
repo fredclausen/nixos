@@ -7,6 +7,7 @@
   verbose_name,
   github_email,
   github_signing_key,
+  stateVersion,
   ...
 }:
 
@@ -18,7 +19,7 @@ in
   home = {
     username = username;
     homeDirectory = "/home/${username}";
-    stateVersion = "24.11";
+    stateVersion = stateVersion;
 
     packages = with pkgs; [
       zoxide
