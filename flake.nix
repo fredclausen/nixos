@@ -64,13 +64,8 @@
         "aarch64-darwin"
       ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-
     in
     {
-      ##########################################################################
-      ## mkSystem — minimal DRY abstraction
-      ##########################################################################
-
       lib.mkSystem =
         {
           hostName,
@@ -92,7 +87,7 @@
           };
 
           modules = [
-            ./systems/${hostName}/configuration.nix
+            ./systems-linux/${hostName}/configuration.nix
             ./modules/common/system.nix
             home-manager.nixosModules.home-manager
             {
@@ -203,13 +198,13 @@
         Daytona = self.lib.mkSystem {
           hostName = "daytona";
           hmModules = [
-            ./systems/daytona/home.nix
+            ./systems-linux/daytona/home.nix
           ];
         };
 
         maranello = self.lib.mkSystem {
           hostName = "maranello";
-          hmModules = [ ./systems/maranello/home.nix ];
+          hmModules = [ ./systems-linux/maranello/home.nix ];
         };
 
         sdrhub = self.lib.mkSystem {
@@ -235,6 +230,13 @@
         hfdlhub2 = self.lib.mkSystem {
           hostName = "hfdlhub2";
           hmModules = [ ];
+        };
+      };
+
+      darwinConfigurations = {
+        "Freds-MacBook-Pro" = self.lib.mkDarwinSystem {
+          hostName = "Freds-MacBook-Pro";
+          hmModules = [ ./systems-linux/Freds-Macbook-Pro/home.nix ];
         };
       };
 
