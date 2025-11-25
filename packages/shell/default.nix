@@ -29,10 +29,6 @@ in
       recursive = true;
     };
 
-    home.file.".config/hadolint.yaml" = {
-      source = ../../dotfiles/${username}/.config/hadolint.yaml;
-    };
-
     home.file.".markdownlint-cli2.yaml" = {
       source = ../../dotfiles/${username}/.markdownlint-cli2.yaml;
     };
