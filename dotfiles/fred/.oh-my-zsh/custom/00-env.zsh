@@ -3,8 +3,8 @@
 # shellcheck disable=SC2034
 
 # --- User paths and common dirs ---
-GITHUB_DIR="${USER_HOME}/GitHub"
-ANSIBLE_DIR="${USER_HOME}/.ansible"
+GITHUB_DIR="${HOME}/GitHub"
+ANSIBLE_DIR="${HOME}/.ansible"
 
 # OG cat function
 if [[ "$HOME" == /home/* ]]; then

@@ -13,12 +13,12 @@ if [ -d "$HOME/.local/bin" ]; then
   export PATH="$HOME/.local/bin:$PATH"
 fi
 
-# /home/fred/.local/share/bob exists, add it to the PATH
+# ~.local/share/bob exists, add it to the PATH
 if [ -d "$HOME/.local/share/bob" ]; then
   export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
 fi
 
-# if /home/fred/.fzf/bin exists, add it to the PATH
+# if ~/.fzf/bin exists, add it to the PATH
 if [ -d "$HOME/.fzf/bin" ]; then
   export PATH="$HOME/.fzf/bin:$PATH"
 fi

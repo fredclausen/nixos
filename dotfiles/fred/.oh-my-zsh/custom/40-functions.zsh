@@ -12,7 +12,7 @@ updatenix() {
   local macflake_dir="${GITHUB_DIR}/nixos/macflake"
   local target_dir pushed=false
 
-  if [[ "$USER_HOME" == /Users/* ]]; then
+  if [[ "$HOME" == /Users/* ]]; then
     target_dir="$macflake_dir"
     if [[ "$(pwd)" != "$target_dir" ]]; then
       pushd "$target_dir" >/dev/null || return
@@ -62,8 +62,8 @@ nvim_custom() {
 remove_dsstore() {
   pushd "${GITHUB_DIR}/$1" >/dev/null || { echo "Repo not found"; return; }
 
-  if [[ -f "${USER_HOME}/.config/scripts/remove_dsstore.sh" ]]; then
-    "${USER_HOME}/.config/scripts/remove_dsstore.sh"
+  if [[ -f "${HOME}/.config/scripts/remove_dsstore.sh" ]]; then
+    "${HOME}/.config/scripts/remove_dsstore.sh"
   elif [[ -f "${GITHUB_DIR}/remove_dsstore.sh" ]]; then
     "${GITHUB_DIR}/remove_dsstore.sh"
   else
@@ -91,12 +91,12 @@ scal() {
 }
 
 sign() {
-  mkdir -p "${USER_HOME}/tmp"
-  pushd "${USER_HOME}/tmp" >/dev/null || return
+  mkdir -p "${HOME}/tmp"
+  pushd "${HOME}/tmp" >/dev/null || return
   touch a.txt
   gpg --sign a.txt
   popd >/dev/null || return
-  rm -rf "${USER_HOME}/tmp"
+  rm -rf "${HOME}/tmp"
 }
 
 gcverify() {

@@ -1,345 +1,137 @@
 #!/usr/bin/env bash
+# Sync Docker Compose files between local and remote hosts
 
-# create a backup of the adsb-compose/docker-compose.yml file
-# and then copy the new docker-compose.yml file to the adsb-compose directory
+set -euo pipefail
 
-# backup the current docker-compose.yml file
+########################################
+#  Helpers
+########################################
 
-# check to see if /home/fred/ exits. If so, set $HOME_DIR to /home/fred
-# otherwise set $HOME_DIR to /Users/fred
+die() { echo "ERROR: $*" >&2; exit 1; }
 
-if [[ -d /home/fred ]]; then
-  HOME_DIR=/home/fred
-else
-  HOME_DIR=/Users/fred
-fi
+require_file() { [[ -f "$1" ]] || die "File not found: $1"; }
+require_nonempty() { [[ -n "$1" ]] || die "$2 not set"; }
 
-function sync_compose_remote_to_local() {
-  ip=$1
-  remote_path_compose=$2
-  remote_path_env=$3
-  local_path_compose=$4
-  local_path_env=$5
-  port=$6
-  user=$7
+########################################
+#  Copy Remote → Local
+########################################
 
-  scp_cmd=(scp -P "$port")
+sync_compose_remote_to_local() {
+  local ip=$1 remote_compose=$2 remote_env=$3 local_compose=$4 local_env=$5 port=$6 user=$7 use_legacy=${8:-false}
 
-  # if the 8th parameter is set to true, then use the legacy scp command
-  if [[ $8 == true ]]; then
-    scp_cmd+=("-O")
-  fi
+  require_nonempty "$ip" "IP"
+  require_nonempty "$remote_compose" "Remote compose"
+  require_nonempty "$remote_env" "Remote env"
+  require_nonempty "$local_compose" "Local compose"
+  require_nonempty "$local_env" "Local env"
+  require_nonempty "$port" "Port"
+  require_nonempty "$user" "User"
 
-  # verify all the parameters are set
+  require_file "$local_compose"
+  require_file "$local_env"
 
-  if [[ -z $ip ]]; then
-    echo "IP address not set"
-    exit 1
-  fi
+  local local_dir
+  local_dir=$(dirname "$(realpath "$local_compose")")
+  local compose_name env_name
 
-  if [[ -z $remote_path_compose ]]; then
-    echo "Remote path to docker-compose.yml file not set"
-    exit 1
-  fi
+  compose_name=$(basename "$local_compose")
+  env_name=$(basename "$local_env")
 
-  if [[ -z $remote_path_env ]]; then
-    echo "Remote path to .env file not set"
-    exit 1
-  fi
+  # Build SCP command
+  local scp_cmd=(scp -P "$port")
+  [[ "$use_legacy" == true ]] && scp_cmd+=("-O")
 
-  if [[ -z $port ]]; then
-    echo "Port not set"
-    exit 1
-  fi
+  mv "$local_compose" "$local_dir/${compose_name}.bak"
+  mv "$local_env" "$local_dir/${env_name}.bak"
 
-  if [[ -z $user ]]; then
-    echo "User not set"
-    exit 1
-  fi
+  "${scp_cmd[@]}" "$user@$ip:$remote_compose" "$local_compose"
+  "${scp_cmd[@]}" "$user@$ip:$remote_env" "$local_env"
 
-  if [[ -z $local_path_compose ]]; then
-    echo "Local path to docker-compose.yml file not set"
-    exit 1
-  else
-    # get the full path to the docker-compose.yaml file
-    local_path=$(realpath "$local_path_compose")
-    compose_file_name=$(basename "$local_path")
-    local_path=$(dirname "$local_path")
-  fi
+  docker compose -f "$local_compose" config --quiet || die "Compose validation failed"
 
-  if [[ ! -f $local_path_compose ]]; then
-    echo "Local path to docker-compose.yml file does not exist"
-    exit 1
-  fi
-
-  if [[ -z $local_path_env ]]; then
-    echo "Local path to .env file not set"
-    exit 1
-  else
-    # get the full path to the .env file
-    env_file_name=$(basename "$local_path_env")
-  fi
-
-  if [[ ! -f $local_path_env ]]; then
-    echo "Local path to .env file does not exist"
-    exit 1
-  fi
-
-  # backup the current docker-compose.yml file
-  if mv "$local_path_compose" "$local_path/$compose_file_name".bak; then
-    echo "docker-compose.yml file backed up successfully"
-  else
-    echo "docker-compose.yml file failed to backup"
-    exit 1
-  fi
-
-  # back up the current .env file
-
-  if mv "$local_path_env" "$local_path/$env_file_name".bak; then
-    echo ".env file backed up successfully"
-  else
-    echo ".env file failed to backup"
-    exit 1
-  fi
-
-  # copy the new docker-compose.yml file to the adsb-compose directory
-  # from the ADSB Hub @ $ip:$remote_path_compose
-
-  if "${scp_cmd[@]}" "$user@$ip:$remote_path_compose" "$local_path_compose"; then
-    echo "New docker-compose.yml file copied successfully"
-  else
-    echo "New docker-compose.yml file failed to copy"
-    exit 1
-  fi
-
-  # copy the new .env file to the adsb-compose directory
-  # from the ADSB Hub @ $ip:$remote_path_env
-
-  if "${scp_cmd[@]}" "$user@$ip:$remote_path_env" "$local_path_env"; then
-    echo "New .env file copied successfully"
-  else
-    echo "New .env file failed to copy"
-    exit 1
-  fi
-
-  # verify the new docker-compose.yml file looks good
-
-  if docker compose -f "$local_path_compose" config --quiet; then
-    echo "New docker-compose.yml file looks good"
-  else
-    echo "New docker-compose.yml file has errors"
-    exit 1
-  fi
-
-  # Delete the backup file
-  rm "$local_path_compose".bak
-  rm "$local_path_env".bak
+  rm "$local_dir/${compose_name}.bak" "$local_dir/${env_name}.bak"
 }
 
-function sync_compose_local_to_remote() {
-  ip=$1
-  remote_path_compose=$2
-  remote_path_env=$3
-  local_path_compose=$4
-  local_path_env=$5
-  port=$6
-  user=$7
+########################################
+#  Copy Local → Remote
+########################################
 
-  scp_cmd=(scp -P "$port")
+sync_compose_local_to_remote() {
+  local ip=$1 remote_compose=$2 remote_env=$3 local_compose=$4 local_env=$5 port=$6 user=$7 use_legacy=${8:-false}
 
-  # if the 8th parameter is set to true, then use the legacy scp command
-  if [[ $8 == true ]]; then
-    scp_cmd+=("-O")
-  fi
+  require_nonempty "$ip" "IP"
+  require_nonempty "$remote_compose" "Remote compose"
+  require_nonempty "$remote_env" "Remote env"
+  require_nonempty "$local_compose" "Local compose"
+  require_nonempty "$local_env" "Local env"
+  require_nonempty "$port" "Port"
+  require_nonempty "$user" "User"
 
-  # verify all the parameters are set
+  require_file "$local_compose"
+  require_file "$local_env"
 
-  if [[ -z $ip ]]; then
-    echo "IP address not set"
-    exit 1
-  fi
+  docker compose -f "$local_compose" config --quiet || die "Compose validation failed"
 
-  if [[ -z $remote_path_compose ]]; then
-    echo "Remote path to docker-compose.yml file not set"
-    exit 1
-  fi
+  # Build SCP command
+  local scp_cmd=(scp -P "$port")
+  [[ "$use_legacy" == true ]] && scp_cmd+=("-O")
 
-  if [[ -z $remote_path_env ]]; then
-    echo "Remote path to .env file not set"
-    exit 1
-  fi
+  "${scp_cmd[@]}" "$local_compose" "$user@$ip:$remote_compose"
+  "${scp_cmd[@]}" "$local_env" "$user@$ip:$remote_env"
+}
 
-  if [[ -z $port ]]; then
-    echo "Port not set"
-    exit 1
-  fi
+########################################
+#  Input Parsing
+########################################
 
-  if [[ -z $user ]]; then
-    echo "User not set"
-    exit 1
-  fi
+[[ $# -lt 2 ]] && die "Usage: $0 <local|remote> <target>"
 
-  if [[ -z $local_path_compose ]]; then
-    echo "Local path to docker-compose.yml file not set"
-    exit 1
+sync_direction=$1
+sync_target=$2
+
+case "$sync_direction" in
+  local|remote) ;;
+  *) die "First parameter must be local|remote" ;;
+esac
+
+case "$sync_target" in
+  all|sdrhub|acarshub|brandon|vdlmhub|vps|hfdlhub-1|hfdlhub-2) ;;
+  *) die "Invalid target" ;;
+esac
+
+########################################
+#  Paths
+########################################
+
+LOCAL_BASE="$HOME/GitHub/adsb-compose"
+
+########################################
+#  Target Table
+########################################
+
+sync_host() {
+  local dir="$1" ip="$2" remote_comp="$3" remote_env="$4" port="$5" legacy="$6"
+
+  local lc="$LOCAL_BASE/$dir/docker-compose.yaml"
+  local le="$LOCAL_BASE/$dir/.env"
+
+  if [[ $sync_direction == "remote" ]]; then
+    echo "Backing up $dir"
+    sync_compose_remote_to_local "$ip" "$remote_comp" "$remote_env" "$lc" "$le" "$port" "fred" "$legacy"
   else
-    # get the full path to the docker-compose.yaml file
-    local_path=$(realpath "$local_path_compose")
-    compose_file_name=$(basename "$local_path")
-    local_path=$(dirname "$local_path")
-  fi
-
-  if [[ ! -f $local_path_compose ]]; then
-    echo "Local path to docker-compose.yml file does not exist"
-    exit 1
-  fi
-
-  if [[ -z $local_path_env ]]; then
-    echo "Local path to .env file not set"
-    exit 1
-  else
-    # get the full path to the .env file
-    env_file_name=$(basename "$local_path_env")
-  fi
-
-  if [[ ! -f $local_path_env ]]; then
-    echo "Local path to .env file does not exist"
-    exit 1
-  fi
-
-  # verify the new docker-compose.yml file looks good
-
-  if docker compose -f "$local_path_compose" config --quiet; then
-    echo "New docker-compose.yml file looks good"
-  else
-    echo "New docker-compose.yml file has errors"
-    exit 1
-  fi
-
-  # copy the new docker-compose.yml file to the adsb-compose directory
-
-  if "${scp_cmd[@]}" "$local_path_compose" "$user@$ip:$remote_path_compose"; then
-    echo "New docker-compose.yml file copied successfully"
-  else
-    echo "New docker-compose.yml file failed to copy"
-    exit 1
-  fi
-
-  # copy the new .env file to the adsb-compose directory
-
-  if "${scp_cmd[@]}" "$local_path_env" "$user@$ip:$remote_path_env"; then
-    echo "New .env file copied successfully"
-  else
-    echo "New .env file failed to copy"
-    exit 1
+    echo "Pushing $dir"
+    sync_compose_local_to_remote "$ip" "$remote_comp" "$remote_env" "$lc" "$le" "$port" "fred" "$legacy"
   fi
 }
 
-# check input parameters
+########################################
+#  Dispatch Table
+########################################
 
-# two input parameters are required
-# first is going to be either local or remote
-# the second is going to be all, adsbhub, brandon or vps
-# any other values are invalid
-
-if [[ -z $1 ]]; then
-  echo "First parameter sync direction not set"
-  echo "Should be either local or remote"
-  echo "local = copy from local to remote"
-  echo "remote = copy from remote to local"
-  exit 1
-else
-  if [[ $1 != "local" && $1 != "remote" ]]; then
-    echo "First parameter is invalid"
-    echo "Should be either local or remote"
-    exit 1
-  fi
-
-  sync_direction=$1
-fi
-
-if [[ -z $2 ]]; then
-  echo "Second parameter not set"
-  echo "Should be either all, adsbhub, brandon or vps"
-  exit 1
-else
-  if [[ $2 != "all" && $2 != "sdrhub" && $2 != "brandon" && $2 != "vps" && $2 != "hfdlhub-1" && $2 != "hfdlhub-2" && $2 != "acarshub" && $2 != "vdlmhub" ]]; then
-    echo "Second parameter sync target is invalid"
-    echo "Should be either all, sdrhub, acarshub, brandon, vdlmhub, or vps"
-    exit 1
-  fi
-
-  sync_target=$2
-fi
-
-if [[ $sync_direction == "remote" ]]; then
-  if [[ $sync_target == "all" || $sync_target == "sdrhub" ]]; then
-    echo "Backing up SDR Hub"
-    sync_compose_remote_to_local "192.168.31.20" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/sdrhub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/sdrhub/.env 22 fred
-  fi
-
-  if [[ $sync_target == "all" || $sync_target == "hfdlhub-1" ]]; then
-    echo "Backing up HFDL Hub 1"
-    sync_compose_remote_to_local "192.168.31.19" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/hfdlhub-1/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/hfdlhub-1/.env 22 fred
-  fi
-
-  if [[ $sync_target == "all" || $sync_target == "hfdlhub-2" ]]; then
-    echo "Backing up HFDL Hub 2"
-    sync_compose_remote_to_local "192.168.31.17" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/hfdlhub-2/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/hfdlhub-2/.env 22 fred
-  fi
-
-  if [[ $sync_target == "all" || $sync_target == "acarshub" ]]; then
-    echo "Backing up ACARS Hub"
-    sync_compose_remote_to_local "192.168.31.24" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/acarshub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/acarshub/.env 22 fred
-  fi
-
-  if [[ $sync_target == "all" || $sync_target == "vdlmhub" ]]; then
-    echo "Backing up VDL Hub"
-    sync_compose_remote_to_local "192.168.31.23" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/vdlmhub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/vdlmhub/.env 22 fred
-  fi
-
-  if [[ $sync_target == "all" || $sync_target == "vps" ]]; then
-    echo "Backing up fredclausen.com"
-    sync_compose_remote_to_local "fredclausen.com" /home/fred/docker-compose.yaml /home/fred/.env $HOME_DIR/GitHub/adsb-compose/vps/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/vps/.env 22 fred
-  fi
-
-  if [[ $sync_target == "all" || $sync_target == "brandon" ]]; then
-    echo "Backing up Brandon"
-    sync_compose_remote_to_local "73.242.200.187" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/brandon/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/brandon/.env "3222" fred true
-  fi
-elif [[ $sync_direction == "local" ]]; then
-  if [[ $sync_target == "all" || $sync_target == "sdrhub" ]]; then
-    echo "Pushing sdr Hub"
-    sync_compose_local_to_remote "192.168.31.20" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/sdrhub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/sdrhub/.env 22 fred
-  fi
-
-  if [[ $sync_target == "all" || $sync_target == "hfdlhub-1" ]]; then
-    echo "Pushing HFDL Hub 1"
-    sync_compose_local_to_remote "192.168.31.19" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/hfdlhub-1/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/hfdlhub-1/.env 22 fred
-  fi
-
-  if [[ $sync_target == "all" || $sync_target == "hfdlhub-2" ]]; then
-    echo "Pushing HFDL Hub 2"
-    sync_compose_local_to_remote "192.168.31.17" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/hfdlhub-2/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/hfdlhub-2/.env 22 fred
-  fi
-
-  if [[ $sync_target == "all" || $sync_target == "acarshub" ]]; then
-    echo "Pushing ACARS Hub"
-    sync_compose_local_to_remote "192.168.31.24" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/acarshub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/acarshub/.env 22 fred
-  fi
-
-  if [[ $sync_target == "all" || $sync_target == "vdlmhub" ]]; then
-    echo "Pushing VDL Hub"
-    sync_compose_local_to_remote "192.168.31.23" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/vdlmhub/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/vdlmhub/.env 22 fred
-  fi
-
-  if [[ $sync_target == "all" || $sync_target == "vps" ]]; then
-    echo "Pushing fredclausen.com"
-    sync_compose_local_to_remote "fredclausen.com" /home/fred/docker-compose.yaml /home/fred/.env $HOME_DIR/GitHub/adsb-compose/vps/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/vps/.env 22 fred
-  fi
-
-  if [[ $sync_target == "all" || $sync_target == "brandon" ]]; then
-    echo "Pushing Brandon"
-    sync_compose_local_to_remote "73.242.200.187" /opt/adsb/docker-compose.yaml /opt/adsb/.env $HOME_DIR/GitHub/adsb-compose/brandon/docker-compose.yaml $HOME_DIR/GitHub/adsb-compose/brandon/.env "3222" fred true
-  fi
-fi
+[[ $sync_target == "all" || $sync_target == "sdrhub" ]]     && sync_host "sdrhub"     "192.168.31.20" "/opt/adsb/docker-compose.yaml" "/opt/adsb/.env" 22 false
+[[ $sync_target == "all" || $sync_target == "hfdlhub-1" ]]  && sync_host "hfdlhub-1"  "192.168.31.19" "/opt/adsb/docker-compose.yaml" "/opt/adsb/.env" 22 false
+[[ $sync_target == "all" || $sync_target == "hfdlhub-2" ]]  && sync_host "hfdlhub-2"  "192.168.31.17" "/opt/adsb/docker-compose.yaml" "/opt/adsb/.env" 22 false
+[[ $sync_target == "all" || $sync_target == "acarshub" ]]   && sync_host "acarshub"   "192.168.31.24" "/opt/adsb/docker-compose.yaml" "/opt/adsb/.env" 22 false
+[[ $sync_target == "all" || $sync_target == "vdlmhub" ]]    && sync_host "vdlmhub"    "192.168.31.23" "/opt/adsb/docker-compose.yaml" "/opt/adsb/.env" 22 false
+[[ $sync_target == "all" || $sync_target == "vps" ]]        && sync_host "vps"        "fredclausen.com" "/home/fred/docker-compose.yaml" "/home/fred/.env" 22 false
+[[ $sync_target == "all" || $sync_target == "brandon" ]]    && sync_host "brandon"    "73.242.200.187" "/opt/adsb/docker-compose.yaml" "/opt/adsb/.env" 3222 true

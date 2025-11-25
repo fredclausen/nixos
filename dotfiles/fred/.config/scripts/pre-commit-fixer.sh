@@ -15,11 +15,10 @@ if [ ! -d "$1" ]; then
   exit 1
 fi
 
-python="\/etc\/profiles\/per-user\/fred\/bin\/python3"
-python_grep="/etc/profiles/per-user/fred/bin/python3"
-pre_commit="\/etc\/profiles\/per-user\/fred\/bin\/pre-commit"
-pre_commit_grep="/etc/profiles/per-user/fred/bin/pre-commit"
-
+python="\/etc\/profiles\/per-user\/$USER\/bin\/python3"
+python_grep="/etc/profiles/per-user/$USER/bin/python3"
+pre_commit="\/etc\/profiles\/per-user\/$USER\/bin\/pre-commit"
+pre_commit_grep="/etc/profiles/per-user/$USER/bin/pre-commit"
 
 # loop through the files in the directory
 # if there is a .git file in the directory, then check the .git/hooks/pre-commit file exists

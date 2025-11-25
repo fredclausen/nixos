@@ -77,11 +77,11 @@
           },
           {
             "label": "   Lock",
-            "command": "/home/fred/.config/hyprextra/scripts/lock"
+            "command": "~/.config/hyprextra/scripts/lock"
           },
           {
             "label": "   Logout",
-            "command": "/home/fred/.config/hyprextra/scripts/logout"
+            "command": "~/.config/hyprextra/scripts/logout"
           },
           {
             "label": "   Shut down",
@@ -121,7 +121,7 @@
           },
           {
             "label": "✂︎   Open screenshot folder",
-            "command": "nautilus /home/fred/Pictures"
+            "command": "nautilus ~/Pictures"
           }
         ]
       }

@@ -3,11 +3,11 @@
 
 alias cd="z"
 
-alias uz="${USER_HOME}/.config/scripts/update-zsh-stuff.sh"
-alias ugh="${USER_HOME}/.config/scripts/update-all-git.sh ${GITHUB_DIR}"
-alias ipc="${USER_HOME}/.config/scripts/install-all-precommit.sh ${GITHUB_DIR}"
-alias scr="${USER_HOME}/.config/scripts/sync-compose.sh"
-alias ub="${USER_HOME}/.config/scripts/update-brew.sh"
+alias uz="${HOME}/.config/scripts/update-zsh-stuff.sh"
+alias ugh="${HOME}/.config/scripts/update-all-git.sh ${GITHUB_DIR}"
+alias ipc="${HOME}/.config/scripts/install-all-precommit.sh ${GITHUB_DIR}"
+alias scr="${HOME}/.config/scripts/sync-compose.sh"
+alias ub="${HOME}/.config/scripts/update-brew.sh"
 
 alias ls="lsd -la"
 alias co="rustup update"
