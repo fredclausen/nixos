@@ -65,7 +65,7 @@ in
       catppuccin.zsh-syntax-highlighting.enable = true;
 
       # Install your custom Zsh module files
-      home.file.".oh-my-zsh/custom".source = ../../../dotfiles/fred/.oh-my-zsh/custom;
+      home.file.".oh-my-zsh/custom".source = ../../../dotfiles/.oh-my-zsh/custom;
     };
   };
 }

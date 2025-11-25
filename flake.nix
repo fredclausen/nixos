@@ -184,7 +184,7 @@
               "^Documents/.*"
               "^.*\\.png$"
               "^.*\\.jpg$"
-              "^dotfiles/.*/.config/fastfetch/.*"
+              "^dotfiles/.config/fastfetch/.*"
             ];
 
             hooks = {

@@ -28,14 +28,9 @@ in
 
       programs.yazi = {
         enable = true;
-        # theme = (builtins.fromTOML (builtins.readFile ../../../dotfiles/fred/.config/yazi/theme.toml));
       };
 
       catppuccin.yazi.enable = true;
-
-      # home.file.".config/yazi/Catppuccin-mocha.tmTheme" = {
-      #   source = ../../../dotfiles/fred/.config/yazi/Catppuccin-mocha.tmTheme;
-      # };
     };
   };
 }

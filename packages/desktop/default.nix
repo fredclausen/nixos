@@ -100,7 +100,7 @@ in
 
     home-manager.users.${username} = {
       home.file.".config/backgrounds/" = {
-        source = ../../dotfiles/${username}/.config/backgrounds;
+        source = ../../dotfiles/.config/backgrounds;
         recursive = true;
       };
 

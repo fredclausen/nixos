@@ -25,12 +25,12 @@ in
 
   home-manager.users.${username} = {
     home.file.".config/scripts/" = {
-      source = ../../dotfiles/${username}/.config/scripts;
+      source = ../../dotfiles/.config/scripts;
       recursive = true;
     };
 
     home.file.".markdownlint-cli2.yaml" = {
-      source = ../../dotfiles/${username}/.markdownlint-cli2.yaml;
+      source = ../../dotfiles/.markdownlint-cli2.yaml;
     };
   };
 }
