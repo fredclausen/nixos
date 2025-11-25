@@ -5,20 +5,27 @@
   user,
   ...
 }:
+
 let
   username = user;
 in
 {
   config = {
     home-manager.users.${username} = {
-      home.packages = with pkgs; [
-        bat
-      ];
+
+      # Install bat
+      home.packages = [ pkgs.bat ];
 
       programs.bat = {
         enable = true;
+
+        config = {
+          italic-text = "always";
+          pager = "less --RAW-CONTROL-CHARS --quit-if-one-screen --mouse";
+        };
       };
 
+      # Theme
       catppuccin.bat.enable = true;
     };
   };
