@@ -2,27 +2,30 @@
   config,
   pkgs,
   inputs,
-  user,
-  hmlib,
+  lib,
+  system,
   ...
 }:
 
+let
+  isDarwin = lib.hasSuffix "darwin" system;
+  isLinux = !isDarwin;
+in
 {
   imports = [
-    inputs.catppuccin.nixosModules.catppuccin
-    ../../packages
-    ../../users
-  ];
+    # always-safe imports (none for now)
+  ]
+  # Darwin modules
+  ++ lib.optional isDarwin inputs.home-manager.darwinModules.default
+  # Linux-only NixOS modules
+  ++ lib.optional isLinux inputs.catppuccin.nixosModules.catppuccin
+  ++ lib.optional isLinux ../../packages
+  ++ lib.optional isLinux ../../users
+  ++ lib.optional isLinux ./linux-catpuccin.nix
+  ++ lib.optional isLinux ./linux-common.nix;
 
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
-
-  # catppuccin defaults (hosts can override)
-  catppuccin = {
-    enable = true;
-    flavor = "mocha";
-    accent = "lavender";
-  };
 }

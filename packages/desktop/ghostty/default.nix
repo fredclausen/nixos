@@ -3,6 +3,7 @@
   pkgs,
   config,
   user,
+  system,
   ...
 }:
 
@@ -10,9 +11,11 @@ let
   username = user;
   cfg = config.desktop.ghostty;
   t = config.terminal;
+  isDarwin = lib.hasSuffix "darwin" system;
+  isLinux = !isDarwin;
 in
 {
-  imports = [ ../../../modules/terminal/common.nix ];
+  imports = [ ../../../modules/terminal/common.nix ] ++ lib.optional isLinux ./linux-xdg.nix;
 
   options.desktop.ghostty = {
     enable = lib.mkEnableOption "Enable Ghostty terminal emulator";
@@ -33,11 +36,6 @@ in
       };
 
       catppuccin.ghostty.enable = true;
-
-      xdg.mimeApps = {
-        associations.added."x-terminal-emulator" = [ "ghostty.desktop" ];
-        defaultApplications."x-terminal-emulator" = [ "ghostty.desktop" ];
-      };
     };
   };
 }

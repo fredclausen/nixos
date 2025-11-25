@@ -1,22 +1,5 @@
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 {
-  environment = {
-    systemPackages = [ pkgs.coreutils ];
-    systemPath = [ "/opt/homebrew/bin" ];
-    pathsToLink = [ "/Applications" ];
-    variables.EDITOR = "nvim";
-  };
-
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
-
-  system = {
-    primaryUser = "fred";
-    stateVersion = 6;
-  };
-  security.pam.services.sudo_local.touchIdAuth = true;
-  users.users.fred.home = "/Users/fred";
 
   homebrew = {
     enable = true;

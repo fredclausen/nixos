@@ -9,20 +9,17 @@ garbagecollect() {
 
 updatenix() {
   local nixos_dir="${GITHUB_DIR}/nixos"
-  local macflake_dir="${GITHUB_DIR}/nixos/macflake"
-  local target_dir pushed=false
+  local pushed=false
 
   if [[ "$HOME" == /Users/* ]]; then
-    target_dir="$macflake_dir"
-    if [[ "$(pwd)" != "$target_dir" ]]; then
-      pushd "$target_dir" >/dev/null || return
+    if [[ "$(pwd)" != "$nixos_dir" ]]; then
+      pushd "$nixos_dir" >/dev/null || return
       pushed=true
     fi
     sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .
   else
-    target_dir="$nixos_dir"
-    if [[ "$(pwd)" != "$target_dir" ]]; then
-      pushd "$target_dir" >/dev/null || return
+    if [[ "$(pwd)" != "$nixos_dir" ]]; then
+      pushd "$nixos_dir" >/dev/null || return
       pushed=true
     fi
     sudo nixos-rebuild switch --flake .#"$(hostname)"

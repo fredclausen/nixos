@@ -4,6 +4,7 @@
   lib,
   inputs,
   user,
+  system,
   verbose_name,
   github_email,
   github_signing_key,
@@ -13,58 +14,44 @@
 
 let
   username = user;
+  isDarwin = lib.hasSuffix "darwin" system;
+  isLinux = !isDarwin;
+
+  homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
 in
-
 {
-  home = {
-    username = username;
-    homeDirectory = "/home/${username}";
-    stateVersion = stateVersion;
-
-    packages = with pkgs; [
-      zoxide
-      oh-my-zsh
-    ];
-  };
-
-  xdg = {
-    enable = true;
-
-    userDirs = {
-      enable = true;
-      createDirectories = false;
-    };
-
-    mimeApps.enable = true;
-  };
-
-  fonts.fontconfig.enable = true;
-
+  ##########################################################################
+  ## Shared Home-Manager module imports
+  ##########################################################################
   imports = [
-    # full HM suite
     ../../users/homemanager/default.nix
     inputs.catppuccin.homeModules.catppuccin
     inputs.nixvim.homeModules.nixvim
-    inputs.niri.homeModules.niri
-  ];
+  ]
+  ++ lib.optional isLinux inputs.niri.homeModules.niri;
 
+  ##########################################################################
+  ## .gitconfig — fully generated
+  ##########################################################################
   home.file.".gitconfig".text = ''
     [filter "lfs"]
-            required = true
-            clean = git-lfs clean -- %f
-            smudge = git-lfs smudge -- %f
-            process = git-lfs filter-process
+        required = true
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+        process = git-lfs filter-process
 
     [user]
-            name = ${verbose_name}
-            email = ${github_email}
-            signingkey = ${github_signing_key}
+        name = ${verbose_name}
+        email = ${github_email}
+        signingkey = ${github_signing_key}
 
     [commit]
-            gpgsign = true
+        gpgsign = true
 
     [gpg]
-      program = /run/current-system/sw/bin/gpg
+        program = ${
+          if isDarwin then "/run/current-system/sw/bin/gpg" else "/run/current-system/sw/bin/gpg"
+        }
 
     [core]
         pager = delta

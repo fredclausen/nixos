@@ -9,7 +9,7 @@ let
 in
 {
   # ------------------------------
-  # Host-specific Home Manager overrides for Daytona
+  # Host-specific Home Manager overrides for Freds-MacBook-Pro
   # ------------------------------
 
   imports = [

@@ -126,13 +126,13 @@
           hmModules ? [ ],
           extraModules ? [ ],
           stateVersion ? "25.05",
+          system ? "aarch64-darwin",
         }:
         darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-
           specialArgs = {
             inherit
               inputs
+              system
               user
               verbose_name
               github_email
@@ -143,9 +143,8 @@
           };
 
           modules = [
-            ./macflake/darwin/${hostName}.nix
-            ./macflake/packages/configuration.nix
-
+            ./systems-darwin/${hostName}/configuration.nix
+            ./modules/common/system.nix
             home-manager.darwinModules.home-manager
 
             {
@@ -153,7 +152,7 @@
               home-manager.useUserPackages = true;
 
               home-manager.users.${user} = {
-                imports = [ ./macflake/home-manager ] ++ hmModules;
+                imports = [ ./modules/common/home.nix ] ++ hmModules;
 
                 catppuccin = {
                   enable = true;
@@ -166,6 +165,7 @@
                 inherit
                   inputs
                   self
+                  system
                   user
                   verbose_name
                   hmlib
@@ -236,7 +236,7 @@
       darwinConfigurations = {
         "Freds-MacBook-Pro" = self.lib.mkDarwinSystem {
           hostName = "Freds-MacBook-Pro";
-          hmModules = [ ./systems-linux/Freds-Macbook-Pro/home.nix ];
+          hmModules = [ ./systems-darwin/Freds-MacBook-Pro/home.nix ];
         };
       };
 

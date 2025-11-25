@@ -3,6 +3,7 @@
   pkgs,
   config,
   user,
+  system,
   ...
 }:
 
@@ -13,15 +14,15 @@ let
   # Pull shared settings from terminal/common.nix
   t = config.terminal;
 
-  isDarwin = pkgs.stdenv.isDarwin;
-
+  isDarwin = lib.hasSuffix "darwin" system;
+  isLinux = !isDarwin;
 in
 {
   options.desktop.wezterm = {
     enable = lib.mkEnableOption "Enable WezTerm terminal emulator";
   };
 
-  imports = [ ../../../modules/terminal/common.nix ];
+  imports = [ ../../../modules/terminal/common.nix ] ++ lib.optional isLinux ./linux-xdg.nix;
 
   config = lib.mkIf cfg.enable {
     home-manager.users.${username} = {
