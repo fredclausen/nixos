@@ -3,6 +3,7 @@
 keys:
   - &maranello age1ksrxfhh58az67e2lzssjqqae5vs43uexc5r6js38eywc4yu8tfmsrmdjsp
   - &daytona age1fvs6tt5e2exjxdara9wweukzk47q8n83n0alaljudyjtjnende6s5nyzfx
+  - &macbook age17l9r4t8kqhpgn9klq3cwz83l0uvc487unwd3q8zx3gzt9epthsxq7m70yp
   - &acarshub age1rlew25xc7psxfwgwahn2zdc67gxd3vmkymy58gfe8gx90zuh34aqlalkxm
   - &hfdlhub1 age1c6qkqvcwggg4wekk2e02utfgevpw8kdul0r5ddq5nfg4gckzcapsxzqapd
   - &hfdlhub2 age1z36t4m08swfyp9emazxywz7l8dtxx2h9rfrlln3eqyqsyaqjvfwqw96d87
@@ -14,6 +15,7 @@ creation_rules:
       - age:
           - *maranello
           - *daytona
+          - *macbook
           - *acarshub
           - *hfdlhub1
           - *hfdlhub2
