@@ -66,4 +66,50 @@
       $rm -f /run/reboot-required
     fi
   '';
+
+  networking.networkmanager = {
+    enable = true;
+
+    ensureProfiles = {
+      environmentFiles = [
+        config.sops.secrets."wifi.env".path
+      ];
+
+      profiles = {
+        "Home" = {
+          connection.id = "Home";
+          connection.type = "wifi";
+
+          wifi.ssid = "$home_ssid";
+
+          wifi-security = {
+            key-mgmt = "wpa-psk";
+            psk = "$home_psk";
+          };
+        };
+
+        "Work" = {
+          connection.id = "Work";
+          connection.type = "wifi";
+
+          wifi.ssid = "$work_ssid";
+
+          wifi-security = {
+          };
+        };
+
+        "Parents" = {
+          connection.id = "Parents";
+          connection.type = "wifi";
+
+          wifi.ssid = "$parents_ssid";
+
+          wifi-security = {
+            key-mgmt = "wpa-psk";
+            psk = "$parents_psk";
+          };
+        };
+      };
+    };
+  };
 }
