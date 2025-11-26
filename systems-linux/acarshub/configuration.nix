@@ -5,7 +5,9 @@
   stateVersion,
   ...
 }:
-
+let
+  dockerCompose = pkgs.writeText "docker-compose.yaml" (builtins.readFile ./docker-compose.yaml);
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -38,8 +40,6 @@
       $rm -f /run/reboot-required
     fi
   '';
-
-  dockerCompose = pkgs.writeText "docker-compose.yaml" (builtins.readFile ./docker-compose.yaml);
 
   systemd.tmpfiles.rules = [
     "d /opt/adsb 0755 fred users - -"
