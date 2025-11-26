@@ -102,7 +102,7 @@ services:
 
   # direct connect SDR
   airspy_adsb:
-    image: ghcr.io/sdr-enthusiasts/airspy_adsb:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/airspy_adsb:trixie-latest-build-3
     container_name: airspy_adsb
     hostname: airspy_adsb
     restart: always
