@@ -200,7 +200,7 @@ services:
       - /var/log:size=32M
 
   dump978:
-    image: ghcr.io/sdr-enthusiasts/docker-dump978:trixie-latest-build-1
+    image: ghcr.io/sdr-enthusiasts/docker-dump978:trixie-latest-build-2
     #image: ghcr.io/sdr-enthusiasts/docker-dump978:latest-build-769
     tty: true
     container_name: dump978
