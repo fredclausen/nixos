@@ -242,7 +242,7 @@ services:
       - /var/log
 
   fr24:
-    image: ghcr.io/sdr-enthusiasts/docker-flightradar24:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/docker-flightradar24:trixie-latest-build-3
     tty: true
     container_name: fr24
     restart: always
