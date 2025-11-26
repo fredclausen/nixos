@@ -377,7 +377,7 @@ services:
       - /var/log
 
   sdrmap:
-    image: ghcr.io/sdr-enthusiasts/docker-sdrmap:trixie-latest-build-3
+    image: ghcr.io/sdr-enthusiasts/docker-sdrmap:trixie-latest-build-4
     container_name: sdrmap
     restart: always
     environment:
