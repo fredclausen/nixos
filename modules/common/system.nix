@@ -13,7 +13,7 @@ let
 in
 {
   imports = [
-    # always-safe imports (none for now)
+    ./sops.nix
   ]
   # Darwin modules
   ++ lib.optional isDarwin inputs.home-manager.darwinModules.default

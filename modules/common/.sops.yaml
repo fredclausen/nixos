@@ -1,0 +1,11 @@
+# .sops.yaml
+
+keys:
+  - &maranello age1ksrxfhh58az67e2lzssjqqae5vs43uexc5r6js38eywc4yu8tfmsrmdjsp
+  - &hfdlhub2 age1z36t4m08swfyp9emazxywz7l8dtxx2h9rfrlln3eqyqsyaqjvfwqw96d87
+creation_rules:
+  - path_regex: secrets.yaml$
+    key_groups:
+      - age:
+          - *maranello
+          - *hfdlhub2
