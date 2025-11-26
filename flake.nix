@@ -274,6 +274,7 @@
               "^.*\\.png$"
               "^.*\\.jpg$"
               "^dotfiles/.config/fastfetch/.*"
+              "secrets.yaml"
             ];
 
             hooks = {
