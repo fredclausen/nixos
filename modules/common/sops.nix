@@ -67,3 +67,4 @@ in
 # 5. Commit the updated `.sops.yaml` and `secrets.yaml` files.
 # 6. Push the changes to the repository.
 # 7. On the new system, pull the latest changes from the repository.
+# 8. Rebuild the NixOS configuration to apply the changes and decrypt the secrets.

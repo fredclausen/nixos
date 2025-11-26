@@ -4,6 +4,7 @@ keys:
   - &maranello age1ksrxfhh58az67e2lzssjqqae5vs43uexc5r6js38eywc4yu8tfmsrmdjsp
   - &hfdlhub1 age1c6qkqvcwggg4wekk2e02utfgevpw8kdul0r5ddq5nfg4gckzcapsxzqapd
   - &hfdlhub2 age1z36t4m08swfyp9emazxywz7l8dtxx2h9rfrlln3eqyqsyaqjvfwqw96d87
+  - &sdrhub age1utqkfpf5pjul0hlkuple53f5c0unaw8dr2ud76fyt0mwh4kr3u5qg3hufh
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
@@ -11,3 +12,4 @@ creation_rules:
           - *maranello
           - *hfdlhub1
           - *hfdlhub2
+          - *sdrhub
