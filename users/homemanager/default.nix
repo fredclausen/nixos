@@ -3,26 +3,17 @@
   lib,
   user,
   stateVersion,
+  system,
   ...
 }:
 let
   username = user;
+  isDarwin = lib.hasSuffix "darwin" system;
+  isLinux = !isDarwin;
 in
 with lib.hm.gvariant;
 {
-  xdg = {
-    enable = true;
-    userDirs = {
-      enable = true;
-      createDirectories = false;
-    };
-
-    mimeApps = {
-      enable = true;
-    };
-  };
-
-  fonts.fontconfig.enable = true;
+  imports = lib.optional isLinux ./linux-xdg.nix;
 
   home = {
     stateVersion = stateVersion;

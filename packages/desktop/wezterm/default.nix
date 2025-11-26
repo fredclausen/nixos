@@ -67,9 +67,6 @@ in
       # Catppuccin theme integration
       catppuccin.wezterm.enable = true;
       catppuccin.wezterm.apply = true;
-
-      # Make Wezterm the terminal handler
-      xdg.mimeApps.associations.added."x-terminal-emulator" = [ "wezterm.desktop" ];
     };
   };
 }

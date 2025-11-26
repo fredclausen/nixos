@@ -16,14 +16,14 @@
   ##########################################################################
   ## XDG + FONTS — Linux Only
   ##########################################################################
-  xdg.enable = lib.mkIf isLinux true;
+  xdg.enable = true;
 
-  xdg.userDirs = lib.mkIf isLinux {
+  xdg.userDirs = {
     enable = true;
     createDirectories = false;
   };
 
-  xdg.mimeApps.enable = lib.mkIf isLinux true;
+  xdg.mimeApps.enable = true;
 
-  fonts.fontconfig.enable = lib.mkIf isLinux true;
+  fonts.fontconfig.enable = true;
 }
