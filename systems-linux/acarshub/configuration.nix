@@ -40,11 +40,11 @@
   '';
 
   systemd.tmpfiles.rules = [
-    # ensure directory
-    "d /opt/adsb 0755 fred users -"
+    # ensure directory exists
+    "d /opt/adsb 0755 fred users - -"
 
-    # copy compose file on boot or switch if changed
-    "C /opt/adsb/docker-compose.yaml 0644 fred users ${./docker-compose.yaml}"
+    # copy file (correct field positions)
+    "C /opt/adsb/docker-compose.yaml 0644 fred users - ${./docker-compose.yaml}"
   ];
 
   sops.secrets = {
