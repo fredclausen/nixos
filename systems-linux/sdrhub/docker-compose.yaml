@@ -338,7 +338,7 @@ services:
       # - "/etc/timezone:/etc/timezone:ro"
 
   rbfeeder:
-    image: ghcr.io/sdr-enthusiasts/docker-airnavradar:latest-build-811
+    image: ghcr.io/sdr-enthusiasts/docker-airnavradar:latest-build-818
     tty: false
     container_name: rb_feeder
     restart: always
