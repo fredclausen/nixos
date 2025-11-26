@@ -17,6 +17,7 @@ in
   ]
   # Darwin modules
   ++ lib.optional isDarwin inputs.home-manager.darwinModules.default
+  ++ lib.optional isDarwin ../homebrew.nix
   # Linux-only NixOS modules
   ++ lib.optional isLinux inputs.catppuccin.nixosModules.catppuccin
   ++ lib.optional isLinux ../../packages
