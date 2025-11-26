@@ -48,7 +48,7 @@
   ];
 
   sops.secrets = {
-    "acarshub.env" = {
+    "docker/acarshub.env" = {
       path = "/opt/adsb/.env";
       owner = "fred";
     };
