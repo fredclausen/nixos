@@ -258,7 +258,7 @@ services:
       - /var/log
 
   piaware:
-    image: ghcr.io/sdr-enthusiasts/docker-piaware:latest-build-634
+    image: ghcr.io/sdr-enthusiasts/docker-piaware:latest-build-638
     tty: true
     container_name: piaware
     hostname: piaware
