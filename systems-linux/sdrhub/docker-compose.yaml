@@ -313,7 +313,7 @@ services:
       - /var/log
 
   radarvirtuel:
-    image: ghcr.io/sdr-enthusiasts/docker-radarvirtuel:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/docker-radarvirtuel:trixie-latest-build-3
     tty: true
     container_name: radarvirtuel
     hostname: radarvirtuel
