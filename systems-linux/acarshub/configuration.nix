@@ -43,8 +43,10 @@
     # ensure directory exists
     "d /opt/adsb 0755 fred users - -"
 
+    "r! /opt/adsb/docker-compose.yaml - - - -"
+
     # copy file (correct field positions)
-    "Z /opt/adsb/docker-compose.yaml 0644 fred users - ${./docker-compose.yaml}"
+    "C /opt/adsb/docker-compose.yaml 0644 fred users - ${./docker-compose.yaml}"
   ];
 
   sops.secrets = {
