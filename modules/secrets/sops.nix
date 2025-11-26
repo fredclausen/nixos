@@ -57,6 +57,23 @@ in
 
       # wifi
       "wifi.env" = { };
+
+      # compose env secrets
+      "docker/acarshub.env" = {
+        owner = username;
+      };
+      "docker/sdrhub.env" = {
+        owner = username;
+      };
+      "docker/hfdlhub1.env" = {
+        owner = username;
+      };
+      "docker/hfdlhub2.env" = {
+        owner = username;
+      };
+      "docker/vdlmhub.env" = {
+        owner = username;
+      };
     };
   };
 

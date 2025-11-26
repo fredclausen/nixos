@@ -1,0 +1,200 @@
+services:
+  dozzle-agent:
+    image: amir20/dozzle:v8.14.4
+    container_name: dozzle-agent
+    command: agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 7007:7007
+
+  hfdlobserver:
+    image: ghcr.io/sdr-enthusiasts/docker-hfdlobserver:latest-build-14
+    #image: ghcr.io/sdr-enthusiasts/docker-hfdlobserver:trixie-latest-build-2
+    container_name: hfdlobserver
+    volumes:
+      - /opt/adsb/hfdlobserver:/run/hfdlobserver
+
+  # dumphfdl-1:
+  #   image: ghcr.io/sdr-enthusiasts/docker-dumphfdl:latest-build-147
+  #   tty: true
+  #   container_name: dumphfdl-1
+  #   restart: always
+  #   device_cgroup_rules:
+  #     - "c 189:* rwm"
+  #   environment:
+  #     - TZ=${FEEDER_TZ}
+  #     - SOAPYSDRDRIVER=driver=sdrplay,serial=2235008D99
+  #     - SOAPYSAMPLERATE=2000000
+  #     #- SOAPYSAMPLERATE=6000000
+  #     - GAIN=IFGR=40,RFGR=2
+  #     - GAIN_TYPE=--gain-elements
+  #     - FEED_ID=CS-KABQ-HFDL
+  #     - ZMQ_MODE=client
+  #     - ZMQ_ENDPOINT=tcp://192.168.31.20:35556
+  #     - FREQUENCIES=17901 17912 17916 17919 17922 17928 17934 17958 17967
+  #     #- FREQUENCIES=11184 11288 11306 11312 11315 11318 11321 11327 11348 11354 11384 11387 13264 13270 13276 13303 13312 13315 13321 13324 13342 13351 13354 15025
+  #     - DUMP_HFDL_COMMAND_EXTRA=--output decoded:basestation:tcp:address=192.168.31.20,port=12000
+  #   tmpfs:
+  #     - /run:exec,size=64M
+  #     - /var/log
+  #     - /tmp
+  #   volumes:
+  #     - /dev:/dev
+  #     - /opt/adsb/data/dumphfdl1-data:/opt/dumphfdl
+  #     - /opt/adsb/data/dumphfdl1-scanner:/opt/scanner
+
+  # dumphfdl-2:
+  #   image: ghcr.io/sdr-enthusiasts/docker-dumphfdl:latest-build-147
+  #   tty: true
+  #   container_name: dumphfdl-2
+  #   restart: always
+  #   device_cgroup_rules:
+  #     - "c 189:* rwm"
+  #   depends_on:
+  #     dumphfdl-1:
+  #       condition: service_started
+  #   environment:
+  #     - TZ=${FEEDER_TZ}
+  #     - SOAPYSDRDRIVER=driver=sdrplay,serial=2238053F99
+  #     - SOAPYSAMPLERATE=2000000
+  #     #- SOAPYSAMPLERATE=5000000
+  #     - GAIN=IFGR=40,RFGR=2
+  #     - GAIN_TYPE=--gain-elements
+  #     - FEED_ID=CS-KABQ-HFDL
+  #     - ZMQ_MODE=client
+  #     - ZMQ_ENDPOINT=tcp://192.168.31.20:35556
+  #     - FREQUENCIES=21928 21931 21934 21937 21949 21955 21982 21990 21995 21997
+  #     #- FREQUENCIES=17901 17912 17916 17919 17922 17928 17934 17952 17958 17967 17985 21928 21931 21934 21937 21940 21946 21949 21955 21973 21982 21988 21990 21997
+  #     - DUMP_HFDL_COMMAND_EXTRA=--output decoded:basestation:tcp:address=192.168.31.20,port=12000
+  #   tmpfs:
+  #     - /run:exec,size=64M
+  #     - /var/log
+  #     - /tmp
+  #   volumes:
+  #     - /dev:/dev
+  #     - /opt/adsb/data/dumphfdl2-data:/opt/dumphfdl
+  #     - /opt/adsb/data/dumphfdl2-scanner:/opt/scanner
+
+  # dumphfdl-scanner:
+  #   image: ghcr.io/sdr-enthusiasts/docker-dumphfdl:latest-build-147
+  #   tty: true
+  #   container_name: dumphfdl-scanner
+  #   restart: always
+  #   device_cgroup_rules:
+  #     - "c 189:* rwm"
+  #   depends_on:
+  #     dumphfdl-1:
+  #       condition: service_started
+  #     dumphfdl-2:
+  #       condition: service_started
+  #   environment:
+  #     - TZ=${FEEDER_TZ}
+  #     - SOAPYSDRDRIVER=driver=airspyhf,serial=0x3b52aa80389e25ad
+  #     - GAIN_TYPE=--gain
+  #     - SOAPYSAMPLERATE=912000
+  #     - GAIN=40
+  #     - FEED_ID=CS-KABQ-HFDL
+  #     - ZMQ_MODE=client
+  #     - ZMQ_ENDPOINT=tcp://192.168.31.20:35556
+  #     - DUMP_HFDL_COMMAND_EXTRA=--output decoded:basestation:tcp:address=192.168.31.20,port=12000
+  #   tmpfs:
+  #     - /run:exec,size=64M
+  #     - /var/log
+  #     - /tmp
+  #   volumes:
+  #     - /dev:/dev
+  #     - /opt/adsb/data/dumphfdl-scanner-data:/opt/dumphfdl
+  #     - /opt/adsb/data/dumphfdl-scanner-scanner:/opt/scanner
+
+  # dumphfdl-1:
+  #   image: ghcr.io/sdr-enthusiasts/docker-dumphfdl:latest-build-147
+  #   tty: true
+  #   container_name: dumphfdl-1
+  #   restart: always
+  #   device_cgroup_rules:
+  #     - "c 189:* rwm"
+  #   environment:
+  #     - TZ=${FEEDER_TZ}
+  #     - SOAPYSDRDRIVER=driver=sdrplay,serial=2235008D99
+  #     - SOAPYSAMPLERATE=2000000
+  #     #- SOAPYSAMPLERATE=6000000
+  #     - GAIN=IFGR=40,RFGR=2
+  #     - GAIN_TYPE=--gain-elements
+  #     - FEED_ID=CS-KABQ-HFDL
+  #     - ZMQ_MODE=client
+  #     - ZMQ_ENDPOINT=tcp://192.168.31.20:35556
+  #     - FREQUENCIES=17901 17912 17916 17919 17922 17928 17934 17958 17967
+  #     #- FREQUENCIES=11184 11288 11306 11312 11315 11318 11321 11327 11348 11354 11384 11387 13264 13270 13276 13303 13312 13315 13321 13324 13342 13351 13354 15025
+  #     - DUMP_HFDL_COMMAND_EXTRA=--output decoded:basestation:tcp:address=192.168.31.20,port=12000
+  #   tmpfs:
+  #     - /run:exec,size=64M
+  #     - /var/log
+  #     - /tmp
+  #   volumes:
+  #     - /dev:/dev
+  #     - /opt/adsb/data/dumphfdl1-data:/opt/dumphfdl
+  #     - /opt/adsb/data/dumphfdl1-scanner:/opt/scanner
+
+  # dumphfdl-2:
+  #   image: ghcr.io/sdr-enthusiasts/docker-dumphfdl:latest-build-147
+  #   tty: true
+  #   container_name: dumphfdl-2
+  #   restart: always
+  #   device_cgroup_rules:
+  #     - "c 189:* rwm"
+  #   depends_on:
+  #     dumphfdl-1:
+  #       condition: service_started
+  #   environment:
+  #     - TZ=${FEEDER_TZ}
+  #     - SOAPYSDRDRIVER=driver=sdrplay,serial=2238053F99
+  #     - SOAPYSAMPLERATE=2000000
+  #     #- SOAPYSAMPLERATE=5000000
+  #     - GAIN=IFGR=40,RFGR=2
+  #     - GAIN_TYPE=--gain-elements
+  #     - FEED_ID=CS-KABQ-HFDL
+  #     - ZMQ_MODE=client
+  #     - ZMQ_ENDPOINT=tcp://192.168.31.20:35556
+  #     - FREQUENCIES=21928 21931 21934 21937 21949 21955 21982 21990 21995 21997
+  #     #- FREQUENCIES=17901 17912 17916 17919 17922 17928 17934 17952 17958 17967 17985 21928 21931 21934 21937 21940 21946 21949 21955 21973 21982 21988 21990 21997
+  #     - DUMP_HFDL_COMMAND_EXTRA=--output decoded:basestation:tcp:address=192.168.31.20,port=12000
+  #   tmpfs:
+  #     - /run:exec,size=64M
+  #     - /var/log
+  #     - /tmp
+  #   volumes:
+  #     - /dev:/dev
+  #     - /opt/adsb/data/dumphfdl2-data:/opt/dumphfdl
+  #     - /opt/adsb/data/dumphfdl2-scanner:/opt/scanner
+
+  # dumphfdl-scanner:
+  #   image: ghcr.io/sdr-enthusiasts/docker-dumphfdl:latest-build-147
+  #   tty: true
+  #   container_name: dumphfdl-scanner
+  #   restart: always
+  #   device_cgroup_rules:
+  #     - "c 189:* rwm"
+  #   depends_on:
+  #     dumphfdl-1:
+  #       condition: service_started
+  #     dumphfdl-2:
+  #       condition: service_started
+  #   environment:
+  #     - TZ=${FEEDER_TZ}
+  #     - SOAPYSDRDRIVER=driver=airspyhf,serial=0x3b52aa80389e25ad
+  #     - GAIN_TYPE=--gain
+  #     - SOAPYSAMPLERATE=912000
+  #     - GAIN=40
+  #     - FEED_ID=CS-KABQ-HFDL
+  #     - ZMQ_MODE=client
+  #     - ZMQ_ENDPOINT=tcp://192.168.31.20:35556
+  #     - DUMP_HFDL_COMMAND_EXTRA=--output decoded:basestation:tcp:address=192.168.31.20,port=12000
+  #   tmpfs:
+  #     - /run:exec,size=64M
+  #     - /var/log
+  #     - /tmp
+  #   volumes:
+  #     - /dev:/dev
+  #     - /opt/adsb/data/dumphfdl-scanner-data:/opt/dumphfdl
+  #     - /opt/adsb/data/dumphfdl-scanner-scanner:/opt/scanner

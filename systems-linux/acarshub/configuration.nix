@@ -38,4 +38,19 @@
       $rm -f /run/reboot-required
     fi
   '';
+
+  systemd.tmpfiles.rules = [
+    # ensure directory
+    "d /opt/adsb 0755 fred users -"
+
+    # copy compose file on boot or switch if changed
+    "C /opt/adsb/docker-compose.yaml 0644 fred users ${./docker-compose.yaml}"
+  ];
+
+  sops.secrets = {
+    "acarshub.env" = {
+      path = "/opt/adsb/.env";
+      owner = "fred";
+    };
+  };
 }
