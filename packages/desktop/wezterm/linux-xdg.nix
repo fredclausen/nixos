@@ -5,8 +5,11 @@
   user,
   ...
 }:
+let
+  username = user;
+in
 {
-  config = lib.mkIf cfg.enable {
+  config = {
     home-manager.users.${username} = {
       xdg.mimeApps.associations.added."x-terminal-emulator" = [ "wezterm.desktop" ];
     };

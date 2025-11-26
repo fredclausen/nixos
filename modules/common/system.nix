@@ -22,8 +22,7 @@ in
   ++ lib.optional isLinux inputs.catppuccin.nixosModules.catppuccin
   ++ lib.optional isLinux ../../packages
   ++ lib.optional isLinux ../../users
-  ++ lib.optional isLinux ./linux-catpuccin.nix
-  ++ lib.optional isLinux ./linux-common.nix;
+  ++ lib.optional isLinux ./linux-catpuccin.nix;
 
   nix.settings.experimental-features = [
     "nix-command"

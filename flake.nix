@@ -72,6 +72,7 @@
           hmModules ? [ ],
           extraModules ? [ ],
           stateVersion ? "24.11",
+          system ? "x86_64-linux",
         }:
         nixpkgs.lib.nixosSystem {
           specialArgs = {
@@ -82,6 +83,7 @@
               github_email
               github_signing_key
               hmlib
+              system
               stateVersion
               ;
           };
@@ -113,6 +115,7 @@
                   nixvim
                   niri
                   stateVersion
+                  system
                   ;
               };
             }

@@ -28,7 +28,8 @@ in
     inputs.catppuccin.homeModules.catppuccin
     inputs.nixvim.homeModules.nixvim
   ]
-  ++ lib.optional isLinux inputs.niri.homeModules.niri;
+  ++ lib.optional isLinux inputs.niri.homeModules.niri
+  ++ lib.optional isLinux ./linux-common.nix;
 
   ##########################################################################
   ## .gitconfig — fully generated

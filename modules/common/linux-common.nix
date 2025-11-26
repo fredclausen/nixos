@@ -1,4 +1,15 @@
 {
+  stateVersion,
+  user,
+  homeDir,
+  pkgs,
+  ...
+}:
+let
+  username = user;
+  homeDir = "/home/${username}";
+in
+{
   ##########################################################################
   ## HOME BASE SETTINGS (platform-aware)
   ##########################################################################
