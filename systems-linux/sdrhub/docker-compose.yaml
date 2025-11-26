@@ -127,7 +127,7 @@ services:
 
   # ADSB Related SDR services
   ultrafeeder:
-    image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-837
+    image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-838
     tty: false
     container_name: ultrafeeder
     hostname: ultrafeeder
