@@ -44,7 +44,7 @@
     "d /opt/adsb 0755 fred users - -"
 
     # copy file (correct field positions)
-    "C /opt/adsb/docker-compose.yaml 0644 fred users - ${./docker-compose.yaml}"
+    "C! /opt/adsb/docker-compose.yaml 0644 fred users - ${./docker-compose.yaml}"
   ];
 
   sops.secrets = {
