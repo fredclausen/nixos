@@ -83,7 +83,7 @@ services:
 
   dozzle:
     container_name: dozzle
-    image: amir20/dozzle:v8.14.4
+    image: amir20/dozzle:v8.14.9
     restart: always
     environment:
       - DOZZLE_BASE=/dozzle
@@ -92,7 +92,7 @@ services:
       - 9999:8080
 
   dozzle-agent:
-    image: amir20/dozzle:v8.14.4
+    image: amir20/dozzle:v8.14.9
     container_name: dozzle-agent
     command: agent
     volumes:
@@ -102,7 +102,7 @@ services:
 
   # direct connect SDR
   airspy_adsb:
-    image: ghcr.io/sdr-enthusiasts/airspy_adsb:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/airspy_adsb:trixie-latest-build-3
     container_name: airspy_adsb
     hostname: airspy_adsb
     restart: always
@@ -127,7 +127,7 @@ services:
 
   # ADSB Related SDR services
   ultrafeeder:
-    image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-816
+    image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-837
     tty: false
     container_name: ultrafeeder
     hostname: ultrafeeder
@@ -200,7 +200,7 @@ services:
       - /var/log:size=32M
 
   dump978:
-    image: ghcr.io/sdr-enthusiasts/docker-dump978:trixie-latest-build-1
+    image: ghcr.io/sdr-enthusiasts/docker-dump978:trixie-latest-build-2
     #image: ghcr.io/sdr-enthusiasts/docker-dump978:latest-build-769
     tty: true
     container_name: dump978
@@ -229,7 +229,7 @@ services:
 
   # ADSB Feeders
   adsbhub:
-    image: ghcr.io/sdr-enthusiasts/docker-adsbhub:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/docker-adsbhub:trixie-latest-build-3
     tty: true
     container_name: adsbhub
     restart: always
@@ -242,7 +242,7 @@ services:
       - /var/log
 
   fr24:
-    image: ghcr.io/sdr-enthusiasts/docker-flightradar24:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/docker-flightradar24:trixie-latest-build-3
     tty: true
     container_name: fr24
     restart: always
@@ -258,7 +258,7 @@ services:
       - /var/log
 
   piaware:
-    image: ghcr.io/sdr-enthusiasts/docker-piaware:latest-build-634
+    image: ghcr.io/sdr-enthusiasts/docker-piaware:latest-build-638
     tty: true
     container_name: piaware
     hostname: piaware
@@ -278,7 +278,7 @@ services:
       - /var/log
 
   planefinder:
-    image: ghcr.io/sdr-enthusiasts/docker-planefinder:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/docker-planefinder:trixie-latest-build-3
     tty: true
     container_name: planefinder
     restart: always
@@ -295,7 +295,7 @@ services:
       - /var/log
 
   planewatch:
-    image: ghcr.io/plane-watch/docker-plane-watch:latest-build-207
+    image: ghcr.io/plane-watch/docker-plane-watch:latest-build-210
     tty: true
     container_name: planewatch
     restart: always
@@ -313,7 +313,7 @@ services:
       - /var/log
 
   radarvirtuel:
-    image: ghcr.io/sdr-enthusiasts/docker-radarvirtuel:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/docker-radarvirtuel:trixie-latest-build-3
     tty: true
     container_name: radarvirtuel
     hostname: radarvirtuel
@@ -338,7 +338,7 @@ services:
       # - "/etc/timezone:/etc/timezone:ro"
 
   rbfeeder:
-    image: ghcr.io/sdr-enthusiasts/docker-airnavradar:latest-build-811
+    image: ghcr.io/sdr-enthusiasts/docker-airnavradar:latest-build-818
     tty: false
     container_name: rb_feeder
     restart: always
@@ -360,7 +360,7 @@ services:
       - /var/log
 
   opensky:
-    image: ghcr.io/sdr-enthusiasts/docker-opensky-network:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/docker-opensky-network:trixie-latest-build-3
     tty: true
     container_name: opensky
     restart: always
@@ -377,7 +377,7 @@ services:
       - /var/log
 
   sdrmap:
-    image: ghcr.io/sdr-enthusiasts/docker-sdrmap:trixie-latest-build-3
+    image: ghcr.io/sdr-enthusiasts/docker-sdrmap:trixie-latest-build-4
     container_name: sdrmap
     restart: always
     environment:
@@ -395,7 +395,7 @@ services:
   # ACARS Related Services
   acarshub:
     #image: ghcr.io/sdr-enthusiasts/docker-acarshub:latest-build-1444
-    image: ghcr.io/sdr-enthusiasts/docker-acarshub:trixie-latest-build-9
+    image: ghcr.io/sdr-enthusiasts/docker-acarshub:trixie-latest-build-10
     tty: true
     container_name: acarshub
     restart: always
@@ -425,7 +425,7 @@ services:
       - /var/log
 
   acars_router:
-    image: ghcr.io/sdr-enthusiasts/acars_router:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/acars_router:trixie-latest-build-3
     tty: true
     ports:
       - 15550:15550

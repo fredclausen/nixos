@@ -1,6 +1,6 @@
 services:
   dozzle-agent:
-    image: amir20/dozzle:v8.14.4
+    image: amir20/dozzle:v8.14.9
     container_name: dozzle-agent
     command: agent
     volumes:
@@ -10,7 +10,7 @@ services:
 
   dumpvdl2-1:
     #image: ghcr.io/sdr-enthusiasts/docker-dumpvdl2:latest-build-387
-    image: ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-4
+    image: ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5
     tty: true
     container_name: dumpvdl2-1
     restart: always
@@ -32,7 +32,7 @@ services:
 
   dumpvdl2-2:
     #image: ghcr.io/sdr-enthusiasts/docker-dumpvdl2:latest-build-387
-    image: ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-4
+    image: ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5
     tty: true
     container_name: dumpvdl2-2
     restart: always
@@ -54,7 +54,7 @@ services:
 
   dumpvdl2-3:
     #image: ghcr.io/sdr-enthusiasts/docker-dumpvdl2:latest-build-387
-    image: ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-4
+    image: ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5
     tty: true
     container_name: dumpvdl2-3
     restart: always
@@ -76,7 +76,7 @@ services:
 
   dumpvdl2-4:
     #image: ghcr.io/sdr-enthusiasts/docker-dumpvdl2:latest-build-387
-    image: ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-4
+    image: ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5
     tty: true
     container_name: dumpvdl2-4
     restart: always

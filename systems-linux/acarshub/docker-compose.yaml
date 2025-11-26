@@ -1,6 +1,6 @@
 services:
   dozzle-agent:
-    image: amir20/dozzle:v8.14.4
+    image: amir20/dozzle:v8.14.9
     container_name: dozzle-agent
     command: agent
     volumes:
@@ -10,7 +10,7 @@ services:
 
   # ACARS SDR Interfaces
   acarsdec-1:
-    image: ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-3
+    image: ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-4
     #image: ghcr.io/sdr-enthusiasts/docker-acarsdec:latest-build-455
     tty: true
     container_name: acarsdec-1
@@ -33,7 +33,7 @@ services:
       - /dev:/dev
 
   acarsdec-2:
-    image: ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-3
+    image: ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-4
     #image: ghcr.io/sdr-enthusiasts/docker-acarsdec:latest-build-454
     tty: true
     container_name: acarsdec-2
@@ -55,7 +55,7 @@ services:
       - /dev:/dev
 
   acarsdec-3:
-    image: ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-3
+    image: ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-4
     #image: ghcr.io/sdr-enthusiasts/docker-acarsdec:latest-build-454
     tty: true
     container_name: acarsdec-3
