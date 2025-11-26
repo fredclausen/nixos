@@ -278,7 +278,7 @@ services:
       - /var/log
 
   planefinder:
-    image: ghcr.io/sdr-enthusiasts/docker-planefinder:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/docker-planefinder:trixie-latest-build-3
     tty: true
     container_name: planefinder
     restart: always
