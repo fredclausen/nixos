@@ -23,14 +23,15 @@ The main entry point is [`flake.nix`](./flake.nix).
 
 It defines several host configurations:
 
-| System Name   | Description      | Profile                                                    |
-| ------------- | ---------------- | ---------------------------------------------------------- |
-| **Daytona**   | Personal laptop  | Desktop + Extra Packages + Development                     |
-| **Maranello** | Home workstation | Desktop + Extra Packages + Games + Streaming + Development |
-| **acarshub**  | Server           | Server + Development                                       |
-| **vdlmhub**   | Server           | Server + Development                                       |
-| **hfdlhub-1** | Server           | Server + Development                                       |
-| **hfdlhub-2** | Server           | Server + Development                                       |
+| System Name           | Description           | Profile                                                    |
+| --------------------- | --------------------- | ---------------------------------------------------------- |
+| **Daytona**           | Personal laptop       | Desktop + Extra Packages + Development                     |
+| **Maranello**         | Home workstation      | Desktop + Extra Packages + Games + Streaming + Development |
+| **acarshub**          | Server                | Server + Development                                       |
+| **vdlmhub**           | Server                | Server + Development                                       |
+| **hfdlhub-1**         | Server                | Server + Development                                       |
+| **hfdlhub-2**         | Server                | Server + Development                                       |
+| **Freds-Macbook-Pro** | Personal macOS laptop | Development/Darwin                                         |
 
 ## Using This Configuration (If You Really Want To)
 
@@ -44,23 +45,16 @@ This is mostly here for my own machines---but if you want to adopt it:
 5. Rename `system/maranello` → `system/<your system name>`.
 6. Copy your generated `/etc/nixos/hardware-configuration.nix` into
    that directory.
-7. Change the `user`, `verbose_name`, and `github_username` fields in
-   `flake.nix`.
-8. Search for the username `fred` and replace with your own. See the note below.
-9. Update dotfile paths (rename `dotfiles/fred` →
-   `dotfiles/<your username>` if needed).
-10. In your `system/<system>/configuration.nix`, replace `maranello`
-    with your system name.
-11. Build and switch:
+7. In `flake.nix`, update the `{nixos|darwin}Configurations.<system>` entry to
+   point to your renamed system directory. Each of the `mk{Nixos|Darwin}System` has some global configuration options. The name documents what they do, and you will want to change them. Very likely, you will want to ALSO set the `stateVersion` to the most recent NixOS release (I started my Nix journey when 24.11 was the most recent), which at this current time is `25.05`.
+8. Build and switch:
 
 ```bash
 sudo nixos-rebuild switch --flake .#<system name>
 ```
 
 > [!IMPORTANT]
-> `fred` as a username is still baked in in quite a few places, namely in the `dotfiles` directory. A lot of my custom scripts just have the `/home/fred` path hardcoded. You will need to change these to your own username or home directory path.
->
-> Additionally, there are a few other files that have `fred` hardcoded in them. You will need to change these as well.
+> `flake.nix` has the configuration options to allow you to dynamically set your username and a few other options to customize this to your needs. That said, if you look in the dotfiles directory I have custom scripts for myself that hard code paths in them. You will, obviously, need to audit these files because they're bespoke to my needs. Most of these can probably be nuked without issue.
 
 ### Optional Post-Install Steps
 
@@ -108,12 +102,11 @@ Each system's `configuration.nix` supports these options:
 > \[!WARNING\] This is **not** a pure-Nix, perfectly-immutable setup.
 >
 > Some development tools are installed **system-wide** to make tools
-> like `lazygit` work cleanly.\
+> like `lazygit` work cleanly.
 > Several optional post-install steps are still **imperative**, and
 > should ideally be baked into declarative modules in the future.
 >
-> Treat this as a functional starting point---not an example of strict
-> Nix purity.
+> I am migrating all of my git repositories to include a `flake.nix`, and when that happens I will be able to remove a lot of the imperative steps.
 
 ## Included Packages (Partial List)
 
