@@ -395,7 +395,7 @@ services:
   # ACARS Related Services
   acarshub:
     #image: ghcr.io/sdr-enthusiasts/docker-acarshub:latest-build-1444
-    image: ghcr.io/sdr-enthusiasts/docker-acarshub:trixie-latest-build-9
+    image: ghcr.io/sdr-enthusiasts/docker-acarshub:trixie-latest-build-10
     tty: true
     container_name: acarshub
     restart: always
