@@ -16,8 +16,9 @@ let
 in
 {
   imports = [
-    inputs.sops-nix.nixosModules.sops
-  ];
+  ]
+  ++ lib.optional isLinux inputs.sops-nix.nixosModules.sops
+  ++ lib.optional isDarwin inputs.sops-nix.darwinModules.sops;
 
   environment.systemPackages = [
     pkgs.sops
