@@ -83,7 +83,7 @@ services:
 
   dozzle:
     container_name: dozzle
-    image: amir20/dozzle:v8.14.4
+    image: amir20/dozzle:v8.14.9
     restart: always
     environment:
       - DOZZLE_BASE=/dozzle
@@ -92,7 +92,7 @@ services:
       - 9999:8080
 
   dozzle-agent:
-    image: amir20/dozzle:v8.14.4
+    image: amir20/dozzle:v8.14.9
     container_name: dozzle-agent
     command: agent
     volumes:
