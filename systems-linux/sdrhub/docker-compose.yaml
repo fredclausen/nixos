@@ -229,7 +229,7 @@ services:
 
   # ADSB Feeders
   adsbhub:
-    image: ghcr.io/sdr-enthusiasts/docker-adsbhub:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/docker-adsbhub:trixie-latest-build-3
     tty: true
     container_name: adsbhub
     restart: always
