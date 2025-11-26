@@ -41,10 +41,16 @@ in
     fi
   '';
 
-  systemd.tmpfiles.rules = [
-    "d /opt/adsb 0755 fred users - -"
-    "C! /opt/adsb/docker-compose.yaml 0644 fred users - ${dockerCompose}"
-  ];
+  system.activationScripts.adsbDockerCompose = {
+    text = ''
+      # Ensure directory exists (does not touch contents if already there)
+      install -d -m0755 -o fred -g users /opt/adsb
+
+      # Always overwrite the compose file from the Nix store
+      install -m0644 -o fred -g users ${dockerCompose} /opt/adsb/docker-compose.yaml
+    '';
+    deps = [ ];
+  };
 
   sops.secrets = {
     "docker/acarshub.env" = {
