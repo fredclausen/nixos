@@ -295,7 +295,7 @@ services:
       - /var/log
 
   planewatch:
-    image: ghcr.io/plane-watch/docker-plane-watch:latest-build-207
+    image: ghcr.io/plane-watch/docker-plane-watch:latest-build-210
     tty: true
     container_name: planewatch
     restart: always
