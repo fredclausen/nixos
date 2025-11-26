@@ -29,28 +29,34 @@ in
     defaultSopsFormat = "yaml";
     age.keyFile = "${homeDir}/.config/sops/age/keys.txt";
 
-    secrets."ssh/id_ed25519" = {
-      path = "${homeDir}/.ssh/id_ed25519";
-      owner = username;
-      mode = "0600";
-    };
-    secrets."ssh/id_ed25519.pub" = {
-      path = "${homeDir}/.ssh/id_ed25519.pub";
-      owner = username;
-    };
-    secrets."ssh/id_rsa.pub" = {
-      path = "${homeDir}/.ssh/id_rsa.pub";
-      owner = username;
-    };
-    secrets."ssh/id_rsa" = {
-      path = "${homeDir}/.ssh/id_rsa";
-      owner = username;
-      mode = "0600";
-    };
-    secrets."ssh/authorized_keys" = {
-      path = "${homeDir}/.ssh/authorized_keys";
-      owner = username;
-      mode = "0600";
+    # SSH
+    secrets = {
+      "ssh/id_ed25519" = {
+        path = "${homeDir}/.ssh/id_ed25519";
+        owner = username;
+        mode = "0600";
+      };
+      "ssh/id_ed25519.pub" = {
+        path = "${homeDir}/.ssh/id_ed25519.pub";
+        owner = username;
+      };
+      "ssh/id_rsa.pub" = {
+        path = "${homeDir}/.ssh/id_rsa.pub";
+        owner = username;
+      };
+      "ssh/id_rsa" = {
+        path = "${homeDir}/.ssh/id_rsa";
+        owner = username;
+        mode = "0600";
+      };
+      "ssh/authorized_keys" = {
+        path = "${homeDir}/.ssh/authorized_keys";
+        owner = username;
+        mode = "0600";
+      };
+
+      # wifi
+      "wifi.env" = { };
     };
   };
 
