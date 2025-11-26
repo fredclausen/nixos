@@ -39,14 +39,11 @@
     fi
   '';
 
+  dockerCompose = pkgs.writeText "docker-compose.yaml" (builtins.readFile ./docker-compose.yaml);
+
   systemd.tmpfiles.rules = [
-    # ensure directory exists
     "d /opt/adsb 0755 fred users - -"
-
-    "r! /opt/adsb/docker-compose.yaml - - - -"
-
-    # copy file (correct field positions)
-    "C /opt/adsb/docker-compose.yaml 0644 fred users - ${./docker-compose.yaml}"
+    "C! /opt/adsb/docker-compose.yaml 0644 fred users - ${dockerCompose}"
   ];
 
   sops.secrets = {
