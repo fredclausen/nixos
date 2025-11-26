@@ -425,7 +425,7 @@ services:
       - /var/log
 
   acars_router:
-    image: ghcr.io/sdr-enthusiasts/acars_router:trixie-latest-build-2
+    image: ghcr.io/sdr-enthusiasts/acars_router:trixie-latest-build-3
     tty: true
     ports:
       - 15550:15550
