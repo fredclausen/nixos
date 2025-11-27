@@ -6,11 +6,12 @@
   ...
 }:
 let
-  dockerCompose = pkgs.writeText "docker-compose.yaml" (builtins.readFile ./docker-compose.yaml);
+  dockerSecrets = builtins.fromJSON (builtins.readFile config.sops.secrets."docker/acarshub".path);
 in
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/adsb-quadlet.nix
   ];
 
   # Server profile
@@ -41,21 +42,102 @@ in
     fi
   '';
 
-  system.activationScripts.adsbDockerCompose = {
-    text = ''
-      # Ensure directory exists (does not touch contents if already there)
-      install -d -m0755 -o fred -g users /opt/adsb
+  services.adsb.containers = [
+    ###############################################################
+    # DOZZLE
+    ###############################################################
+    {
+      name = "dozzle-agent";
+      image = "amir20/dozzle:v8.14.9";
+      exec = "agent";
 
-      # Always overwrite the compose file from the Nix store
-      install -m0644 -o fred -g users ${dockerCompose} /opt/adsb/docker-compose.yaml
-    '';
-    deps = [ ];
-  };
+      volumes = [
+        "/var/run/docker.sock:/var/run/docker.sock:ro"
+      ];
 
-  sops.secrets = {
-    "docker/acarshub.env" = {
-      path = "/opt/adsb/.env";
-      owner = "fred";
-    };
-  };
+      ports = [ "7007:7007" ];
+    }
+
+    ###############################################################
+    # ACARSDEC-1
+    ###############################################################
+    {
+      name = "acarsdec-1";
+      image = "ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-4";
+
+      tty = true;
+      restart = "always";
+
+      environment = {
+        TZ = config.sops.secrets.feeder_tz.path;
+        SERIAL = "00012785";
+        FREQUENCIES = "131.85;131.825;131.725;131.65;131.55;131.525;131.475;131.45;131.425;131.25;131.125;130.85;130.825;130.55;130.45;130.425";
+        FEED_ID = "CS-KABQ-ACARS";
+        OUTPUT_SERVER = "192.168.31.20";
+        OUTPUT_SERVER_MODE = "tcp";
+        OUTPUT_SERVER_PORT = "5550";
+      };
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+
+      devices = [ "/dev" ];
+    }
+
+    ###############################################################
+    # ACARSDEC-2
+    ###############################################################
+    {
+      name = "acarsdec-2";
+      image = "ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-4";
+      tty = true;
+      restart = "always";
+
+      environment = {
+        TZ = config.sops.secrets.feeder_tz.path;
+        SERIAL = "00013305";
+        FREQUENCIES = "130.025;129.9;129.525;129.35;129.125;129.0";
+        FEED_ID = "CS-KABQ-ACARS";
+        OUTPUT_SERVER = "192.168.31.20";
+        OUTPUT_SERVER_MODE = "tcp";
+        OUTPUT_SERVER_PORT = "5550";
+      };
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+
+      devices = [ "/dev" ];
+    }
+
+    ###############################################################
+    # ACARSDEC-3
+    ###############################################################
+    {
+      name = "acarsdec-3";
+      image = "ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-4";
+      tty = true;
+      restart = "always";
+
+      environment = {
+        TZ = config.sops.secrets.feeder_tz.path;
+        SERIAL = "00012095";
+        FREQUENCIES = "136.975;136.8;136.65";
+        FEED_ID = "CS-KABQ-ACARS";
+        OUTPUT_SERVER = "192.168.31.20";
+        OUTPUT_SERVER_MODE = "tcp";
+        OUTPUT_SERVER_PORT = "5550";
+      };
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+
+      devices = [ "/dev" ];
+    }
+  ];
 }
