@@ -6,42 +6,39 @@
   timezone: "Etc/UTC",
   schedule: ["before 3am on saturday"],
 
-  // What managers Renovate should run
   enabledManagers: ["nix", "regex", "github-actions"],
 
-  // Nix flakes + *.nix
   nix: {
     enabled: false,
     fileMatch: ["flake\\.nix$", "flake\\.lock$", "\\.nix$"],
   },
 
-  // ---- REGEX MANAGER ----
-  // Extract Docker images from *.nix files
+  // --- CUSTOM VERSIONING MODULE FOR SDR-E TAGS -------------------------------
+  customVersioning: {
+    sdrBuild: {
+      regex: "^(?<release>[a-z0-9-]+-latest-build)-(?<version>\\d+)$",
+      versioning: "numeric",
+    },
+  },
+
+  // --- REGEX MANAGER TO EXTRACT DOCKER IMAGES FROM NIX ------------------------
   regexManagers: [
     {
       fileMatch: ["\\.nix$"],
       matchStrings: [
-        // image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-838"
-        'image\\s*=\\s*"(?<depName>[^:"]+):(?<currentValue>[^"]+)"',
+        'image\\s*=\\s*"(?<depName>[^:]+):(?<currentValue>[^"]+)"',
       ],
       datasourceTemplate: "docker",
     },
   ],
 
-  // ---- PACKAGE RULES ----
+  // --- APPLY CUSTOM VERSIONING TO ONLY SDR-E IMAGES ---------------------------
   packageRules: [
     {
-      // Only apply to Docker deps
       matchDatasources: ["docker"],
-      // Apply docker versioning (NOT semver)
-      versioning: "loose",
-      commitMessageTopic: "Docker image",
-    },
-
-    {
-      // SDR-Enthusiasts ecosystem
       matchDepNames: ["ghcr.io/sdr-enthusiasts/*", "ghcr.io/plane-watch/*"],
-      versioning: "loose",
+      versioning: "sdrBuild",
+      commitMessageTopic: "SDR-E Docker image",
     },
   ],
 }
