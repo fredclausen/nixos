@@ -3,41 +3,70 @@
 
   extends: ["config:best-practices"],
 
-  timezone: "Etc/UTC",
-  schedule: ["before 3am on saturday"],
-
   enabledManagers: ["nix", "regex", "github-actions"],
 
   nix: {
-    enabled: false,
+    enabled: true,
     fileMatch: ["flake\\.nix$", "flake\\.lock$", "\\.nix$"],
   },
 
-  // --- CUSTOM VERSIONING MODULE FOR SDR-E TAGS -------------------------------
-  customVersioning: {
-    sdrBuild: {
-      regex: "^(?<release>[a-z0-9-]+-latest-build)-(?<version>\\d+)$",
-      versioning: "numeric",
-    },
-  },
-
-  // --- REGEX MANAGER TO EXTRACT DOCKER IMAGES FROM NIX ------------------------
+  // Regex manager for Docker images in Nix
   regexManagers: [
     {
       fileMatch: ["\\.nix$"],
+
+      // Matches: image = "ghcr.io/...:<tag>"
       matchStrings: [
-        'image\\s*=\\s*"(?<depName>[^:]+):(?<currentValue>[^"]+)"',
+        'image\\s*=\\s*"(?<depName>[^:"]+):(?<currentValue>[^"]+)"',
       ],
+
+      // Use docker registry as datasource
       datasourceTemplate: "docker",
+
+      // Let packageRules decide versioning
+      versioningTemplate: "loose",
     },
   ],
 
-  // --- APPLY CUSTOM VERSIONING TO ONLY SDR-E IMAGES ---------------------------
   packageRules: [
+    // Ensure docker images get updated with loose comparison
     {
       matchDatasources: ["docker"],
-      matchDepNames: ["ghcr.io/sdr-enthusiasts/*", "ghcr.io/plane-watch/*"],
-      versioning: "sdrBuild",
+      versioning: "loose",
+      commitMessageTopic: "Docker image",
+    },
+
+    // Special rule for SDR-Enthusiasts images with weird tags:
+    {
+      matchDatasources: ["docker"],
+      matchDepNames: [
+        "ghcr.io/plane-watch/docker-plane-watch",
+        "ghcr.io/sdr-enthusiasts/docker-acarsdec",
+        "ghcr.io/sdr-enthusiasts/airspy_adsb",
+        "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder",
+        "ghcr.io/sdr-enthusiasts/docker-dump978",
+        "ghcr.io/sdr-enthusiasts/docker-adsbhub",
+        "ghcr.io/sdr-enthusiasts/docker-flightradar24",
+        "ghcr.io/sdr-enthusiasts/docker-piaware",
+        "ghcr.io/sdr-enthusiasts/docker-planefinder",
+        "ghcr.io/sdr-enthusiasts/docker-radarvirtuel",
+        "ghcr.io/sdr-enthusiasts/docker-airnavradar",
+        "ghcr.io/sdr-enthusiasts/docker-sdrmap",
+        "ghcr.io/sdr-enthusiasts/acars_router",
+        "ghcr.io/sdr-enthusiasts/docker-opensky-network",
+        "ghcr.io/sdr-enthusiasts/docker-acarshub",
+        "ghcr.io/sdr-enthusiasts/docker-hfdlobserver",
+        "ghcr.io/sdr-enthusiasts/docker-dumphfdl",
+        "ghcr.io/sdr-enthusiasts/docker-acarsdec",
+        "ghcr.io/sdr-enthusiasts/docker-dumpvdl2",
+      ],
+
+      // Use "regex" comparator for build numbers
+      versioning: "regex",
+
+      // Extract only the build number
+      extractVersion: ".*-(?<version>\\d+)$",
+
       commitMessageTopic: "SDR-E Docker image",
     },
   ],
