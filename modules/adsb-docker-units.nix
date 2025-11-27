@@ -80,7 +80,12 @@ in
   };
 
   config = lib.mkIf (cfg.containers != [ ]) {
-    virtualisation.docker.enable = true;
+    virtualisation.docker = {
+      enable = true;
+      networks.adsbnet = {
+        driver = "bridge";
+      };
+    };
 
     systemd.services = lib.foldl' (acc: c: acc // { "${c.name}" = mkUnit c; }) { } cfg.containers;
   };
