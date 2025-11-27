@@ -44,7 +44,7 @@ let
 
       [Container]
       Image=${c.image}
-      PodmanArgs=--privileged
+      PodmanArgs=--privileged --device=/dev/bus/usb:/dev/bus/usb:rwm
       ${execLine}
       ${envFileBlock}
       ${envBlock}
