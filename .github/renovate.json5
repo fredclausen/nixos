@@ -6,7 +6,6 @@
   timezone: "Etc/UTC",
   schedule: ["before 3am on saturday"],
 
-  // Enable Nix support
   enabledManagers: ["nix", "regex", "github-actions"],
 
   nix: {
@@ -14,26 +13,15 @@
     fileMatch: ["flake\\.nix$", "flake\\.lock$", "\\.nix$"],
   },
 
-  // Regex manager for Docker images inside Nix files
   regexManagers: [
     {
       fileMatch: ["\\.nix$"],
       matchStrings: [
-        // matches image="ghcr.io/...:trixie-latest-build-3"
-        'image\\s*=\\s*"(?<depName>ghcr\\.io\\/sdr-enthusiasts\\/[^:]+):(?<currentValue>[^\\"]+)"',
-      ],
-      datasourceTemplate: "docker",
-      versioningTemplate: "regex",
-      extractVersion: "trixie-latest-build-(?<version>\\d+)",
-    },
-
-    {
-      // For generic Docker images that ARE SemVer (e.g. amir20/dozzle:v8.14.9)
-      fileMatch: ["\\.nix$"],
-      matchStrings: [
+        // capture any Docker image string:  image = "ghcr.io/...:<tag>"
         'image\\s*=\\s*"(?<depName>[^:]+):(?<currentValue>[^"]+)"',
       ],
       datasourceTemplate: "docker",
+      versioningTemplate: "loose", // allow tags like latest-build-XYZ
     },
   ],
 
