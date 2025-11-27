@@ -8,6 +8,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/adsb-docker-units.nix
   ];
 
   # Server profile
@@ -208,6 +209,5 @@
       requires = [ "network-online.target" ];
       after = [ "network-online.target" ];
     }
-
   ];
 }
