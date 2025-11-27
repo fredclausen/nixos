@@ -8,7 +8,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/adsb-quadlet.nix
+    ../../modules/adsb-docker-units.nix
   ];
 
   # Server profile
@@ -41,23 +41,25 @@
 
   services.adsb.containers = [
     ###############################################################
-    # DOZZLE
+    # DOZZLE AGENT
     ###############################################################
-    # {
-    #   name = "dozzle-agent";
-    #   image = "amir20/dozzle:v8.14.9";
-    #   exec = "agent";
+    {
+      name = "dozzle-agent";
+      image = "amir20/dozzle:v8.14.9";
+      exec = "agent";
 
-    #   environmentFiles = [
-    #     config.sops.secrets."docker/acarshub.env".path
-    #   ];
+      environmentFiles = [
+        config.sops.secrets."docker/acarshub.env".path
+      ];
 
-    #   volumes = [
-    #     "/var/run/docker.sock:/var/run/docker.sock:ro"
-    #   ];
+      volumes = [
+        "/var/run/docker.sock:/var/run/docker.sock:ro"
+      ];
 
-    #   ports = [ "7007:7007" ];
-    # }
+      ports = [ "7007:7007" ];
+
+      requires = [ "network-online.target" ];
+    }
 
     ###############################################################
     # ACARSDEC-1
@@ -88,7 +90,11 @@
         "/var/log"
       ];
 
-      #volumes = [ "/dev:/dev" ];
+      volumes = [
+        "/dev:/dev"
+      ];
+
+      requires = [ "network-online.target" ];
     }
 
     ###############################################################
@@ -97,6 +103,7 @@
     {
       name = "acarsdec-2";
       image = "ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-4";
+
       tty = true;
       restart = "always";
 
@@ -105,7 +112,7 @@
       ];
 
       environment = {
-        TZ = "$${ escape: $${FEEDER_TZ}}";
+        TZ = "America/Denver";
         SERIAL = "00013305";
         FREQUENCIES = "130.025;129.9;129.525;129.35;129.125;129.0";
         FEED_ID = "CS-KABQ-ACARS";
@@ -119,7 +126,11 @@
         "/var/log"
       ];
 
-      volumes = [ "/dev:/dev" ];
+      volumes = [
+        "/dev:/dev"
+      ];
+
+      requires = [ "network-online.target" ];
     }
 
     ###############################################################
@@ -128,6 +139,7 @@
     {
       name = "acarsdec-3";
       image = "ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-4";
+
       tty = true;
       restart = "always";
 
@@ -136,7 +148,7 @@
       ];
 
       environment = {
-        TZ = "$${ escape: $${FEEDER_TZ}}";
+        TZ = "America/Denver";
         SERIAL = "00012095";
         FREQUENCIES = "136.975;136.8;136.65";
         FEED_ID = "CS-KABQ-ACARS";
@@ -150,7 +162,11 @@
         "/var/log"
       ];
 
-      volumes = [ "/dev:/dev" ];
+      volumes = [
+        "/dev:/dev"
+      ];
+
+      requires = [ "network-online.target" ];
     }
   ];
 }
