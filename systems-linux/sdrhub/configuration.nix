@@ -343,7 +343,7 @@ in
       ];
 
       volumes = [
-        "/dev:/dev:ro"
+        "/dev:/dev"
         "/opt/adsb/data/airspy_adsb:/run/airspy_adsb"
       ];
     }
