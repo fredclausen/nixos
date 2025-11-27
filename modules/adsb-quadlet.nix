@@ -69,7 +69,9 @@ in
       acc: c:
       acc
       // {
-        "containers/systemd/${c.name}.container".text = mkContainerUnit c;
+        "containers/systemd/${c.name}.container".source = pkgs.writeText "${c.name}.container" (
+          mkContainerUnit c
+        );
       }
     ) { } cfg.containers;
   };
