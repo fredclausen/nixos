@@ -13,28 +13,20 @@
     fileMatch: ["flake\\.nix$", "flake\\.lock$", "\\.nix$"],
   },
 
+  // Normal docker images (like Dozzle) work automatically.
+  // No custom rules needed.
+
+  // SDR-E regex manager (ONLY applies to SDR-E)
   regexManagers: [
     {
       fileMatch: ["\\.nix$"],
-
-      // Match: image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-123"
       matchStrings: [
-        'image\\s*=\\s*"(?<depName>[^:"]+):(?<currentValue>[^"\\s]+)"',
+        // capture SDR-E image patterns only
+        'image\\s*=\\s*"(?<depName>ghcr\\.io\\/sdr-enthusiasts\\/[^:]+):(?<currentValue>[^"]+)"',
       ],
-
-      // Normalize ANY docker tag ending in "-123" → version "123"
-      // Works with: latest-build-818, trixie-latest-build-10, etc.
-      versioningTemplate: "regex",
-      extractVersionTemplate: ".*-(?<version>\\d+)$",
-
       datasourceTemplate: "docker",
-    },
-  ],
-
-  packageRules: [
-    {
-      matchDatasources: ["docker"],
-      commitMessageTopic: "Docker image",
+      versioningTemplate: "loose", // allow "latest-build-XYZ"
+      extractVersionTemplate: ".*-(?<version>\\d+)$",
     },
   ],
 }
