@@ -23,11 +23,6 @@ in
   networking.hostName = "sdrhub";
 
   environment.systemPackages = with pkgs; [
-    airspy
-  ];
-
-  services.udev.packages = [
-    pkgs.airspy
   ];
 
   ###########################################
@@ -432,6 +427,8 @@ in
         "/run/readsb"
         "/var/log"
       ];
+
+      extraDockerArgs = "--device=/dev/bus/usb";
     }
 
     ###############################################################

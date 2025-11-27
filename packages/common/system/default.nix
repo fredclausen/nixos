@@ -24,6 +24,11 @@
       pkgs.inotify-tools
       pkgs.usbutils
       pkgs.hwdata
+      pkgs.airspy
+    ];
+
+    services.udev.packages = [
+      pkgs.airspy
     ];
 
     xdg.portal = {
