@@ -44,7 +44,7 @@
     # DOZZLE AGENT
     ###############################################################
     {
-      name = "dozzle-agent";
+      name = "dozzle-agent2";
       image = "amir20/dozzle:v8.14.9";
       exec = "agent";
 
