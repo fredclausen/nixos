@@ -8,28 +8,29 @@
 let
   cfg = config.services.adsb;
 
-  # Convert { key = value; } to multiple Environment=key=value lines
+  # Convert { key = value; } → multiple Environment=key=value lines
   mkEnv = env: lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "Environment=${k}=${v}") env);
 
-  # Convert [ "/path:/path:ro" ... ] into repeated lines like Key=/path...
-  mkList = key: xs: lib.concatLines (map (x: "${key}=${x}") xs);
+  # Convert [ "a", "b" ] → repeated lines like "Key=a\nKey=b"
+  mkList = key: xs: lib.concatStringsSep "\n" (map (x: "${key}=${x}") xs);
 
   mkContainerUnit =
     c:
     let
       envBlock = mkEnv (c.environment or { });
+      envFileBlock = mkList "EnvironmentFile" (c.environmentFiles or [ ]);
       volumeBlock = mkList "Volume" (c.volumes or [ ]);
       portBlock = mkList "PublishPort" (c.ports or [ ]);
       tmpfsBlock = mkList "Tmpfs" (c.tmpfs or [ ]);
       deviceBlock = mkList "Device" (c.devices or [ ]);
 
-      execLine = if (c ? exec) then "Exec=${c.exec}" else "";
+      execLine = if c ? exec then "Exec=${c.exec}" else "";
       ttyLine = if (c.tty or false) then "Terminal=true" else "";
-      restartLine = if (c ? restart) then "Restart=${c.restart}" else "";
+      restartLine = if c ? restart then "Restart=${c.restart}" else "";
     in
     ''
       [Unit]
-      Description=Container ${c.name}
+      Description=ADSB Container ${c.name}
       Wants=network-online.target
       After=network-online.target
 
@@ -38,6 +39,7 @@ let
       ${execLine}
       ${ttyLine}
       ${restartLine}
+      ${envFileBlock}
       ${envBlock}
       ${volumeBlock}
       ${tmpfsBlock}
@@ -52,20 +54,17 @@ in
   options.services.adsb.containers = lib.mkOption {
     type = lib.types.listOf lib.types.attrs;
     default = [ ];
-    description = ''
-      List of ADS-B/ACARS/SDR containers to run on this host via Quadlet.
-      Each entry is an attribute set describing one container.
-    '';
+    description = "List of ADS-B/ACARS/SDR containers to run via Podman Quadlet.";
   };
 
   config = lib.mkIf (cfg.containers != [ ]) {
     virtualisation.podman = {
       enable = true;
-      dockerCompat = true; # optional, gives you /run/docker.sock
-      dockerSocket.enable = true; # exposes /var/run/docker.sock for containers
+      dockerCompat = true;
+      # you can drop dockerCompat later if you don't need Docker CLI compat
     };
 
-    # Generate 1 .container unit per entry
+    # This is the IMPORTANT bit: write Quadlet files where podman expects them.
     environment.etc = lib.foldl' (
       acc: c:
       acc
