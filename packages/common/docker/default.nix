@@ -10,9 +10,7 @@
 
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = ''
-          ${pkgs.docker}/bin/docker network create adsbnet || true
-        '';
+        ExecStart = ''${pkgs.runtimeShell} -c "${pkgs.docker}/bin/docker network create adsbnet || true"'';
       };
 
       wantedBy = [ "multi-user.target" ];
