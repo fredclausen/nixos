@@ -1,39 +1,39 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
 
-  // Renovate defaults + safety
   extends: ["config:best-practices"],
 
   timezone: "Etc/UTC",
   schedule: ["before 3am on saturday"],
 
-  // Managers allowed on GitHub-hosted Renovate
-  enabledManagers: ["regex", "nix", "github-actions"],
+  enabledManagers: ["nix", "regex", "github-actions"],
 
   nix: {
     enabled: true,
     fileMatch: ["flake\\.nix$", "flake\\.lock$", "\\.nix$"],
   },
 
-  // regex manager to capture all Docker images
   regexManagers: [
     {
       fileMatch: ["\\.nix$"],
+
+      // Match: image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-123"
       matchStrings: [
-        // image = "repo/name:tag"
-        'image\\s*=\\s*"(?<depName>[^:"]+):(?<currentValue>[^"]+)"',
+        'image\\s*=\\s*"(?<depName>[^:"]+):(?<currentValue>[^"\\s]+)"',
       ],
+
+      // Normalize ANY docker tag ending in "-123" → version "123"
+      // Works with: latest-build-818, trixie-latest-build-10, etc.
+      versioningTemplate: "regex",
+      extractVersionTemplate: ".*-(?<version>\\d+)$",
+
       datasourceTemplate: "docker",
-      // tell renovate “do not try semver — treat tags as strings”
-      extractVersionTemplate: "^.*$",
     },
   ],
 
-  // Allow Renovate to update even non-semver or weird tags
   packageRules: [
     {
       matchDatasources: ["docker"],
-      looseVersioning: true,
       commitMessageTopic: "Docker image",
     },
   ],
