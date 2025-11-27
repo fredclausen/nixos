@@ -11,7 +11,7 @@
 
   // Nix flakes + *.nix
   nix: {
-    enabled: true,
+    enabled: false,
     fileMatch: ["flake\\.nix$", "flake\\.lock$", "\\.nix$"],
   },
 
