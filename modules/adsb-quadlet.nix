@@ -82,22 +82,29 @@ in
       ''
     );
 
-    # This is the IMPORTANT bit: write Quadlet files where podman expects them.
-    system.activationScripts.adsbQuadlet.text =
-      let
-        files = lib.concatStringsSep "\n" (
-          map (c: ''
-                        echo "Writing ${c.name}.container"
-                        install -m 0644 /dev/stdin /etc/containers/systemd/${c.name}.container <<'EOF'
-            ${mkContainerUnit c}
-            EOF
-          '') cfg.containers
-        );
-      in
-      ''
-        mkdir -p /etc/containers/systemd
-        ${files}
-      '';
+    environment.etc = lib.foldl' (
+      acc: c:
+      acc
+      // {
+        "containers/systemd/${c.name}.container".text = mkContainerUnit c;
+      }
+    ) { } cfg.containers;
+
+    # system.activationScripts.adsbQuadlet.text =
+    #   let
+    #     files = lib.concatStringsSep "\n" (
+    #       map (c: ''
+    #                     echo "Writing ${c.name}.container"
+    #                     install -m 0644 /dev/stdin /etc/containers/systemd/${c.name}.container <<'EOF'
+    #         ${mkContainerUnit c}
+    #         EOF
+    #       '') cfg.containers
+    #     );
+    #   in
+    #   ''
+    #     mkdir -p /etc/containers/systemd
+    #     ${files}
+    #   '';
 
   };
 }
