@@ -62,6 +62,7 @@ in
     virtualisation.podman = {
       enable = true;
       dockerCompat = true; # optional, gives you /run/docker.sock
+      dockerSocket.enable = true; # exposes /var/run/docker.sock for containers
     };
 
     # Generate 1 .container unit per entry
