@@ -65,22 +65,13 @@ in
     };
 
     # This is the IMPORTANT bit: write Quadlet files where podman expects them.
-    environment.etc =
-      lib.foldl'
-        (
-          acc: c:
-          acc
-          // {
-            "containers/systemd/${c.name}.container".source = pkgs.writeText "${c.name}.container" (
-              mkContainerUnit c
-            );
-          }
-        )
-        {
-          "containers/".directory = true;
-          "containers/systemd/".directory = true;
-        }
-        cfg.containers;
+    environment.etc = lib.foldl' (
+      acc: c:
+      acc
+      // {
+        "containers/systemd/${c.name}.container".text = mkContainerUnit c;
+      }
+    ) { } cfg.containers;
 
   };
 }
