@@ -81,9 +81,6 @@
       ];
 
       ports = [ "7007:7007" ];
-
-      requires = [ "network-online.target" ];
-      after = [ "network-online.target" ];
     }
 
     ###############################################################
@@ -112,9 +109,6 @@
       volumes = [
         "/dev:/dev"
       ];
-
-      requires = [ "network-online.target" ];
-      after = [ "network-online.target" ];
     }
 
     ###############################################################
@@ -143,9 +137,6 @@
       volumes = [
         "/dev:/dev"
       ];
-
-      requires = [ "network-online.target" ];
-      after = [ "network-online.target" ];
     }
 
     ###############################################################
@@ -174,9 +165,6 @@
       volumes = [
         "/dev:/dev"
       ];
-
-      requires = [ "network-online.target" ];
-      after = [ "network-online.target" ];
     }
 
     ###############################################################
@@ -205,9 +193,6 @@
       volumes = [
         "/dev:/dev"
       ];
-
-      requires = [ "network-online.target" ];
-      after = [ "network-online.target" ];
     }
   ];
 }
