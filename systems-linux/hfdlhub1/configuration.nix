@@ -5,7 +5,9 @@
   stateVersion,
   ...
 }:
-
+let
+  dockerCompose = pkgs.writeText "docker-compose.yaml" (builtins.readFile ./docker-compose.yaml);
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -38,4 +40,22 @@
       $rm -f /run/reboot-required
     fi
   '';
+
+  system.activationScripts.adsbDockerCompose = {
+    text = ''
+      # Ensure directory exists (does not touch contents if already there)
+      install -d -m0755 -o fred -g users /opt/adsb
+
+      # Always overwrite the compose file from the Nix store
+      install -m0644 -o fred -g users ${dockerCompose} /opt/adsb/docker-compose.yaml
+    '';
+    deps = [ ];
+  };
+
+  sops.secrets = {
+    "docker/hfdlhub1.env" = {
+      path = "/opt/adsb/.env";
+      owner = "fred";
+    };
+  };
 }
