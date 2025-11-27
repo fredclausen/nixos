@@ -6,6 +6,7 @@
   timezone: "Etc/UTC",
   schedule: ["before 3am on saturday"],
 
+  // What managers we care about
   enabledManagers: ["nix", "regex", "github-actions"],
 
   nix: {
@@ -13,21 +14,47 @@
     fileMatch: ["flake\\.nix$", "flake\\.lock$", "\\.nix$"],
   },
 
+  // One regex manager to capture *all* image = "…:tag" in .nix files
   regexManagers: [
     {
       fileMatch: ["\\.nix$"],
       matchStrings: [
-        // capture any Docker image string:  image = "ghcr.io/...:<tag>"
-        'image\\s*=\\s*"(?<depName>[^:]+):(?<currentValue>[^"]+)"',
+        // captures: image = "ghcr.io/sdr-enthusiasts/docker-foo:trixie-latest-build-3";
+        //   depName      = ghcr.io/sdr-enthusiasts/docker-foo
+        //   currentValue = trixie-latest-build-3
+        'image\\s*=\\s*"(?<depName>[^":]+):(?<currentValue>[^"]+)"',
       ],
       datasourceTemplate: "docker",
-      versioningTemplate: "loose", // allow tags like latest-build-XYZ
     },
   ],
 
   packageRules: [
+    // All ghcr.io/sdr-enthusiasts/* images (no need to enumerate)
     {
       matchDatasources: ["docker"],
+      matchPackagePrefixes: ["ghcr.io/sdr-enthusiasts/"],
+      // Tags like:
+      //   trixie-latest-build-3
+      //   trixie-latest-build-10
+      //   latest-build-818
+      //
+      // We tell Renovate: "the version is the trailing number"
+      versioning: "regex",
+      versioningTemplate: "regex:^.*?(?<major>\\d+)$",
+    },
+
+    // plane-watch image: ghcr.io/plane-watch/docker-plane-watch:latest-build-210
+    {
+      matchDatasources: ["docker"],
+      matchPackagePrefixes: ["ghcr.io/plane-watch/"],
+      versioning: "regex",
+      versioningTemplate: "regex:^.*?(?<major>\\d+)$",
+    },
+
+    // Everything else docker (e.g. amir20/dozzle) – semver/normal docker tags
+    {
+      matchDatasources: ["docker"],
+      // default docker versioning
       commitMessageTopic: "Docker image",
     },
   ],
