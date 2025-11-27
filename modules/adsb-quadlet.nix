@@ -64,6 +64,11 @@ in
       # you can drop dockerCompat later if you don't need Docker CLI compat
     };
 
+    environment.etc."containers/containers.conf".text = ''
+      [containers]
+      default_runtime = "crun"
+    '';
+
     # This is the IMPORTANT bit: write Quadlet files where podman expects them.
     system.activationScripts.adsbQuadlet.text = ''
       mkdir -p /etc/containers/systemd
