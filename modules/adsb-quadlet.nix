@@ -28,14 +28,9 @@ let
       serviceDeviceBlock = ''
         DevicePolicy=auto
         DeviceAllow=/dev/bus/usb rw
-        DeviceAllow=char-usb rw
+        DeviceAllow=char-major:189 rwm
       '';
 
-      #ttyLine = if (c.tty or false) then "Interactive=true" else "";
-      #restartLine = if c ? restart then "Restart=${c.restart}" else "";
-
-      # ${ttyLine}
-      # ${restartLine}
     in
     ''
       [Unit]
