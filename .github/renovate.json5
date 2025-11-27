@@ -19,10 +19,21 @@
     {
       fileMatch: ["\\.nix$"],
       matchStrings: [
-        'image\\s*=\\s*"(?<depName>[\\w./-]+):(?<currentValue>[\\w.-]+)"',
+        // matches image="ghcr.io/...:trixie-latest-build-3"
+        'image\\s*=\\s*"(?<depName>ghcr\\.io\\/sdr-enthusiasts\\/[^:]+):(?<currentValue>[^\\"]+)"',
       ],
       datasourceTemplate: "docker",
-      versioningTemplate: "docker",
+      versioningTemplate: "regex",
+      extractVersion: "trixie-latest-build-(?<version>\\d+)",
+    },
+
+    {
+      // For generic Docker images that ARE SemVer (e.g. amir20/dozzle:v8.14.9)
+      fileMatch: ["\\.nix$"],
+      matchStrings: [
+        'image\\s*=\\s*"(?<depName>[^:]+):(?<currentValue>[^"]+)"',
+      ],
+      datasourceTemplate: "docker",
     },
   ],
 
