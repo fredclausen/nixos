@@ -317,7 +317,7 @@ in
         "/var/run/docker.sock:/var/run/docker.sock:ro"
       ];
 
-      ports = [ "7007:7007" ];
+      ports = [ "3000:7007" ];
 
       requires = [ "network-online.target" ];
       after = [ "network-online.target" ];
