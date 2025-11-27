@@ -78,7 +78,6 @@ in
   };
 
   config = lib.mkIf (cfg.containers != [ ]) {
-
     virtualisation.docker.enable = true;
 
     systemd.services = lib.foldl' (
