@@ -65,13 +65,19 @@ in
     };
 
     # This is the IMPORTANT bit: write Quadlet files where podman expects them.
-    environment.etc = lib.foldl' (
-      acc: c:
-      acc
-      // {
-        "containers/systemd/${c.name}.container".text = mkContainerUnit c;
-      }
-    ) { } cfg.containers;
+    system.activationScripts.adsbQuadlet.text = ''
+      mkdir -p /etc/containers/systemd
+
+      # Write quadlet units directly
+      cat > /etc/containers/systemd/acarsdec-1.container <<'EOF'
+      [Unit]
+      ...
+      EOF
+
+      cat > /etc/containers/systemd/acarsdec-2.container <<'EOF'
+      ...
+      EOF
+    '';
 
   };
 }
