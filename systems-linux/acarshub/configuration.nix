@@ -111,6 +111,8 @@
         "/dev:/dev"
       ];
 
+      extraDockerArgs = "--device=/dev/bus/usb";
+
       requires = [ "network-online.target" ];
     }
 
@@ -150,6 +152,8 @@
         "/dev:/dev"
       ];
 
+      extraDockerArgs = "--device=/dev/bus/usb";
+
       requires = [ "network-online.target" ];
     }
 
@@ -188,6 +192,8 @@
       volumes = [
         "/dev:/dev"
       ];
+
+      extraDockerArgs = "--device=/dev/bus/usb";
 
       requires = [ "network-online.target" ];
     }
