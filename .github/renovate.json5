@@ -3,30 +3,25 @@
 
   extends: ["config:best-practices"],
 
-  timezone: "Etc/UTC",
-  schedule: ["before 3am on saturday"],
-
   enabledManagers: ["nix", "regex", "github-actions"],
 
-  nix: {
-    enabled: true,
-    fileMatch: ["flake\\.nix$", "flake\\.lock$", "\\.nix$"],
-  },
-
-  // Normal docker images (like Dozzle) work automatically.
-  // No custom rules needed.
-
-  // SDR-E regex manager (ONLY applies to SDR-E)
   regexManagers: [
     {
       fileMatch: ["\\.nix$"],
       matchStrings: [
-        // capture SDR-E image patterns only
-        'image\\s*=\\s*"(?<depName>ghcr\\.io\\/sdr-enthusiasts\\/[^:]+):(?<currentValue>[^"]+)"',
+        'image\\s*=\\s*"(?<depName>[^:]+):(?<currentValue>[^"]+)"',
       ],
-      datasourceTemplate: "docker",
-      versioningTemplate: "loose", // allow "latest-build-XYZ"
-      extractVersionTemplate: ".*-(?<version>\\d+)$",
+      datasourceTemplate: "docker", // allow native behavior
+      // NO custom versioning
+    },
+  ],
+
+  packageRules: [
+    {
+      matchManagers: ["regex"],
+      matchDatasources: ["docker"],
+      // treat non-semver tags as immutable digests
+      pinDigests: true,
     },
   ],
 }
