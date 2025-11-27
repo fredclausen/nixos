@@ -359,13 +359,13 @@ in
       restart = "unless-stopped";
       tty = false;
 
-      environmentFiles = [
-        config.sops.secrets."docker/sdrhub/ultrafeeder.env".path
-      ];
+      # environmentFiles = [
+      #   config.sops.secrets."docker/sdrhub/ultrafeeder.env".path
+      # ];
 
-      deviceCgroupRules = [
-        "c 189:* rwm"
-      ];
+      # deviceCgroupRules = [
+      #   "c 189:* rwm"
+      # ];
 
       # ports = [
       #   "8080:80"
