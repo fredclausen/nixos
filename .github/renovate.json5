@@ -1,0 +1,35 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+
+  extends: ["config:best-practices"],
+
+  timezone: "Etc/UTC",
+  schedule: ["before 3am on saturday"],
+
+  // Enable Nix support
+  enabledManagers: ["nix", "regex", "github-actions"],
+
+  nix: {
+    enabled: true,
+    fileMatch: ["flake\\.nix$", "flake\\.lock$", "\\.nix$"],
+  },
+
+  // Regex manager for Docker images inside Nix files
+  regexManagers: [
+    {
+      fileMatch: ["\\.nix$"],
+      matchStrings: [
+        'image\\s*=\\s*"(?<depName>[\\w./-]+):(?<currentValue>[\\w.-]+)"',
+      ],
+      datasourceTemplate: "docker",
+      versioningTemplate: "docker",
+    },
+  ],
+
+  packageRules: [
+    {
+      matchDatasources: ["docker"],
+      commitMessageTopic: "Docker image",
+    },
+  ],
+}
