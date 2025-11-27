@@ -100,6 +100,10 @@
       tty = true;
       restart = "always";
 
+      environmentFiles = [
+        config.sops.secrets."docker/acarshub.env".path
+      ];
+
       environment = {
         TZ = "${FEEDER_TZ}";
         SERIAL = "00013305";
@@ -126,6 +130,10 @@
       image = "ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-4";
       tty = true;
       restart = "always";
+
+      environmentFiles = [
+        config.sops.secrets."docker/acarshub.env".path
+      ];
 
       environment = {
         TZ = "${FEEDER_TZ}";
