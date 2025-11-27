@@ -25,7 +25,7 @@ let
       deviceBlock = mkList "Device" (c.devices or [ ]);
 
       execLine = if c ? exec then "Exec=${c.exec}" else "";
-      ttyLine = if (c.tty or false) then "Interactive=true" else "";
+      #ttyLine = if (c.tty or false) then "Interactive=true" else "";
       restartLine = if c ? restart then "Restart=${c.restart}" else "";
     in
     ''
