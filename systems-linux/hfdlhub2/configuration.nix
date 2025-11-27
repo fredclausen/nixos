@@ -11,6 +11,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/adsb-docker-units.nix
   ];
 
   # Server profile
@@ -58,4 +59,53 @@ in
       owner = "fred";
     };
   };
+
+  sops.secrets = {
+    "docker/hfdlhub2.env" = {
+      format = "yaml";
+    };
+  };
+
+  services.adsb.containers = [
+
+    ###############################################################
+    # DOZZLE AGENT
+    ###############################################################
+    {
+      name = "dozzle-agent";
+      image = "amir20/dozzle:v8.14.9";
+      exec = "agent";
+
+      environmentFiles = [
+        config.sops.secrets."docker/hfdlhub2.env".path
+      ];
+
+      volumes = [
+        "/var/run/docker.sock:/var/run/docker.sock:ro"
+      ];
+
+      ports = [ "7007:7007" ];
+
+      requires = [ "network-online.target" ];
+    }
+
+    ###############################################################
+    # HFDLOBserver
+    ###############################################################
+    {
+      name = "hfdlobserver";
+      image = "ghcr.io/sdr-enthusiasts/docker-hfdlobserver:latest-build-14";
+
+      environmentFiles = [
+        config.sops.secrets."docker/hfdlhub2.env".path
+      ];
+
+      volumes = [
+        "/opt/adsb/hfdlobserver:/run/hfdlobserver"
+      ];
+
+      requires = [ "network-online.target" ];
+    }
+
+  ];
 }
