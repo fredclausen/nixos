@@ -356,7 +356,7 @@ in
       image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-838";
 
       hostname = "ultrafeeder";
-      # restart = "unless-stopped";
+      restart = "always";
       tty = false;
 
       environmentFiles = [
