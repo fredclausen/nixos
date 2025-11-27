@@ -3,25 +3,27 @@
 
   extends: ["config:best-practices"],
 
-  enabledManagers: ["nix", "github-actions"],
+  timezone: "Etc/UTC",
+  schedule: ["before 3am on saturday"],
+
+  enabledManagers: ["regex", "nix", "github-actions"],
 
   regexManagers: [
     {
       fileMatch: ["\\.nix$"],
       matchStrings: [
-        'image\\s*=\\s*"(?<depName>[^:]+):(?<currentValue>[^"]+)"',
+        // extract depName and currentValue from image strings
+        'image\\s*=\\s*"(?<depName>[^:"]+):(?<currentValue>[^"]+)"',
       ],
-      datasourceTemplate: "docker", // allow native behavior
-      // NO custom versioning
+      datasourceTemplate: "docker",
+      versioningTemplate: "loose", // THIS is allowed inside regexManagers
     },
   ],
 
   packageRules: [
     {
-      matchManagers: ["regex"],
       matchDatasources: ["docker"],
-      // treat non-semver tags as immutable digests
-      pinDigests: true,
+      commitMessageTopic: "Docker image",
     },
   ],
 }
