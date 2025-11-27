@@ -6,7 +6,9 @@
   ...
 }:
 let
-  dockerCompose = pkgs.writeText "docker-compose.yaml" (builtins.readFile ./docker-compose.yaml);
+  hfdlObserver = pkgs.writeText "settings.yaml" (
+    builtins.readFile ./docker-data/hfdlobsersver.settings.yaml
+  );
 in
 {
   imports = [
@@ -42,28 +44,23 @@ in
     fi
   '';
 
+  sops.secrets = {
+    "docker/hfdlhub2.env" = {
+      format = "yaml";
+    };
+  };
+
   system.activationScripts.adsbDockerCompose = {
     text = ''
       # Ensure directory exists (does not touch contents if already there)
       install -d -m0755 -o fred -g users /opt/adsb
 
+      install -d -m0755 -o fred -g users /opt/adsb/hfdlobserver
+
       # Always overwrite the compose file from the Nix store
-      install -m0644 -o fred -g users ${dockerCompose} /opt/adsb/docker-compose.yaml
+      install -m0644 -o fred -g users ${hfdlObserver} /opt/adsb/hfdlobserver/settings.yaml
     '';
     deps = [ ];
-  };
-
-  sops.secrets = {
-    "docker/hfdlhub2.env" = {
-      path = "/opt/adsb/.env";
-      owner = "fred";
-    };
-  };
-
-  sops.secrets = {
-    "docker/hfdlhub2.env" = {
-      format = "yaml";
-    };
   };
 
   services.adsb.containers = [

@@ -39,6 +39,14 @@
     fi
   '';
 
+  system.activationScripts.adsbDockerCompose = {
+    text = ''
+      # Ensure directory exists (does not touch contents if already there)
+      install -d -m0755 -o fred -g users /opt/adsb
+    '';
+    deps = [ ];
+  };
+
   sops.secrets = {
     "docker/acarshub.env" = {
       format = "yaml";

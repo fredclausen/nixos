@@ -1,0 +1,76 @@
+receivers:
+  web888:
+    receiver: web888
+    client:
+      address: 192.168.31.25
+      port: 8073
+      recorder_path: kiwiclient/kiwirecorder.py
+dumphfdl:
+  default:
+    station_id: CS-KABQ-HFDL
+    airframes_enabled: false
+    # statsd_server: 10.10.10.63:8125
+    # other settings
+    output:
+      # # acarsrouter
+      - format: json
+        protocol: tcp
+        address: 192.168.31.20
+        port: 5556
+      # # TAR1090
+      - format: basestation
+        protocol: tcp
+        address: 192.168.31.20
+        port: 12000
+      # # text
+      # - format: text
+      #   protocol: udp
+      #   address:
+      #   port: 2259
+      # a text output over tcp
+      # - format: text
+      #   protocol: udp
+      #   address: 127.0.0.1
+      #   port: 5000
+      #observer feed
+      # - output: hfdl_observer
+observer:
+  all_receivers:
+    - name: web888-01
+      receiver: web888
+    - name: web888-02
+      receiver: web888
+    - name: web888-03
+      receiver: web888
+    - name: web888-04
+      receiver: web888
+    - name: web888-05
+      receiver: web888
+    - name: web888-06
+      receiver: web888
+    - name: web888-07
+      receiver: web888
+    - name: web888-08
+      receiver: web888
+    - name: web888-09
+      receiver: web888
+    - name: web888-10
+      receiver: web888
+    - name: web888-11
+      receiver: web888
+    - name: web888-12
+      receiver: web888
+    - name: web888-13
+      receiver: web888
+  conductor:
+    # or whatever you have
+    #ignored_frequencies: [[0,2000],[22000,30000]]
+    ranked_stations: [1, 4, 11, 9, 2, 3, 7, 13, 17, 14, 10, 16, 5, 15, 6, 8]
+cui:
+  ticker:
+    show_all_active: no
+    show_active_line: yes
+    show_targetting: no
+    show_confidence: yes
+    show_quiet: no
+    display_mode: frequency

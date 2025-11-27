@@ -5,9 +5,6 @@
   stateVersion,
   ...
 }:
-let
-  dockerCompose = pkgs.writeText "docker-compose.yaml" (builtins.readFile ./docker-compose.yaml);
-in
 {
   imports = [
     ./hardware-configuration.nix
@@ -52,6 +49,14 @@ in
     "docker/hfdlhub1/dumphfdl3.env" = {
       format = "yaml";
     };
+  };
+
+  system.activationScripts.adsbDockerCompose = {
+    text = ''
+      # Ensure directory exists (does not touch contents if already there)
+      install -d -m0755 -o fred -g users /opt/adsb
+    '';
+    deps = [ ];
   };
 
   services.adsb.containers = [
