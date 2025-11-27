@@ -65,12 +65,13 @@ in
     };
 
     # Generate 1 .container unit per entry
-    systemd.units = lib.foldl' (
+    environment.etc = lib.foldl' (
       acc: c:
       acc
       // {
-        "${c.name}.container".text = mkContainerUnit c;
+        "containers/systemd/${c.name}.container".text = mkContainerUnit c;
       }
     ) { } cfg.containers;
+
   };
 }
