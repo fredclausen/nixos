@@ -68,6 +68,7 @@ let
       after = [
         "docker.service"
         "network-online.target"
+        "docker-create-adsbnet.service"
       ];
       wants = [ "network-online.target" ];
     };
@@ -82,9 +83,6 @@ in
   config = lib.mkIf (cfg.containers != [ ]) {
     virtualisation.docker = {
       enable = true;
-      networks.adsbnet = {
-        driver = "bridge";
-      };
     };
 
     systemd.services = lib.foldl' (acc: c: acc // { "${c.name}" = mkUnit c; }) { } cfg.containers;
