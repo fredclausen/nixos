@@ -11,6 +11,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/adsb-docker-units.nix
   ];
 
   # Server profile (no desktop components)
@@ -211,17 +212,481 @@ in
     text = ''
       # Ensure directory exists (does not touch contents if already there)
       install -d -m0755 -o fred -g users /opt/adsb
-
-      # Always overwrite the compose file from the Nix store
-      install -m0644 -o fred -g users ${dockerCompose} /opt/adsb/docker-compose.yaml
     '';
     deps = [ ];
   };
 
   sops.secrets = {
-    "docker/sdrhub.env" = {
-      path = "/opt/adsb/.env";
-      owner = "fred";
+    "docker/sdrhub/dozzle.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/dozzle-agent.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/airspy_adsb.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/ultrafeeder.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/dump978.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/adsbhub.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/fr24.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/piaware.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/planefinder.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/planewatch.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/radarvirtuel.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/rbfeeder.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/opensky.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/sdrmap.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/acarshub.env" = {
+      format = "yaml";
+    };
+
+    "docker/sdrhub/acars_router.env" = {
+      format = "yaml";
     };
   };
+
+  services.adsb.containers = [
+
+    ###############################################################
+    # DOZZLE (UI)
+    ###############################################################
+    {
+      name = "dozzle";
+      image = "amir20/dozzle:v8.14.9";
+
+      restart = "always";
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/dozzle.env".path
+      ];
+
+      ports = [
+        "9999:8080"
+      ];
+
+      requires = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+    }
+
+    ###############################################################
+    # DOZZLE AGENT
+    ###############################################################
+    {
+      name = "dozzle-agent";
+      image = "amir20/dozzle:v8.14.9";
+      exec = "agent";
+
+      volumes = [
+        "/var/run/docker.sock:/var/run/docker.sock:ro"
+      ];
+
+      ports = [ "7007:7007" ];
+
+      requires = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+    }
+
+    ###############################################################
+    # AIRSPY ADS-B RECEIVER
+    ###############################################################
+    {
+      name = "airspy_adsb";
+      image = "ghcr.io/sdr-enthusiasts/airspy_adsb:trixie-latest-build-3";
+
+      hostname = "airspy_adsb";
+      restart = "always";
+      tty = false;
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/airspy_adsb.env".path
+      ];
+
+      deviceCgroupRules = [
+        "c 189:* rwm"
+      ];
+
+      volumes = [
+        "/dev:/dev:ro"
+        "/opt/adsb/data/airspy_adsb:/run/airspy_adsb"
+      ];
+    }
+
+    ###############################################################
+    # ULTRAFEEDER (readsb) — central ADS-B decoder
+    ###############################################################
+    {
+      name = "ultrafeeder";
+      image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-838";
+
+      hostname = "ultrafeeder";
+      restart = "unless-stopped";
+      tty = false;
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/ultrafeeder.env".path
+      ];
+
+      deviceCgroupRules = [
+        "c 189:* rwm"
+      ];
+
+      ports = [
+        "8080:80"
+        "30002:30002"
+        "30003:30003"
+        "30005:30005"
+        "30047:30047"
+        "12000:12000"
+      ];
+
+      volumes = [
+        "/opt/adsb/data/ultra_globe_history:/var/globe_history"
+        "/opt/adsb/data/ultra_graphs1090:/var/lib/collectd"
+        "/proc/diskstats:/proc/diskstats:ro"
+        "/dev:/dev"
+        "/sys/class/thermal/thermal_zone2:/sys/class/thermal/thermal_zone0:ro"
+        "/opt/adsb/data/airspy_adsb:/run/airspy_adsb"
+      ];
+
+      tmpfs = [
+        "/run:exec,size=256M"
+        "/tmp:size=128M"
+        "/var/log:size=32M"
+      ];
+    }
+
+    ###############################################################
+    # dump978 — UAT / 978 MHz decoder
+    ###############################################################
+    {
+      name = "dump978";
+      image = "ghcr.io/sdr-enthusiasts/docker-dump978:trixie-latest-build-2";
+
+      hostname = "dump978";
+      restart = "always";
+      tty = true;
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/dump978.env".path
+      ];
+
+      deviceCgroupRules = [
+        "c 189:* rwm"
+      ];
+
+      ports = [
+        "8083:80"
+      ];
+
+      volumes = [
+        "/opt/adsb/data/dump978_autogain:/var/globe_history"
+        "/dev:/dev"
+      ];
+
+      tmpfs = [
+        "/run/readsb"
+        "/var/log"
+      ];
+    }
+
+    ###############################################################
+    # ADSBHub feeder
+    ###############################################################
+    {
+      name = "adsbhub";
+      image = "ghcr.io/sdr-enthusiasts/docker-adsbhub:trixie-latest-build-3";
+
+      restart = "always";
+      tty = true;
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/adsbhub.env".path
+      ];
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+    }
+
+    ###############################################################
+    # Flightradar24 feeder
+    ###############################################################
+    {
+      name = "fr24";
+      image = "ghcr.io/sdr-enthusiasts/docker-flightradar24:trixie-latest-build-3";
+
+      restart = "always";
+      tty = true;
+
+      ports = [
+        "8082:8754"
+      ];
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/fr24.env".path
+      ];
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+    }
+
+    ###############################################################
+    # PiAware (FlightAware)
+    ###############################################################
+    {
+      name = "piaware";
+      image = "ghcr.io/sdr-enthusiasts/docker-piaware:latest-build-638";
+
+      hostname = "piaware";
+      restart = "always";
+      tty = true;
+
+      ports = [
+        "8084:80"
+      ];
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/piaware.env".path
+      ];
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+    }
+
+    ###############################################################
+    # PlaneFinder feeder
+    ###############################################################
+    {
+      name = "planefinder";
+      image = "ghcr.io/sdr-enthusiasts/docker-planefinder:trixie-latest-build-3";
+
+      restart = "always";
+      tty = true;
+
+      ports = [
+        "8087:30053"
+      ];
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/planefinder.env".path
+      ];
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+    }
+
+    ###############################################################
+    # PlaneWatch feeder
+    ###############################################################
+    {
+      name = "planewatch";
+      image = "ghcr.io/plane-watch/docker-plane-watch:latest-build-210";
+
+      restart = "always";
+      tty = true;
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/planewatch.env".path
+      ];
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+    }
+
+    ###############################################################
+    # RadarVirtuel feeder
+    ###############################################################
+    {
+      name = "radarvirtuel";
+      image = "ghcr.io/sdr-enthusiasts/docker-radarvirtuel:trixie-latest-build-3";
+
+      hostname = "radarvirtuel";
+      restart = "always";
+      tty = true;
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/radarvirtuel.env".path
+      ];
+
+      tmpfs = [
+        "/tmp:rw,nosuid,nodev,noexec,relatime,size=128M"
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+
+      volumes = [
+        "/etc/localtime:/etc/localtime:ro"
+      ];
+    }
+
+    ###############################################################
+    # RBFeeder / AirNav RadarBox
+    ###############################################################
+    {
+      name = "rbfeeder";
+      image = "ghcr.io/sdr-enthusiasts/docker-airnavradar:latest-build-818";
+
+      restart = "always";
+      tty = false;
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/rbfeeder.env".path
+      ];
+
+      volumes = [
+        "/opt/adsb/data/fake_cpuinfo:/proc/cpuinfo"
+        "/sys/class/thermal/thermal_zone2:/sys/class/thermal/thermal_zone0:ro"
+      ];
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+    }
+
+    ###############################################################
+    # OpenSky Network Feeder
+    ###############################################################
+    {
+      name = "opensky";
+      image = "ghcr.io/sdr-enthusiasts/docker-opensky-network:trixie-latest-build-3";
+
+      restart = "always";
+      tty = true;
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/opensky.env".path
+      ];
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+    }
+
+    ###############################################################
+    # SDRMAP
+    ###############################################################
+    {
+      name = "sdrmap";
+      image = "ghcr.io/sdr-enthusiasts/docker-sdrmap:trixie-latest-build-4";
+
+      restart = "always";
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/sdrmap.env".path
+      ];
+    }
+
+    ###############################################################
+    # ACARSHUB (ACARS/VHFM/VDLM ingestion + UI)
+    ###############################################################
+    {
+      name = "acarshub";
+      image = "ghcr.io/sdr-enthusiasts/docker-acarshub:trixie-latest-build-10";
+
+      restart = "always";
+      tty = true;
+
+      ports = [
+        "8085:80"
+      ];
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/acarshub.env".path
+      ];
+
+      volumes = [
+        "/opt/adsb/data/acarshub:/run/acars"
+      ];
+
+      tmpfs = [
+        "/database:exec,size=64M"
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+    }
+
+    ###############################################################
+    # ACARS ROUTER (ACARS + VDLM2 + HFDL consolidation)
+    ###############################################################
+    {
+      name = "acars_router";
+      image = "ghcr.io/sdr-enthusiasts/acars_router:trixie-latest-build-3";
+
+      restart = "always";
+      tty = true;
+
+      ports = [
+        "15550:15550"
+        "15555:15555"
+        "15556:15556"
+        "35550:35550"
+        "35555:35555"
+        "35556:35556"
+        "45550:45550"
+        "45555:45555"
+        "45556:45556"
+        "5550:5550"
+        "5556:5556"
+      ];
+
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/acars_router.env".path
+      ];
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+    }
+
+  ];
+
 }
