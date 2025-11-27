@@ -7,12 +7,15 @@
       description = "Create Docker network adsbnet";
       after = [ "docker.service" ];
       requires = [ "docker.service" ];
+
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${pkgs.docker}/bin/docker network create adsbnet || true";
+        ExecStart = ''
+          ${pkgs.docker}/bin/docker network create adsbnet || true
+        '';
       };
+
       wantedBy = [ "multi-user.target" ];
     };
-
   };
 }
