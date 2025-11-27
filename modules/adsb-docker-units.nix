@@ -23,6 +23,11 @@ let
   # ports
   mkPortFlags = ports: lib.concatStringsSep " " (map (p: ''-p "${p}"'') ports);
 
+  mkDeviceCgroupRuleFlags =
+    rules: lib.concatStringsSep " " (map (r: ''--device-cgroup-rule="${r}"'') rules);
+
+  mkDeviceFlags = devs: lib.concatStringsSep " " (map (d: ''--device="${d}"'') devs);
+
   mkUnit =
     c:
     let
@@ -34,6 +39,8 @@ let
       restartPolicy = c.restart or "always";
       execCmd = c.exec or "";
       ttyFlag = if (c.tty or false) then "--tty" else "";
+      deviceRuleFlags = mkDeviceCgroupRuleFlags (c.deviceCgroupRules or [ ]);
+      deviceFlags = mkDeviceFlags (c.devices or [ ]);
     in
     {
       description = "Docker Container ${c.name}";
@@ -57,7 +64,7 @@ let
             "--network"
             "adsbnet"
           ]
-          + " ${ttyFlag} ${envFlags} ${envFileFlags} ${volumeFlags} ${tmpfsFlags} ${portFlags} "
+          + " ${ttyFlag} ${deviceRuleFlags} ${deviceFlags} ${envFlags} ${envFileFlags} ${volumeFlags} ${tmpfsFlags} ${portFlags} "
           + (c.extraDockerArgs or "")
           + " ${c.image} ${execCmd}";
 
