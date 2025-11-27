@@ -352,6 +352,8 @@ in
         "/dev:/dev"
         "/opt/adsb/data/airspy_adsb:/run/airspy_adsb"
       ];
+
+      extraDockerArgs = "--device=/dev/bus/usb";
     }
 
     ###############################################################
