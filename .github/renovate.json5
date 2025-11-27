@@ -3,7 +3,7 @@
 
   extends: ["config:best-practices"],
 
-  enabledManagers: ["nix", "regex", "github-actions"],
+  enabledManagers: ["regex"],
 
   regexManagers: [
     {
