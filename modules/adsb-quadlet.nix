@@ -58,8 +58,6 @@ in
   };
 
   config = lib.mkIf (cfg.containers != [ ]) {
-    environment.etc."containers/".directory = true;
-
     virtualisation.podman = {
       enable = true;
       dockerCompat = true;
