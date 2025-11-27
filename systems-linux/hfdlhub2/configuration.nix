@@ -7,7 +7,7 @@
 }:
 let
   hfdlObserver = pkgs.writeText "settings.yaml" (
-    builtins.readFile ./docker-data/hfdlobsersver/settings.yaml
+    builtins.readFile ./docker-data/hfdlobserver/settings.yaml
   );
 in
 {
