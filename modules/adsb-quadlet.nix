@@ -73,19 +73,21 @@ in
     );
 
     # This is the IMPORTANT bit: write Quadlet files where podman expects them.
-    system.activationScripts.adsbQuadlet.text = ''
-      mkdir -p /etc/containers/systemd
-
-      # Write quadlet units directly
-      cat > /etc/containers/systemd/acarsdec-1.container <<'EOF'
-      [Unit]
-      ...
-      EOF
-
-      cat > /etc/containers/systemd/acarsdec-2.container <<'EOF'
-      ...
-      EOF
-    '';
+    system.activationScripts.adsbQuadlet.text =
+      let
+        files = lib.concatStringsSep "\n" (
+          map (c: ''
+                        echo "Writing ${c.name}.container"
+                        install -m 0644 /dev/stdin /etc/containers/systemd/${c.name}.container <<'EOF'
+            ${mkContainerUnit c}
+            EOF
+          '') cfg.containers
+        );
+      in
+      ''
+        mkdir -p /etc/containers/systemd
+        ${files}
+      '';
 
   };
 }
