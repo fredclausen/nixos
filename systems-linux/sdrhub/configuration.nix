@@ -376,20 +376,20 @@ in
         "12000:12000"
       ];
 
-      # volumes = [
-      #   "/opt/adsb/data/ultra_globe_history:/var/globe_history"
-      #   "/opt/adsb/data/ultra_graphs1090:/var/lib/collectd"
-      #   "/proc/diskstats:/proc/diskstats:ro"
-      #   "/dev:/dev"
-      #   "/sys/class/thermal/thermal_zone2:/sys/class/thermal/thermal_zone0:ro"
-      #   "/opt/adsb/data/airspy_adsb:/run/airspy_adsb"
-      # ];
-
-      tmpfs = [
-        "/run:exec,size=256M"
-        "/tmp:size=128M"
-        "/var/log:size=32M"
+      volumes = [
+        "/opt/adsb/data/ultra_globe_history:/var/globe_history"
+        "/opt/adsb/data/ultra_graphs1090:/var/lib/collectd"
+        "/proc/diskstats:/proc/diskstats:ro"
+        "/dev:/dev"
+        "/sys/class/thermal/thermal_zone2:/sys/class/thermal/thermal_zone0:ro"
+        "/opt/adsb/data/airspy_adsb:/run/airspy_adsb"
       ];
+
+      # tmpfs = [
+      #   "/run:exec,size=256M"
+      #   "/tmp:size=128M"
+      #   "/var/log:size=32M"
+      # ];
     }
 
     ###############################################################
