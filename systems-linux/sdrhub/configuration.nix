@@ -355,9 +355,9 @@ in
       name = "ultrafeeder";
       image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-838";
 
-      hostname = "ultrafeeder";
-      restart = "unless-stopped";
-      tty = false;
+      # hostname = "ultrafeeder";
+      # restart = "unless-stopped";
+      # tty = false;
 
       # environmentFiles = [
       #   config.sops.secrets."docker/sdrhub/ultrafeeder.env".path
