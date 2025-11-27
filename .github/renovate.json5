@@ -1,73 +1,40 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
 
+  // Renovate defaults + safety
   extends: ["config:best-practices"],
 
-  enabledManagers: ["nix", "regex", "github-actions"],
+  timezone: "Etc/UTC",
+  schedule: ["before 3am on saturday"],
+
+  // Managers allowed on GitHub-hosted Renovate
+  enabledManagers: ["regex", "nix", "github-actions"],
 
   nix: {
     enabled: true,
     fileMatch: ["flake\\.nix$", "flake\\.lock$", "\\.nix$"],
   },
 
-  // Regex manager for Docker images in Nix
+  // regex manager to capture all Docker images
   regexManagers: [
     {
       fileMatch: ["\\.nix$"],
-
-      // Matches: image = "ghcr.io/...:<tag>"
       matchStrings: [
+        // image = "repo/name:tag"
         'image\\s*=\\s*"(?<depName>[^:"]+):(?<currentValue>[^"]+)"',
       ],
-
-      // Use docker registry as datasource
       datasourceTemplate: "docker",
-
-      // Let packageRules decide versioning
-      versioningTemplate: "loose",
+      // tell renovate “do not try semver — treat tags as strings”
+      extractVersionTemplate: "^.*$",
     },
   ],
 
+  // Allow Renovate to update even non-semver or weird tags
   packageRules: [
-    // Ensure docker images get updated with loose comparison
     {
       matchDatasources: ["docker"],
-      versioning: "loose",
+      looseVersioning: true,
       commitMessageTopic: "Docker image",
-    },
-
-    // Special rule for SDR-Enthusiasts images with weird tags:
-    {
-      matchDatasources: ["docker"],
-      matchDepNames: [
-        "ghcr.io/plane-watch/docker-plane-watch",
-        "ghcr.io/sdr-enthusiasts/docker-acarsdec",
-        "ghcr.io/sdr-enthusiasts/airspy_adsb",
-        "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder",
-        "ghcr.io/sdr-enthusiasts/docker-dump978",
-        "ghcr.io/sdr-enthusiasts/docker-adsbhub",
-        "ghcr.io/sdr-enthusiasts/docker-flightradar24",
-        "ghcr.io/sdr-enthusiasts/docker-piaware",
-        "ghcr.io/sdr-enthusiasts/docker-planefinder",
-        "ghcr.io/sdr-enthusiasts/docker-radarvirtuel",
-        "ghcr.io/sdr-enthusiasts/docker-airnavradar",
-        "ghcr.io/sdr-enthusiasts/docker-sdrmap",
-        "ghcr.io/sdr-enthusiasts/acars_router",
-        "ghcr.io/sdr-enthusiasts/docker-opensky-network",
-        "ghcr.io/sdr-enthusiasts/docker-acarshub",
-        "ghcr.io/sdr-enthusiasts/docker-hfdlobserver",
-        "ghcr.io/sdr-enthusiasts/docker-dumphfdl",
-        "ghcr.io/sdr-enthusiasts/docker-acarsdec",
-        "ghcr.io/sdr-enthusiasts/docker-dumpvdl2",
-      ],
-
-      // Use "regex" comparator for build numbers
-      versioning: "regex",
-
-      // Extract only the build number
-      extractVersion: ".*-(?<version>\\d+)$",
-
-      commitMessageTopic: "SDR-E Docker image",
     },
   ],
 }
