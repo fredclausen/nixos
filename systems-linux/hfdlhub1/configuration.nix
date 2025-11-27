@@ -74,8 +74,6 @@
       ];
 
       ports = [ "7007:7007" ];
-
-      requires = [ "network-online.target" ];
     }
 
     ###############################################################
@@ -146,8 +144,6 @@
         "/opt/adsb/data/dumphfdl2-data:/opt/dumphfdl"
         "/opt/adsb/data/dumphfdl2-scanner:/opt/scanner"
       ];
-
-      requires = [ "network-online.target" ];
     }
 
     ###############################################################
@@ -188,10 +184,6 @@
         "/opt/adsb/data/dumphfdl3-data:/opt/dumphfdl"
         "/opt/adsb/data/dumphfdl3-scanner:/opt/scanner"
       ];
-
-      requires = [ "network-online.target" ];
     }
-
   ];
-
 }
