@@ -22,7 +22,13 @@ in
 
   networking.hostName = "sdrhub";
 
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [
+    airspy
+  ];
+
+  services.udev.packages = [
+    pkgs.airspy
+  ];
 
   ###########################################
   # Unbound DNS Resolver
