@@ -25,10 +25,11 @@ let
       deviceBlock = mkList "Device" (c.devices or [ ]);
 
       execLine = if c ? exec then "Exec=${c.exec}" else "";
-      serviceDeviceBlock = mkList "DeviceAllow" [
-        "/dev/bus/usb rw"
-        "char-usb rw"
-      ];
+      serviceDeviceBlock = ''
+        DevicePolicy=auto
+        DeviceAllow=/dev/bus/usb rw
+        DeviceAllow=char-usb rw
+      '';
 
       #ttyLine = if (c.tty or false) then "Interactive=true" else "";
       #restartLine = if c ? restart then "Restart=${c.restart}" else "";
@@ -74,14 +75,6 @@ in
       # you can drop dockerCompat later if you don't need Docker CLI compat
     };
 
-    # environment.etc."containers/containers.conf".source = lib.mkForce (
-    #   pkgs.writeText "containers.conf" ''
-    #     # Quadlet fix: make this file real so the systemd podman generator works.
-    #     [containers]
-    #     default_runtime="crun"
-    #   ''
-    # );
-
     environment.etc = lib.foldl' (
       acc: c:
       acc
@@ -89,22 +82,5 @@ in
         "containers/systemd/${c.name}.container".text = mkContainerUnit c;
       }
     ) { } cfg.containers;
-
-    # system.activationScripts.adsbQuadlet.text =
-    #   let
-    #     files = lib.concatStringsSep "\n" (
-    #       map (c: ''
-    #                     echo "Writing ${c.name}.container"
-    #                     install -m 0644 /dev/stdin /etc/containers/systemd/${c.name}.container <<'EOF'
-    #         ${mkContainerUnit c}
-    #         EOF
-    #       '') cfg.containers
-    #     );
-    #   in
-    #   ''
-    #     mkdir -p /etc/containers/systemd
-    #     ${files}
-    #   '';
-
   };
 }
