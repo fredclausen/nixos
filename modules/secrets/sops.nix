@@ -58,7 +58,7 @@ in
       # wifi
       "wifi.env" = { };
 
-      "docker/acarshub" = {
+      "docker/acarshub.env" = {
         format = "yaml";
       };
     };
