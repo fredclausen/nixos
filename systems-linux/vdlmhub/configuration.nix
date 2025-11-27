@@ -5,9 +5,6 @@
   stateVersion,
   ...
 }:
-let
-  dockerCompose = pkgs.writeText "docker-compose.yaml" (builtins.readFile ./docker-compose.yaml);
-in
 {
   imports = [
     ./hardware-configuration.nix
@@ -49,17 +46,168 @@ in
     text = ''
       # Ensure directory exists (does not touch contents if already there)
       install -d -m0755 -o fred -g users /opt/adsb
-
-      # Always overwrite the compose file from the Nix store
-      install -m0644 -o fred -g users ${dockerCompose} /opt/adsb/docker-compose.yaml
     '';
     deps = [ ];
   };
 
   sops.secrets = {
-    "docker/vdlmhub.env" = {
-      path = "/opt/adsb/.env";
-      owner = "fred";
+    "docker/vdlmhub/dumpvdl2-1.env" = {
+      format = "yaml";
+    };
+    "docker/vdlmhub/dumpvdl2-2.env" = {
+      format = "yaml";
+    };
+    "docker/vdlmhub/dumpvdl2-3.env" = {
+      format = "yaml";
+    };
+    "docker/vdlmhub/dumpvdl2-4.env" = {
+      format = "yaml";
     };
   };
+
+  services.adsb.containers = [
+
+    ###############################################################
+    # DOZZLE AGENT
+    ###############################################################
+    {
+      name = "dozzle-agent";
+      image = "amir20/dozzle:v8.14.9";
+      exec = "agent";
+
+      volumes = [
+        "/var/run/docker.sock:/var/run/docker.sock:ro"
+      ];
+
+      ports = [ "7007:7007" ];
+
+      requires = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+    }
+
+    ###############################################################
+    # dumpvdl2-1
+    ###############################################################
+    {
+      name = "dumpvdl2-1";
+      image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5";
+
+      tty = true;
+      restart = "always";
+
+      environmentFiles = [
+        config.sops.secrets."docker/vdlmhub/dumpvdl2-1.env".path
+      ];
+
+      deviceCgroupRules = [
+        "c 189:* rwm"
+      ];
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+
+      volumes = [
+        "/dev:/dev"
+      ];
+
+      requires = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+    }
+
+    ###############################################################
+    # dumpvdl2-2
+    ###############################################################
+    {
+      name = "dumpvdl2-2";
+      image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5";
+
+      tty = true;
+      restart = "always";
+
+      environmentFiles = [
+        config.sops.secrets."docker/vdlmhub/dumpvdl2-2.env".path
+      ];
+
+      deviceCgroupRules = [
+        "c 189:* rwm"
+      ];
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+
+      volumes = [
+        "/dev:/dev"
+      ];
+
+      requires = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+    }
+
+    ###############################################################
+    # dumpvdl2-3
+    ###############################################################
+    {
+      name = "dumpvdl2-3";
+      image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5";
+
+      tty = true;
+      restart = "always";
+
+      environmentFiles = [
+        config.sops.secrets."docker/vdlmhub/dumpvdl2-3.env".path
+      ];
+
+      deviceCgroupRules = [
+        "c 189:* rwm"
+      ];
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+
+      volumes = [
+        "/dev:/dev"
+      ];
+
+      requires = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+    }
+
+    ###############################################################
+    # dumpvdl2-4
+    ###############################################################
+    {
+      name = "dumpvdl2-4";
+      image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5";
+
+      tty = true;
+      restart = "always";
+
+      environmentFiles = [
+        config.sops.secrets."docker/vdlmhub/dumpvdl2-4.env".path
+      ];
+
+      deviceCgroupRules = [
+        "c 189:* rwm"
+      ];
+
+      tmpfs = [
+        "/run:exec,size=64M"
+        "/var/log"
+      ];
+
+      volumes = [
+        "/dev:/dev"
+      ];
+
+      requires = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+    }
+
+  ];
 }
