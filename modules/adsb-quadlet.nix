@@ -72,6 +72,5 @@ in
         "containers/systemd/${c.name}.container".text = mkContainerUnit c;
       }
     ) { } cfg.containers;
-
   };
 }
