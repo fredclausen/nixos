@@ -44,7 +44,7 @@ let
 
       [Container]
       Image=${c.image}
-      Privileged=true
+      PodmanArgs=--privileged
       ${execLine}
       ${envFileBlock}
       ${envBlock}
