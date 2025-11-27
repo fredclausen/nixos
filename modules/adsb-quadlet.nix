@@ -61,7 +61,6 @@ in
   config = lib.mkIf (cfg.containers != [ ]) {
     virtualisation.podman = {
       enable = true;
-      enableQuadlet = true;
       dockerCompat = true; # optional, gives you /run/docker.sock
     };
 
