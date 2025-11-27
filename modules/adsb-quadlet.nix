@@ -27,8 +27,9 @@ let
       execLine = if c ? exec then "Exec=${c.exec}" else "";
       serviceDeviceBlock = ''
         DevicePolicy=auto
-        DeviceAllow=/dev/bus/usb rw
         DeviceAllow=char-major:189 rwm
+        DeviceAllow=/dev/bus/usb rwm
+        DeviceAllow=char-major:* m
       '';
 
     in
