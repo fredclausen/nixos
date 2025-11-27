@@ -22,6 +22,8 @@
       pkgs.dig
       pkgs.nethogs
       pkgs.inotify-tools
+      pkgs.usbutils
+      pkgs.hwdata
     ];
 
     xdg.portal = {
