@@ -105,7 +105,7 @@
       ];
 
       environment = {
-        TZ = "${FEEDER_TZ}";
+        TZ = "\\${FEEDER_TZ}";
         SERIAL = "00013305";
         FREQUENCIES = "130.025;129.9;129.525;129.35;129.125;129.0";
         FEED_ID = "CS-KABQ-ACARS";
@@ -136,7 +136,7 @@
       ];
 
       environment = {
-        TZ = "${FEEDER_TZ}";
+        TZ = "\\${FEEDER_TZ}";
         SERIAL = "00012095";
         FREQUENCIES = "136.975;136.8;136.65";
         FEED_ID = "CS-KABQ-ACARS";
