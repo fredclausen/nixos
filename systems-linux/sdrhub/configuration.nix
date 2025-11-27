@@ -355,41 +355,41 @@ in
       name = "ultrafeeder";
       image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-838";
 
-      # hostname = "ultrafeeder";
+      hostname = "ultrafeeder";
       # restart = "unless-stopped";
-      # tty = false;
+      tty = false;
 
-      # environmentFiles = [
-      #   config.sops.secrets."docker/sdrhub/ultrafeeder.env".path
-      # ];
+      environmentFiles = [
+        config.sops.secrets."docker/sdrhub/ultrafeeder.env".path
+      ];
 
-      # deviceCgroupRules = [
-      #   "c 189:* rwm"
-      # ];
+      deviceCgroupRules = [
+        "c 189:* rwm"
+      ];
 
-      # ports = [
-      #   "8080:80"
-      #   "30002:30002"
-      #   "30003:30003"
-      #   "30005:30005"
-      #   "30047:30047"
-      #   "12000:12000"
-      # ];
+      ports = [
+        "8080:80"
+        "30002:30002"
+        "30003:30003"
+        "30005:30005"
+        "30047:30047"
+        "12000:12000"
+      ];
 
-      # volumes = [
-      #   "/opt/adsb/data/ultra_globe_history:/var/globe_history"
-      #   "/opt/adsb/data/ultra_graphs1090:/var/lib/collectd"
-      #   "/proc/diskstats:/proc/diskstats:ro"
-      #   "/dev:/dev"
-      #   "/sys/class/thermal/thermal_zone2:/sys/class/thermal/thermal_zone0:ro"
-      #   "/opt/adsb/data/airspy_adsb:/run/airspy_adsb"
-      # ];
+      volumes = [
+        "/opt/adsb/data/ultra_globe_history:/var/globe_history"
+        "/opt/adsb/data/ultra_graphs1090:/var/lib/collectd"
+        "/proc/diskstats:/proc/diskstats:ro"
+        "/dev:/dev"
+        "/sys/class/thermal/thermal_zone2:/sys/class/thermal/thermal_zone0:ro"
+        "/opt/adsb/data/airspy_adsb:/run/airspy_adsb"
+      ];
 
-      # tmpfs = [
-      #   "/run:exec,size=256M"
-      #   "/tmp:size=128M"
-      #   "/var/log:size=32M"
-      # ];
+      tmpfs = [
+        "/run:exec,size=256M"
+        "/tmp:size=128M"
+        "/var/log:size=32M"
+      ];
     }
 
     ###############################################################
