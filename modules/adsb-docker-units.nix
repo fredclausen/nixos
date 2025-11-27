@@ -54,7 +54,7 @@ let
             "run"
             "--name"
             c.name
-            "--privileged"
+            "--network adsbnet"
           ]
           + " ${ttyFlag} ${envFlags} ${envFileFlags} ${volumeFlags} ${tmpfsFlags} ${portFlags} "
           + (c.extraDockerArgs or "")
