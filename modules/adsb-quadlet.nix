@@ -27,6 +27,8 @@ let
       execLine = if c ? exec then "Exec=${c.exec}" else "";
       #ttyLine = if (c.tty or false) then "Interactive=true" else "";
       restartLine = if c ? restart then "Restart=${c.restart}" else "";
+
+      # ${ttyLine}
     in
     ''
       [Unit]
@@ -37,7 +39,6 @@ let
       [Container]
       Image=${c.image}
       ${execLine}
-      ${ttyLine}
       ${restartLine}
       ${envFileBlock}
       ${envBlock}
