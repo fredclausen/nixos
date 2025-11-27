@@ -92,20 +92,20 @@ in
     ###############################################################
     # HFDLOBserver
     ###############################################################
-    {
-      name = "hfdlobserver";
-      image = "ghcr.io/sdr-enthusiasts/docker-hfdlobserver:latest-build-14";
+    # {
+    #   name = "hfdlobserver";
+    #   image = "ghcr.io/sdr-enthusiasts/docker-hfdlobserver:latest-build-14";
 
-      environmentFiles = [
-        config.sops.secrets."docker/hfdlhub2.env".path
-      ];
+    #   environmentFiles = [
+    #     config.sops.secrets."docker/hfdlhub2.env".path
+    #   ];
 
-      volumes = [
-        "/opt/adsb/hfdlobserver:/run/hfdlobserver"
-      ];
+    #   volumes = [
+    #     "/opt/adsb/hfdlobserver:/run/hfdlobserver"
+    #   ];
 
-      requires = [ "network-online.target" ];
-    }
+    #   requires = [ "network-online.target" ];
+    # }
 
   ];
 }
