@@ -59,9 +59,6 @@ in
   };
 
   config = lib.mkIf (cfg.containers != [ ]) {
-    virtualisation.podman.package = pkgs.podman;
-    virtualisation.podman.tools = [ pkgs.podman ];
-
     virtualisation.podman = {
       enable = true;
       dockerCompat = true;
