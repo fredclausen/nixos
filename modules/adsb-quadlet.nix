@@ -74,13 +74,13 @@ in
       # you can drop dockerCompat later if you don't need Docker CLI compat
     };
 
-    environment.etc."containers/containers.conf".source = lib.mkForce (
-      pkgs.writeText "containers.conf" ''
-        # Quadlet fix: make this file real so the systemd podman generator works.
-        [containers]
-        default_runtime="crun"
-      ''
-    );
+    # environment.etc."containers/containers.conf".source = lib.mkForce (
+    #   pkgs.writeText "containers.conf" ''
+    #     # Quadlet fix: make this file real so the systemd podman generator works.
+    #     [containers]
+    #     default_runtime="crun"
+    #   ''
+    # );
 
     environment.etc = lib.foldl' (
       acc: c:
