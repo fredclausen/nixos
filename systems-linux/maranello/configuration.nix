@@ -53,6 +53,11 @@ in
     fi
   '';
 
+  sops.secrets = {
+    # wifi
+    "wifi.env" = { };
+  };
+
   networking.networkmanager = {
     enable = true;
 

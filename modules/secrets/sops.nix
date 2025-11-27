@@ -54,13 +54,6 @@ in
         owner = username;
         mode = "0600";
       };
-
-      # wifi
-      "wifi.env" = { };
-
-      "docker/acarshub.env" = {
-        format = "yaml";
-      };
     };
   };
 

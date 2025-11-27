@@ -39,6 +39,12 @@
     fi
   '';
 
+  sops.secrets = {
+    "docker/acarshub.env" = {
+      format = "yaml";
+    };
+  };
+
   services.adsb.containers = [
     ###############################################################
     # DOZZLE AGENT
