@@ -6,55 +6,68 @@
   timezone: "Etc/UTC",
   schedule: ["before 3am on saturday"],
 
-  // What managers we care about
-  enabledManagers: ["nix", "regex", "github-actions"],
+  enabledManagers: ["nix", "regex", "github-actions", "custom"],
 
   nix: {
     enabled: true,
     fileMatch: ["flake\\.nix$", "flake\\.lock$", "\\.nix$"],
   },
 
-  // One regex manager to capture *all* image = "…:tag" in .nix files
+  /*
+   * -----------------------------------------
+   *  CUSTOM MANAGER FOR DOCKER IN NIX FILES
+   * -----------------------------------------
+   */
+  customManagers: [
+    {
+      customType: "regex",
+      fileMatch: ["\\.nix$"],
+
+      // Capture any image = "<repo>:<tag>"
+      matchStrings: [
+        'image\\s*=\\s*"(?<depName>[^:]+):(?<currentValue>[^"]+)"',
+      ],
+
+      datasourceTemplate: "docker",
+
+      // apply custom versioning to all SDR-Enthusiasts images
+      versioningTemplate: "loose",
+
+      // Add ALL SDR-E repos here
+      matchDepNames: [
+        "ghcr.io/sdr-enthusiasts/docker-acarsdec",
+        "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder",
+        "ghcr.io/sdr-enthusiasts/docker-adsbhub",
+        "ghcr.io/sdr-enthusiasts/docker-airnavradar",
+        "ghcr.io/sdr-enthusiasts/docker-sdrmap",
+        "ghcr.io/sdr-enthusiasts/airspy_adsb",
+        "ghcr.io/sdr-enthusiasts/acars_router",
+        "ghcr.io/sdr-enthusiasts/docker-dump978",
+        "ghcr.io/sdr-enthusiasts/docker-dumphfdl",
+        "ghcr.io/sdr-enthusiasts/docker-dumpvdl2",
+        "ghcr.io/sdr-enthusiasts/docker-flightradar24",
+        "ghcr.io/sdr-enthusiasts/docker-piaware",
+        "ghcr.io/sdr-enthusiasts/docker-planefinder",
+        "ghcr.io/sdr-enthusiasts/docker-radarvirtuel",
+        "ghcr.io/plane-watch/docker-plane-watch",
+      ],
+    },
+  ],
+
+  // normal regex manager still allowed for other docker images
   regexManagers: [
     {
       fileMatch: ["\\.nix$"],
       matchStrings: [
-        // captures: image = "ghcr.io/sdr-enthusiasts/docker-foo:trixie-latest-build-3";
-        //   depName      = ghcr.io/sdr-enthusiasts/docker-foo
-        //   currentValue = trixie-latest-build-3
-        'image\\s*=\\s*"(?<depName>[^":]+):(?<currentValue>[^"]+)"',
+        'image\\s*=\\s*"(?<depName>[^:]+):(?<currentValue>[^"]+)"',
       ],
       datasourceTemplate: "docker",
     },
   ],
 
   packageRules: [
-    // All ghcr.io/sdr-enthusiasts/* images (no need to enumerate)
     {
       matchDatasources: ["docker"],
-      matchPackagePrefixes: ["ghcr.io/sdr-enthusiasts/"],
-      // Tags like:
-      //   trixie-latest-build-3
-      //   trixie-latest-build-10
-      //   latest-build-818
-      //
-      // We tell Renovate: "the version is the trailing number"
-      versioning: "regex",
-      versioningTemplate: "regex:^.*?(?<major>\\d+)$",
-    },
-
-    // plane-watch image: ghcr.io/plane-watch/docker-plane-watch:latest-build-210
-    {
-      matchDatasources: ["docker"],
-      matchPackagePrefixes: ["ghcr.io/plane-watch/"],
-      versioning: "regex",
-      versioningTemplate: "regex:^.*?(?<major>\\d+)$",
-    },
-
-    // Everything else docker (e.g. amir20/dozzle) – semver/normal docker tags
-    {
-      matchDatasources: ["docker"],
-      // default docker versioning
       commitMessageTopic: "Docker image",
     },
   ],
