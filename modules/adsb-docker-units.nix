@@ -54,7 +54,8 @@ let
             "run"
             "--name"
             c.name
-            "--network adsbnet"
+            "--network"
+            "adsbnet"
           ]
           + " ${ttyFlag} ${envFlags} ${envFileFlags} ${volumeFlags} ${tmpfsFlags} ${portFlags} "
           + (c.extraDockerArgs or "")
