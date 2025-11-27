@@ -58,7 +58,7 @@ in
       # wifi
       "wifi.env" = { };
 
-      sops.secrets."docker/acarshub" = {
+      "docker/acarshub" = {
         format = "yaml";
       };
     };

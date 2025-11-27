@@ -6,7 +6,9 @@
   ...
 }:
 let
-  dockerSecrets = builtins.fromJSON (builtins.readFile config.sops.secrets."docker/acarshub".path);
+  dockerSecrets = builtins.fromJSON (
+    builtins.readFile config.sops.secrets."docker/acarshub.env".path
+  );
 in
 {
   imports = [
@@ -69,7 +71,7 @@ in
       restart = "always";
 
       environment = {
-        TZ = config.sops.secrets.feeder_tz.path;
+        TZ = dockerSecrets.FEEDER_TZ;
         SERIAL = "00012785";
         FREQUENCIES = "131.85;131.825;131.725;131.65;131.55;131.525;131.475;131.45;131.425;131.25;131.125;130.85;130.825;130.55;130.45;130.425";
         FEED_ID = "CS-KABQ-ACARS";
@@ -96,7 +98,7 @@ in
       restart = "always";
 
       environment = {
-        TZ = config.sops.secrets.feeder_tz.path;
+        TZ = dockerSecrets.FEEDER_TZ;
         SERIAL = "00013305";
         FREQUENCIES = "130.025;129.9;129.525;129.35;129.125;129.0";
         FEED_ID = "CS-KABQ-ACARS";
@@ -123,7 +125,7 @@ in
       restart = "always";
 
       environment = {
-        TZ = config.sops.secrets.feeder_tz.path;
+        TZ = dockerSecrets.FEEDER_TZ;
         SERIAL = "00012095";
         FREQUENCIES = "136.975;136.8;136.65";
         FEED_ID = "CS-KABQ-ACARS";
