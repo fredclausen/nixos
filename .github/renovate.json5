@@ -10,7 +10,6 @@
   enabledManagers: ["custom.regex", "nix", "github-actions"],
   nix: {
     enabled: true,
-    managerFilePatterns: ["/flake\\.lock$/"],
   },
   customManagers: [
     {
