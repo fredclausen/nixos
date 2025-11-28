@@ -616,7 +616,7 @@ in
     ###############################################################
     {
       name = "sdrmap";
-      image = "ghcr.io/sdr-enthusiasts/docker-sdrmap:trixie-latest-build-4";
+      image = "ghcr.io/sdr-enthusiasts/docker-sdrmap:latest-build-36";
 
       restart = "always";
 
