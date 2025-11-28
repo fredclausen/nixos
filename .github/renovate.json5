@@ -21,6 +21,7 @@
       depNameTemplate: "{{depName}}",
       extractVersionTemplate: "{{currentValue}}",
       packageNameTemplate: "{{depName}}",
+      versioningTemplate: "loose",
     },
   ],
   packageRules: [
