@@ -3,7 +3,7 @@
   extends: ["config:recommended", "config:best-practices"],
   lockFileMaintenance: {
     enabled: true,
-    schedule: ["0 */4 * * *"],
+    schedule: ["* */4 * * *"], // every 4 hours
   },
   timezone: "Etc/UTC",
   schedule: ["before 3am on saturday"],
