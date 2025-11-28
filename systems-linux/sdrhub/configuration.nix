@@ -596,7 +596,7 @@ in
     ###############################################################
     {
       name = "opensky";
-      image = "ghcr.io/sdr-enthusiasts/docker-opensky-network:trixie-latest-build-3";
+      image = "ghcr.io/sdr-enthusiasts/docker-opensky-network:latest-build-809";
 
       restart = "always";
       tty = true;
