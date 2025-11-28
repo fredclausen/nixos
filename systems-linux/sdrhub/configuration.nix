@@ -432,7 +432,7 @@ in
     ###############################################################
     {
       name = "adsbhub";
-      image = "ghcr.io/sdr-enthusiasts/docker-adsbhub:trixie-latest-build-3";
+      image = "ghcr.io/sdr-enthusiasts/docker-adsbhub:latest-build-503";
 
       restart = "always";
       tty = true;
