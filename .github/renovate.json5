@@ -26,7 +26,15 @@
   packageRules: [
     {
       matchDatasources: ["docker"],
-      versioning: "regex:^(trixie-)?latest-build-(?<major>\\d+)?$",
+      versioning: "regex:^trixie-latest-build-(?<major>\\d+)?$",
+      matchPackageNames: [
+        "ghcr.io/sdr-enthusiasts/{/,}**",
+        "ghcr.io/plane-watch/{/,}**",
+      ],
+    },
+    {
+      matchDatasources: ["docker"],
+      versioning: "regex:^latest-build-(?<major>\\d+)?$",
       matchPackageNames: [
         "ghcr.io/sdr-enthusiasts/{/,}**",
         "ghcr.io/plane-watch/{/,}**",
