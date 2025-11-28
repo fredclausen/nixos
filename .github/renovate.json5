@@ -1,62 +1,41 @@
 {
-  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: [
-    'config:recommended',
-    'config:best-practices',
-  ],
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:recommended", "config:best-practices"],
   lockFileMaintenance: {
     enabled: true,
-    extends: [
-      'schedule:daily',
-    ],
+    extends: ["every 4 hours"],
   },
-  timezone: 'Etc/UTC',
-  schedule: [
-    'before 3am on saturday',
-  ],
-  enabledManagers: [
-    'custom.regex',
-    'nix',
-    'github-actions',
-  ],
+  timezone: "Etc/UTC",
+  schedule: ["before 3am on saturday"],
+  enabledManagers: ["custom.regex", "nix", "github-actions"],
   nix: {
     enabled: true,
   },
   customManagers: [
     {
-      customType: 'regex',
-      managerFilePatterns: [
-        '/systems-linux/(.*)/configuration\\.nix$/',
-      ],
-      matchStrings: [
-        'image = "(?<depName>.*?):(?<currentValue>.*?)";',
-      ],
-      datasourceTemplate: 'docker',
-      depTypeTemplate: 'container',
-      depNameTemplate: '{{depName}}',
-      extractVersionTemplate: '{{currentValue}}',
-      packageNameTemplate: '{{depName}}',
+      customType: "regex",
+      managerFilePatterns: ["/systems-linux/(.*)/configuration\\.nix$/"],
+      matchStrings: ['image = "(?<depName>.*?):(?<currentValue>.*?)";'],
+      datasourceTemplate: "docker",
+      depTypeTemplate: "container",
+      depNameTemplate: "{{depName}}",
+      extractVersionTemplate: "{{currentValue}}",
+      packageNameTemplate: "{{depName}}",
     },
   ],
   packageRules: [
     {
-      matchDatasources: [
-        'docker',
-      ],
-      versioning: 'regex:^(trixie-)?latest-build-(?<major>\\d+)?$',
+      matchDatasources: ["docker"],
+      versioning: "regex:^(trixie-)?latest-build-(?<major>\\d+)?$",
       matchPackageNames: [
-        'ghcr.io/sdr-enthusiasts/{/,}**',
-        'ghcr.io/plane-watch/{/,}**',
+        "ghcr.io/sdr-enthusiasts/{/,}**",
+        "ghcr.io/plane-watch/{/,}**",
       ],
     },
     {
-      matchDatasources: [
-        'docker',
-      ],
-      matchPackageNames: [
-        'amir20/dozzle',
-      ],
-      versioning: 'semver',
+      matchDatasources: ["docker"],
+      matchPackageNames: ["amir20/dozzle"],
+      versioning: "semver",
     },
   ],
 }
