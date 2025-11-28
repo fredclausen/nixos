@@ -3,26 +3,16 @@
 
   extends: ["config:best-practices"],
 
-  timezone: "Etc/UTC",
-  schedule: ["before 3am on saturday"],
-
   enabledManagers: ["regex", "nix", "github-actions"],
 
   regexManagers: [
     {
-      fileMatch: ["configuration\\.nix$"],
+      fileMatch: ["\\.nix$"],
       matchStrings: [
-        // extract depName and currentValue from image strings
         'image\\s*=\\s*"(?<depName>[^:"]+):(?<currentValue>[^"]+)"',
       ],
       datasourceTemplate: "docker",
-    },
-  ],
-
-  packageRules: [
-    {
-      matchDatasources: ["docker"],
-      commitMessageTopic: "Docker image",
+      versioning: "trixieBuild", // <-- USE CUSTOM VERSIONING
     },
   ],
 }
