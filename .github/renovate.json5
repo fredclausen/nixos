@@ -32,10 +32,5 @@
         "ghcr.io/plane-watch/{/,}**",
       ],
     },
-    {
-      matchDatasources: ["docker"],
-      matchPackageNames: ["amir20/dozzle"],
-      versioning: "regex:^(?<major>v?\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
-    },
   ],
 }
