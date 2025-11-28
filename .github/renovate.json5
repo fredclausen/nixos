@@ -11,7 +11,7 @@
   customManagers: [
     {
       customType: "regex",
-      managerFilePatterns: ["/systems-linux/acarshub/configuration\\.nix$/"],
+      managerFilePatterns: ["/systems-linux/(.*)/configuration\\.nix$/"],
       matchStrings: ['image = "(?<depName>.*?):(?<currentValue>.*?)";'],
       datasourceTemplate: "docker",
       depTypeTemplate: "container",
