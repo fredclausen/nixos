@@ -35,7 +35,7 @@
     {
       matchDatasources: ["docker"],
       matchPackageNames: ["amir20/dozzle"],
-      versioning: "semver",
+      versioning: "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
     },
   ],
 }
