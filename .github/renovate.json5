@@ -7,13 +7,8 @@
   },
   timezone: "Etc/UTC",
   schedule: ["before 3am on saturday"],
-  enabledManagers: ["custom.regex", "nix", "nix-flake", "github-actions"],
-
+  enabledManagers: ["custom.regex", "nix", "github-actions"],
   nix: {
-    enabled: true,
-  },
-
-  nixFlake: {
     enabled: true,
   },
   customManagers: [
