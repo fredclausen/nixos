@@ -25,7 +25,7 @@
     {
       matchDatasources: ["docker"],
       matchPackagePrefixes: ["ghcr.io/sdr-enthusiasts/", "ghcr.io/planewatch/"],
-      versioning: "regex:^trixie-latest-build-(?<major>\d+))?$",
+      versioning: "regex:^trixie-latest-build-(?<major>\d+)?$",
     },
     {
       matchDatasources: ["docker"],
