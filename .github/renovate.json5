@@ -11,11 +11,7 @@
   // --- Nix updates ---
   nix: {
     enabled: true,
-    fileMatch: [
-      "flake\\.nix$",
-      "flake\\.lock$",
-      "^/systems-linux/acarshub/configuration\\.nix$",
-    ],
+    fileMatch: ["flake\\.nix$", "flake\\.lock$"],
   },
 
   // --- Regex manager to detect Docker images in Nix files ---
@@ -24,6 +20,7 @@
       fileMatch: ["configuration\\.nix$"],
       matchStrings: ['image = "(?<depName>.*?):(?<currentValue>.*?)";'],
       datasourceTemplate: "docker",
+      depTypeTemplate: "container",
     },
   ],
   packageRules: [
