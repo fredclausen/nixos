@@ -26,12 +26,12 @@
   packageRules: [
     {
       matchDatasources: ["docker"],
-      matchCurrentValue: "^trixie-latest-build-",
+      matchCurrentValue: "^trixie-latest-build-\\d+$",
       versioning: "regex:^trixie-latest-build-(?<minor>\\d+)$",
     },
     {
       matchDatasources: ["docker"],
-      matchCurrentValue: "^latest-build-",
+      matchCurrentValue: "^latest-build-\\d+$",
       versioning: "regex:^latest-build-(?<minor>\\d+)$",
     },
   ],
