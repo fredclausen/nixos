@@ -80,7 +80,7 @@
     ###############################################################
     {
       name = "acarsdec-1";
-      image = "ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-4";
+      image = "ghcr.io/sdr-enthusiasts/docker-acarsdec:trixie-latest-build-3";
 
       tty = true;
       restart = "always";
