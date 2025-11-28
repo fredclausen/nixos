@@ -15,14 +15,14 @@
     {
       customType: "regex",
       managerFilePatterns: ["/systems-linux/(.*)/configuration\\.nix$/"],
-      matchStrings: ['image = "(?<depName>.*?):(?<currentValue>.*?)";'],
-      extractVersionTemplate: "{{#if currentValue}}{{#match currentValue '^v(?<num>.*)$'}}{{num}}{{else}}{{currentValue}}{{/match}}{{/if}}",
+      matchStrings: ['image = "(?<depName>.*?):v?(?<currentValue>.*?)";'],
       datasourceTemplate: "docker",
       depTypeTemplate: "container",
       depNameTemplate: "{{depName}}",
       extractVersionTemplate: "{{currentValue}}",
       packageNameTemplate: "{{depName}}",
       versioningTemplate: "loose",
+      extractVersionTemplate: "{{currentValue}}",
     },
   ],
   packageRules: [
