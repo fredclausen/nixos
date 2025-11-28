@@ -10,13 +10,12 @@
 
   regexManagers: [
     {
-      fileMatch: ["\\.nix$"],
+      fileMatch: ["configuration\\.nix$"],
       matchStrings: [
         // extract depName and currentValue from image strings
         'image\\s*=\\s*"(?<depName>[^:"]+):(?<currentValue>[^"]+)"',
       ],
       datasourceTemplate: "docker",
-      versioningTemplate: "loose", // THIS is allowed inside regexManagers
     },
   ],
 
