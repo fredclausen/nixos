@@ -1,33 +1,43 @@
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json",
-
-  extends: ["config:best-practices"],
-
-  timezone: "Etc/UTC",
-  schedule: ["before 3am on saturday"],
-
-  enabledManagers: ["regex", "nix", "github-actions"],
-
-  // --- Nix updates ---
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:best-practices',
+  ],
+  timezone: 'Etc/UTC',
+  schedule: [
+    'before 3am on saturday',
+  ],
+  enabledManagers: [
+    'custom.regex',
+    'nix',
+    'github-actions',
+  ],
   nix: {
     enabled: true,
-    fileMatch: ["flake\\.nix$", "flake\\.lock$"],
+    managerFilePatterns: [
+      '/flake\\.nix$/',
+      '/flake\\.lock$/',
+    ],
   },
-
-  // --- Regex manager to detect Docker images in Nix files ---
-  regexManagers: [
+  customManagers: [
     {
-      fileMatch: ["configuration\\.nix$"],
-      matchStrings: ['image = "(?<depName>.*?):(?<currentValue>.*?)";'],
-      datasourceTemplate: "docker",
-      depTypeTemplate: "container",
+      customType: 'regex',
+      managerFilePatterns: [
+        '/configuration\\.nix$/',
+      ],
+      matchStrings: [
+        'image = "(?<depName>.*?):(?<currentValue>.*?)";',
+      ],
+      datasourceTemplate: 'docker',
+      depTypeTemplate: 'container',
     },
   ],
   packageRules: [
     {
-      matchDatasources: ["docker"],
-      // Use "semver" if you know the image strictly uses it, otherwise use default
-      versioning: "loose",
+      matchDatasources: [
+        'docker',
+      ],
+      versioning: 'loose',
     },
   ],
 }
