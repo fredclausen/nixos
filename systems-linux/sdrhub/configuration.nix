@@ -501,7 +501,7 @@ in
     ###############################################################
     {
       name = "planefinder";
-      image = "ghcr.io/sdr-enthusiasts/docker-planefinder:trixie-latest-build-3";
+      image = "ghcr.io/sdr-enthusiasts/docker-planefinder:latest-build-514";
 
       restart = "always";
       tty = true;
