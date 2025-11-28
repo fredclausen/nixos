@@ -15,7 +15,7 @@
     {
       customType: "regex",
       managerFilePatterns: ["/systems-linux/(.*)/configuration\\.nix$/"],
-      matchStrings: ['image = "(?<depName>.*?):v?(?<currentValue>.*?)";'],
+      matchStrings: ['image = "(?<depName>.*?):(?<currentValue>v?.*?)";'],
       datasourceTemplate: "docker",
       depTypeTemplate: "container",
       depNameTemplate: "{{depName}}",
