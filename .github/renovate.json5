@@ -1,28 +1,45 @@
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  extends: ["config:best-practices"],
-  timezone: "Etc/UTC",
-  schedule: ["before 3am on saturday"],
-  enabledManagers: ["custom.regex", "nix", "github-actions"],
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:best-practices',
+  ],
+  timezone: 'Etc/UTC',
+  schedule: [
+    'before 3am on saturday',
+  ],
+  enabledManagers: [
+    'custom.regex',
+    'nix',
+    'github-actions',
+  ],
   nix: {
     enabled: false,
-    managerFilePatterns: ["/flake\\.nix$/", "/flake\\.lock$/"],
+    managerFilePatterns: [
+      '/flake\\.nix$/',
+      '/flake\\.lock$/',
+    ],
   },
   customManagers: [
     {
-      customType: "regex",
-      managerFilePatterns: ["/systems-linux/acarshub/configuration\\.nix$/"],
-      matchStrings: ['image = "(?<depName>.*?):(?<currentValue>.*?)";'],
-      depNameTemplate: "{{depName}}",
-      extractVersionTemplate: "{{currentValue}}",
-      datasourceTemplate: "docker",
-      lookupNameTemplate: "{{depName}}",
+      customType: 'regex',
+      managerFilePatterns: [
+        '/systems-linux/acarshub/configuration\\.nix$/',
+      ],
+      matchStrings: [
+        'image = "(?<depName>.*?):(?<currentValue>.*?)";',
+      ],
+      depNameTemplate: '{{depName}}',
+      extractVersionTemplate: '{{currentValue}}',
+      datasourceTemplate: 'docker',
+      packageNameTemplate: '{{depName}}',
     },
   ],
   packageRules: [
     {
-      matchDatasources: ["docker"],
-      versioning: "loose",
+      matchDatasources: [
+        'docker',
+      ],
+      versioning: 'loose',
     },
   ],
 }
