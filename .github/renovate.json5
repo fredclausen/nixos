@@ -36,6 +36,7 @@
     {
       matchDatasources: ["docker"],
       matchPackageNames: ["amir20/dozzle"],
+      extractVersionTemplate: "{{currentValue | regexReplace('^v', '')}}",
       versioning: "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
     },
   ],
