@@ -3,16 +3,40 @@
 
   extends: ["config:best-practices"],
 
+  timezone: "Etc/UTC",
+  schedule: ["before 3am on saturday"],
+
   enabledManagers: ["regex", "nix", "github-actions"],
 
+  // --- Nix updates ---
+  nix: {
+    enabled: true,
+    fileMatch: ["flake\\.nix$", "flake\\.lock$", "configuration\\.nix$"],
+  },
+
+  // --- Regex manager to detect Docker images in Nix files ---
   regexManagers: [
     {
       fileMatch: ["\\.nix$"],
       matchStrings: [
+        // extract depName + currentValue
         'image\\s*=\\s*"(?<depName>[^:"]+):(?<currentValue>[^"]+)"',
       ],
+
+      // Tell Renovate these are Docker images
       datasourceTemplate: "docker",
-      versioning: "trixieBuild", // <-- USE CUSTOM VERSIONING
+
+      // No versioningTemplate
+      // No extractVersionTemplate
+      // No versioning
+    },
+  ],
+
+  // Cosmetic rules for commits
+  packageRules: [
+    {
+      matchDatasources: ["docker"],
+      commitMessageTopic: "Docker image",
     },
   ],
 }
