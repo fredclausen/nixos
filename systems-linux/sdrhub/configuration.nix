@@ -290,7 +290,7 @@ in
     ###############################################################
     {
       name = "dozzle";
-      images = "amir20/dozzle:v8.14.9";
+      image = "amir20/dozzle:v8.14.9";
 
       restart = "always";
 
@@ -311,7 +311,7 @@ in
     ###############################################################
     {
       name = "dozzle-agent";
-      images = "amir20/dozzle:v8.14.9";
+      image = "amir20/dozzle:v8.14.9";
       exec = "agent";
 
       volumes = [
