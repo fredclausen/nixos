@@ -17,7 +17,7 @@
   // --- Regex manager to detect Docker images in Nix files ---
   regexManagers: [
     {
-      fileMatch: ["(^|/services/myapp/)configuration\\.nix$"],
+      fileMatch: ["configuration\\.nix$"],
       matchStrings: ['image = "(?<depName>.*?):(?<currentValue>.*?)";'],
       datasourceTemplate: "docker",
     },
