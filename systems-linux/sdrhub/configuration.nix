@@ -398,7 +398,7 @@ in
     ###############################################################
     {
       name = "dump978";
-      image = "ghcr.io/sdr-enthusiasts/docker-dump978:trixie-latest-build-2";
+      image = "ghcr.io/sdr-enthusiasts/docker-dump978:latest-build-773";
 
       hostname = "dump978";
       restart = "always";
