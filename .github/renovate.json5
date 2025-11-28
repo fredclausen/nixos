@@ -5,7 +5,7 @@
   schedule: ["before 3am on saturday"],
   enabledManagers: ["custom.regex", "nix", "github-actions"],
   nix: {
-    enabled: true,
+    enabled: false,
     managerFilePatterns: ["/flake\\.nix$/", "/flake\\.lock$/"],
   },
   customManagers: [
