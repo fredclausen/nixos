@@ -12,11 +12,11 @@
     {
       customType: "regex",
       managerFilePatterns: ["/systems-linux/acarshub/configuration\\.nix$/"],
-      matchStrings: [
-        'image = "(?<depName>.*?):(?<currentValue>.*?)";\\s*#\\s*renovate\\n"',
-      ],
+      matchStrings: ['image = "(?<depName>.*?):(?<currentValue>.*?)";'],
+      depNameTemplate: "{{depName}}",
+      extractVersionTemplate: "{{currentValue}}",
       datasourceTemplate: "docker",
-      depTypeTemplate: "container",
+      lookupNameTemplate: "{{depName}}",
     },
   ],
   packageRules: [
