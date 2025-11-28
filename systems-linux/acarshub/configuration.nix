@@ -57,23 +57,23 @@
     ###############################################################
     # DOZZLE AGENT
     ###############################################################
-    {
-      name = "dozzle-agent";
-      image = "amir20/dozzle:v8.14.9";
-      exec = "agent";
+    # {
+    #   name = "dozzle-agent";
+    #   image = "amir20/dozzle:v8.14.9";
+    #   exec = "agent";
 
-      environmentFiles = [
-        config.sops.secrets."docker/acarshub.env".path
-      ];
+    #   environmentFiles = [
+    #     config.sops.secrets."docker/acarshub.env".path
+    #   ];
 
-      volumes = [
-        "/var/run/docker.sock:/var/run/docker.sock:ro"
-      ];
+    #   volumes = [
+    #     "/var/run/docker.sock:/var/run/docker.sock:ro"
+    #   ];
 
-      ports = [ "7007:7007" ];
+    #   ports = [ "7007:7007" ];
 
-      requires = [ "network-online.target" ];
-    }
+    #   requires = [ "network-online.target" ];
+    # }
 
     ###############################################################
     # ACARSDEC-1

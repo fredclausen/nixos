@@ -288,41 +288,41 @@ in
     ###############################################################
     # DOZZLE (UI)
     ###############################################################
-    {
-      name = "dozzle";
-      image = "amir20/dozzle:v8.14.9";
+    # {
+    #   name = "dozzle";
+    #   image = "amir20/dozzle:v8.14.9";
 
-      restart = "always";
+    #   restart = "always";
 
-      environmentFiles = [
-        config.sops.secrets."docker/sdrhub/dozzle.env".path
-      ];
+    #   environmentFiles = [
+    #     config.sops.secrets."docker/sdrhub/dozzle.env".path
+    #   ];
 
-      ports = [
-        "9999:8080"
-      ];
+    #   ports = [
+    #     "9999:8080"
+    #   ];
 
-      requires = [ "network-online.target" ];
-      after = [ "network-online.target" ];
-    }
+    #   requires = [ "network-online.target" ];
+    #   after = [ "network-online.target" ];
+    # }
 
     ###############################################################
     # DOZZLE AGENT
     ###############################################################
-    {
-      name = "dozzle-agent";
-      image = "amir20/dozzle:v8.14.9";
-      exec = "agent";
+    # {
+    #   name = "dozzle-agent";
+    #   image = "amir20/dozzle:v8.14.9";
+    #   exec = "agent";
 
-      volumes = [
-        "/var/run/docker.sock:/var/run/docker.sock:ro"
-      ];
+    #   volumes = [
+    #     "/var/run/docker.sock:/var/run/docker.sock:ro"
+    #   ];
 
-      ports = [ "3939:7007" ];
+    #   ports = [ "3939:7007" ];
 
-      requires = [ "network-online.target" ];
-      after = [ "network-online.target" ];
-    }
+    #   requires = [ "network-online.target" ];
+    #   after = [ "network-online.target" ];
+    # }
 
     ###############################################################
     # AIRSPY ADS-B RECEIVER
