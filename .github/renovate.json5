@@ -6,7 +6,7 @@
   enabledManagers: ["custom.regex", "nix", "github-actions"],
   nix: {
     enabled: false,
-    managerFilePatterns: ["/flake\\.nix$/", "/flake\\.lock$/"],
+    managerFilePatterns: ["/flake\\.lock$/"],
   },
   customManagers: [
     {
@@ -25,7 +25,7 @@
     {
       matchDatasources: ["docker"],
       matchPackagePrefixes: ["ghcr.io/sdr-enthusiasts/", "ghcr.io/planewatch/"],
-      versioning: "regex:^trixie-latest-build-(?<major>\\d+)?$",
+      versioning: "regex:^(trixie-)?latest-build-(?<major>\\d+)?$",
     },
     {
       matchDatasources: ["docker"],
