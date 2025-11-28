@@ -30,18 +30,11 @@
         "ghcr.io/sdr-enthusiasts/{/,}**",
         "ghcr.io/plane-watch/{/,}**",
       ],
-      matchCurrentValue: "^trixie-latest-build-\\d+$",
-      versioning: "regex:^trixie-latest-build-(?<minor>\\d+)$",
-    },
+      // let renovate accept all tags
+      versioning: "loose",
 
-    {
-      matchDatasources: ["docker"],
-      matchPackageNames: [
-        "ghcr.io/sdr-enthusiasts/{/,}**",
-        "ghcr.io/plane-watch/{/,}**",
-      ],
-      matchCurrentValue: "^latest-build-\\d+$",
-      versioning: "regex:^latest-build-(?<minor>\\d+)$",
+      // conditionally constrain the version parsing
+      extractVersionTemplate: '{{#if (match currentValue "^trixie-latest-build-")}}trixie-latest-build-{{match currentValue "\\d+$"}}{{else}}latest-build-{{match currentValue "\\d+$"}}{{/if}}',
     },
   ],
 }
