@@ -22,7 +22,6 @@
       extractVersionTemplate: "{{currentValue}}",
       packageNameTemplate: "{{depName}}",
       versioningTemplate: "loose",
-      extractVersionTemplate: "{{currentValue}}",
     },
   ],
   packageRules: [
