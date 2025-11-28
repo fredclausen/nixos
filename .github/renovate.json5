@@ -32,7 +32,7 @@
       ],
 
       // ONE versioning rule that supports both patterns
-      versioning: "regex:^(?<flavor>trixie-)?latest-build-(?<build>\\d+)$",
+      versioning: "regex:^(?<flavor>trixie-)?latest-build-(?<major>\\d+)$",
     },
   ],
 }
