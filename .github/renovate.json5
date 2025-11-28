@@ -17,26 +17,16 @@
   // --- Regex manager to detect Docker images in Nix files ---
   regexManagers: [
     {
-      fileMatch: ["\\.nix$"],
-      matchStrings: [
-        // extract depName + currentValue
-        'image\\s*=\\s*"(?<depName>[^:"]+):(?<currentValue>[^"]+)"',
-      ],
-
-      // Tell Renovate these are Docker images
+      fileMatch: ["(^|/services/myapp/)image\\.nix$"],
+      matchStrings: ['image = "(?<depName>.*?):(?<currentValue>.*?)";'],
       datasourceTemplate: "docker",
-
-      // No versioningTemplate
-      // No extractVersionTemplate
-      // No versioning
     },
   ],
-
-  // Cosmetic rules for commits
   packageRules: [
     {
       matchDatasources: ["docker"],
-      commitMessageTopic: "Docker image",
+      // Use "semver" if you know the image strictly uses it, otherwise use default
+      versioning: "semver",
     },
   ],
 }
