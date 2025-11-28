@@ -5,7 +5,7 @@
   schedule: ["before 3am on saturday"],
   enabledManagers: ["custom.regex", "nix", "github-actions"],
   nix: {
-    enabled: false,
+    enabled: true,
     managerFilePatterns: ["/flake\\.lock$/"],
   },
   customManagers: [
@@ -24,7 +24,10 @@
   packageRules: [
     {
       matchDatasources: ["docker"],
-      matchPackagePrefixes: ["ghcr.io/sdr-enthusiasts/", "ghcr.io/planewatch/"],
+      matchPackagePrefixes: [
+        "ghcr.io/sdr-enthusiasts/",
+        "ghcr.io/plane-watch/",
+      ],
       versioning: "regex:^(trixie-)?latest-build-(?<major>\\d+)?$",
     },
     {
