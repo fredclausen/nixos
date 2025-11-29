@@ -56,7 +56,7 @@
     },
     {
       matchDataSources: ["docker"],
-      matchPackageNames: ["/^amir20/dozzle$/"],
+      matchPackageNames: ["amir20/dozzle"],
       pinDigests: false,
     },
   ],
