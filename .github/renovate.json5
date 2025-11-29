@@ -29,7 +29,6 @@
       matchPackagePatterns: [
         "^ghcr\\.io/sdr-enthusiasts/(docker-acarsdec|docker-dumphfdl|airspy_adsb|docker-dump978|docker-adsbhub|docker-flightradar24|docker-planefinder|docker-radarvirtuel|docker-opensky-network|docker-sdrmap|docker-acarshub|acars_router|docker-dumpvdl2)$",
       ],
-      matchCurrentValue: "^trixie-latest-build-\\d+$",
       versioning: "regex:^trixie-latest-build-(?<major>\\d+)$",
     },
 
@@ -38,7 +37,6 @@
       matchPackagePatterns: [
         "^ghcr\\.io/sdr-enthusiasts/(docker-hfdlobserver|docker-adsb-ultrafeeder|docker-piaware|docker-airnavradar)$",
       ],
-      matchCurrentValue: "^latest-build-\\d+$",
       versioning: "regex:^latest-build-(?<major>\\d+)$",
     },
   ],
