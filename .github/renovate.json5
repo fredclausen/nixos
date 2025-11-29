@@ -48,5 +48,15 @@
       ],
       pinDigests: false,
     },
+    {
+      matchDatasources: ["docker"],
+      versioning: "regex:^(trixie-)?latest-build-(?<major>\\d+)?$",
+      matchPackageNames: ["ghcr.io/plane-watch/{/,}**"],
+      pinDigests: false,
+    },
+    {
+      matchDataSources: ["docker"],
+      pinDigests: false,
+    },
   ],
 }
