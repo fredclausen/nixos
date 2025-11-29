@@ -55,7 +55,7 @@
       pinDigests: false,
     },
     {
-      matchDataSources: ["docker"],
+      matchDatasources: ["docker"],
       matchPackageNames: ["amir20/dozzle"],
       pinDigests: false,
     },
