@@ -354,7 +354,7 @@ in
     ###############################################################
     {
       name = "ultrafeeder";
-      image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-837";
+      image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-838";
 
       hostname = "ultrafeeder";
       restart = "always";
