@@ -12,6 +12,10 @@
   timezone: "Etc/UTC",
   schedule: ["before 3am on saturday"],
   enabledManagers: ["custom.regex", "nix", "github-actions"],
+  prConcurrentLimit: 20,
+  prCreation: "immediate",
+  automerge: false,
+  platformAutomerge: false,
   nix: {
     enabled: true,
   },
