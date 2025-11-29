@@ -2,10 +2,17 @@
   description = "Fred's NixOS config flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
+    };
 
-    catppuccin.url = "github:catppuccin/nix";
-    apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
+    catppuccin = {
+      url = "github:catppuccin/nix";
+    };
+
+    apple-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -17,7 +24,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
 
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -38,6 +47,11 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-needsreboot = {
+      url = "github:fredclausen/nixos-needsreboot";
+    };
+
   };
 
   outputs =
@@ -52,6 +66,7 @@
       nixvim,
       niri,
       darwin,
+      nixos-needsreboot,
       ...
     }:
 

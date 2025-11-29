@@ -20,15 +20,25 @@
       args:
         chdir: /home/fred/GitHub/nixos
       when: git_result.changed
-    - name: Check if reboot is needed (NixOS)
+
+    - name: Check if reboot-required exists (NixOS)
       stat:
         path: /run/reboot-required
       register: nixos_reboot
 
-    - name: System needs reboot (NixOS)
-      debug:
-        msg: "System needs reboot"
+    - name: Read reboot-required details (NixOS)
       when: nixos_reboot.stat.exists
+      slurp:
+        src: /run/reboot-required
+      register: reboot_details
+
+    - name: Report reboot requirement + details (NixOS)
+      when: nixos_reboot.stat.exists
+      debug:
+        msg: |
+          🔴 System needs reboot
+          ───────────────────────────
+          {{ reboot_details.content | b64decode }}
 
 - name: Update Ubuntu Systems
   connection: ansible.netcommon.network_cli

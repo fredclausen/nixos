@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   config = {
 
@@ -9,26 +14,35 @@
     # Enable networking
     networking.networkmanager.enable = true;
 
-    environment.systemPackages = [
-      pkgs.pass
-      pkgs.wget
-      pkgs.unzip
-      pkgs.file
-      pkgs.lsd
-      pkgs.zip
-      pkgs.toybox
-      pkgs.nix-index
-      pkgs.lm_sensors
-      pkgs.dig
-      pkgs.nethogs
-      pkgs.inotify-tools
-      pkgs.usbutils
-      pkgs.hwdata
-      pkgs.airspy
+    nixpkgs.overlays = [
+      (final: prev: {
+        nixos-needsreboot = prev.nixos-needsreboot.overrideAttrs (old: {
+          vendorSha256 = "sha256-o4/q0t9GhPbZ+R4Rnxf202WMJcMNu4RftqHkS95YZJs=";
+        });
+      })
     ];
 
-    services.udev.packages = [
-      pkgs.airspy
+    environment.systemPackages = with pkgs; [
+      pass
+      wget
+      unzip
+      file
+      lsd
+      zip
+      toybox
+      nix-index
+      lm_sensors
+      dig
+      nethogs
+      inotify-tools
+      usbutils
+      hwdata
+      airspy
+      inputs.nixos-needsreboot.packages.${config.nixpkgs.hostPlatform.system}.default
+    ];
+
+    services.udev.packages = with pkgs; [
+      airspy
     ];
 
     xdg.portal = {

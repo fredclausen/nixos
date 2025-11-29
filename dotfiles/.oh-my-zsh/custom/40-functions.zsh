@@ -23,6 +23,26 @@ updatenix() {
       pushed=true
     fi
     sudo nixos-rebuild switch --flake .#"$(hostname)"
+    sudo nixos-needsreboot
+
+    if [[ -f /run/reboot-required ]]; then
+      echo
+      echo "╔══════════════════════════════════════════╗"
+      echo "║        🔴 SYSTEM NEEDS A REBOOT          ║"
+      echo "╚══════════════════════════════════════════╝"
+      echo
+
+      printf "  %-15s %-20s\n" "Component" "Upgrade"
+      printf "  %-15s %-20s\n" "--------- " "--------"
+
+      while IFS= read -r line; do
+        component=$(echo "$line" | cut -d '(' -f 1)
+        versions=$(echo "$line" | sed 's/.*(//;s/)//')
+        printf "  \033[1;36m%-15s\033[0m %s\n" "$component" "$versions"
+      done < /run/reboot-required
+
+      echo
+    fi
   fi
 
   [[ "$pushed" = true ]] && popd >/dev/null || return
