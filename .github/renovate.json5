@@ -1,60 +1,45 @@
 {
-  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
-    'config:recommended',
-    'config:best-practices',
+    "config:recommended",
+    "config:best-practices",
+    "default:pinDigestsDisabled",
   ],
   lockFileMaintenance: {
     enabled: true,
-    schedule: [
-      '* */4 * * *',
-    ],
+    schedule: ["* */4 * * *"],
   },
-  timezone: 'Etc/UTC',
-  schedule: [
-    'before 3am on saturday',
-  ],
-  enabledManagers: [
-    'custom.regex',
-    'nix',
-    'github-actions',
-  ],
+  timezone: "Etc/UTC",
+  schedule: ["before 3am on saturday"],
+  enabledManagers: ["custom.regex", "nix", "github-actions"],
   nix: {
     enabled: true,
   },
   customManagers: [
     {
-      customType: 'regex',
-      managerFilePatterns: [
-        '/systems-linux/(.*)/configuration\\.nix$/',
-      ],
-      matchStrings: [
-        'image = "v?(?<depName>.*?):(?<currentValue>.*?)";',
-      ],
-      datasourceTemplate: 'docker',
-      depTypeTemplate: 'container',
-      depNameTemplate: '{{depName}}',
-      packageNameTemplate: '{{depName}}',
-      versioningTemplate: 'loose',
+      customType: "regex",
+      managerFilePatterns: ["/systems-linux/(.*)/configuration\\.nix$/"],
+      matchStrings: ['image = "v?(?<depName>.*?):(?<currentValue>.*?)";'],
+      datasourceTemplate: "docker",
+      depTypeTemplate: "container",
+      depNameTemplate: "{{depName}}",
+      packageNameTemplate: "{{depName}}",
+      versioningTemplate: "loose",
     },
   ],
   packageRules: [
     {
-      matchDatasources: [
-        'docker',
-      ],
-      versioning: 'regex:^trixie-latest-build-(?<major>\\d+)$',
+      matchDatasources: ["docker"],
+      versioning: "regex:^trixie-latest-build-(?<major>\\d+)$",
       matchPackageNames: [
-        '/^ghcr\\.io/sdr-enthusiasts/(docker-acarsdec|docker-dumphfdl|airspy_adsb|docker-dump978|docker-adsbhub|docker-flightradar24|docker-planefinder|docker-radarvirtuel|docker-opensky-network|docker-sdrmap|docker-acarshub|acars_router|docker-dumpvdl2)$/',
+        "/^ghcr\\.io/sdr-enthusiasts/(docker-acarsdec|docker-dumphfdl|airspy_adsb|docker-dump978|docker-adsbhub|docker-flightradar24|docker-planefinder|docker-radarvirtuel|docker-opensky-network|docker-sdrmap|docker-acarshub|acars_router|docker-dumpvdl2)$/",
       ],
     },
     {
-      matchDatasources: [
-        'docker',
-      ],
-      versioning: 'regex:^latest-build-(?<major>\\d+)$',
+      matchDatasources: ["docker"],
+      versioning: "regex:^latest-build-(?<major>\\d+)$",
       matchPackageNames: [
-        '/^ghcr\\.io/sdr-enthusiasts/(docker-hfdlobserver|docker-adsb-ultrafeeder|docker-piaware|docker-airnavradar)$/',
+        "/^ghcr\\.io/sdr-enthusiasts/(docker-hfdlobserver|docker-adsb-ultrafeeder|docker-piaware|docker-airnavradar)$/",
       ],
     },
   ],
