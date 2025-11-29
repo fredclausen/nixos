@@ -290,7 +290,7 @@ in
     ###############################################################
     {
       name = "dozzle";
-      image = "amir20/dozzle:v8.14.8";
+      image = "amir20/dozzle:v8.14.9";
 
       restart = "always";
 
