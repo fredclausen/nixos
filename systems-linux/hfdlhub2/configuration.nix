@@ -91,7 +91,7 @@ in
     ###############################################################
     # {
     #   name = "hfdlobserver";
-    #   image = "ghcr.io/sdr-enthusiasts/docker-hfdlobserver:latest-build-13";
+    #   image = "ghcr.io/sdr-enthusiasts/docker-hfdlobserver:latest-build-14";
 
     #   environmentFiles = [
     #     config.sops.secrets."docker/hfdlhub2.env".path
