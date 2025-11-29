@@ -10,7 +10,7 @@
     schedule: ["* */4 * * *"],
   },
   timezone: "Etc/UTC",
-  schedule: ["before 3am on saturday"],
+  schedule: ["* */4 * * *"],
   enabledManagers: ["custom.regex", "nix", "github-actions"],
   prConcurrentLimit: 0,
   prHourlyLimit: 0,
