@@ -274,7 +274,7 @@ in
     ###############################################################
     {
       name = "dozzle";
-      image = "amir20/dozzle:v8.14.8";
+      image = "amir20/dozzle:v8.14.9";
 
       restart = "always";
 
@@ -313,7 +313,7 @@ in
     ###############################################################
     {
       name = "airspy_adsb";
-      image = "ghcr.io/sdr-enthusiasts/airspy_adsb:trixie-latest-build-2";
+      image = "ghcr.io/sdr-enthusiasts/airspy_adsb:trixie-latest-build-3";
 
       hostname = "airspy_adsb";
       restart = "always";
@@ -338,7 +338,7 @@ in
     ###############################################################
     {
       name = "ultrafeeder";
-      image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-837";
+      image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-838";
 
       hostname = "ultrafeeder";
       restart = "always";

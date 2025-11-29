@@ -1,67 +1,94 @@
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   extends: [
-    "config:recommended",
-    "config:best-practices",
-    "default:pinDigestsDisabled",
+    'config:recommended',
+    'config:best-practices',
+    'default:pinDigestsDisabled',
   ],
   lockFileMaintenance: {
     enabled: true,
-    schedule: ["* */4 * * *"],
+    schedule: [
+      '* */4 * * *',
+    ],
   },
-  timezone: "Etc/UTC",
-  schedule: ["* */4 * * *"],
-  enabledManagers: ["custom.regex", "nix", "github-actions"],
+  timezone: 'Etc/UTC',
+  schedule: [
+    '* */4 * * *',
+  ],
+  enabledManagers: [
+    'custom.regex',
+    'nix',
+    'github-actions',
+  ],
   prConcurrentLimit: 0,
   prHourlyLimit: 0,
-  prCreation: "immediate",
+  prCreation: 'immediate',
   automerge: false,
   platformAutomerge: false,
   nix: {
     enabled: true,
   },
-  docker: {
-    enabled: true,
-    pinDigests: false,
-  },
   customManagers: [
     {
-      customType: "regex",
-      managerFilePatterns: ["/systems-linux/(.*)/configuration\\.nix$/"],
-      matchStrings: ['image = "v?(?<depName>.*?):(?<currentValue>.*?)";'],
-      datasourceTemplate: "docker",
-      depTypeTemplate: "container",
-      depNameTemplate: "{{depName}}",
-      packageNameTemplate: "{{depName}}",
-      versioningTemplate: "loose",
+      customType: 'regex',
+      managerFilePatterns: [
+        '/systems-linux/(.*)/configuration\\.nix$/',
+      ],
+      matchStrings: [
+        'image = "v?(?<depName>.*?):(?<currentValue>.*?)";',
+      ],
+      datasourceTemplate: 'docker',
+      depTypeTemplate: 'container',
+      depNameTemplate: '{{depName}}',
+      packageNameTemplate: '{{depName}}',
+      versioningTemplate: 'loose',
     },
   ],
   packageRules: [
     {
-      matchDatasources: ["docker"],
-      versioning: "regex:^trixie-latest-build-(?<major>\\d+)$",
+      matchCategories: [
+        'docker',
+      ],
+      enabled: true,
+      pinDigests: false,
+    },
+    {
+      matchDatasources: [
+        'docker',
+      ],
+      versioning: 'regex:^trixie-latest-build-(?<major>\\d+)$',
       matchPackageNames: [
-        "/^ghcr\\.io/sdr-enthusiasts/(docker-acarsdec|docker-dumphfdl|airspy_adsb|docker-dump978|docker-adsbhub|docker-flightradar24|docker-planefinder|docker-radarvirtuel|docker-opensky-network|docker-sdrmap|docker-acarshub|acars_router|docker-dumpvdl2)$/",
+        '/^ghcr\\.io/sdr-enthusiasts/(docker-acarsdec|docker-dumphfdl|airspy_adsb|docker-dump978|docker-adsbhub|docker-flightradar24|docker-planefinder|docker-radarvirtuel|docker-opensky-network|docker-sdrmap|docker-acarshub|acars_router|docker-dumpvdl2)$/',
       ],
       pinDigests: false,
     },
     {
-      matchDatasources: ["docker"],
-      versioning: "regex:^latest-build-(?<major>\\d+)$",
+      matchDatasources: [
+        'docker',
+      ],
+      versioning: 'regex:^latest-build-(?<major>\\d+)$',
       matchPackageNames: [
-        "/^ghcr\\.io/sdr-enthusiasts/(docker-hfdlobserver|docker-adsb-ultrafeeder|docker-piaware|docker-airnavradar)$/",
+        '/^ghcr\\.io/sdr-enthusiasts/(docker-hfdlobserver|docker-adsb-ultrafeeder|docker-piaware|docker-airnavradar)$/',
       ],
       pinDigests: false,
     },
     {
-      matchDatasources: ["docker"],
-      versioning: "regex:^(trixie-)?latest-build-(?<major>\\d+)?$",
-      matchPackageNames: ["ghcr.io/plane-watch/{/,}**"],
+      matchDatasources: [
+        'docker',
+      ],
+      versioning: 'regex:^(trixie-)?latest-build-(?<major>\\d+)?$',
+      matchPackageNames: [
+        'ghcr.io/plane-watch/{/,}**',
+      ],
       pinDigests: false,
     },
     {
-      matchDatasources: ["docker"],
-      matchPackageNames: ["amir20/dozzle"],
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        'amir20/dozzle',
+      ],
       pinDigests: false,
     },
   ],
