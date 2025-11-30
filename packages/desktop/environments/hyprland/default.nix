@@ -235,7 +235,7 @@ in
             "$mainMod, A, exec, nautilus"
             "$mainMod, S, exec, code"
             "CTRL, SPACE, exec, fuzzel"
-            "ALT, SPACE, exec, ulauncher"
+            "ALT, SPACE, exec, vicinae toggle"
             "$mainMod, C, killactive"
             "$mainMod, M, exit"
             "$mainMod, L, exec, ~/.config/hyprextra/scripts/pauseandsleep"

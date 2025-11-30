@@ -22,7 +22,7 @@ in
     ./hyprlandextra
     ./pamixer
     ./swaync
-    ./ulauncher
+    ./vicinae
     ./waybar
   ];
 
@@ -31,8 +31,8 @@ in
     desktop.environments.modules.hyprlandextra.enable = true;
     desktop.environments.modules.pamixer.enable = true;
     desktop.environments.modules.fuzzel.enable = true;
+    desktop.environments.modules.vicinae.enable = true;
     desktop.environments.modules.waybar.enable = true;
     desktop.environments.modules.swaync.enable = true;
-    desktop.environments.modules.ulauncher.enable = true;
   };
 }

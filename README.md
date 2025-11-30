@@ -123,7 +123,7 @@ Each system's `configuration.nix` supports these options:
 - `fuzzel`
 - `waybar`
 - `swaync`
-- `ulauncher`
+- `vicinae`
 - `cliphist`
 - `wl-clipboard`
 
