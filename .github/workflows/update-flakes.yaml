@@ -56,16 +56,18 @@ jobs:
     name: Enable auto-merge on update PRs
     runs-on: ubuntu-latest
     needs: update-flake
+    if: ${{ always() }}
 
     permissions:
       contents: write
       pull-requests: write
 
     steps:
-      - name: Checkout PR list
-        uses: actions/github-script@v7
+      - name: Get update PRs
         id: pr-list
+        uses: actions/github-script@v7
         with:
+          result-encoding: string
           script: |
             const prs = await github.rest.pulls.list({
               owner: context.repo.owner,
@@ -75,26 +77,25 @@ jobs:
               direction: "desc",
             });
 
-            // Only PRs created by this bot and matching update-* branches
-            const updatePRs = prs.data.filter(pr =>
-              pr.head.ref.startsWith("update-") &&
-              pr.user.login === "github-actions[bot]" || pr.user.login === "github[bot]"
+            const filtered = prs.data.filter(pr =>
+              pr.head.ref.startsWith("update-")
             );
 
-            return { prs: updatePRs };
+            return JSON.stringify(filtered);
 
       - name: Enable auto-merge on each PR
-        if: ${{ steps.pr-list.outputs.prs != '[]' }}
+        if: ${{ steps["pr-list"].outputs.result != '' }}
         uses: actions/github-script@v7
         with:
+          prs: ${{ steps["pr-list"].outputs.result }}
           script: |
-            const prs = JSON.parse(${{ steps.pr-list.outputs.prs }});
+            const prs = JSON.parse(core.getInput("prs"));
             for (const pr of prs) {
               console.log(`Enabling auto-merge for PR #${pr.number}`);
               await github.rest.pulls.enableAutoMerge({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: pr.number,
-                merge_method: "squash"
+                merge_method: "squash",
               });
             }
