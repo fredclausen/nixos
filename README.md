@@ -99,7 +99,7 @@ Each system's `configuration.nix` supports these options:
 
 ## Caveats
 
-> [!WARNING\] This is **not** a pure-Nix, perfectly-immutable setup.
+> [!WARNING] This is **not** a pure-Nix, perfectly-immutable setup.
 >
 > Some development tools are installed **system-wide** to make tools
 > like `lazygit` work cleanly.
