@@ -1,16 +1,13 @@
 {
   config,
   pkgs,
-  inputs,
   stateVersion,
   ...
 }:
-let
-  dockerCompose = pkgs.writeText "docker-compose.yaml" (builtins.readFile ./docker-compose.yaml);
-in
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/secrets/sops.nix
     ../../modules/adsb-docker-units.nix
   ];
 
@@ -19,6 +16,7 @@ in
   desktop.enable_extra = false;
   desktop.enable_games = false;
   desktop.enable_streaming = false;
+  sops_secrets.enable_secrets.enable = true;
 
   networking.hostName = "sdrhub";
 

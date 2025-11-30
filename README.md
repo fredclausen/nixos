@@ -112,48 +112,72 @@ Each system's `configuration.nix` supports these options:
 
 ### Graphical Environments
 
-- GNOME
-- Hyprland
+- `GNOME`
+- `Hyprland`
+- `Cosmic`
+- `Niri`
 
-#### Hyprland Tools
+#### Hyprland/Niri Tools
 
-- fuzzel
-- waybar
+- `fuzzel`
+- `waybar`
+- `swaync`
+- `ulauncher`
+- `cliphist`
+- `wl-clipboard`
 
 ### Graphical Applications
 
 #### Browsers
 
-- Firefox
-- Brave
+- `Firefox`
+- `Brave`
+- `Ladybird`
 
 #### Terminals
 
-- Alacritty
-- Ghostty
-- WezTerm _(default)_
+- `Alacritty`
+- `Ghostty`
+- `WezTerm` _(default)_
+- `iTerm2` (darwin only)
 
 #### Editors
 
-- Neovim
-- VS Code
-- Sublime Text
+- `Neovim`
+- `Zed`
+- `VS Code`
+- `Sublime Text`
+
+#### Media
+
+- `VLC`
+- `multiviewer`
+- `obs-studio`
+- `streamcontroller`
+
+#### Office
+
+- `LibreOffice`
+
+### Social
+
+- `Discord`
 
 ### Shells
 
-- bash
-- Zsh _(default)_
+- `bash`
+- `Zsh` _(default)_
 
 ### CLI Tools
 
-- bat
-- eza
-- fastfetch
-- fd
-- fzf
-- gnupg
-- lazygit
-- oh-my-zsh
-- starship
-- yazi
-- zoxide
+- `bat`
+- `eza`
+- `fastfetch`
+- `fd`
+- `fzf`
+- `gnupg`
+- `lazygit`
+- `oh-my-zsh`
+- `starship`
+- `yazi`
+- `zoxide`

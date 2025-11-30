@@ -1,17 +1,13 @@
 {
   config,
   pkgs,
-  inputs,
-  user,
   stateVersion,
   ...
 }:
-let
-  username = user;
-in
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/secrets/sops.nix
   ];
 
   nix.settings.experimental-features = [
@@ -24,6 +20,7 @@ in
   desktop.enable_extra = true;
   desktop.enable_games = true;
   desktop.enable_streaming = true;
+  sops_secrets.enable_secrets.enable = true;
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_testing;
   networking.hostName = "maranello";

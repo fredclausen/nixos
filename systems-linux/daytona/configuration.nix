@@ -1,14 +1,13 @@
 {
   config,
   pkgs,
-  inputs,
   stateVersion,
   ...
 }:
-
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/secrets/sops.nix
   ];
 
   nix.settings.experimental-features = [
@@ -21,6 +20,7 @@
   desktop.enable_extra = true;
   desktop.enable_games = false;
   desktop.enable_streaming = false;
+  sops_secrets.enable_secrets.enable = true;
 
   hardware.graphics = {
     enable = true;

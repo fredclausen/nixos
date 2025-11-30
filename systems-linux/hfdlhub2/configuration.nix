@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  inputs,
   stateVersion,
   ...
 }:
@@ -13,6 +12,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/secrets/sops.nix
     ../../modules/adsb-docker-units.nix
   ];
 
@@ -21,6 +21,7 @@ in
   desktop.enable_extra = false;
   desktop.enable_games = false;
   desktop.enable_streaming = false;
+  sops_secrets.enable_secrets.enable = true;
 
   networking.hostName = "hfdlhub2";
 

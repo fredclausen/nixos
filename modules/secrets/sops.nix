@@ -7,7 +7,9 @@
   user,
   ...
 }:
+with lib;
 let
+  cfg = config.sops_secrets.enable_secrets;
   username = user;
   isDarwin = lib.hasSuffix "darwin" system;
   isLinux = !isDarwin;
@@ -15,52 +17,61 @@ let
   homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
 in
 {
+  options.sops_secrets.enable_secrets = {
+    enable = mkOption {
+      description = "Enable SOPS Secrets.";
+      default = false;
+    };
+  };
+
   imports = [
   ]
   ++ lib.optional isLinux inputs.sops-nix.nixosModules.sops
   ++ lib.optional isDarwin inputs.sops-nix.darwinModules.sops;
 
-  environment.systemPackages = [
-    pkgs.sops
-  ];
+  config = mkIf cfg.enable {
+    environment.systemPackages = [
+      pkgs.sops
+    ];
 
-  sops = {
-    defaultSopsFile = ./secrets.yaml;
-    defaultSopsFormat = "yaml";
-    age.keyFile = "${homeDir}/.config/sops/age/keys.txt";
+    sops = {
+      defaultSopsFile = ./secrets.yaml;
+      defaultSopsFormat = "yaml";
+      age.keyFile = "${homeDir}/.config/sops/age/keys.txt";
 
-    # SSH
-    secrets = {
-      "ssh/id_ed25519" = {
-        path = "${homeDir}/.ssh/id_ed25519";
-        owner = username;
-        mode = "0600";
-      };
-      "ssh/id_ed25519.pub" = {
-        path = "${homeDir}/.ssh/id_ed25519.pub";
-        owner = username;
-      };
-      "ssh/id_rsa.pub" = {
-        path = "${homeDir}/.ssh/id_rsa.pub";
-        owner = username;
-      };
-      "ssh/id_rsa" = {
-        path = "${homeDir}/.ssh/id_rsa";
-        owner = username;
-        mode = "0600";
-      };
-      "ssh/authorized_keys" = {
-        path = "${homeDir}/.ssh/authorized_keys";
-        owner = username;
-        mode = "0600";
+      # SSH
+      secrets = {
+        "ssh/id_ed25519" = {
+          path = "${homeDir}/.ssh/id_ed25519";
+          owner = username;
+          mode = "0600";
+        };
+        "ssh/id_ed25519.pub" = {
+          path = "${homeDir}/.ssh/id_ed25519.pub";
+          owner = username;
+        };
+        "ssh/id_rsa.pub" = {
+          path = "${homeDir}/.ssh/id_rsa.pub";
+          owner = username;
+        };
+        "ssh/id_rsa" = {
+          path = "${homeDir}/.ssh/id_rsa";
+          owner = username;
+          mode = "0600";
+        };
+        "ssh/authorized_keys" = {
+          path = "${homeDir}/.ssh/authorized_keys";
+          owner = username;
+          mode = "0600";
+        };
       };
     };
-  };
 
-  users.users.${username}.openssh.authorizedKeys.keys = [
-    config.sops.secrets."ssh/id_rsa.pub".path
-    config.sops.secrets."ssh/id_ed25519.pub".path
-  ];
+    users.users.${username}.openssh.authorizedKeys.keys = [
+      config.sops.secrets."ssh/id_rsa.pub".path
+      config.sops.secrets."ssh/id_ed25519.pub".path
+    ];
+  };
 }
 
 ## This is the flow for adding a new system:
