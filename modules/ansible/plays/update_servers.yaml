@@ -14,12 +14,20 @@
         clone: no
         force: no
       register: git_result
+
     - name: Update system if repo is changed
       become: yes
       command: nixos-rebuild switch --flake .#{{ hostvars[inventory_hostname]['vars']['nix_name'] }}
       args:
         chdir: /home/fred/GitHub/nixos
       when: git_result.changed
+
+    - name: Check for reboot (NixOS)
+      become: yes
+      command: nixos-needsreboot
+      register: reboot_check
+      failed_when: reboot_check.rc not in [0, 2]
+      changed_when: reboot_check.rc == 2
 
     - name: Check if reboot-required exists (NixOS)
       stat:
@@ -32,13 +40,21 @@
         src: /run/reboot-required
       register: reboot_details
 
-    - name: Report reboot requirement + details (NixOS)
+    - name: Display reboot message (NixOS)
       when: nixos_reboot.stat.exists
       debug:
         msg: |
           🔴 System needs reboot
           ───────────────────────────
+
+          Raw file:
           {{ reboot_details.content | b64decode }}
+
+          Pretty:
+          {{ reboot_pretty.stdout | default('NO STDOUT') }}
+
+          Pretty (lines):
+          {{ reboot_pretty.stdout_lines | join('\n') | default('NO STDOUT_LINES') }}
 
 - name: Update Ubuntu Systems
   connection: ansible.netcommon.network_cli
