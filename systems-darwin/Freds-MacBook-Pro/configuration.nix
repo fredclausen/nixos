@@ -48,10 +48,12 @@ in
     ../../packages/desktop/githubdesktop
     ../../packages/desktop/ghostty
     ../../packages/desktop/wezterm
+    ../../packages/desktop/zed
   ];
 
   desktop.wezterm.enable = true;
   desktop.alacritty.enable = true;
+  desktop.zed.enable = true;
 
   home-manager.users.${username} =
     { config, pkgs, ... }:

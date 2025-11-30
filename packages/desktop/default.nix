@@ -64,6 +64,7 @@ in
     ./vscode
     ./wezterm
     ./wireshark
+    ./zed
   ];
 
   config = mkIf cfg.enable {
@@ -76,6 +77,7 @@ in
     desktop.print.enable = true;
     desktop.githubdesktop.enable = true;
     desktop.vscode.enable = true;
+    desktop.zed.enable = true;
     desktop.onepassword.enable = true;
     desktop.sqlitebrowser.enable = true;
     desktop.sublimetext.enable = true;

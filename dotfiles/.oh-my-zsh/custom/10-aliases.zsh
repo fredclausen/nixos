@@ -24,7 +24,7 @@ alias n="nvim"
 
 alias rds="remove_dsstore"
 alias cat="bat --color always"
-alias c="code ."
+alias c="zeditor ."
 
 alias updatedocker="updatedocker_ansible"
 alias updatesystems="updatesystems_ansible"
