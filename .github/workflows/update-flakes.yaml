@@ -56,7 +56,7 @@ jobs:
     name: Enable auto-merge on update PRs
     runs-on: ubuntu-latest
     needs: update-flake
-    if: ${{ always() }}
+    if: always()
 
     permissions:
       contents: write
@@ -84,12 +84,12 @@ jobs:
             return JSON.stringify(filtered);
 
       - name: Enable auto-merge on each PR
-        if: ${{ steps["pr_list"].outputs.result != '' }}
+        if: ${{ steps.pr_list.outputs.result != '' }}
         uses: actions/github-script@v7
         with:
-          prs: ${{ steps["pr_list"].outputs.result }}
+          prs: ${{ steps.pr_list.outputs.result }}
           script: |
-            const prs = JSON.parse(core.getInput("prs"));
+            const prs = JSON.parse(core.getInput('prs'));
             for (const pr of prs) {
               console.log(`Enabling auto-merge for PR #${pr.number}`);
               await github.rest.pulls.enableAutoMerge({
