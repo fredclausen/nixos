@@ -369,11 +369,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1764459741,
-        "narHash": "sha256-OMjiIFerYnenJYPBRT3CLEZorLIYRLezfnJExacnZt4=",
+        "lastModified": 1764529576,
+        "narHash": "sha256-0KnDDF+K6C3Pj/b/o30lTRNUxDq4SwZU1K17zsrrOT4=",
         "owner": "fredclausen",
         "repo": "nixos-needsreboot",
-        "rev": "974b6796c24d33ea09db50dd7fc643c329fd69a7",
+        "rev": "4eac6a8686e583184f9414450a746a6ee0a90db5",
         "type": "github"
       },
       "original": {
