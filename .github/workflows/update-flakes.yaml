@@ -64,6 +64,7 @@ jobs:
 
     steps:
       - name: Get update PRs
+        id: pr_list
         uses: actions/github-script@v7
         with:
           result-encoding: string
@@ -83,10 +84,10 @@ jobs:
             return JSON.stringify(filtered);
 
       - name: Enable auto-merge on each PR
-        if: ${{ steps["pr-list"].outputs.result != '' }}
+        if: ${{ steps["pr_list"].outputs.result != '' }}
         uses: actions/github-script@v7
         with:
-          prs: ${{ steps["pr-list"].outputs.result }}
+          prs: ${{ steps["pr_list"].outputs.result }}
           script: |
             const prs = JSON.parse(core.getInput("prs"));
             for (const pr of prs) {
