@@ -43,6 +43,12 @@ in
         '')
         ansible-lint
         crates-lsp
+        vscode-json-languageserver
+        (pkgs.writeShellScriptBin "jsonls-local" ''
+          exec ${lib.getExe pkgs.vscode-json-languageserver} --stdio
+        '')
+        package-version-server
+        lua-language-server
       ];
       catppuccin.zed = {
         enable = true;
@@ -66,6 +72,10 @@ in
           "ini"
           "ansible"
           "crates-lsp"
+          "json"
+          "css"
+          "markdown"
+          "markdownlint"
         ];
         userSettings = {
           # theme = {
@@ -290,6 +300,12 @@ in
             dockerfile-language-server = {
               binary = {
                 path = "/etc/profiles/per-user/fred/bin/dockerfile-language-server-local";
+              };
+            };
+
+            markdownlint = {
+              settings = {
+                "MD013" = false;
               };
             };
           };
