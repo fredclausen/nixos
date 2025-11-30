@@ -29,6 +29,7 @@ in
 
   imports = [
     inputs.home-manager.darwinModules.default
+    ../../modules/secrets/sops.nix
     ../../packages/shell
     ../../packages/develop/ansible
     ../../packages/develop/clang
@@ -54,6 +55,7 @@ in
   desktop.wezterm.enable = true;
   desktop.alacritty.enable = true;
   desktop.zed.enable = true;
+  sops_secrets.enable_secrets.enable = true;
 
   home-manager.users.${username} =
     { config, pkgs, ... }:
