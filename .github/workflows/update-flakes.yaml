@@ -64,7 +64,6 @@ jobs:
 
     steps:
       - name: Get update PRs
-        id: pr-list
         uses: actions/github-script@v7
         with:
           result-encoding: string
