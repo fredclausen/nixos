@@ -50,4 +50,4 @@ jobs:
           delete-branch: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-branch-prefix: update-
-          automerge: true
+          automerge: false
