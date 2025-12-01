@@ -58,7 +58,7 @@ jobs:
           echo "Building Darwin system: ${{ matrix.system }}"
           nix build ".#darwinConfigurations.${{ matrix.system }}.system"
 
-  build-servers-summary:
+  build-darwin-summary:
     runs-on: ubuntu-latest
     needs: build-darwin
     steps:
