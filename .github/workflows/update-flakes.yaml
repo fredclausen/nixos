@@ -37,9 +37,10 @@ jobs:
       matrix: ${{ fromJson(needs.get-flake-inputs.outputs.flake-inputs) }}
 
     steps:
-      - uses: actions/checkout@v6.0.0
+      - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
 
       - uses: DeterminateSystems/nix-installer-action@v21
         with:
