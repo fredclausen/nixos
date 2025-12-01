@@ -1,4 +1,5 @@
-name: CI
+---
+name: CI (Linux)
 
 on:
   push:
@@ -82,10 +83,6 @@ jobs:
   eval-desktops:
     runs-on: ubuntu-latest
     needs: find-systems
-    strategy:
-      fail-fast: false
-      matrix:
-        system: ${{ fromJson(needs.find-systems.outputs.desktops) }}
 
     steps:
       - uses: actions/checkout@v4
@@ -96,8 +93,14 @@ jobs:
       - name: Enable Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@v7
 
-      - name: Evaluate desktop system (no build)
+      - name: Desktop smoke test
         run: |
-          echo "Evaluating desktop config: ${{ matrix.system }}"
+          echo "Checking desktop config: ${{ matrix.system }}"
 
-          nix eval ".#nixosConfigurations.${{ matrix.system }}"
+          echo "::group::flake metadata"
+          nix flake metadata
+          echo "::endgroup::"
+
+          echo "::group::flake check"
+          nix flake check --no-build --print-build-logs
+          echo "::endgroup::"

@@ -276,10 +276,8 @@
           pre-commit-check = git-hooks.lib.${system}.run {
             src = pkgs.lib.cleanSourceWith {
               src = ./.;
-              filter =
-                # path: type:
-                # keep all files, including dotfiles
-                true;
+              # deadnix: skip
+              filter = path: type: true;
             };
 
             excludes = [

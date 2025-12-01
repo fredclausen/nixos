@@ -56,7 +56,7 @@
 
   powerManagement.enable = true;
 
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = [ ];
 
   system.stateVersion = stateVersion;
 
