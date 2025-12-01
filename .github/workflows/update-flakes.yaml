@@ -37,10 +37,11 @@ jobs:
       matrix: ${{ fromJson(needs.get-flake-inputs.outputs.flake-inputs) }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
+          ref: main
 
       - uses: DeterminateSystems/nix-installer-action@v21
         with:
@@ -51,37 +52,18 @@ jobs:
           git config --global user.email "noreply@github.com"
           git config --global user.name "github[bot]"
 
-      #######################################################################
-      # STEP 1: Delete old branch
-      #######################################################################
-      - name: Reset update branch to main
-        shell: bash
-        run: |
-          BRANCH="update-${{ matrix.flake }}"
-
-          echo "Deleting remote branch if exists..."
-          git push origin --delete "$BRANCH" || true
-
-          echo "Creating fresh branch from main..."
-          git fetch origin main
-          git checkout -B "$BRANCH" origin/main
-          git push origin "$BRANCH" --force-with-lease
-
-      #######################################################################
-      # STEP 2: Run flake update on the rebased or new branch
-      #######################################################################
       - uses: cpcloud/flake-update-action@v2.0.1
         with:
           dependency: ${{ matrix.flake }}
           pull-request-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-author: github[bot] <noreply@github.com>
-          delete-branch: true
+          delete-branch: true # ensures old branches are removed cleanly
           github-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-branch-prefix: update-
           automerge: false
 
   ###########################################################################
-  # AUTO-MERGE SECTION
+  # AUTO-MERGE
   ###########################################################################
   auto-merge:
     name: Enable auto-merge on update PRs
@@ -144,7 +126,7 @@ jobs:
             }
 
   ###########################################################################
-  # OPTIONAL: CLEAN UP STALE update-* BRANCHES (if PRs were manually closed)
+  # CLEAN UP ORPHANED BRANCHES
   ###########################################################################
   cleanup-stale:
     runs-on: ubuntu-latest
@@ -163,11 +145,11 @@ jobs:
         run: |
           echo "Cleaning stale update branches…"
 
-          for BR in $(git ls-remote --heads origin "update-*"); do
-            BRANCH=$(basename "$BR")
-            echo "Checking $BRANCH…"
+          for REF in $(git ls-remote --heads origin "update-*"); do
+            BRANCH=$(echo "$REF" | awk '{print $2}' | sed 's|refs/heads/||')
 
-            # Check if any PR references this branch
+            echo "Checking branch: $BRANCH"
+
             PR=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number' || true)
 
             if [[ -z "$PR" ]]; then
