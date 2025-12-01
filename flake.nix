@@ -166,8 +166,8 @@
           };
 
           modules = [
-            ./systems-darwin/${hostName}/configuration.nix
             ./modules/common/system.nix
+            ./systems-darwin/${hostName}/configuration.nix
             home-manager.darwinModules.home-manager
 
             {
