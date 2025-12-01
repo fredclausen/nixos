@@ -78,7 +78,7 @@ jobs:
             });
 
             const filtered = prs.data.filter(pr =>
-              pr.head.ref.startsWith("chore(flake")
+              pr.head.ref.startsWith("update-")
             );
 
             return JSON.stringify(filtered);
