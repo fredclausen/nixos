@@ -16,24 +16,31 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v11
 
-      - name: Evaluate NixOS systems
+      - name: Enable Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@v7
+
+      - name: Evaluate NixOS systems + drv paths
         id: set-systems
         run: |
           echo "Evaluating nixosConfigurations..."
 
-          # Get attribute names as JSON array
-          systems=$(nix eval --json .#nixosConfigurations --apply builtins.attrNames)
+          # Produce JSON: { name, drv }
+          systems=$(
+            nix eval --json .#nixosConfigurations \
+              --apply 'configs: builtins.map (name: {
+                inherit name;
+                drv = configs.${name}.config.system.build.toplevel.drvPath;
+              }) (builtins.attrNames configs)'
+          )
 
           echo "Detected systems:"
           echo "$systems"
 
-          # Fail loudly if empty
           if [ "$systems" = "[]" ]; then
-            echo "::error::No nixosConfigurations found!"
+            echo "::error::No systems found!"
             exit 1
           fi
 
-          # Set GITHUB_OUTPUT safely
           printf "systems=%s\n" "$systems" >> "$GITHUB_OUTPUT"
 
   build-systems:
@@ -50,8 +57,12 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v11
 
-      - name: Build NixOS system
-        run: |
-          echo "Building system: ${{ matrix.system }}"
+      - name: Enable Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@v7
 
-          nix build ".#nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel"
+      - name: Build system
+        run: |
+          echo "Building system: ${{ matrix.system.name }}"
+          echo "Derivation: ${{ matrix.system.drv }}"
+
+          nix build "${{ matrix.system.drv }}"
