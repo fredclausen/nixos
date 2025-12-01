@@ -1,5 +1,6 @@
 ---
 name: update-flakes
+
 on:
   schedule:
     - cron: "0 */4 * * *"
@@ -14,33 +15,75 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       flake-inputs: ${{ steps.get-flake-inputs.outputs.flake-inputs }}
+
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+      - uses: actions/checkout@v6.0.0
         with:
           sparse-checkout: flake.lock
           persist-credentials: false
+
       - id: get-flake-inputs
         run: |
           flake_inputs="$(jq -c '.nodes.root.inputs | {flake: keys}' flake.lock)"
           echo "flake-inputs=${flake_inputs}" >> "$GITHUB_OUTPUT"
+
   update-flake:
     name: update-${{ matrix.flake }}
     runs-on: ubuntu-latest
     needs: get-flake-inputs
+
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.get-flake-inputs.outputs.flake-inputs) }}
+
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+      - uses: actions/checkout@v6.0.0
         with:
-          lfs: false
           persist-credentials: false
-      - uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
+
+      - uses: DeterminateSystems/nix-installer-action@v21
         with:
           extra-conf: accept-flake-config = true
-      - run: git config --global user.email "noreply@github.com"
-      - run: git config --global user.name "github[bot]"
-      - uses: cpcloud/flake-update-action@10ccab3efc5659d7562dd2368990e081f3ee7ac9 # v2.0.1
+
+      - name: Configure Git identity
+        run: |
+          git config --global user.email "noreply@github.com"
+          git config --global user.name "github[bot]"
+
+      #######################################################################
+      # STEP 1: Rebase existing update branch if present
+      #######################################################################
+      - name: Rebase existing branch if present
+        shell: bash
+        run: |
+          BRANCH="update-${{ matrix.flake }}"
+
+          echo "Checking for existing branch $BRANCH ..."
+          git fetch origin $BRANCH || true
+
+          if git rev-parse --verify --quiet origin/$BRANCH; then
+            echo "Existing update branch found. Rebasing…"
+
+            git checkout -B $BRANCH origin/$BRANCH
+            git fetch origin main
+
+            if git rebase origin/main; then
+              echo "Rebase successful, force pushing…"
+              git push origin $BRANCH --force-with-lease
+            else
+              echo "Rebase failed; aborting and resetting branch."
+              git rebase --abort || true
+              git checkout -B $BRANCH origin/main
+              git push origin $BRANCH --force-with-lease
+            fi
+          else
+            echo "No existing branch. A fresh PR will be created."
+          fi
+
+      #######################################################################
+      # STEP 2: Run flake update on the rebased or new branch
+      #######################################################################
+      - uses: cpcloud/flake-update-action@v2.0.1
         with:
           dependency: ${{ matrix.flake }}
           pull-request-token: ${{ secrets.GITHUB_TOKEN }}
@@ -50,6 +93,9 @@ jobs:
           pull-request-branch-prefix: update-
           automerge: false
 
+  ###########################################################################
+  # AUTO-MERGE SECTION
+  ###########################################################################
   auto-merge:
     name: Enable auto-merge on update PRs
     runs-on: ubuntu-latest
@@ -92,16 +138,55 @@ jobs:
             for (const pr of prs) {
               console.log(`Enabling auto-merge for PR #${pr.number}`);
 
-              await github.graphql(`
-                mutation($pullRequestId: ID!) {
-                  enablePullRequestAutoMerge(input: {
-                    pullRequestId: $pullRequestId,
-                    mergeMethod: SQUASH
-                  }) {
-                    clientMutationId
+              try {
+                await github.graphql(`
+                  mutation($pullRequestId: ID!) {
+                    enablePullRequestAutoMerge(input: {
+                      pullRequestId: $pullRequestId,
+                      mergeMethod: SQUASH
+                    }) {
+                      clientMutationId
+                    }
                   }
-                }
-              `, {
-                pullRequestId: pr.node_id
-              });
+                `, {
+                  pullRequestId: pr.node_id
+                });
+              } catch (err) {
+                console.log(`Auto-merge failed: ${err.message}`);
+              }
             }
+
+  ###########################################################################
+  # OPTIONAL: CLEAN UP STALE update-* BRANCHES (if PRs were manually closed)
+  ###########################################################################
+  cleanup-stale:
+    runs-on: ubuntu-latest
+    needs: update-flake
+    if: always()
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v6.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Delete orphaned update-* branches
+        run: |
+          echo "Cleaning stale update branches…"
+
+          for BR in $(git ls-remote --heads origin "update-*"); do
+            BRANCH=$(basename "$BR")
+            echo "Checking $BRANCH…"
+
+            # Check if any PR references this branch
+            PR=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number' || true)
+
+            if [[ -z "$PR" ]]; then
+              echo "No PR found for $BRANCH — deleting."
+              git push origin --delete "$BRANCH"
+            else
+              echo "$BRANCH still has PR #$PR"
+            fi
+          done
