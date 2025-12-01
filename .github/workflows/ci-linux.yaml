@@ -19,7 +19,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v21
 
       - name: Enable Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@v7
+        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
 
       - id: out
         shell: bash
@@ -70,7 +70,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v21
 
       - name: Enable Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@v7
+        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
 
       - name: Build server system
         run: |
@@ -90,7 +90,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v21
 
       - name: Enable Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@v7
+        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
 
       - name: Desktop smoke test
         run: |
