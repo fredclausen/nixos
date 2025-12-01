@@ -51,34 +51,20 @@ jobs:
           git config --global user.name "github[bot]"
 
       #######################################################################
-      # STEP 1: Rebase existing update branch if present
+      # STEP 1: Delete old branch
       #######################################################################
-      - name: Rebase existing branch if present
+      - name: Reset update branch to main
         shell: bash
         run: |
           BRANCH="update-${{ matrix.flake }}"
 
-          echo "Checking for existing branch $BRANCH ..."
-          git fetch origin $BRANCH || true
+          echo "Deleting remote branch if exists..."
+          git push origin --delete "$BRANCH" || true
 
-          if git rev-parse --verify --quiet origin/$BRANCH; then
-            echo "Existing update branch found. Rebasing…"
-
-            git checkout -B $BRANCH origin/$BRANCH
-            git fetch origin main
-
-            if git rebase origin/main; then
-              echo "Rebase successful, force pushing…"
-              git push origin $BRANCH --force-with-lease
-            else
-              echo "Rebase failed; aborting and resetting branch."
-              git rebase --abort || true
-              git checkout -B $BRANCH origin/main
-              git push origin $BRANCH --force-with-lease
-            fi
-          else
-            echo "No existing branch. A fresh PR will be created."
-          fi
+          echo "Creating fresh branch from main..."
+          git fetch origin main
+          git checkout -B "$BRANCH" origin/main
+          git push origin "$BRANCH" --force-with-lease
 
       #######################################################################
       # STEP 2: Run flake update on the rebased or new branch
