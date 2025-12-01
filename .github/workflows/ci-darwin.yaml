@@ -57,3 +57,11 @@ jobs:
         run: |
           echo "Building Darwin system: ${{ matrix.system }}"
           nix build ".#darwinConfigurations.${{ matrix.system }}.system"
+
+  build-servers-summary:
+    runs-on: ubuntu-latest
+    needs: build-darwin
+    steps:
+      - name: Mark servers build summary
+        run: |
+          echo "All server builds finished."

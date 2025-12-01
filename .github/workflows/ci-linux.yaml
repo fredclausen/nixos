@@ -117,3 +117,12 @@ jobs:
           echo "::group::flake check"
           nix flake check --print-build-logs --keep-going
           echo "::endgroup::"
+
+  build-servers-summary:
+    runs-on: ubuntu-latest
+    needs: [build-servers, eval-desktops]
+    if: always()
+    steps:
+      - name: Mark servers build summary
+        run: |
+          echo "All server builds finished."
