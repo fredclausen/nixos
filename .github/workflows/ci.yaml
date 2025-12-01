@@ -22,34 +22,36 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v7
 
       - id: out
+        shell: bash
         run: |
-          echo "Evaluating nixosConfigurations…"
+          echo "Evaluating nixosConfigurations..."
 
-          # List all hostnames from the flake
           all_systems=$(nix eval --json .#nixosConfigurations --apply builtins.attrNames)
 
           echo "All systems: $all_systems"
 
-          # Define which systems are desktops
+          # Desktop systems
           desktop_names=("Daytona" "maranello")
 
           servers=()
           desktops=()
 
           for sys in $(jq -r '.[]' <<< "$all_systems"); do
-            if [[ " ${desktop_names[*]} " =~ " $sys " ]]; then
+            if [[ " ${desktop_names[*]} " == *" $sys "* ]]; then
               desktops+=("$sys")
             else
               servers+=("$sys")
             fi
           done
 
-          echo "Servers: ${servers[*]}"
-          echo "Desktops: ${desktops[*]}"
+          # Convert bash arrays → compact JSON arrays
+          servers_json=$(printf '%s\n' "${servers[@]}" | jq -R . | jq -cs .)
+          desktops_json=$(printf '%s\n' "${desktops[@]}" | jq -R . | jq -cs .)
 
-          servers_json=$(printf '%s\n' "${servers[@]}" | jq -R . | jq -s .)
-          desktops_json=$(printf '%s\n' "${desktops[@]}" | jq -R . | jq -s .)
+          echo "Servers JSON: $servers_json"
+          echo "Desktops JSON: $desktops_json"
 
+          # MUST be single lines without leading/trailing spaces
           echo "servers=$servers_json" >> "$GITHUB_OUTPUT"
           echo "desktops=$desktops_json" >> "$GITHUB_OUTPUT"
 
