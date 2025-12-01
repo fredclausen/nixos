@@ -26,7 +26,7 @@
       kernelModules = [ ];
     };
     kernelModules = [ "kvm-intel" ];
-    xtraModulePackages = [ ];
+    extraModulePackages = [ ];
   };
 
   fileSystems."/" = {
