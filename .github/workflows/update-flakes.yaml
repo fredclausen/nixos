@@ -94,10 +94,19 @@ jobs:
 
             for (const pr of prs) {
               console.log(`Enabling auto-merge for PR #${pr.number}`);
-              await github.rest.pulls.enableAutoMerge({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pr.number,
-                merge_method: "squash",
+
+              await github.graphql(`
+                mutation($pullRequestId: ID!) {
+                  enablePullRequestAutoMerge(input: {
+                    pullRequestId: $pullRequestId,
+                    mergeMethod: SQUASH
+                  }) {
+                    clientMutationId
+                  }
+                }
+              `, {
+                pullRequestId: pr.node_id
               });
+
+              console.log(`Auto-merge enabled for PR #${pr.number}`);
             }
