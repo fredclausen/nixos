@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v6.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          persist-credentials: false
+          persist-credentials: true
           ref: main
 
       - uses: DeterminateSystems/nix-installer-action@v21
@@ -55,9 +55,9 @@ jobs:
       - uses: cpcloud/flake-update-action@v2.0.1
         with:
           dependency: ${{ matrix.flake }}
-          pull-request-token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-token: ${{ secrets.PAT }}
           pull-request-author: github[bot] <noreply@github.com>
-          delete-branch: true # ensures old branches are removed cleanly
+          delete-branch: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-branch-prefix: update-
           automerge: true
