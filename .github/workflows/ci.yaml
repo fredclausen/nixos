@@ -9,9 +9,11 @@ jobs:
   find-systems:
     runs-on: ubuntu-latest
     outputs:
-      systems: ${{ steps.set-systems.outputs.systems }}
+      servers: ${{ steps.out.outputs.servers }}
+      desktops: ${{ steps.out.outputs.desktops }}
+
     steps:
-      - uses: actions/checkout@v6.0.0
+      - uses: actions/checkout@v4
 
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v21
@@ -19,41 +21,48 @@ jobs:
       - name: Enable Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@v7
 
-      - name: Evaluate NixOS systems + attrs
-        id: set-systems
-        shell: bash
+      - id: out
         run: |
-          echo "Evaluating nixosConfigurations..."
+          echo "Evaluating nixosConfigurations…"
 
-          # JSON like: [{name = "foo"; attr = "nixosConfigurations.foo.config.system.build.toplevel";}, ...]
-          systems=$(
-            nix eval --json .#nixosConfigurations \
-              --apply 'configs: builtins.map (name: {
-                inherit name;
-                attr = "nixosConfigurations.${name}.config.system.build.toplevel";
-              }) (builtins.attrNames configs)'
-          )
+          # List all hostnames from the flake
+          all_systems=$(nix eval --json .#nixosConfigurations --apply builtins.attrNames)
 
-          echo "Detected systems:"
-          echo "$systems"
+          echo "All systems: $all_systems"
 
-          if [ "$systems" = "[]" ]; then
-            echo "::error::No systems found!"
-            exit 1
-          fi
+          # Define which systems are desktops
+          desktop_names=("Daytona" "maranello")
 
-          printf "systems=%s\n" "$systems" >> "$GITHUB_OUTPUT"
+          servers=()
+          desktops=()
 
-  build-systems:
+          for sys in $(jq -r '.[]' <<< "$all_systems"); do
+            if [[ " ${desktop_names[*]} " =~ " $sys " ]]; then
+              desktops+=("$sys")
+            else
+              servers+=("$sys")
+            fi
+          done
+
+          echo "Servers: ${servers[*]}"
+          echo "Desktops: ${desktops[*]}"
+
+          servers_json=$(printf '%s\n' "${servers[@]}" | jq -R . | jq -s .)
+          desktops_json=$(printf '%s\n' "${desktops[@]}" | jq -R . | jq -s .)
+
+          echo "servers=$servers_json" >> "$GITHUB_OUTPUT"
+          echo "desktops=$desktops_json" >> "$GITHUB_OUTPUT"
+
+  build-servers:
     runs-on: ubuntu-latest
     needs: find-systems
     strategy:
       fail-fast: false
       matrix:
-        system: ${{ fromJson(needs.find-systems.outputs.systems) }}
+        system: ${{ fromJson(needs.find-systems.outputs.servers) }}
 
     steps:
-      - uses: actions/checkout@v6.0.0
+      - uses: actions/checkout@v4
 
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v21
@@ -61,10 +70,32 @@ jobs:
       - name: Enable Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@v7
 
-      - name: Build system
-        shell: bash
+      - name: Build server system
         run: |
-          echo "Building system: ${{ matrix.system.name }}"
-          echo "Attribute: .#${{ matrix.system.attr }}"
+          echo "Building system: ${{ matrix.system }}"
 
-          nix build ".#${{ matrix.system.attr }}"
+          nix build \
+            ".#nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel"
+
+  eval-desktops:
+    runs-on: ubuntu-latest
+    needs: find-systems
+    strategy:
+      fail-fast: false
+      matrix:
+        system: ${{ fromJson(needs.find-systems.outputs.desktops) }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v21
+
+      - name: Enable Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@v7
+
+      - name: Evaluate desktop system (no build)
+        run: |
+          echo "Evaluating desktop config: ${{ matrix.system }}"
+
+          nix eval ".#nixosConfigurations.${{ matrix.system }}"
