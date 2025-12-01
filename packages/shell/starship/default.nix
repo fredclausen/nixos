@@ -14,7 +14,9 @@ in
       home.packages = [ pkgs.starship ];
 
       programs.starship = {
-        enable = true;
+        catppuccin.starship.enable =
+          # Disable catppuccin starship during GitHub CI evaluation
+          builtins.getEnv "GITHUB_ACTIONS" != "true";
 
         settings = {
           "$schema" = "https://starship.rs/config-schema.json";

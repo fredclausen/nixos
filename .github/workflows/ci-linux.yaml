@@ -102,5 +102,5 @@ jobs:
           echo "::endgroup::"
 
           echo "::group::flake check"
-          nix flake check --no-build --print-build-logs
+          nix flake check --no-build --print-build-logs --keep-going
           echo "::endgroup::"
