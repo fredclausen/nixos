@@ -13,10 +13,11 @@ let
 in
 {
   config = {
-    environment.systemPackages = [
-      pkgs.git
-      pkgs.gh
-      pkgs.gnupg
+    environment.systemPackages = with pkgs; [
+      git
+      gh
+      gnupg
+      delta
     ];
 
     programs.gnupg.agent = {
