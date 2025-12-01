@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v6.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          persist-credentials: true
+          persist-credentials: false
           ref: main
 
       - uses: DeterminateSystems/nix-installer-action@v21
