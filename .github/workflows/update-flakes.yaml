@@ -84,7 +84,7 @@ jobs:
 
             return JSON.stringify(filtered);
 
-      - name: Merge each update PR immediately
+      - name: Enable auto-merge for each PR
         uses: actions/github-script@v7
         env:
           PR_LIST: ${{ steps.pr_list.outputs.result }}
@@ -93,14 +93,18 @@ jobs:
             const prs = JSON.parse(process.env.PR_LIST);
 
             for (const pr of prs) {
-              console.log(`Merging PR #${pr.number}`);
+              console.log(`Enabling auto-merge for PR #${pr.number}`);
 
-              await github.rest.pulls.merge({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pr.number,
-                merge_method: "squash",
+              await github.graphql(`
+                mutation($pullRequestId: ID!) {
+                  enablePullRequestAutoMerge(input: {
+                    pullRequestId: $pullRequestId,
+                    mergeMethod: SQUASH
+                  }) {
+                    clientMutationId
+                  }
+                }
+              `, {
+                pullRequestId: pr.node_id
               });
-
-              console.log(`Merged PR #${pr.number}`);
             }
