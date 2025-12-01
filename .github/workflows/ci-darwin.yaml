@@ -2,9 +2,8 @@
 name: CI (Darwin)
 
 on:
-  push:
-    branches: [main]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   find-darwin:
@@ -21,21 +20,15 @@ jobs:
       - id: out
         run: |
           echo "Evaluating darwinConfigurations..."
-
           systems=$(nix eval --json .#darwinConfigurations --apply builtins.attrNames)
-
           echo "Darwin systems: $systems"
-
-          if [ "$systems" = "[]" ]; then
-            echo "::warning::No darwin systems found!"
-          fi
-
           echo "systems=$systems" >> "$GITHUB_OUTPUT"
 
   build-darwin:
     runs-on: macos-latest
     needs: find-darwin
-    if: ${{ fromJson(needs.find-darwin.outputs.systems).length > 0 }}
+    if: ${{ needs.find-darwin.outputs.systems != '[]' }}
+
     strategy:
       fail-fast: false
       matrix:
@@ -47,10 +40,15 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v21
 
-      - name: Enable Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@v7
+      # macOS CANNOT use Magic Nix Cache
+      # Remove it completely
+
+      - name: Disable sandboxing (required for macOS builds)
+        run: |
+          echo "sandbox = false" | sudo tee -a /etc/nix/nix.conf
+          sudo launchctl kickstart -k system/org.nixos.nix-daemon
 
       - name: Build Darwin system
         run: |
-          echo "Building darwin sys: ${{ matrix.system }}"
+          echo "Building Darwin system: ${{ matrix.system }}"
           nix build ".#darwinConfigurations.${{ matrix.system }}.system"

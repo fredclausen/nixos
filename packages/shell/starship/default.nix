@@ -216,7 +216,7 @@ in
         };
       };
 
-      #catppuccin.starship.enable = true;
+      catppuccin.starship.enable = true;
     };
   };
 }

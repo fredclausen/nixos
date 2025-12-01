@@ -2,9 +2,8 @@
 name: CI (Linux)
 
 on:
-  push:
-    branches: [main]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   find-systems:
@@ -96,6 +95,10 @@ jobs:
       - name: Desktop smoke test
         run: |
           echo "Checking desktop config: ${{ matrix.system }}"
+
+          echo "::group::preload flake inputs"
+          nix flake archive --json | jq .
+          echo "::endgroup::"
 
           echo "::group::flake metadata"
           nix flake metadata
