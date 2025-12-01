@@ -15,7 +15,6 @@ in
     ++ lib.optional isDarwin ../homebrew.nix
     # Linux-only NixOS modules
     ++ lib.optional isLinux inputs.catppuccin.nixosModules.catppuccin
-    ++ lib.optional isLinux inputs.catppuccin.homeModules.catppuccin
     ++ lib.optional isLinux ../../packages
     ++ lib.optional isLinux ../../users
     ++ lib.optional isLinux ./linux-catpuccin.nix;

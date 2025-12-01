@@ -9,6 +9,8 @@ let
 in
 {
   config = {
+    catppuccin.starship.enable = true;
+
     home-manager.users.${username} = {
 
       home.packages = [ pkgs.starship ];
@@ -215,8 +217,6 @@ in
           };
         };
       };
-
-      catppuccin.starship.enable = true;
     };
   };
 }
