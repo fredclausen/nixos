@@ -16,10 +16,12 @@
   ];
 
   # extra options
-  desktop.enable = true;
-  desktop.enable_extra = true;
-  desktop.enable_games = true;
-  desktop.enable_streaming = true;
+  desktop = {
+    enable = true;
+    enable_extra = true;
+    enable_games = true;
+    enable_streaming = true;
+  };
   sops_secrets.enable_secrets.enable = true;
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_testing;

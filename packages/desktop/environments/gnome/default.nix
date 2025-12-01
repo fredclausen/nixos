@@ -46,29 +46,27 @@ in
       terminal = "wezterm";
     };
 
-    # Enable the X11 windowing system.
-    services.xserver.enable = false;
+    services = {
+      # Enable the X11 windowing system.
+      xserver.enable = false;
+      # Enable the GNOME Desktop Environment.
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+    };
 
-    # Enable the GNOME Desktop Environment.
-    services.displayManager.gdm.enable = true;
-    services.desktopManager.gnome.enable = true;
-
-    environment.gnome.excludePackages = (
-      with pkgs;
-      [
-        atomix # puzzle game
-        cheese # webcam tool
-        epiphany # web browser
-        gnome-characters
-        gnome-music
-        gnome-photos
-        gnome-tour
-        hitori # sudoku game
-        iagno # go game
-        tali # poker game
-        totem # video player
-      ]
-    );
+    environment.gnome.excludePackages = with pkgs; [
+      atomix # puzzle game
+      cheese # webcam tool
+      epiphany # web browser
+      gnome-characters
+      gnome-music
+      gnome-photos
+      gnome-tour
+      hitori # sudoku game
+      iagno # go game
+      tali # poker game
+      totem # video player
+    ];
 
     systemd = {
       user.services.polkit-gnome-authentication-agent-1 = {

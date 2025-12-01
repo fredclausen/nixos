@@ -1,15 +1,10 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
 # KEEP THIS FOR FUTURE REFERENCE
 # this is used in the import section of the flake
 # (import ./firmware.nix) # FIXME: this is a workaround until the firmware is fixed. Bad version is 20250509
 # # hardware.firmware = [ pkgs.linux-firmware ]; # FIXME: Remove this when the firmware is fixed. Bad version is 20250509
 {
   nixpkgs.overlays = [
+    # deadnix: skip
     (self: super: {
       linux-firmware = super.callPackage (
         {

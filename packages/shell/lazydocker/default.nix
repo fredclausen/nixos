@@ -5,7 +5,7 @@ in
 {
   config = {
     home-manager.users.${username} =
-      { config, pkgs, ... }:
+      { pkgs, ... }:
       {
         home.packages = with pkgs; [
           lazydocker

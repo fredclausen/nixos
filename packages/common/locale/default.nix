@@ -1,4 +1,3 @@
-{ config, pkgs, ... }:
 {
   config = {
     time.timeZone = "America/Denver";

@@ -1,23 +1,16 @@
 {
-  config,
-  pkgs,
   lib,
   inputs,
-  user,
   system,
   verbose_name,
   github_email,
   github_signing_key,
-  stateVersion,
   ...
 }:
 
 let
-  username = user;
   isDarwin = lib.hasSuffix "darwin" system;
   isLinux = !isDarwin;
-
-  homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
 in
 {
   ##########################################################################

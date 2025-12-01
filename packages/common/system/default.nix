@@ -15,10 +15,11 @@
     networking.networkmanager.enable = true;
 
     nixpkgs.overlays = [
+      # deadnix: skip
       (final: prev: {
-        nixos-needsreboot = prev.nixos-needsreboot.overrideAttrs (old: {
+        nixos-needsreboot = prev.nixos-needsreboot.overrideAttrs {
           vendorSha256 = "sha256-o4/q0t9GhPbZ+R4Rnxf202WMJcMNu4RftqHkS95YZJs=";
-        });
+        };
       })
     ];
 
@@ -42,18 +43,21 @@
       inputs.nixos-needsreboot.packages.${config.nixpkgs.hostPlatform.system}.default
     ];
 
-    services.udev.packages = with pkgs; [
-      airspy
-    ];
-
-    services.avahi = {
-      enable = true;
-      nssmdns4 = true;
-      publish = {
+    services = {
+      avahi = {
         enable = true;
-        addresses = true;
-        workstation = true;
+        nssmdns4 = true;
+        publish = {
+          enable = true;
+          addresses = true;
+          workstation = true;
+        };
       };
+      fwupd.enable = true;
+
+      udev.packages = with pkgs; [
+        airspy
+      ];
     };
 
     xdg.portal = {
@@ -69,14 +73,14 @@
       persistent = true;
     };
     nix.settings.auto-optimise-store = true;
-    services.fwupd.enable = true;
 
-    nixpkgs.config.permittedInsecurePackages = [
-      "openssl-1.1.1w"
-    ];
+    nixpkgs.config = {
+      permittedInsecurePackages = [
+        "openssl-1.1.1w"
+      ];
 
-    # Allow unfree packages
-    nixpkgs.config.allowUnfree = true;
+      allowUnfree = true;
+    };
 
     security.polkit.enable = true;
     security.polkit.extraConfig = ''

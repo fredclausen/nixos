@@ -17,10 +17,13 @@ in
   ];
 
   # Server profile
-  desktop.enable = false;
-  desktop.enable_extra = false;
-  desktop.enable_games = false;
-  desktop.enable_streaming = false;
+  desktop = {
+    enable = false;
+    enable_extra = false;
+    enable_games = false;
+    enable_streaming = false;
+  };
+
   sops_secrets.enable_secrets.enable = true;
 
   networking.hostName = "hfdlhub2";

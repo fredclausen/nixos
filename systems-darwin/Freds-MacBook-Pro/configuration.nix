@@ -1,10 +1,8 @@
 {
-  config,
   pkgs,
   lib,
   inputs,
   user,
-  hmlib,
   ...
 }:
 let
@@ -52,13 +50,16 @@ in
     ../../packages/desktop/zed
   ];
 
-  desktop.wezterm.enable = true;
-  desktop.alacritty.enable = true;
-  desktop.zed.enable = true;
+  desktop = {
+    wezterm.enable = true;
+    alacritty.enable = true;
+    zed.enable = true;
+  };
+
   sops_secrets.enable_secrets.enable = true;
 
   home-manager.users.${username} =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     {
       home.packages = with pkgs; [
         wget

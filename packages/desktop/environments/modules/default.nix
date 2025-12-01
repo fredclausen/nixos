@@ -1,8 +1,6 @@
 {
   lib,
-  pkgs,
   config,
-  hmlib,
   ...
 }:
 with lib;
@@ -27,12 +25,14 @@ in
   ];
 
   config = mkIf cfg.enable {
-    desktop.environments.modules.clipboard.enable = true;
-    desktop.environments.modules.hyprlandextra.enable = true;
-    desktop.environments.modules.pamixer.enable = true;
-    desktop.environments.modules.fuzzel.enable = true;
-    desktop.environments.modules.vicinae.enable = true;
-    desktop.environments.modules.waybar.enable = true;
-    desktop.environments.modules.swaync.enable = true;
+    desktop.environments.modules = {
+      clipboard.enable = true;
+      hyprlandextra.enable = true;
+      pamixer.enable = true;
+      fuzzel.enable = true;
+      vicinae.enable = true;
+      waybar.enable = true;
+      swaync.enable = true;
+    };
   };
 }

@@ -16,10 +16,13 @@
   ];
 
   # extra options
-  desktop.enable = true;
-  desktop.enable_extra = true;
-  desktop.enable_games = false;
-  desktop.enable_streaming = false;
+  desktop = {
+    enable = true;
+    enable_extra = true;
+    enable_games = false;
+    enable_streaming = false;
+  };
+
   sops_secrets.enable_secrets.enable = true;
 
   hardware.graphics = {
@@ -29,23 +32,29 @@
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_testing;
 
-  networking.hostName = "Daytona";
-  networking.networkmanager.wifi.scanRandMacAddress = false;
+  networking = {
+    hostName = "Daytona";
+    networkmanager.wifi.scanRandMacAddress = false;
+  };
 
-  services.logind = {
-    settings = {
-      Login = {
-        HandleLidSwitch = "suspend";
-        HandlePowerKey = "suspend";
+  services = {
+    logind = {
+      settings = {
+        Login = {
+          HandleLidSwitch = "suspend";
+          HandlePowerKey = "suspend";
+        };
+      };
+
+      fprintd = {
+        enable = true;
+        tod.enable = true;
+        tod.driver = pkgs.libfprint-2-tod1-goodix;
       };
     };
   };
 
   powerManagement.enable = true;
-
-  services.fprintd.enable = true;
-  services.fprintd.tod.enable = true;
-  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
   environment.systemPackages = with pkgs; [ ];
 

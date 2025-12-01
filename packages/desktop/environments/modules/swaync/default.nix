@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   user,
   ...
@@ -22,7 +21,7 @@ in
     home-manager.users.${username} = {
       services.swaync = {
         enable = true;
-        settings = (builtins.fromJSON (builtins.readFile ./config.json));
+        settings = builtins.fromJSON (builtins.readFile ./config.json);
       };
 
       catppuccin.swaync = {

@@ -7,7 +7,7 @@
 
 let
   cfg = config.programs.ansible;
-  username = config.home.username;
+  inherit (config.home) username;
   isDarwin = lib.hasSuffix "darwin" pkgs.stdenv.hostPlatform.system;
   userHome = if isDarwin then "/Users/${username}" else "/home/${username}";
 
@@ -52,6 +52,7 @@ let
     in
     lib.concatMapStrings (line: pad + line + "\n") (lib.splitString "\n" str);
 
+  # deadnix: skip
   dropWhile =
     pred: xs:
     if xs == [ ] then
@@ -104,41 +105,43 @@ in
   ###########################################################
   config = lib.mkIf cfg.enable {
 
-    home.file.".ansible/inventory.yaml".text = clean ''
-      ---
-      ubuntu:
-        hosts:
-      ${indent 4 ubuntuHosts}
-      nixos:
-        hosts:
-      ${indent 4 nixosHosts}
+    home.file = {
+      ".ansible/inventory.yaml".text = clean ''
+        ---
+        ubuntu:
+          hosts:
+        ${indent 4 ubuntuHosts}
+        nixos:
+          hosts:
+        ${indent 4 nixosHosts}
 
-      adsb:
-        children:
-          ubuntu:
-          nixos:
+        adsb:
+          children:
+            ubuntu:
+            nixos:
 
-      all:
-        vars:
-          ansible_user: ${username}
-          ansible_ssh_private_key_file: ~/.ssh/id_rsa
-          ansible_connection: ssh
-    '';
+        all:
+          vars:
+            ansible_user: ${username}
+            ansible_ssh_private_key_file: ~/.ssh/id_rsa
+            ansible_connection: ssh
+      '';
 
-    home.file.".ansible/ansible.cfg".text = clean ''
-      [defaults]
-      inventory = ~/.ansible/inventory.yaml
-      host_key_checking = False
-      retry_files_enabled = False
-      stdout_callback = default
-      result_format = yaml
-      interpreter_python = python3
-    '';
+      ".ansible/ansible.cfg".text = clean ''
+        [defaults]
+        inventory = ~/.ansible/inventory.yaml
+        host_key_checking = False
+        retry_files_enabled = False
+        stdout_callback = default
+        result_format = yaml
+        interpreter_python = python3
+      '';
 
-    # copy your plays directory exactly
-    home.file.".ansible/plays" = {
-      source = ./plays;
-      recursive = true;
+      # copy your plays directory exactly
+      ".ansible/plays" = {
+        source = ./plays;
+        recursive = true;
+      };
     };
   };
 }

@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }:
@@ -25,9 +24,11 @@ in
   ];
 
   config = mkIf cfg.enable {
-    desktop.environments.hyprland.enable = true;
-    desktop.environments.niri.enable = true;
-    desktop.environments.cosmic.enable = true;
-    desktop.environments.gnome.enable = true;
+    desktop.environments = {
+      hyprland.enable = true;
+      niri.enable = true;
+      cosmic.enable = true;
+      gnome.enable = true;
+    };
   };
 }

@@ -2,8 +2,6 @@
   lib,
   pkgs,
   config,
-  inputs,
-  imports,
   user,
   ...
 }:

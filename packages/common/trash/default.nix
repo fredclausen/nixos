@@ -1,8 +1,6 @@
 {
-  config,
   pkgs,
   user,
-  verbose_name,
   ...
 }:
 let

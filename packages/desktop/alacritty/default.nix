@@ -13,7 +13,7 @@ let
   # Pull from the shared terminal module
   t = config.terminal;
 
-  isDarwin = pkgs.stdenv.isDarwin;
+  inherit (pkgs.stdenv) isDarwin;
 in
 {
   options.desktop.alacritty = {
@@ -42,7 +42,7 @@ in
             decorations = "Buttonless";
 
             # opacity from shared module
-            opacity = t.opacity;
+            inherit (t) opacity;
 
             blur = true;
 
@@ -52,7 +52,7 @@ in
           font = {
             # shared font family and size
             normal.family = t.font.family;
-            size = t.font.size;
+            inherit (t.font) size;
           };
         };
       };

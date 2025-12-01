@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  apple-fonts,
   inputs,
   ...
 }:

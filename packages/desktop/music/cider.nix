@@ -20,7 +20,7 @@ let
 in
 pkgs.appimageTools.wrapType2 {
   inherit pname version src;
-  pkgs = pkgs;
+  inherit pkgs;
   nativeBuildInputs = [ pkgs.makeWrapper ];
   extraInstallCommands = ''
       wrapProgram $out/bin/${pname} \

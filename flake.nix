@@ -62,11 +62,9 @@
       catppuccin,
       apple-fonts,
       git-hooks,
-      flake-utils,
       nixvim,
       niri,
       darwin,
-      nixos-needsreboot,
       ...
     }:
 
@@ -112,30 +110,32 @@
             ./modules/common/system.nix
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
 
-              home-manager.users.${user} = {
-                # shared HM baseline
-                imports = [ ./modules/common/home.nix ] ++ hmModules;
-              };
+                users.${user} = {
+                  # shared HM baseline
+                  imports = [ ./modules/common/home.nix ] ++ hmModules;
+                };
 
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  self
-                  user
-                  verbose_name
-                  hmlib
-                  github_email
-                  github_signing_key
-                  catppuccin
-                  apple-fonts
-                  nixvim
-                  niri
-                  stateVersion
-                  system
-                  ;
+                extraSpecialArgs = {
+                  inherit
+                    inputs
+                    self
+                    user
+                    verbose_name
+                    hmlib
+                    github_email
+                    github_signing_key
+                    catppuccin
+                    apple-fonts
+                    nixvim
+                    niri
+                    stateVersion
+                    system
+                    ;
+                };
               };
             }
           ]
@@ -170,33 +170,35 @@
             home-manager.darwinModules.home-manager
 
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
 
-              home-manager.users.${user} = {
-                imports = [ ./modules/common/home.nix ] ++ hmModules;
+                users.${user} = {
+                  imports = [ ./modules/common/home.nix ] ++ hmModules;
 
-                catppuccin = {
-                  enable = true;
-                  flavor = "mocha";
-                  accent = "lavender";
+                  catppuccin = {
+                    enable = true;
+                    flavor = "mocha";
+                    accent = "lavender";
+                  };
                 };
-              };
 
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  self
-                  system
-                  user
-                  verbose_name
-                  hmlib
-                  github_email
-                  github_signing_key
-                  catppuccin
-                  nixvim
-                  stateVersion
-                  ;
+                extraSpecialArgs = {
+                  inherit
+                    inputs
+                    self
+                    system
+                    user
+                    verbose_name
+                    hmlib
+                    github_email
+                    github_signing_key
+                    catppuccin
+                    nixvim
+                    stateVersion
+                    ;
+                };
               };
 
               # Darwin Nix settings
@@ -275,7 +277,7 @@
             src = pkgs.lib.cleanSourceWith {
               src = ./.;
               filter =
-                path: type:
+                # path: type:
                 # keep all files, including dotfiles
                 true;
             };
@@ -316,6 +318,22 @@
               hadolint.enable = true;
               shellcheck.enable = true;
               prettier.enable = true;
+
+              # deadnix: detect unused variables, dead code
+              deadnix = {
+                enable = true;
+                entry = "${pkgs.deadnix}/bin/deadnix";
+                args = [ "--fail" ]; # exit nonzero on findings
+                files = "\\.nix$";
+              };
+
+              # statix: idiomatic Nix linter
+              statix = {
+                enable = true;
+                entry = "${pkgs.statix}/bin/statix";
+                args = [ "check" ];
+                files = "\\.nix$";
+              };
 
               # Hooks that need system packages
               codespell = {

@@ -1,12 +1,11 @@
 {
   lib,
-  config,
   pkgs,
   ...
 }:
 
 let
-  isDarwin = pkgs.stdenv.isDarwin;
+  inherit (pkgs.stdenv) isDarwin;
 in
 
 {

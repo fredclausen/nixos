@@ -6,9 +6,7 @@ in
   config = {
     home-manager.users.${username} =
       {
-        config,
         pkgs,
-        lib,
         ...
       }:
       {

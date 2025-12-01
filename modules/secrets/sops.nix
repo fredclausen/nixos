@@ -24,10 +24,9 @@ in
     };
   };
 
-  imports = [
-  ]
-  ++ lib.optional isLinux inputs.sops-nix.nixosModules.sops
-  ++ lib.optional isDarwin inputs.sops-nix.darwinModules.sops;
+  imports =
+    lib.optional isLinux inputs.sops-nix.nixosModules.sops
+    ++ lib.optional isDarwin inputs.sops-nix.darwinModules.sops;
 
   config = mkIf cfg.enable {
     environment.systemPackages = [

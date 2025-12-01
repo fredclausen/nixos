@@ -1,7 +1,6 @@
 {
   stateVersion,
   user,
-  homeDir,
   pkgs,
   ...
 }:
@@ -14,9 +13,9 @@ in
   ## HOME BASE SETTINGS (platform-aware)
   ##########################################################################
   home = {
-    username = username;
+    inherit username;
     homeDirectory = homeDir;
-    stateVersion = stateVersion;
+    inherit stateVersion;
 
     packages = with pkgs; [
       zoxide
@@ -27,14 +26,16 @@ in
   ##########################################################################
   ## XDG + FONTS — Linux Only
   ##########################################################################
-  xdg.enable = true;
-
-  xdg.userDirs = {
+  xdg = {
     enable = true;
-    createDirectories = false;
-  };
 
-  xdg.mimeApps.enable = true;
+    userDirs = {
+      enable = true;
+      createDirectories = false;
+    };
+
+    mimeApps.enable = true;
+  };
 
   fonts.fontconfig.enable = true;
 }

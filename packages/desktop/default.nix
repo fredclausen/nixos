@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   user,
   ...
@@ -68,37 +67,38 @@ in
   ];
 
   config = mkIf cfg.enable {
-    desktop.environments.enable = true;
-
-    desktop.brave.enable = true;
-    desktop.firefox.enable = true;
-    desktop.fonts.enable = true;
-    desktop.ghostty.enable = true;
-    desktop.print.enable = true;
-    desktop.githubdesktop.enable = true;
-    desktop.vscode.enable = true;
-    desktop.zed.enable = true;
-    desktop.onepassword.enable = true;
-    desktop.sqlitebrowser.enable = true;
-    desktop.sublimetext.enable = true;
-    desktop.wezterm.enable = true;
-    desktop.alacritty.enable = true;
-    desktop.stockfish.enable = true;
-    desktop.libreoffice.enable = true;
-    desktop.vlc.enable = true;
-    desktop.multiviewer.enable = true;
-    desktop.missioncenter.enable = true;
-    desktop.audio.enable = true;
-    desktop.wireshark.enable = true;
-    desktop.ladybird.enable = true;
-    desktop.music.enable = if cfg.enable_extra then true else false;
-    desktop.appimage.enable = if cfg.enable_extra then true else false;
-    desktop.discord.enable = if cfg.enable_extra then true else false;
-    desktop.tradingview.enable = if cfg.enable_extra then true else false;
-    desktop.steam.enable = if cfg.enable_games then true else false;
-    desktop.obs.enable = if cfg.enable_streaming then true else false;
-    desktop.ledger.enable = if cfg.enable_extra then true else false;
-    desktop.trezor.enable = if cfg.enable_extra then true else false;
+    desktop = {
+      environments.enable = true;
+      brave.enable = true;
+      firefox.enable = true;
+      fonts.enable = true;
+      ghostty.enable = true;
+      print.enable = true;
+      githubdesktop.enable = true;
+      vscode.enable = true;
+      zed.enable = true;
+      onepassword.enable = true;
+      sqlitebrowser.enable = true;
+      sublimetext.enable = true;
+      wezterm.enable = true;
+      alacritty.enable = true;
+      stockfish.enable = true;
+      libreoffice.enable = true;
+      vlc.enable = true;
+      multiviewer.enable = true;
+      missioncenter.enable = true;
+      audio.enable = true;
+      wireshark.enable = true;
+      ladybird.enable = true;
+      music.enable = if cfg.enable_extra then true else false;
+      appimage.enable = if cfg.enable_extra then true else false;
+      discord.enable = if cfg.enable_extra then true else false;
+      tradingview.enable = if cfg.enable_extra then true else false;
+      steam.enable = if cfg.enable_games then true else false;
+      obs.enable = if cfg.enable_streaming then true else false;
+      ledger.enable = if cfg.enable_extra then true else false;
+      trezor.enable = if cfg.enable_extra then true else false;
+    };
 
     home-manager.users.${username} = {
       home.file.".config/backgrounds/" = {
