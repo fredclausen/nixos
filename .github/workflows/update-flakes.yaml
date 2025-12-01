@@ -9,8 +9,6 @@ permissions:
   contents: write
   pull-requests: write
 
-# https://github.com/bbigras/nix-config
-
 jobs:
   get-flake-inputs:
     runs-on: ubuntu-latest
@@ -32,7 +30,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.get-flake-inputs.outputs.flake-inputs) }}
-      # max-parallel: 1
     steps:
       - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:

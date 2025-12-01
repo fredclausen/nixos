@@ -12,10 +12,16 @@ jobs:
       systems: ${{ steps.out.outputs.systems }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6.0.0
 
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v21
+
+      - name: Enable Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@v13
+        with:
+          use-flakehub: false
+          use-gha-cache: false
 
       - id: out
         run: |
@@ -35,18 +41,16 @@ jobs:
         system: ${{ fromJson(needs.find-darwin.outputs.systems) }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6.0.0
 
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v21
 
-      # macOS CANNOT use Magic Nix Cache
-      # Remove it completely
-
-      - name: Disable sandboxing (required for macOS builds)
-        run: |
-          echo "sandbox = false" | sudo tee -a /etc/nix/nix.conf
-          sudo launchctl kickstart -k system/org.nixos.nix-daemon
+      - name: Enable Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@v13
+        with:
+          use-flakehub: false
+          use-gha-cache: false
 
       - name: Build Darwin system
         run: |

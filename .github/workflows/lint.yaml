@@ -9,17 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6.0.0
 
       - uses: cachix/install-nix-action@v26
         with:
           nix_path: nixpkgs=channel:nixos-unstable
-
-      # Optional but recommended if you use pre-built cache
-      # - uses: cachix/cachix-action@v14
-      #   with:
-      #     name: fredclausen
-      #     signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
 
       - name: Run flake pre-commit hooks
         run: nix develop -c pre-commit run --all-files
