@@ -86,9 +86,11 @@ jobs:
       - name: Enable auto-merge on each PR
         if: ${{ steps.pr_list.outputs.result != '' }}
         uses: actions/github-script@v7
+        env:
+          PR_LIST: ${{ steps.pr_list.outputs.result }}
         with:
           script: |
-            const prs = JSON.parse(`${{ steps.pr_list.outputs.result }}`);
+            const prs = JSON.parse(process.env.PR_LIST);
 
             for (const pr of prs) {
               console.log(`Enabling auto-merge for PR #${pr.number}`);
