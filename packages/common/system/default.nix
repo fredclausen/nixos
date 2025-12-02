@@ -66,14 +66,6 @@
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
 
-    nix.gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-      persistent = true;
-    };
-    nix.settings.auto-optimise-store = true;
-
     nixpkgs.config = {
       permittedInsecurePackages = [
         "openssl-1.1.1w"

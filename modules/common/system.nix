@@ -19,8 +19,16 @@ in
     ++ lib.optional isLinux ../../users
     ++ lib.optional isLinux ./linux-catpuccin.nix;
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix = {
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 7d";
+    };
+    optimise.automatic = true;
+  };
 }
