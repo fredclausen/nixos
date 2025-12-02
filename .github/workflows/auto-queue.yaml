@@ -1,0 +1,111 @@
+---
+name: Auto-enqueue PRs into Merge Queue
+
+on:
+  # Fired when check suites complete
+  check_suite:
+    types: [completed]
+
+  # Fired when status updates (legacy but required for some integrations)
+  status:
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  auto-queue:
+    runs-on: ubuntu-latest
+
+    if: >
+      github.event.check_suite.conclusion == 'success' ||
+      github.event.state == 'success'
+
+    steps:
+      - name: Find PR associated with this commit
+        id: find_pr
+        uses: actions/github-script@v7
+        with:
+          result-encoding: string
+          script: |
+            const commitSha =
+              github.event.check_suite?.head_sha ||
+              github.event.commit?.sha ||
+              github.event.sha ||
+              context.sha;
+
+            const prs = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: commitSha,
+            });
+
+            if (prs.data.length === 0) {
+              console.log("No PR found for this commit");
+              return "";
+            }
+
+            const pr = prs.data[0];
+            console.log(`Found PR #${pr.number}`);
+            return JSON.stringify({
+              number: pr.number,
+              mergeable: pr.mergeable,
+              draft: pr.draft,
+              head: pr.head.ref,
+              state: pr.state,
+            });
+
+      - name: Check PR eligibility
+        id: check_pr
+        run: |
+          if [[ "${{ steps.find_pr.outputs.result }}" == "" ]]; then
+            echo "No PR → exiting."
+            exit 0
+          fi
+
+          pr=$(echo '${{ steps.find_pr.outputs.result }}' | jq -r .)
+
+          state=$(echo "$pr" | jq -r .state)
+          draft=$(echo "$pr" | jq -r .draft)
+
+          if [[ "$state" != "open" ]]; then
+            echo "PR not open → skipping."
+            exit 0
+          fi
+
+          if [[ "$draft" == "true" ]]; then
+            echo "PR is draft → skipping."
+            exit 0
+          fi
+
+      - name: Enqueue PR into merge queue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = JSON.parse('${{ steps.find_pr.outputs.result }}');
+
+            console.log(`Attempting to enqueue PR #${pr.number}…`);
+
+            try {
+              await github.graphql(`
+                mutation($pr: Int!) {
+                  mergePullRequest(
+                    input: {
+                      pullRequestId: "PR_${pr.number}"
+                      expectedHeadOid: "${context.sha}"
+                    }
+                  ) {
+                    pullRequest {
+                      number
+                    }
+                  }
+                }
+              `, { pr: pr.number });
+
+            } catch (err) {
+              console.log("GitHub rejected the enqueue request:");
+              console.log(err.message);
+              console.log("This usually means checks are not all required/passing.");
+            }

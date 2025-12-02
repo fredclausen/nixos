@@ -35,7 +35,8 @@
   ],
   packageRules: [
     {
-      matchDatasources: ["github-actions", "nix"],
+      matchManagers: ["github-actions", "nix"],
+      matchUpdateTypes: ["major", "minor", "patch", "pin"],
       automerge: true,
     },
     {
