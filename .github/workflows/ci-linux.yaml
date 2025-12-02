@@ -15,7 +15,7 @@ jobs:
       desktops: ${{ steps.out.outputs.desktops }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v21
@@ -69,7 +69,7 @@ jobs:
         system: ${{ fromJson(needs.find-systems.outputs.servers) }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v21
@@ -92,7 +92,7 @@ jobs:
     needs: find-systems
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v21

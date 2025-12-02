@@ -14,7 +14,7 @@ jobs:
       systems: ${{ steps.out.outputs.systems }}
 
     steps:
-      - uses: actions/checkout@v6.0.0
+      - uses: actions/checkout@v6
 
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v21
@@ -43,7 +43,7 @@ jobs:
         system: ${{ fromJson(needs.find-darwin.outputs.systems) }}
 
     steps:
-      - uses: actions/checkout@v6.0.0
+      - uses: actions/checkout@v6
 
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v21
