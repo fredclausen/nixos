@@ -16,8 +16,8 @@
   prConcurrentLimit: 0,
   prHourlyLimit: 0,
   prCreation: "immediate",
-  automerge: false,
-  platformAutomerge: false,
+  automerge: true,
+  platformAutomerge: true,
   nix: {
     enabled: true,
   },
@@ -43,6 +43,7 @@
       matchCategories: ["docker"],
       enabled: true,
       pinDigests: false,
+      automerge: false,
     },
     {
       matchDatasources: ["docker"],
@@ -51,6 +52,7 @@
         "/^ghcr\\.io/sdr-enthusiasts/(docker-acarsdec|docker-dumphfdl|airspy_adsb|docker-dump978|docker-adsbhub|docker-flightradar24|docker-planefinder|docker-radarvirtuel|docker-opensky-network|docker-sdrmap|docker-acarshub|acars_router|docker-dumpvdl2)$/",
       ],
       pinDigests: false,
+      automerge: false,
     },
     {
       matchDatasources: ["docker"],
@@ -59,17 +61,20 @@
         "/^ghcr\\.io/sdr-enthusiasts/(docker-hfdlobserver|docker-adsb-ultrafeeder|docker-piaware|docker-airnavradar)$/",
       ],
       pinDigests: false,
+      automerge: false,
     },
     {
       matchDatasources: ["docker"],
       versioning: "regex:^(trixie-)?latest-build-(?<major>\\d+)?$",
       matchPackageNames: ["ghcr.io/plane-watch/{/,}**"],
       pinDigests: false,
+      automerge: false,
     },
     {
       matchDatasources: ["docker"],
       matchPackageNames: ["amir20/dozzle"],
       pinDigests: false,
+      automerge: false,
     },
   ],
 }
