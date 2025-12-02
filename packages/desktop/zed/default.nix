@@ -250,6 +250,14 @@ in
               binary = {
                 path = lib.getExe pkgs.nil;
               };
+
+              settings = {
+                nix = {
+                  flake = {
+                    autoArchive = true;
+                  };
+                };
+              };
             };
 
             # typescript lsp
