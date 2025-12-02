@@ -140,7 +140,7 @@
       ###############################################################
       {
         name = "dozzle";
-        image = "amir20/dozzle:v8.14.9";
+        image = "amir20/dozzle:v8.14.10";
 
         restart = "always";
 
@@ -161,7 +161,7 @@
       ###############################################################
       {
         name = "dozzle-agent";
-        image = "amir20/dozzle:v8.14.9";
+        image = "amir20/dozzle:v8.14.10";
         exec = "agent";
 
         volumes = [
