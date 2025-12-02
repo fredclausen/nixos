@@ -46,6 +46,7 @@ in
     ../../packages/develop/rust
     ../../packages/develop/shellcheck
     ../../packages/develop/typos
+    ../../packages/develop/act
     ../../packages/common/btop
     ../../packages/common/git
     ../../packages/desktop/alacritty
