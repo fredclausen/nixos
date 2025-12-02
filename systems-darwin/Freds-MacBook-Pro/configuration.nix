@@ -20,8 +20,11 @@ in
     primaryUser = "${username}";
     stateVersion = 6;
   };
-  security.pam.services.sudo_local.touchIdAuth = true;
-  security.pam.services.sudo_local.reattach = true;
+  security.pam.services.sudo_local = {
+    touchIdAuth = true;
+    reattach = true;
+    watchIdAuth = true;
+  };
 
   users.users.${username}.home = "/Users/${username}";
 
