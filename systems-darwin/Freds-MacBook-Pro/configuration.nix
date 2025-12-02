@@ -21,6 +21,8 @@ in
     stateVersion = 6;
   };
   security.pam.services.sudo_local.touchIdAuth = true;
+  security.pam.services.sudo_local.reattach = true;
+
   users.users.${username}.home = "/Users/${username}";
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-darwin";
