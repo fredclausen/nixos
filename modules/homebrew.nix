@@ -5,6 +5,7 @@
     caskArgs.no_quarantine = true;
     taps = [
       "pothosware/pothos"
+      #"mas-cli/tap/mas"
     ];
 
     brews = [
@@ -44,5 +45,25 @@
       "multiviewer"
       "mono-mdk-for-visual-studio"
     ];
+
+    masApps = {
+      "1Password for Safari" = 1569813296;
+      "AdGuard Mini" = 1440147259;
+      "Amphetamine" = 937984704;
+      "Banish" = 1639049780;
+      "GarageBand" = 682658836;
+      "HextEdit" = 1557247094;
+      "iMovie" = 408981434;
+      "Keynote" = 409183694;
+      "Magnet" = 441258766;
+      "Numbers" = 409203825;
+      "Pages" = 409201541;
+      "Pixelmator Pro" = 1289583905;
+      "Stockfish" = 801463932;
+      "StopTheMadness" = 6471380298;
+      "Super Agent" = 1568262835;
+      #"Wifiman" = 1385561119;
+      "Xcode" = 497799835;
+    };
   };
 }
