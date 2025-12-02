@@ -32,3 +32,5 @@ alias rebootsystem="rebootsystem_ansible"
 
 alias nr="updatenix"
 alias nd="garbagecollect"
+
+alias dtop="docker run -v /var/run/docker.sock:/var/run/docker.sock -it ghcr.io/amir20/dtop"

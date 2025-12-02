@@ -1,5 +1,6 @@
 {
   imports = [
+    ./act
     ./ansible
     ./clang
     ./gcc
