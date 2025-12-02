@@ -73,6 +73,7 @@ in
           "ansible"
           "crates-lsp"
           "json"
+          "json5"
           "css"
           "markdown"
           "markdownlint"
