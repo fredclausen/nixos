@@ -53,7 +53,7 @@ in
     deps = [ ];
   };
 
-  services.github-runner.runners = {
+  services.github-runners.runners = {
     runner-1 = {
       enable = true;
       url = "https://github.com/fredclausen/nixos";
