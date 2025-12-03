@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
     ../../modules/secrets/sops.nix
     ../../modules/adsb-docker-units.nix
+    ./monitoring.nix
   ];
 
   # Server profile (no desktop components)
