@@ -56,7 +56,7 @@ in
   services.github-runners = {
     runner-1 = {
       enable = true;
-      url = "https://github.com/fredclausen/nixos";
+      url = "https://github.com/FredSystems/nixos";
       name = "nixos-runner-1";
       tokenFile = config.sops.secrets."github-token".path;
     };
