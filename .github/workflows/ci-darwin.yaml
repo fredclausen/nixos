@@ -9,6 +9,7 @@ on:
 
 jobs:
   find-darwin:
+    name: Find Darwin systems
     runs-on: ubuntu-latest
     outputs:
       systems: ${{ steps.out.outputs.systems }}
@@ -33,6 +34,7 @@ jobs:
           echo "systems=$systems" >> "$GITHUB_OUTPUT"
 
   build-darwin:
+    name: Build Darwin systems
     runs-on: macos-latest
     needs: find-darwin
     if: ${{ needs.find-darwin.outputs.systems != '[]' }}
@@ -62,6 +64,7 @@ jobs:
           # nix build ".#darwinConfigurations.${{ matrix.system }}.system"
 
   build-darwin-summary:
+    name: Build Darwin Systems Summary
     runs-on: ubuntu-latest
     needs: build-darwin
     steps:

@@ -56,6 +56,7 @@
         url = "https://github.com/FredSystems/nixos";
         name = "nixos-hfdlhub1-runner-1";
         tokenFile = config.sops.secrets."github-token".path;
+        ephemeral = true;
       };
 
       runner-2 = {
@@ -63,6 +64,7 @@
         url = "https://github.com/FredSystems/nixos";
         name = "nixos-hfdlhub1-runner-2";
         tokenFile = config.sops.secrets."github-token".path;
+        ephemeral = true;
       };
 
       # runner-3 = {
@@ -70,6 +72,7 @@
       #   url = "https://github.com/FredSystems/nixos";
       #   name = "nixos-hfdlhub1-runner-3";
       #   tokenFile = config.sops.secrets."github-token".path;
+      # ephemeral = true;
       # };
 
       # runner-4 = {
@@ -77,6 +80,7 @@
       #   url = "https://github.com/FredSystems/nixos";
       #   name = "nixos-hfdlhub1-runner-4";
       #   tokenFile = config.sops.secrets."github-token".path;
+      # ephemeral = true;
       # };
     };
 
