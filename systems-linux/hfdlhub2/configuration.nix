@@ -58,10 +58,6 @@ in
       enable = true;
       url = "https://github.com/fredclausen/nixos";
       name = "nixos-runner-1";
-      labels = [
-        "self-hosted"
-        "nixos"
-      ];
       tokenFile = config.sops.secrets."github-token".path;
     };
 
