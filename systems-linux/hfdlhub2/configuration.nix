@@ -53,48 +53,32 @@ in
     deps = [ ];
   };
 
-  services.github-runner.runners = {
+  services.github-runners = {
     runner-1 = {
       enable = true;
-      url = "https://github.com/fredclausen/nixos";
-      name = "nixos-runner-1";
-      labels = [
-        "self-hosted"
-        "nixos"
-      ];
+      url = "https://github.com/FredSystems/nixos";
+      name = "nixos-hfdlhub2-runner-1";
       tokenFile = config.sops.secrets."github-token".path;
     };
 
     runner-2 = {
       enable = true;
       url = "https://github.com/FredSystems/nixos";
-      name = "nixos-runner-2";
-      labels = [
-        "self-hosted"
-        "nixos"
-      ];
+      name = "nixos-hfdlhub2-runner-2";
       tokenFile = config.sops.secrets."github-token".path;
     };
 
     runner-3 = {
       enable = true;
       url = "https://github.com/FredSystems/nixos";
-      name = "nixos-runner-3";
-      labels = [
-        "self-hosted"
-        "nixos"
-      ];
+      name = "nixos-hfdlhub2-runner-3";
       tokenFile = config.sops.secrets."github-token".path;
     };
 
     runner-4 = {
       enable = true;
       url = "https://github.com/FredSystems/nixos";
-      name = "nixos-runner-4";
-      labels = [
-        "self-hosted"
-        "nixos"
-      ];
+      name = "nixos-hfdlhub2-runner-4";
       tokenFile = config.sops.secrets."github-token".path;
     };
   };
