@@ -19,10 +19,10 @@ updatenix() {
         sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .
     else
         if [[ "$(pwd)" != "$nixos_dir" ]]; then
-            pushd "$nixos_dir" >/dev/null || return
+            pushd "$nixos_dir" >/dev/null || return 2
             pushed=true
         fi
-        sudo nixos-rebuild switch --flake .#"$(hostname)" || exit
+        sudo nixos-rebuild switch --flake .#"$(hostname)" || return 1
         sudo nixos-needsreboot
 
         if [[ -f /run/reboot-required ]]; then
