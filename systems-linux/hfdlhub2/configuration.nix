@@ -53,76 +53,77 @@ in
     deps = [ ];
   };
 
-  services.github-runners = {
-    runner-1 = {
-      enable = true;
-      url = "https://github.com/FredSystems/nixos";
-      name = "nixos-hfdlhub2-runner-1";
-      tokenFile = config.sops.secrets."github-token".path;
+  services = {
+    github-runners = {
+      runner-1 = {
+        enable = true;
+        url = "https://github.com/FredSystems/nixos";
+        name = "nixos-hfdlhub2-runner-1";
+        tokenFile = config.sops.secrets."github-token".path;
+      };
+
+      runner-2 = {
+        enable = true;
+        url = "https://github.com/FredSystems/nixos";
+        name = "nixos-hfdlhub2-runner-2";
+        tokenFile = config.sops.secrets."github-token".path;
+      };
+
+      # runner-3 = {
+      #   enable = true;
+      #   url = "https://github.com/FredSystems/nixos";
+      #   name = "nixos-hfdlhub2-runner-3";
+      #   tokenFile = config.sops.secrets."github-token".path;
+      # };
+
+      # runner-4 = {
+      #   enable = true;
+      #   url = "https://github.com/FredSystems/nixos";
+      #   name = "nixos-hfdlhub2-runner-4";
+      #   tokenFile = config.sops.secrets."github-token".path;
+      # };
     };
 
-    runner-2 = {
-      enable = true;
-      url = "https://github.com/FredSystems/nixos";
-      name = "nixos-hfdlhub2-runner-2";
-      tokenFile = config.sops.secrets."github-token".path;
-    };
+    adsb.containers = [
+      ###############################################################
+      # DOZZLE AGENT
+      ###############################################################
+      {
+        name = "dozzle-agent";
+        image = "amir20/dozzle:v8.14.10";
+        exec = "agent";
 
-    runner-3 = {
-      enable = true;
-      url = "https://github.com/FredSystems/nixos";
-      name = "nixos-hfdlhub2-runner-3";
-      tokenFile = config.sops.secrets."github-token".path;
-    };
+        environmentFiles = [
+          config.sops.secrets."docker/hfdlhub2.env".path
+        ];
 
-    runner-4 = {
-      enable = true;
-      url = "https://github.com/FredSystems/nixos";
-      name = "nixos-hfdlhub2-runner-4";
-      tokenFile = config.sops.secrets."github-token".path;
-    };
+        volumes = [
+          "/var/run/docker.sock:/var/run/docker.sock:ro"
+        ];
+
+        ports = [ "7007:7007" ];
+
+        requires = [ "network-online.target" ];
+      }
+
+      ###############################################################
+      # HFDLOBserver
+      ###############################################################
+      # {
+      #   name = "hfdlobserver";
+      #   image = "ghcr.io/sdr-enthusiasts/docker-hfdlobserver:latest-build-14";
+
+      #   environmentFiles = [
+      #     config.sops.secrets."docker/hfdlhub2.env".path
+      #   ];
+
+      #   volumes = [
+      #     "/opt/adsb/hfdlobserver:/run/hfdlobserver"
+      #   ];
+
+      #   requires = [ "network-online.target" ];
+      # }
+
+    ];
   };
-
-  services.adsb.containers = [
-
-    ###############################################################
-    # DOZZLE AGENT
-    ###############################################################
-    {
-      name = "dozzle-agent";
-      image = "amir20/dozzle:v8.14.10";
-      exec = "agent";
-
-      environmentFiles = [
-        config.sops.secrets."docker/hfdlhub2.env".path
-      ];
-
-      volumes = [
-        "/var/run/docker.sock:/var/run/docker.sock:ro"
-      ];
-
-      ports = [ "7007:7007" ];
-
-      requires = [ "network-online.target" ];
-    }
-
-    ###############################################################
-    # HFDLOBserver
-    ###############################################################
-    # {
-    #   name = "hfdlobserver";
-    #   image = "ghcr.io/sdr-enthusiasts/docker-hfdlobserver:latest-build-14";
-
-    #   environmentFiles = [
-    #     config.sops.secrets."docker/hfdlhub2.env".path
-    #   ];
-
-    #   volumes = [
-    #     "/opt/adsb/hfdlobserver:/run/hfdlobserver"
-    #   ];
-
-    #   requires = [ "network-online.target" ];
-    # }
-
-  ];
 }

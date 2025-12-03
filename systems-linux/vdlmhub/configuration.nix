@@ -54,133 +54,165 @@
     };
   };
 
-  services.adsb.containers = [
+  services = {
+    github-runners = {
+      runner-1 = {
+        enable = true;
+        url = "https://github.com/FredSystems/nixos";
+        name = "nixos-vdlmhub-runner-1";
+        tokenFile = config.sops.secrets."github-token".path;
+      };
 
-    ###############################################################
-    # DOZZLE AGENT
-    ###############################################################
-    {
-      name = "dozzle-agent";
-      image = "amir20/dozzle:v8.14.10";
-      exec = "agent";
+      runner-2 = {
+        enable = true;
+        url = "https://github.com/FredSystems/nixos";
+        name = "nixos-vdlmhub-runner-2";
+        tokenFile = config.sops.secrets."github-token".path;
+      };
 
-      volumes = [
-        "/var/run/docker.sock:/var/run/docker.sock:ro"
-      ];
+      # runner-3 = {
+      #   enable = true;
+      #   url = "https://github.com/FredSystems/nixos";
+      #   name = "nixos-vdlmhub-runner-3";
+      #   tokenFile = config.sops.secrets."github-token".path;
+      # };
 
-      ports = [ "7007:7007" ];
-    }
+      # runner-4 = {
+      #   enable = true;
+      #   url = "https://github.com/FredSystems/nixos";
+      #   name = "nixos-vdlmhub-runner-4";
+      #   tokenFile = config.sops.secrets."github-token".path;
+      # };
+    };
 
-    ###############################################################
-    # dumpvdl2-1
-    ###############################################################
-    {
-      name = "dumpvdl2-1";
-      image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5";
+    adsb.containers = [
 
-      tty = true;
-      restart = "always";
+      ###############################################################
+      # DOZZLE AGENT
+      ###############################################################
+      {
+        name = "dozzle-agent";
+        image = "amir20/dozzle:v8.14.10";
+        exec = "agent";
 
-      environmentFiles = [
-        config.sops.secrets."docker/vdlmhub/dumpvdl2-1.env".path
-      ];
+        volumes = [
+          "/var/run/docker.sock:/var/run/docker.sock:ro"
+        ];
 
-      deviceCgroupRules = [
-        "c 189:* rwm"
-      ];
+        ports = [ "7007:7007" ];
+      }
 
-      tmpfs = [
-        "/run:exec,size=64M"
-        "/var/log"
-      ];
+      ###############################################################
+      # dumpvdl2-1
+      ###############################################################
+      {
+        name = "dumpvdl2-1";
+        image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5";
 
-      volumes = [
-        "/dev:/dev"
-      ];
-    }
+        tty = true;
+        restart = "always";
 
-    ###############################################################
-    # dumpvdl2-2
-    ###############################################################
-    {
-      name = "dumpvdl2-2";
-      image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5";
+        environmentFiles = [
+          config.sops.secrets."docker/vdlmhub/dumpvdl2-1.env".path
+        ];
 
-      tty = true;
-      restart = "always";
+        deviceCgroupRules = [
+          "c 189:* rwm"
+        ];
 
-      environmentFiles = [
-        config.sops.secrets."docker/vdlmhub/dumpvdl2-2.env".path
-      ];
+        tmpfs = [
+          "/run:exec,size=64M"
+          "/var/log"
+        ];
 
-      deviceCgroupRules = [
-        "c 189:* rwm"
-      ];
+        volumes = [
+          "/dev:/dev"
+        ];
+      }
 
-      tmpfs = [
-        "/run:exec,size=64M"
-        "/var/log"
-      ];
+      ###############################################################
+      # dumpvdl2-2
+      ###############################################################
+      {
+        name = "dumpvdl2-2";
+        image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5";
 
-      volumes = [
-        "/dev:/dev"
-      ];
-    }
+        tty = true;
+        restart = "always";
 
-    ###############################################################
-    # dumpvdl2-3
-    ###############################################################
-    {
-      name = "dumpvdl2-3";
-      image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5";
+        environmentFiles = [
+          config.sops.secrets."docker/vdlmhub/dumpvdl2-2.env".path
+        ];
 
-      tty = true;
-      restart = "always";
+        deviceCgroupRules = [
+          "c 189:* rwm"
+        ];
 
-      environmentFiles = [
-        config.sops.secrets."docker/vdlmhub/dumpvdl2-3.env".path
-      ];
+        tmpfs = [
+          "/run:exec,size=64M"
+          "/var/log"
+        ];
 
-      deviceCgroupRules = [
-        "c 189:* rwm"
-      ];
+        volumes = [
+          "/dev:/dev"
+        ];
+      }
 
-      tmpfs = [
-        "/run:exec,size=64M"
-        "/var/log"
-      ];
+      ###############################################################
+      # dumpvdl2-3
+      ###############################################################
+      {
+        name = "dumpvdl2-3";
+        image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5";
 
-      volumes = [
-        "/dev:/dev"
-      ];
-    }
+        tty = true;
+        restart = "always";
 
-    ###############################################################
-    # dumpvdl2-4
-    ###############################################################
-    {
-      name = "dumpvdl2-4";
-      image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5";
+        environmentFiles = [
+          config.sops.secrets."docker/vdlmhub/dumpvdl2-3.env".path
+        ];
 
-      tty = true;
-      restart = "always";
+        deviceCgroupRules = [
+          "c 189:* rwm"
+        ];
 
-      environmentFiles = [
-        config.sops.secrets."docker/vdlmhub/dumpvdl2-4.env".path
-      ];
+        tmpfs = [
+          "/run:exec,size=64M"
+          "/var/log"
+        ];
 
-      deviceCgroupRules = [
-        "c 189:* rwm"
-      ];
+        volumes = [
+          "/dev:/dev"
+        ];
+      }
 
-      tmpfs = [
-        "/run:exec,size=64M"
-        "/var/log"
-      ];
+      ###############################################################
+      # dumpvdl2-4
+      ###############################################################
+      {
+        name = "dumpvdl2-4";
+        image = "ghcr.io/sdr-enthusiasts/docker-dumpvdl2:trixie-latest-build-5";
 
-      volumes = [
-        "/dev:/dev"
-      ];
-    }
-  ];
+        tty = true;
+        restart = "always";
+
+        environmentFiles = [
+          config.sops.secrets."docker/vdlmhub/dumpvdl2-4.env".path
+        ];
+
+        deviceCgroupRules = [
+          "c 189:* rwm"
+        ];
+
+        tmpfs = [
+          "/run:exec,size=64M"
+          "/var/log"
+        ];
+
+        volumes = [
+          "/dev:/dev"
+        ];
+      }
+    ];
+  };
 }
