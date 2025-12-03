@@ -33,11 +33,11 @@ in
   system.stateVersion = stateVersion;
 
   sops.secrets = {
+    "github-token" = { };
+
     "docker/hfdlhub2.env" = {
       format = "yaml";
     };
-
-    "github-token" = { };
   };
 
   system.activationScripts.adsbDockerCompose = {

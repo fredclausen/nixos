@@ -35,6 +35,8 @@
   };
 
   sops.secrets = {
+    "github-token" = { };
+
     "docker/acarshub.env" = {
       format = "yaml";
     };

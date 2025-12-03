@@ -40,6 +40,8 @@
   };
 
   sops.secrets = {
+    "github-token" = { };
+
     "docker/vdlmhub/dumpvdl2-1.env" = {
       format = "yaml";
     };

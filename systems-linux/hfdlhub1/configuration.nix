@@ -28,6 +28,8 @@
   system.stateVersion = stateVersion;
 
   sops.secrets = {
+    "github-token" = { };
+
     "docker/hfdlhub1/dumphfdl1.env" = {
       format = "yaml";
     };
