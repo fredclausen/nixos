@@ -61,38 +61,26 @@ in
       tokenFile = config.sops.secrets."github-token".path;
     };
 
-    # runner-2 = {
-    #   enable = true;
-    #   url = "https://github.com/FredSystems/nixos";
-    #   name = "nixos-runner-2";
-    #   labels = [
-    #     "self-hosted"
-    #     "nixos"
-    #   ];
-    #   tokenFile = config.sops.secrets."github-token".path;
-    # };
+    runner-2 = {
+      enable = true;
+      url = "https://github.com/FredSystems/nixos";
+      name = "nixos-runner-1";
+      tokenFile = config.sops.secrets."github-token".path;
+    };
 
-    # runner-3 = {
-    #   enable = true;
-    #   url = "https://github.com/FredSystems/nixos";
-    #   name = "nixos-runner-3";
-    #   labels = [
-    #     "self-hosted"
-    #     "nixos"
-    #   ];
-    #   tokenFile = config.sops.secrets."github-token".path;
-    # };
+    runner-3 = {
+      enable = true;
+      url = "https://github.com/FredSystems/nixos";
+      name = "nixos-runner-1";
+      tokenFile = config.sops.secrets."github-token".path;
+    };
 
-    # runner-4 = {
-    #   enable = true;
-    #   url = "https://github.com/FredSystems/nixos";
-    #   name = "nixos-runner-4";
-    #   labels = [
-    #     "self-hosted"
-    #     "nixos"
-    #   ];
-    #   tokenFile = config.sops.secrets."github-token".path;
-    # };
+    runner-4 = {
+      enable = true;
+      url = "https://github.com/FredSystems/nixos";
+      name = "nixos-runner-1";
+      tokenFile = config.sops.secrets."github-token".path;
+    };
   };
 
   services.adsb.containers = [
