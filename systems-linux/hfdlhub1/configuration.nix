@@ -28,6 +28,8 @@
   system.stateVersion = stateVersion;
 
   sops.secrets = {
+    "github-token" = { };
+
     "docker/hfdlhub1/dumphfdl1.env" = {
       format = "yaml";
     };
@@ -47,131 +49,167 @@
     deps = [ ];
   };
 
-  services.adsb.containers = [
-
-    ###############################################################
-    # DOZZLE AGENT
-    ###############################################################
-    {
-      name = "dozzle-agent";
-      image = "amir20/dozzle:v8.14.10";
-      exec = "agent";
-
-      volumes = [
-        "/var/run/docker.sock:/var/run/docker.sock:ro"
-      ];
-
-      ports = [ "7007:7007" ];
-    }
-
-    ###############################################################
-    # DUMPHFDL-1
-    ###############################################################
-    {
-      name = "dumphfdl-1";
-      image = "ghcr.io/sdr-enthusiasts/docker-dumphfdl:trixie-latest-build-3";
-
-      tty = true;
-      restart = "always";
-
-      environmentFiles = [
-        config.sops.secrets."docker/hfdlhub1/dumphfdl1.env".path
-      ];
-
-      deviceCgroupRules = [
-        "c 189:* rwm"
-      ];
-
-      tmpfs = [
-        "/run:exec,size=64M"
-        "/var/log"
-        "/tmp"
-      ];
-
-      volumes = [
-        "/dev:/dev"
-        "/opt/adsb/data/dumphfdl1-data:/opt/dumphfdl"
-        "/opt/adsb/data/dumphfdl1-scanner:/opt/scanner"
-      ];
-
-      requires = [ "network-online.target" ];
-    }
-
-    ###############################################################
-    # DUMPHFDL-2
-    ###############################################################
-    {
-      name = "dumphfdl-2";
-      image = "ghcr.io/sdr-enthusiasts/docker-dumphfdl:trixie-latest-build-3";
-
-      tty = true;
-      restart = "always";
-
-      depends_on = {
-        "dumphfdl-1" = {
-          condition = "service_started";
-        };
+  services = {
+    github-runners = {
+      runner-1 = {
+        enable = true;
+        url = "https://github.com/FredSystems/nixos";
+        name = "nixos-hfdlhub1-runner-1";
+        tokenFile = config.sops.secrets."github-token".path;
+        ephemeral = true;
       };
 
-      environmentFiles = [
-        config.sops.secrets."docker/hfdlhub1/dumphfdl2.env".path
-      ];
-
-      deviceCgroupRules = [
-        "c 189:* rwm"
-      ];
-
-      tmpfs = [
-        "/run:exec,size=64M"
-        "/var/log"
-        "/tmp"
-      ];
-
-      volumes = [
-        "/dev:/dev"
-        "/opt/adsb/data/dumphfdl2-data:/opt/dumphfdl"
-        "/opt/adsb/data/dumphfdl2-scanner:/opt/scanner"
-      ];
-    }
-
-    ###############################################################
-    # DUMPHFDL-3
-    ###############################################################
-    {
-      name = "dumphfdl-3";
-      image = "ghcr.io/sdr-enthusiasts/docker-dumphfdl:trixie-latest-build-3";
-
-      tty = true;
-      restart = "always";
-
-      depends_on = {
-        "dumphfdl-1" = {
-          condition = "service_started";
-        };
-        "dumphfdl-2" = {
-          condition = "service_started";
-        };
+      runner-2 = {
+        enable = true;
+        url = "https://github.com/FredSystems/nixos";
+        name = "nixos-hfdlhub1-runner-2";
+        tokenFile = config.sops.secrets."github-token".path;
+        ephemeral = true;
       };
 
-      environmentFiles = [
-        config.sops.secrets."docker/hfdlhub1/dumphfdl3.env".path
-      ];
+      # runner-3 = {
+      #   enable = true;
+      #   url = "https://github.com/FredSystems/nixos";
+      #   name = "nixos-hfdlhub1-runner-3";
+      #   tokenFile = config.sops.secrets."github-token".path;
+      # ephemeral = true;
+      # };
 
-      deviceCgroupRules = [
-        "c 189:* rwm"
-      ];
+      # runner-4 = {
+      #   enable = true;
+      #   url = "https://github.com/FredSystems/nixos";
+      #   name = "nixos-hfdlhub1-runner-4";
+      #   tokenFile = config.sops.secrets."github-token".path;
+      # ephemeral = true;
+      # };
+    };
 
-      tmpfs = [
-        "/run:exec,size=64M"
-        "/var/log"
-        "/tmp"
-      ];
+    adsb.containers = [
 
-      volumes = [
-        "/dev:/dev"
-        "/opt/adsb/data/dumphfdl3-data:/opt/dumphfdl"
-        "/opt/adsb/data/dumphfdl3-scanner:/opt/scanner"
-      ];
-    }
-  ];
+      ###############################################################
+      # DOZZLE AGENT
+      ###############################################################
+      {
+        name = "dozzle-agent";
+        image = "amir20/dozzle:v8.14.10";
+        exec = "agent";
+
+        volumes = [
+          "/var/run/docker.sock:/var/run/docker.sock:ro"
+        ];
+
+        ports = [ "7007:7007" ];
+      }
+
+      ###############################################################
+      # DUMPHFDL-1
+      ###############################################################
+      {
+        name = "dumphfdl-1";
+        image = "ghcr.io/sdr-enthusiasts/docker-dumphfdl:trixie-latest-build-3";
+
+        tty = true;
+        restart = "always";
+
+        environmentFiles = [
+          config.sops.secrets."docker/hfdlhub1/dumphfdl1.env".path
+        ];
+
+        deviceCgroupRules = [
+          "c 189:* rwm"
+        ];
+
+        tmpfs = [
+          "/run:exec,size=64M"
+          "/var/log"
+          "/tmp"
+        ];
+
+        volumes = [
+          "/dev:/dev"
+          "/opt/adsb/data/dumphfdl1-data:/opt/dumphfdl"
+          "/opt/adsb/data/dumphfdl1-scanner:/opt/scanner"
+        ];
+
+        requires = [ "network-online.target" ];
+      }
+
+      ###############################################################
+      # DUMPHFDL-2
+      ###############################################################
+      {
+        name = "dumphfdl-2";
+        image = "ghcr.io/sdr-enthusiasts/docker-dumphfdl:trixie-latest-build-3";
+
+        tty = true;
+        restart = "always";
+
+        depends_on = {
+          "dumphfdl-1" = {
+            condition = "service_started";
+          };
+        };
+
+        environmentFiles = [
+          config.sops.secrets."docker/hfdlhub1/dumphfdl2.env".path
+        ];
+
+        deviceCgroupRules = [
+          "c 189:* rwm"
+        ];
+
+        tmpfs = [
+          "/run:exec,size=64M"
+          "/var/log"
+          "/tmp"
+        ];
+
+        volumes = [
+          "/dev:/dev"
+          "/opt/adsb/data/dumphfdl2-data:/opt/dumphfdl"
+          "/opt/adsb/data/dumphfdl2-scanner:/opt/scanner"
+        ];
+      }
+
+      ###############################################################
+      # DUMPHFDL-3
+      ###############################################################
+      {
+        name = "dumphfdl-3";
+        image = "ghcr.io/sdr-enthusiasts/docker-dumphfdl:trixie-latest-build-3";
+
+        tty = true;
+        restart = "always";
+
+        depends_on = {
+          "dumphfdl-1" = {
+            condition = "service_started";
+          };
+          "dumphfdl-2" = {
+            condition = "service_started";
+          };
+        };
+
+        environmentFiles = [
+          config.sops.secrets."docker/hfdlhub1/dumphfdl3.env".path
+        ];
+
+        deviceCgroupRules = [
+          "c 189:* rwm"
+        ];
+
+        tmpfs = [
+          "/run:exec,size=64M"
+          "/var/log"
+          "/tmp"
+        ];
+
+        volumes = [
+          "/dev:/dev"
+          "/opt/adsb/data/dumphfdl3-data:/opt/dumphfdl"
+          "/opt/adsb/data/dumphfdl3-scanner:/opt/scanner"
+        ];
+      }
+    ];
+  };
 }

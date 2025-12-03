@@ -9,6 +9,7 @@ on:
 
 jobs:
   find-systems:
+    name: Find linux systems
     runs-on: ubuntu-latest
     outputs:
       servers: ${{ steps.out.outputs.servers }}
@@ -61,6 +62,7 @@ jobs:
           echo "desktops=$desktops_json" >> "$GITHUB_OUTPUT"
 
   build-servers:
+    name: Build server systems
     runs-on: ubuntu-latest
     needs: find-systems
     strategy:
@@ -87,9 +89,14 @@ jobs:
           nix build \
             ".#nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel"
 
-  eval-desktops:
-    runs-on: ubuntu-latest
+  build-desktops:
+    name: Build desktop systems
+    runs-on: self-hosted
     needs: find-systems
+    strategy:
+      fail-fast: false
+      matrix:
+        system: ${{ fromJson(needs.find-systems.outputs.desktops) }}
 
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
@@ -103,25 +110,17 @@ jobs:
           use-flakehub: false
           use-gha-cache: false
 
-      - name: Desktop smoke test
+      - name: Build desktop system
         run: |
-          echo "Checking desktop config: ${{ matrix.system }}"
+          echo "Building system: ${{ matrix.system }}"
 
-          echo "::group::preload flake inputs"
-          nix flake archive --json | jq .
-          echo "::endgroup::"
-
-          echo "::group::flake metadata"
-          nix flake metadata
-          echo "::endgroup::"
-
-          echo "::group::flake check"
-          nix flake check --print-build-logs --keep-going
-          echo "::endgroup::"
+          nix build \
+            ".#nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel"
 
   build-servers-summary:
+    name: Build Linux Summary
     runs-on: ubuntu-latest
-    needs: [build-servers, eval-desktops]
+    needs: [build-servers, build-desktops]
     if: always()
     steps:
       - name: Mark servers build summary

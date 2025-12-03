@@ -33,6 +33,8 @@ in
   system.stateVersion = stateVersion;
 
   sops.secrets = {
+    "github-token" = { };
+
     "docker/hfdlhub2.env" = {
       format = "yaml";
     };
@@ -51,46 +53,81 @@ in
     deps = [ ];
   };
 
-  services.adsb.containers = [
+  services = {
+    github-runners = {
+      runner-1 = {
+        enable = true;
+        url = "https://github.com/FredSystems/nixos";
+        name = "nixos-hfdlhub2-runner-1";
+        tokenFile = config.sops.secrets."github-token".path;
+        ephemeral = true;
+      };
 
-    ###############################################################
-    # DOZZLE AGENT
-    ###############################################################
-    {
-      name = "dozzle-agent";
-      image = "amir20/dozzle:v8.14.10";
-      exec = "agent";
+      runner-2 = {
+        enable = true;
+        url = "https://github.com/FredSystems/nixos";
+        name = "nixos-hfdlhub2-runner-2";
+        tokenFile = config.sops.secrets."github-token".path;
+        ephemeral = true;
+      };
 
-      environmentFiles = [
-        config.sops.secrets."docker/hfdlhub2.env".path
-      ];
+      # runner-3 = {
+      #   enable = true;
+      #   url = "https://github.com/FredSystems/nixos";
+      #   name = "nixos-hfdlhub2-runner-3";
+      #   tokenFile = config.sops.secrets."github-token".path;
+      # ephemeral = true;
+      # };
 
-      volumes = [
-        "/var/run/docker.sock:/var/run/docker.sock:ro"
-      ];
+      # runner-4 = {
+      #   enable = true;
+      #   url = "https://github.com/FredSystems/nixos";
+      #   name = "nixos-hfdlhub2-runner-4";
+      #   tokenFile = config.sops.secrets."github-token".path;
+      # ephemeral = true;
+      # };
+    };
 
-      ports = [ "7007:7007" ];
+    adsb.containers = [
+      ###############################################################
+      # DOZZLE AGENT
+      ###############################################################
+      {
+        name = "dozzle-agent";
+        image = "amir20/dozzle:v8.14.10";
+        exec = "agent";
 
-      requires = [ "network-online.target" ];
-    }
+        environmentFiles = [
+          config.sops.secrets."docker/hfdlhub2.env".path
+        ];
 
-    ###############################################################
-    # HFDLOBserver
-    ###############################################################
-    # {
-    #   name = "hfdlobserver";
-    #   image = "ghcr.io/sdr-enthusiasts/docker-hfdlobserver:latest-build-14";
+        volumes = [
+          "/var/run/docker.sock:/var/run/docker.sock:ro"
+        ];
 
-    #   environmentFiles = [
-    #     config.sops.secrets."docker/hfdlhub2.env".path
-    #   ];
+        ports = [ "7007:7007" ];
 
-    #   volumes = [
-    #     "/opt/adsb/hfdlobserver:/run/hfdlobserver"
-    #   ];
+        requires = [ "network-online.target" ];
+      }
 
-    #   requires = [ "network-online.target" ];
-    # }
+      ###############################################################
+      # HFDLOBserver
+      ###############################################################
+      # {
+      #   name = "hfdlobserver";
+      #   image = "ghcr.io/sdr-enthusiasts/docker-hfdlobserver:latest-build-14";
 
-  ];
+      #   environmentFiles = [
+      #     config.sops.secrets."docker/hfdlhub2.env".path
+      #   ];
+
+      #   volumes = [
+      #     "/opt/adsb/hfdlobserver:/run/hfdlobserver"
+      #   ];
+
+      #   requires = [ "network-online.target" ];
+      # }
+
+    ];
+  };
 }
