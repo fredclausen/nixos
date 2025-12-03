@@ -57,28 +57,28 @@ in
     runner-1 = {
       enable = true;
       url = "https://github.com/FredSystems/nixos";
-      name = "nixos-runner-1";
+      name = "nixos-hfdlhub2-runner-1";
       tokenFile = config.sops.secrets."github-token".path;
     };
 
     runner-2 = {
       enable = true;
       url = "https://github.com/FredSystems/nixos";
-      name = "nixos-runner-1";
+      name = "nixos-hfdlhub2-runner-2";
       tokenFile = config.sops.secrets."github-token".path;
     };
 
     runner-3 = {
       enable = true;
       url = "https://github.com/FredSystems/nixos";
-      name = "nixos-runner-1";
+      name = "nixos-hfdlhub2-runner-3";
       tokenFile = config.sops.secrets."github-token".path;
     };
 
     runner-4 = {
       enable = true;
       url = "https://github.com/FredSystems/nixos";
-      name = "nixos-runner-1";
+      name = "nixos-hfdlhub2-runner-4";
       tokenFile = config.sops.secrets."github-token".path;
     };
   };
