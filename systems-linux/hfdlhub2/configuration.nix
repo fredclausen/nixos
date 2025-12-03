@@ -36,6 +36,8 @@ in
     "docker/hfdlhub2.env" = {
       format = "yaml";
     };
+
+    "github-token" = { };
   };
 
   system.activationScripts.adsbDockerCompose = {
@@ -49,6 +51,52 @@ in
       install -m0644 -o fred -g users ${hfdlObserver} /opt/adsb/hfdlobserver/settings.yaml
     '';
     deps = [ ];
+  };
+
+  services.github-runner.runners = {
+    runner-1 = {
+      enable = true;
+      url = "https://github.com/fredclausen/nixos";
+      name = "nixos-runner-1";
+      labels = [
+        "self-hosted"
+        "nixos"
+      ];
+      tokenFile = config.sops.secrets."github-token".path;
+    };
+
+    runner-2 = {
+      enable = true;
+      url = "https://github.com/FredSystems/nixos";
+      name = "nixos-runner-2";
+      labels = [
+        "self-hosted"
+        "nixos"
+      ];
+      tokenFile = config.sops.secrets."github-token".path;
+    };
+
+    runner-3 = {
+      enable = true;
+      url = "https://github.com/FredSystems/nixos";
+      name = "nixos-runner-3";
+      labels = [
+        "self-hosted"
+        "nixos"
+      ];
+      tokenFile = config.sops.secrets."github-token".path;
+    };
+
+    runner-4 = {
+      enable = true;
+      url = "https://github.com/FredSystems/nixos";
+      name = "nixos-runner-4";
+      labels = [
+        "self-hosted"
+        "nixos"
+      ];
+      tokenFile = config.sops.secrets."github-token".path;
+    };
   };
 
   services.adsb.containers = [
