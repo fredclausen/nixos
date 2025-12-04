@@ -9,7 +9,8 @@
     ./hardware-configuration.nix
     ../../modules/secrets/sops.nix
     ../../modules/adsb-docker-units.nix
-    ./monitoring.nix
+    ../../modules/monitoring/monitoring-master.nix
+    ../../modules/monitoring/monitoring-agent.nix
   ];
 
   # Server profile (no desktop components)
@@ -19,6 +20,8 @@
     enable_games = false;
     enable_streaming = false;
   };
+
+  deployment.role = "monitoring-master";
 
   sops_secrets.enable_secrets.enable = true;
 

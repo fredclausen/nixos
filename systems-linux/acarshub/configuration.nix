@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
     ../../modules/secrets/sops.nix
     ../../modules/adsb-docker-units.nix
+    ../../modules/monitoring/monitoring-agent.nix
   ];
 
   # Server profile
@@ -18,6 +19,8 @@
     enable_games = false;
     enable_streaming = false;
   };
+  deployment.role = "monitoring-agent";
+
   sops_secrets.enable_secrets.enable = true;
 
   networking.hostName = "acarshub";

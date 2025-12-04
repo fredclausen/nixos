@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
     ../../modules/secrets/sops.nix
     ../../modules/adsb-docker-units.nix
+    ../../modules/monitoring/monitoring-agent.nix
   ];
 
   # Server profile
@@ -18,6 +19,8 @@
     enable_games = false;
     enable_streaming = false;
   };
+
+  deployment.role = "monitoring-agent";
 
   sops_secrets.enable_secrets.enable = true;
 
@@ -50,39 +53,39 @@
   };
 
   services = {
-    github-runners = {
-      runner-1 = {
-        enable = true;
-        url = "https://github.com/FredSystems/nixos";
-        name = "nixos-hfdlhub1-runner-1";
-        tokenFile = config.sops.secrets."github-token".path;
-        ephemeral = true;
-      };
+    # github-runners = {
+    #   runner-1 = {
+    #     enable = true;
+    #     url = "https://github.com/FredSystems/nixos";
+    #     name = "nixos-hfdlhub1-runner-1";
+    #     tokenFile = config.sops.secrets."github-token".path;
+    #     ephemeral = true;
+    #   };
 
-      runner-2 = {
-        enable = true;
-        url = "https://github.com/FredSystems/nixos";
-        name = "nixos-hfdlhub1-runner-2";
-        tokenFile = config.sops.secrets."github-token".path;
-        ephemeral = true;
-      };
+    #   runner-2 = {
+    #     enable = true;
+    #     url = "https://github.com/FredSystems/nixos";
+    #     name = "nixos-hfdlhub1-runner-2";
+    #     tokenFile = config.sops.secrets."github-token".path;
+    #     ephemeral = true;
+    #   };
 
-      # runner-3 = {
-      #   enable = true;
-      #   url = "https://github.com/FredSystems/nixos";
-      #   name = "nixos-hfdlhub1-runner-3";
-      #   tokenFile = config.sops.secrets."github-token".path;
-      # ephemeral = true;
-      # };
+    # runner-3 = {
+    #   enable = true;
+    #   url = "https://github.com/FredSystems/nixos";
+    #   name = "nixos-hfdlhub1-runner-3";
+    #   tokenFile = config.sops.secrets."github-token".path;
+    # ephemeral = true;
+    # };
 
-      # runner-4 = {
-      #   enable = true;
-      #   url = "https://github.com/FredSystems/nixos";
-      #   name = "nixos-hfdlhub1-runner-4";
-      #   tokenFile = config.sops.secrets."github-token".path;
-      # ephemeral = true;
-      # };
-    };
+    # runner-4 = {
+    #   enable = true;
+    #   url = "https://github.com/FredSystems/nixos";
+    #   name = "nixos-hfdlhub1-runner-4";
+    #   tokenFile = config.sops.secrets."github-token".path;
+    # ephemeral = true;
+    # };
+    # };
 
     adsb.containers = [
 

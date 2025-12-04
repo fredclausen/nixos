@@ -1,9 +1,12 @@
 {
   lib,
   pkgs,
+  agentNodes,
   ...
 }:
-
+let
+  agentHosts = agentNodes;
+in
 {
   #######################################
   # SOPS Secret
@@ -24,15 +27,26 @@
     deps = [ ];
   };
 
-  environment.etc."grafana/provisioning/dashboards/system/node-exporter-full.json" = {
-    source = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/rfrail3/grafana-dashboards/master/prometheus/node-exporter-full.json";
-      sha256 = "sha256-lOpPVIW4Rih8/5zWnjC3K0kKgK5Jc1vQgCgj4CVkYP4=";
+  environment.etc = {
+    "grafana/provisioning/dashboards/system/node-exporter-full.json" = {
+      source = pkgs.fetchurl {
+        url = "https://grafana.com/api/dashboards/1860/revisions/29/download";
+        sha256 = "sha256-UGzW9KXevW5uJb8GLzX/J8h4yStHPur5nBI0luobsFw=";
+      };
+      user = "grafana";
+      group = "grafana";
+      mode = "0444";
     };
 
-    user = "grafana";
-    group = "grafana";
-    mode = "0444";
+    "grafana/provisioning/dashboards/containers/docker-cadvisor.json" = {
+      source = pkgs.fetchurl {
+        url = "https://grafana.com/api/dashboards/14282/revisions/1/download";
+        sha256 = "sha256-dqhaC4r4rXHCJpASt5y3EZXW00g5fhkQM+MgNcgX1c0=";
+      };
+      user = "grafana";
+      group = "grafana";
+      mode = "0444";
+    };
   };
 
   #######################################
@@ -66,26 +80,53 @@
 
       ruleFiles = [ ];
 
-      exporters.node = {
-        enable = true;
-        openFirewall = true;
-        listenAddress = "0.0.0.0";
-        port = 9100;
-      };
-
       scrapeConfigs = [
         {
           job_name = "node";
-          static_configs = [
-            { targets = [ "127.0.0.1:9100" ]; }
-          ];
+          static_configs =
+            (map (h: {
+              targets = [ "${h}.local:9100" ];
+              labels = {
+                hostname = h;
+                role = "agent";
+                exporter = "node";
+              };
+            }) agentHosts)
+            ++ [
+              {
+                targets = [ "sdrhub.local:9100" ];
+                labels = {
+                  hostname = "sdrhub";
+                  role = "master";
+                  exporter = "node";
+                };
+              }
+            ];
         }
+
         {
           job_name = "cadvisor";
-          static_configs = [
-            { targets = [ "127.0.0.1:4567" ]; }
-          ];
+          static_configs =
+            (map (h: {
+              targets = [ "${h}.local:4567" ];
+              labels = {
+                hostname = h;
+                role = "agent";
+                exporter = "cadvisor";
+              };
+            }) agentHosts)
+            ++ [
+              {
+                targets = [ "sdrhub.local:4567" ];
+                labels = {
+                  hostname = "sdrhub";
+                  role = "master";
+                  exporter = "cadvisor";
+                };
+              }
+            ];
         }
+
         {
           job_name = "prometheus";
           static_configs = [
@@ -100,44 +141,44 @@
           ];
         }
       ];
-    };
 
-    #######################################
-    # Alertmanager
-    #######################################
-    prometheus.alertmanager = {
-      enable = true;
+      #######################################
+      # Alertmanager
+      #######################################
+      alertmanager = {
+        enable = true;
 
-      listenAddress = "0.0.0.0";
-      port = 9093;
+        listenAddress = "0.0.0.0";
+        port = 9093;
 
-      configuration = {
-        global = {
-          resolve_timeout = "5m";
+        configuration = {
+          global = {
+            resolve_timeout = "5m";
+          };
+
+          route = {
+            receiver = "null";
+          };
+
+          receivers = [
+            {
+              name = "null";
+            }
+          ];
         };
+      };
 
-        route = {
-          receiver = "null";
-        };
+      #######################################
+      # Pushgateway
+      #######################################
+      pushgateway = {
+        enable = true;
 
-        receivers = [
-          {
-            name = "null";
-          }
+        # If you want bind to localhost-only:
+        extraFlags = [
+          "--web.listen-address=127.0.0.1:9091"
         ];
       };
-    };
-
-    #######################################
-    # Pushgateway
-    #######################################
-    prometheus.pushgateway = {
-      enable = true;
-
-      # If you want bind to localhost-only:
-      extraFlags = [
-        "--web.listen-address=127.0.0.1:9091"
-      ];
     };
 
     #######################################
@@ -178,6 +219,7 @@
         dashboards = {
           settings = {
             apiVersion = 1;
+
             providers = [
               {
                 name = "node-exporter";
@@ -186,8 +228,21 @@
                 type = "file";
                 disableDeletion = true;
                 updateIntervalSeconds = 60;
+
                 options = {
                   path = "/etc/grafana/provisioning/dashboards/system";
+                };
+              }
+
+              {
+                name = "cadvisor-dashboards";
+                orgId = 1;
+                folder = "Containers";
+                type = "file";
+                disableDeletion = true;
+                updateIntervalSeconds = 60;
+                options = {
+                  path = "/etc/grafana/provisioning/dashboards/containers";
                 };
               }
             ];
@@ -196,11 +251,6 @@
       };
 
       dataDir = "/var/lib/grafana";
-    };
-
-    cadvisor = {
-      enable = true;
-      port = 4567;
     };
   };
 
@@ -211,5 +261,6 @@
     9090 # Prometheus
     9093 # Alertmanager
     3333 # Grafana
+    4567 # cAdvisor
   ];
 }

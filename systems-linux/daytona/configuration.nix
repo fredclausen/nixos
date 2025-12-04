@@ -23,6 +23,8 @@
     enable_streaming = false;
   };
 
+  deployment.role = "desktop";
+
   sops_secrets.enable_secrets.enable = true;
 
   hardware.graphics = {

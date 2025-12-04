@@ -22,6 +22,7 @@
     enable_games = true;
     enable_streaming = true;
   };
+  deployment.role = "desktop";
   sops_secrets.enable_secrets.enable = true;
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_testing;
