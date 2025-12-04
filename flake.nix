@@ -77,6 +77,13 @@
       github_signing_key = "F406B080289FEC21";
       hmlib = home-manager.lib;
 
+      agentNodes = builtins.filter (
+        name: self.nixosConfigurations.${name}.config.deployment.role == "monitoring-agent"
+      ) (builtins.attrNames self.nixosConfigurations);
+
+      # Turn each node name into actual DNS/IP scrape targets
+      agentTargets = map (name: "${name}.local") agentNodes;
+
       supportedSystems = [
         "x86_64-linux"
         "aarch64-darwin"
@@ -103,10 +110,13 @@
               hmlib
               system
               stateVersion
+              agentNodes
+              agentTargets
               ;
           };
 
           modules = [
+            ./modules/deployment-meta.nix
             ./systems-linux/${hostName}/configuration.nix
             ./modules/common/system.nix
             home-manager.nixosModules.home-manager
@@ -166,6 +176,7 @@
           };
 
           modules = [
+            ./modules/deployment-meta.nix
             ./modules/common/system.nix
             ./systems-darwin/${hostName}/configuration.nix
             home-manager.darwinModules.home-manager
