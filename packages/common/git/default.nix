@@ -3,6 +3,7 @@
   user,
   verbose_name,
   github_email,
+  github_signing_key,
   ...
 }:
 let
@@ -37,10 +38,10 @@ in
           };
 
           "credential \"https://github.com\"" = {
-            helper = "!/etc/profiles/per-user/${username}/bin/gh auth git-credential";
+            helper = "!${pkgs.gh}/bin/gh auth git-credential";
           };
           "credential \"https://gist.github.com\"" = {
-            helper = "!/etc/profiles/per-user/${username}/bin/gh auth git-credential";
+            helper = "!${pkgs.gh}/bin/gh auth git-credential";
           };
         };
 
@@ -49,7 +50,7 @@ in
         signing = {
           signer = "${pkgs.gnupg}/bin/gpg";
           signByDefault = true;
-          key = "F406B080289FEC21";
+          key = github_signing_key;
         };
 
         lfs = {
