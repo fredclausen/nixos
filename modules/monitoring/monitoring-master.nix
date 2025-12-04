@@ -30,18 +30,8 @@ in
   environment.etc = {
     "grafana/provisioning/dashboards/system/node-exporter-full.json" = {
       source = pkgs.fetchurl {
-        url = "https://grafana.com/api/dashboards/1860/revisions/29/download";
-        sha256 = "sha256-UGzW9KXevW5uJb8GLzX/J8h4yStHPur5nBI0luobsFw=";
-      };
-      user = "grafana";
-      group = "grafana";
-      mode = "0444";
-    };
-
-    "grafana/provisioning/dashboards/containers/docker-cadvisor.json" = {
-      source = pkgs.fetchurl {
-        url = "https://grafana.com/api/dashboards/14282/revisions/1/download";
-        sha256 = "sha256-dqhaC4r4rXHCJpASt5y3EZXW00g5fhkQM+MgNcgX1c0=";
+        url = "https://raw.githubusercontent.com/rfrail3/grafana-dashboards/master/prometheus/node-exporter-full.json";
+        sha256 = "sha256-lOpPVIW4Rih8/5zWnjC3K0kKgK5Jc1vQgCgj4CVkYP4=`";
       };
       user = "grafana";
       group = "grafana";
@@ -231,18 +221,6 @@ in
 
                 options = {
                   path = "/etc/grafana/provisioning/dashboards/system";
-                };
-              }
-
-              {
-                name = "cadvisor-dashboards";
-                orgId = 1;
-                folder = "Containers";
-                type = "file";
-                disableDeletion = true;
-                updateIntervalSeconds = 60;
-                options = {
-                  path = "/etc/grafana/provisioning/dashboards/containers";
                 };
               }
             ];
