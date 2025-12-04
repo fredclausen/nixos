@@ -29,43 +29,23 @@
   "panels": [
     {
       "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
       "id": 100,
       "title": "Node Overview",
       "type": "row"
     },
+
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${ds_prometheus}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 0,
-        "y": 1
-      },
+      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "fieldConfig": { "defaults": { "unit": "percent" } },
+      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 1 },
       "id": 101,
       "options": {
-        "legend": {
-          "displayMode": "table",
-          "placement": "right"
-        }
+        "legend": { "displayMode": "table", "placement": "right" }
       },
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{name!=\"\", hostname=\"$node\"}[5m])) * 100",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{name!=\"\", hostname=~\"$node\"}[5m])) * 100",
           "legendFormat": "{{hostname}} CPU %",
           "refId": "A"
         }
@@ -73,26 +53,15 @@
       "title": "Node CPU Usage (Total)",
       "type": "timeseries"
     },
+
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${ds_prometheus}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bytes"
-        }
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 8,
-        "y": 1
-      },
+      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "fieldConfig": { "defaults": { "unit": "bytes" } },
+      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 1 },
       "id": 102,
       "targets": [
         {
-          "expr": "sum(container_memory_usage_bytes{hostname=\"$node\", name!=\"\"})",
+          "expr": "sum(container_memory_usage_bytes{hostname=~\"$node\", name!=\"\"})",
           "legendFormat": "{{hostname}}",
           "refId": "A"
         }
@@ -100,26 +69,15 @@
       "title": "Node Memory Usage (Total)",
       "type": "timeseries"
     },
+
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${ds_prometheus}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bytes"
-        }
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 16,
-        "y": 1
-      },
+      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "fieldConfig": { "defaults": { "unit": "bytes" } },
+      "gridPos": { "h": 6, "w": 8, "x": 16, "y": 1 },
       "id": 103,
       "targets": [
         {
-          "expr": "sum(container_fs_usage_bytes{hostname=\"$node\", name!=\"\"})",
+          "expr": "sum(container_fs_usage_bytes{hostname=~\"$node\", name!=\"\"})",
           "legendFormat": "{{hostname}}",
           "refId": "A"
         }
@@ -130,32 +88,19 @@
 
     {
       "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 7
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 7 },
       "id": 200,
       "title": "Container Overview",
       "type": "row"
     },
 
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${ds_prometheus}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 0,
-        "y": 8
-      },
+      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 8 },
       "id": 201,
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{name=\"$container\", hostname=\"$node\"}[5m]))",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\"$container\", hostname=~\"$node\"}[5m]))",
           "legendFormat": "{{name}} ({{hostname}})",
           "refId": "A"
         }
@@ -165,20 +110,12 @@
     },
 
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${ds_prometheus}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 12,
-        "y": 8
-      },
+      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 8 },
       "id": 202,
       "targets": [
         {
-          "expr": "container_memory_usage_bytes{name=\"$container\", hostname=\"$node\"}",
+          "expr": "container_memory_usage_bytes{name=~\"$container\", hostname=~\"$node\"}",
           "legendFormat": "{{name}} ({{hostname}})",
           "refId": "A"
         }
@@ -188,25 +125,17 @@
     },
 
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${ds_prometheus}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 0,
-        "y": 14
-      },
+      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 14 },
       "id": 203,
       "targets": [
         {
-          "expr": "rate(container_network_receive_bytes_total{name=\"$container\", hostname=\"$node\"}[5m])",
+          "expr": "rate(container_network_receive_bytes_total{name=~\"$container\", hostname=~\"$node\"}[5m])",
           "legendFormat": "RX {{name}} ({{hostname}})",
           "refId": "A"
         },
         {
-          "expr": "rate(container_network_transmit_bytes_total{name=\"$container\", hostname=\"$node\"}[5m])",
+          "expr": "rate(container_network_transmit_bytes_total{name=~\"$container\", hostname=~\"$node\"}[5m])",
           "legendFormat": "TX {{name}} ({{hostname}})",
           "refId": "B"
         }
@@ -216,25 +145,17 @@
     },
 
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${ds_prometheus}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 12,
-        "y": 14
-      },
+      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 14 },
       "id": 204,
       "targets": [
         {
-          "expr": "rate(container_fs_reads_bytes_total{name=\"$container\", hostname=\"$node\"}[5m])",
+          "expr": "rate(container_fs_reads_bytes_total{name=~\"$container\", hostname=~\"$node\"}[5m])",
           "legendFormat": "Reads {{name}}",
           "refId": "A"
         },
         {
-          "expr": "rate(container_fs_writes_bytes_total{name=\"$container\", hostname=\"$node\"}[5m])",
+          "expr": "rate(container_fs_writes_bytes_total{name=~\"$container\", hostname=~\"$node\"}[5m])",
           "legendFormat": "Writes {{name}}",
           "refId": "B"
         }
@@ -246,6 +167,7 @@
 
   "style": "dark",
   "tags": ["containers", "nodes", "cadvisor", "prometheus"],
+
   "templating": {
     "list": [
       {
@@ -262,45 +184,28 @@
         "name": "node",
         "label": "Node",
         "type": "query",
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${ds_prometheus}"
-        },
+        "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
         "refresh": 1,
         "query": "label_values(container_cpu_usage_seconds_total, hostname)",
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": ".*"
-        },
         "includeAll": true,
-        "allValue": ".*"
+        "allValue": ".*",
+        "current": { "selected": true, "text": "All", "value": ".*" }
       },
       {
         "name": "container",
         "label": "Container",
         "type": "query",
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${ds_prometheus}"
-        },
+        "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
         "refresh": 1,
         "query": "label_values(container_cpu_usage_seconds_total{hostname=~\"$node\"}, name)",
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": ".*"
-        },
         "includeAll": true,
-        "allValue": ".*"
+        "allValue": ".*",
+        "current": { "selected": true, "text": "All", "value": ".*" }
       }
     ]
   },
 
-  "time": {
-    "from": "now-1h",
-    "to": "now"
-  },
+  "time": { "from": "now-1h", "to": "now" },
   "version": 1,
   "weekStart": ""
 }
