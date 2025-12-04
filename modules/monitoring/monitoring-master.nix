@@ -37,6 +37,14 @@ in
       group = "grafana";
       mode = "0444";
     };
+
+    "grafana/provisioning/dashboards/containers/dashboard-container-overview.json" = {
+      user = "grafana";
+      group = "grafana";
+      mode = "0444";
+
+      source = ./container.json;
+    };
   };
 
   #######################################
@@ -221,6 +229,19 @@ in
 
                 options = {
                   path = "/etc/grafana/provisioning/dashboards/system";
+                };
+              }
+
+              {
+                name = "cadvisor";
+                orgId = 1;
+                folder = "Container";
+                type = "file";
+                disableDeletion = true;
+                updateIntervalSeconds = 60;
+
+                options = {
+                  path = "/etc/grafana/provisioning/dashboards/containers";
                 };
               }
             ];
