@@ -17,6 +17,19 @@ in
   };
 
   system = {
+    defaults = {
+      dock = {
+        dashboard-in-overlay = false;
+        magnification = false;
+        orientation = "bottom";
+        show-recents = false;
+        tilesize = 32;
+        wvous-br-corner = 1;
+        wvous-bl-corner = 1;
+        wvous-tl-corner = 1;
+        wvous-tr-corner = 1;
+      };
+    };
     primaryUser = "${username}";
     stateVersion = 6;
   };
