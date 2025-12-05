@@ -84,7 +84,7 @@ in
       ];
 
       ruleFiles = [
-        #"/etc/prometheus/alert-rules.yaml"
+        ./alert-rules.yaml
       ];
 
       scrapeConfigs = [
