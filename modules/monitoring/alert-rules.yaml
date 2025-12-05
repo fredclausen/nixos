@@ -1,0 +1,62 @@
+groups:
+  - name: node-alerts
+    rules:
+      - alert: NodeDown
+        expr: up{job="node"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Node {{ $labels.hostname }} is down"
+          description: "Prometheus has not scraped {{ $labels.hostname }} for 2 minutes."
+
+      - alert: HighNodeCPU
+        expr: avg(rate(container_cpu_usage_seconds_total{name!=""}[5m])) by (hostname) > 0.70
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU on {{ $labels.hostname }}"
+          description: "CPU usage has been > 70% for 5 minutes."
+
+      - alert: HighNodeMemory
+        expr: (sum(container_memory_usage_bytes{name!=""}) by (hostname))
+          /
+          (sum(machine_memory_bytes{}) by (hostname))
+          > 0.80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage on {{ $labels.hostname }}"
+          description: "Memory usage has exceeded 80% for more than 5 minutes."
+
+      - alert: NodeDiskLow
+        expr: (node_filesystem_avail_bytes{mountpoint="/"}
+          / node_filesystem_size_bytes{mountpoint="/"})
+          < 0.10
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Disk almost full on {{ $labels.hostname }}"
+          description: "The root filesystem is less than 10% free."
+
+  - name: container-alerts
+    rules:
+      - alert: ContainerRestarting
+        expr: rate(container_start_time_seconds[15m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container restarting frequently"
+          description: "{{ $labels.name }} on {{ $labels.hostname }} has restarted in the last 15 minutes."
+
+      - alert: ContainerOOM
+        expr: increase(container_oom_events_total[15m]) > 0
+        labels:
+          severity: critical
+        annotations:
+          summary: "Container OOM killed"
+          description: "{{ $labels.name }} on {{ $labels.hostname }} was OOM-killed."

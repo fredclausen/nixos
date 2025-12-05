@@ -45,6 +45,13 @@ in
 
       source = ./container.json;
     };
+
+    "prometheus/alert-rules.yaml" = {
+      source = ./alert-rules.yaml;
+      user = "prometheus";
+      group = "prometheus";
+      mode = "0444";
+    };
   };
 
   #######################################
@@ -76,7 +83,9 @@ in
         }
       ];
 
-      ruleFiles = [ ];
+      ruleFiles = [
+        #"/etc/prometheus/alert-rules.yaml"
+      ];
 
       scrapeConfigs = [
         {
