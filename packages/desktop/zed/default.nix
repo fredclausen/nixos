@@ -77,6 +77,7 @@ in
           "css"
           "markdown"
           "markdownlint"
+          "git-firefly"
         ];
         userSettings = {
           # theme = {
