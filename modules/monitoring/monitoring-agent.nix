@@ -35,6 +35,7 @@
               labels = {
                 job = "journal";
                 hostname = "${config.networking.hostName}";
+                host = "${config.networking.hostName}";
               };
             };
             relabel_configs = [
