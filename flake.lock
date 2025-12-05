@@ -155,24 +155,6 @@
         "type": "github"
       }
     },
-    "flake-utils_3": {
-      "inputs": {
-        "systems": "systems_3"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "git-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -275,34 +257,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "ixx": {
-      "inputs": {
-        "flake-utils": [
-          "nixvim",
-          "nuschtosSearch",
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixvim",
-          "nuschtosSearch",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1754860581,
-        "narHash": "sha256-EM0IE63OHxXCOpDHXaTyHIOk2cNvMCGPqLt/IdtVxgk=",
-        "owner": "NuschtOS",
-        "repo": "ixx",
-        "rev": "babfe85a876162c4acc9ab6fb4483df88fa1f281",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NuschtOS",
-        "ref": "v0.1.1",
-        "repo": "ixx",
         "type": "github"
       }
     },
@@ -464,49 +418,39 @@
         "type": "github"
       }
     },
-    "nixvim": {
-      "inputs": {
-        "flake-parts": "flake-parts",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nuschtosSearch": "nuschtosSearch",
-        "systems": "systems_4"
-      },
+    "nixpkgs_5": {
       "locked": {
-        "lastModified": 1764937607,
-        "narHash": "sha256-9IaPsg65IOkT7tkjjXuhnw3EeFQMB2KVPhYIAGUMftM=",
-        "owner": "nix-community",
-        "repo": "nixvim",
-        "rev": "b715929c344919c9a0dd31794b8e514ed9a8994b",
+        "lastModified": 1764886837,
+        "narHash": "sha256-Sup1QVtp30cSa1FJLVkwTHEBV75XT+lWPvgHL0I7s1s=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "bd88d6c13ab85cc842b93d53f68d6d40412e5a18",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "nixvim",
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
-    "nuschtosSearch": {
+    "nixvim": {
       "inputs": {
-        "flake-utils": "flake-utils_3",
-        "ixx": "ixx",
-        "nixpkgs": [
-          "nixvim",
-          "nixpkgs"
-        ]
+        "flake-parts": "flake-parts",
+        "nixpkgs": "nixpkgs_5",
+        "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1761730856,
-        "narHash": "sha256-t1i5p/vSWwueZSC0Z2BImxx3BjoUDNKyC2mk24krcMY=",
-        "owner": "NuschtOS",
-        "repo": "search",
-        "rev": "e29de6db0cb3182e9aee75a3b1fd1919d995d85b",
+        "lastModified": 1764942275,
+        "narHash": "sha256-ilPl/NCTxabL4kL+hpK6slcTdrqfr0KfyFrRjQt+sps=",
+        "owner": "nix-community",
+        "repo": "nixvim",
+        "rev": "812d7e639d0be7b0ed5aa50990ce0028a43215c8",
         "type": "github"
       },
       "original": {
-        "owner": "NuschtOS",
-        "repo": "search",
+        "owner": "nix-community",
+        "repo": "nixvim",
         "type": "github"
       }
     },
@@ -672,21 +616,6 @@
       }
     },
     "systems_3": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_4": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
