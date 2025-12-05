@@ -54,10 +54,54 @@ in
     };
   };
 
+  systemd.tmpfiles.rules = [
+    "d /var/lib/loki 0750 loki loki -"
+  ];
+
   #######################################
   # Prometheus
   #######################################
   services = {
+    loki = {
+      enable = true;
+      configuration = {
+        server = {
+          http_listen_address = "0.0.0.0";
+          http_listen_port = 5678;
+        };
+
+        auth_enabled = false;
+
+        common = {
+          replication_factor = 1;
+          path_prefix = "/tmp/loki";
+          ring = {
+            kvstore.store = "inmemory";
+            instance_addr = "127.0.0.1";
+          };
+        };
+
+        schema_config = {
+          configs = [
+            {
+              from = "2020-05-15";
+              store = "tsdb";
+              object_store = "filesystem";
+              schema = "v13";
+              index = {
+                prefix = "index_";
+                period = "24h";
+              };
+            }
+          ];
+        };
+
+        storage_config.filesystem.directory = "/tmp/loki/chunks";
+
+        analytics.reporting_enabled = false;
+      };
+    };
+
     prometheus = {
       enable = true;
 
@@ -150,6 +194,38 @@ in
         }
       ];
 
+      alertmanager-ntfy = {
+        enable = true;
+        settings = {
+          http = {
+            addr = "127.0.0.1:8000";
+          };
+          ntfy = {
+            baseurl = "https://ntfy.sh";
+            notification = {
+              topic = "fred-sdrhub-alerts";
+              priority = ''
+                status == "firing" ? "high" : "default"
+              '';
+              tags = [
+                {
+                  tag = "+1";
+                  condition = ''status == "resolved"'';
+                }
+                {
+                  tag = "rotating_light";
+                  condition = ''status == "firing"'';
+                }
+              ];
+              templates = {
+                title = ''{{ if eq .Status "resolved" }}Resolved: {{ end }}{{ index .Annotations "summary" }}'';
+                description = ''{{ index .Annotations "description" }}'';
+              };
+            };
+          };
+        };
+      };
+
       #######################################
       # Alertmanager
       #######################################
@@ -165,12 +241,19 @@ in
           };
 
           route = {
-            receiver = "null";
+            receiver = "ntfy";
           };
 
           receivers = [
             {
-              name = "null";
+              name = "ntfy";
+
+              webhook_configs = [
+                {
+                  url = "http://127.0.0.1:8000/hook";
+                  send_resolved = true;
+                }
+              ];
             }
           ];
         };
@@ -219,6 +302,14 @@ in
                 url = "http://127.0.0.1:9090";
                 access = "proxy";
                 isDefault = true;
+              }
+
+              {
+                name = "Loki";
+                type = "loki";
+                access = "proxy";
+                url = "http://localhost:3100";
+                isDefault = false;
               }
             ];
           };
@@ -270,6 +361,6 @@ in
     9090 # Prometheus
     9093 # Alertmanager
     3333 # Grafana
-    4567 # cAdvisor
+    5678 # Loki
   ];
 }
