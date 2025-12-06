@@ -58,7 +58,7 @@ updatedocker_ansible() {
 updatesystems_ansible() {
     echo "Running system update playbook..."
     pushd "$ANSIBLE_DIR" >/dev/null || return
-    ansible-playbook -i inventory.yaml plays/update_servers.yaml --ask-become-pass
+    ansible-playbook -i inventory.yaml plays/update_servers.yaml --ask-become-pass "$@"
     popd >/dev/null || return
 }
 
