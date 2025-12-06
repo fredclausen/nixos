@@ -46,6 +46,13 @@ in
       source = ./container.json;
     };
 
+    "grafana/provisioning/dashboards/system/system-logs.json" = {
+      source = ./system-logs.json;
+      user = "grafana";
+      group = "grafana";
+      mode = "0444";
+    };
+
     "prometheus/alert-rules.yaml" = {
       source = ./alert-rules.yaml;
       user = "prometheus";
@@ -334,7 +341,7 @@ in
                 name = "Loki";
                 type = "loki";
                 access = "proxy";
-                url = "http://localhost:3100";
+                url = "http://localhost:5678";
                 isDefault = false;
               }
             ];

@@ -93,6 +93,8 @@ in
       enable = true;
     };
 
-    systemd.services = lib.foldl' (acc: c: acc // { "${c.name}" = mkUnit c; }) { } cfg.containers;
+    systemd.services = lib.foldl' (
+      acc: c: acc // { "docker-${c.name}" = mkUnit c; }
+    ) { } cfg.containers;
   };
 }
