@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   agentNodes,
   ...
 }:
@@ -8,13 +7,6 @@ let
   agentHosts = agentNodes;
 in
 {
-  #######################################
-  # SOPS Secret
-  #######################################
-  sops.secrets."monitoring/grafana_pw" = {
-    owner = "grafana";
-  };
-
   systemd.services.prometheus.serviceConfig = {
     WorkingDirectory = lib.mkForce "/opt/monitoring/prometheus";
   };
@@ -28,113 +20,23 @@ in
   };
 
   environment.etc = {
-    "grafana/provisioning/dashboards/system/node-exporter-full.json" = {
-      source = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/rfrail3/grafana-dashboards/master/prometheus/node-exporter-full.json";
-        sha256 = "sha256-lOpPVIW4Rih8/5zWnjC3K0kKgK5Jc1vQgCgj4CVkYP4=`";
-      };
-      user = "grafana";
-      group = "grafana";
-      mode = "0444";
-    };
-
-    "grafana/provisioning/dashboards/containers/dashboard-container-overview.json" = {
-      user = "grafana";
-      group = "grafana";
-      mode = "0444";
-
-      source = ./container.json;
-    };
-
-    "grafana/provisioning/dashboards/system/system-logs.json" = {
-      source = ./system-logs.json;
-      user = "grafana";
-      group = "grafana";
-      mode = "0444";
-    };
-
     "prometheus/alert-rules.yaml" = {
-      source = ./alert-rules.yaml;
+      source = ./alert-rules/alert-rules.yaml;
       user = "prometheus";
       group = "prometheus";
       mode = "0444";
     };
   };
 
-  systemd.tmpfiles.rules = [
-    "d /var/lib/loki 0750 loki loki -"
+  networking.firewall.allowedTCPPorts = [
+    9090 # Prometheus
+    9093 # Alertmanager
   ];
 
   #######################################
   # Prometheus
   #######################################
   services = {
-    loki = {
-      enable = true;
-
-      configuration = {
-        server = {
-          http_listen_address = "0.0.0.0";
-          http_listen_port = 5678;
-        };
-
-        auth_enabled = false;
-
-        common = {
-          replication_factor = 1;
-          path_prefix = "/var/lib/loki";
-
-          ring = {
-            kvstore.store = "inmemory";
-            instance_addr = "127.0.0.1";
-          };
-        };
-
-        #
-        # Loki 3.x TSDB schema
-        #
-        schema_config = {
-          configs = [
-            {
-              from = "2024-01-01";
-              store = "tsdb";
-              object_store = "filesystem";
-              schema = "v13";
-              index = {
-                prefix = "index_";
-                period = "24h";
-              };
-            }
-          ];
-        };
-
-        #
-        # Loki 3.x retention lives here
-        #
-        limits_config = {
-          retention_period = "30d";
-        };
-
-        #
-        # Loki 3.x compactor settings
-        #
-        compactor = {
-          working_directory = "/var/lib/loki/compactor";
-
-          # shared_store = "filesystem";
-
-          compaction_interval = "10m";
-          retention_enabled = true;
-          retention_delete_delay = "2h";
-          delete_request_store = "filesystem";
-        };
-
-        storage_config.filesystem.directory = "/var/lib/loki/chunks";
-
-        analytics.reporting_enabled = false;
-      };
-    };
-
     prometheus = {
       enable = true;
 
@@ -162,7 +64,7 @@ in
       ];
 
       ruleFiles = [
-        ./alert-rules.yaml
+        ./alert-rules/alert-rules.yaml
       ];
 
       scrapeConfigs = [
@@ -304,96 +206,5 @@ in
         ];
       };
     };
-
-    #######################################
-    # Grafana
-    #######################################
-    grafana = {
-      enable = true;
-
-      settings = {
-        server = {
-          http_port = 3333;
-          http_addr = "0.0.0.0";
-        };
-
-        security = {
-          admin_user = "admin";
-          admin_password = "$__file{/run/secrets/monitoring/grafana_pw}";
-        };
-      };
-
-      provision = {
-        enable = true;
-
-        datasources = {
-          settings = {
-            datasources = [
-              {
-                name = "Prometheus";
-                type = "prometheus";
-                url = "http://127.0.0.1:9090";
-                access = "proxy";
-                isDefault = true;
-              }
-
-              {
-                name = "Loki";
-                type = "loki";
-                access = "proxy";
-                url = "http://localhost:5678";
-                isDefault = false;
-              }
-            ];
-          };
-        };
-
-        dashboards = {
-          settings = {
-            apiVersion = 1;
-
-            providers = [
-              {
-                name = "node-exporter";
-                orgId = 1;
-                folder = "System";
-                type = "file";
-                disableDeletion = true;
-                updateIntervalSeconds = 60;
-
-                options = {
-                  path = "/etc/grafana/provisioning/dashboards/system";
-                };
-              }
-
-              {
-                name = "cadvisor";
-                orgId = 1;
-                folder = "Container";
-                type = "file";
-                disableDeletion = true;
-                updateIntervalSeconds = 60;
-
-                options = {
-                  path = "/etc/grafana/provisioning/dashboards/containers";
-                };
-              }
-            ];
-          };
-        };
-      };
-
-      dataDir = "/var/lib/grafana";
-    };
   };
-
-  #######################################
-  # Firewall
-  #######################################
-  networking.firewall.allowedTCPPorts = [
-    9090 # Prometheus
-    9093 # Alertmanager
-    3333 # Grafana
-    5678 # Loki
-  ];
 }

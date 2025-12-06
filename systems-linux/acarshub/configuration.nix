@@ -9,7 +9,7 @@
     ./hardware-configuration.nix
     ../../modules/secrets/sops.nix
     ../../modules/adsb-docker-units.nix
-    ../../modules/monitoring/monitoring-agent.nix
+    ../../modules/monitoring/agent
   ];
 
   # Server profile
