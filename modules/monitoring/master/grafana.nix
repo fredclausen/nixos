@@ -31,6 +31,13 @@
       group = "grafana";
       mode = "0444";
     };
+
+    "grafana/provisioning/dashboards/adsb/dashboard-adsb.json" = {
+      source = ./dashboards/adsb.json;
+      user = "grafana";
+      group = "grafana";
+      mode = "0444";
+    };
   };
 
   services = {
@@ -105,6 +112,19 @@
 
                 options = {
                   path = "/etc/grafana/provisioning/dashboards/containers";
+                };
+              }
+
+              {
+                name = "adsb";
+                orgId = 1;
+                folder = "ADSB";
+                type = "file";
+                disableDeletion = true;
+                updateIntervalSeconds = 60;
+
+                options = {
+                  path = "/etc/grafana/provisioning/dashboards/adsb";
                 };
               }
             ];

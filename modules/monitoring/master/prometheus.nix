@@ -159,6 +159,29 @@ in
 
       scrapeConfigs = [
         {
+          job_name = "ultrafeeder";
+          static_configs = [
+            {
+              targets = [
+                "sdrhub.local:9273"
+                "sdrhub.local:9274"
+              ];
+            }
+          ];
+        }
+
+        {
+          job_name = "dump978";
+          static_configs = [
+            {
+              targets = [
+                "sdrhub.local:9275"
+              ];
+            }
+          ];
+        }
+
+        {
           job_name = "node";
           static_configs =
             (map (h: {
