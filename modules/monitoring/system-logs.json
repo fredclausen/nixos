@@ -1,0 +1,137 @@
+{
+  "title": "System Logs (Loki)",
+  "uid": "system-logs",
+  "schemaVersion": 36,
+  "editable": true,
+  "liveNow": false,
+  "tags": ["logs", "loki", "systemd"],
+  "time": { "from": "now-1h", "to": "now" },
+
+  "panels": [
+    {
+      "type": "row",
+      "title": "Log Overview",
+      "id": 100,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }
+    },
+
+    {
+      "type": "timeseries",
+      "title": "Log Volume (lines/sec)",
+      "id": 101,
+      "datasource": { "type": "loki", "uid": "${ds_loki}" },
+      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 1 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate({host=~\"$host\", unit=~\"$unit\"}[1m])) by (host)"
+        }
+      ]
+    },
+
+    {
+      "type": "logs",
+      "title": "Live Logs",
+      "id": 102,
+      "datasource": { "type": "loki", "uid": "${ds_loki}" },
+      "gridPos": { "h": 12, "w": 24, "x": 0, "y": 7 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{host=~\"$host\", unit=~\"$unit\"}"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": true,
+        "wrapLogMessage": true
+      }
+    },
+
+    {
+      "type": "timeseries",
+      "title": "Error / Warning Rate",
+      "id": 103,
+      "datasource": { "type": "loki", "uid": "${ds_loki}" },
+      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 19 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate({host=~\"$host\", unit=~\"$unit\", detected_level=~\"error|warn\"}[5m])) by (detected_level)"
+        }
+      ]
+    },
+
+    {
+      "type": "logs",
+      "title": "Container Logs",
+      "id": 104,
+      "datasource": { "type": "loki", "uid": "${ds_loki}" },
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 25 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{host=~\"$host\", unit=~\"docker-.*\\\\.service\"}"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": true,
+        "wrapLogMessage": true
+      }
+    },
+
+    {
+      "type": "logs",
+      "title": "Systemd Unit Logs",
+      "id": 105,
+      "datasource": { "type": "loki", "uid": "${ds_loki}" },
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 35 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{host=~\"$host\", unit!~\"docker-.*\\\\.service\", unit!=\"docker.service\"}"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": true,
+        "wrapLogMessage": true
+      }
+    }
+  ],
+
+  "templating": {
+    "list": [
+      {
+        "name": "ds_loki",
+        "type": "datasource",
+        "label": "Loki",
+        "query": "loki",
+        "current": {
+          "selected": true,
+          "text": "Loki",
+          "value": "${ds_loki}"
+        }
+      },
+      {
+        "name": "host",
+        "label": "Host",
+        "type": "query",
+        "datasource": { "type": "loki", "uid": "${ds_loki}" },
+        "query": "label_values(host)",
+        "includeAll": true,
+        "allValue": ".+"
+      },
+      {
+        "name": "unit",
+        "label": "Unit",
+        "type": "query",
+        "datasource": { "type": "loki", "uid": "${ds_loki}" },
+        "query": "label_values(unit)",
+        "includeAll": true,
+        "allValue": ".+"
+      }
+    ]
+  }
+}
