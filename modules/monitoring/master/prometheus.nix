@@ -1,22 +1,111 @@
 {
   lib,
+  pkgs,
   agentNodes,
+  user,
   ...
 }:
 let
   agentHosts = agentNodes;
+
 in
 {
-  systemd.services.prometheus.serviceConfig = {
-    WorkingDirectory = lib.mkForce "/opt/monitoring/prometheus";
-  };
+  environment.systemPackages = [
+    pkgs.prometheus.cli
+  ];
 
   system.activationScripts.prometheus_activation = {
     text = ''
       # Ensure directory exists (does not touch contents if already there)
       install -d -m0755 -o fred -g users /opt/monitoring/prometheus
+      install -d -m0755 -o prometheus -g prometheus /var/lib/prometheus2/data/snapshots
     '';
     deps = [ ];
+  };
+
+  systemd = {
+    services = {
+      prometheus.serviceConfig = {
+        WorkingDirectory = lib.mkForce "/opt/monitoring/prometheus";
+      };
+
+      setPrometheusACL = {
+        description = "Apply ACLs to Prometheus snapshot directory";
+        after = [ "prometheus.service" ];
+        wantedBy = [ "multi-user.target" ];
+
+        serviceConfig = {
+          Type = "oneshot";
+
+          ExecStart = ''
+            ${pkgs.coreutils}/bin/install -d -m0755 -o prometheus -g prometheus /var/lib/prometheus2/data/snapshots
+          '';
+
+          ExecStartPost = ''
+            ${pkgs.acl}/bin/setfacl -R -m u:${user}:rX /var/lib/prometheus2
+            ${pkgs.acl}/bin/setfacl -R -m u:${user}:rX /var/lib/prometheus2/data
+            ${pkgs.acl}/bin/setfacl -R -m u:${user}:rX /var/lib/prometheus2/data/snapshots
+            ${pkgs.acl}/bin/setfacl -R -m d:u:${user}:rX /var/lib/prometheus2/data/snapshots
+          '';
+        };
+      };
+
+      # Prune Prometheus snapshots older than 30 days
+      prunePrometheusSnapshots = {
+        description = "Prune Prometheus snapshots older than 30 days";
+        # Snapshots must exist before pruning
+        after = [ "prometheus.service" ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.writeShellScript "prune-prometheus-snapshots" ''
+            set -eu
+
+            SNAPSHOT_DIR="/var/lib/prometheus2/data/snapshots"
+
+            if [ -d "$SNAPSHOT_DIR" ]; then
+              # Delete directories older than 30 days
+              ${pkgs.toybox}/bin/find "$SNAPSHOT_DIR"/* -maxdepth 0 -type d -mtime +30 -print -exec  ${pkgs.toybox}/bin/rm -rf {} +
+            fi
+          ''}";
+        };
+      };
+
+      createPrometheusSnapshot = {
+        description = "Create Prometheus TSDB snapshot";
+        after = [ "prometheus.service" ];
+        wants = [ "prometheus.service" ];
+
+        serviceConfig = {
+          Type = "oneshot";
+
+          ExecStart = "${pkgs.writeShellScript "create-prometheus-snapshot" ''
+            set -eu
+
+            ${pkgs.curl}/bin/curl -XPOST http://localhost:9090/api/v1/admin/tsdb/snapshot
+          ''}";
+        };
+      };
+    };
+
+    timers = {
+      prunePrometheusSnapshots = {
+        description = "Daily prune of Prometheus snapshots older than 30 days";
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "daily"; # runs at 00:00 by default
+          Persistent = true; # catch-up if system was down
+        };
+      };
+
+      createPrometheusSnapshot = {
+        description = "Scheduled Prometheus TSDB snapshot generation";
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "daily";
+          Persistent = true; # catch up after reboot
+        };
+      };
+    };
   };
 
   environment.etc = {
@@ -46,7 +135,8 @@ in
 
       # Prometheus now requires extraFlags for TSDB paths
       extraFlags = [
-        "--storage.tsdb.retention.time=30d"
+        "--storage.tsdb.retention.time=1d"
+        "--web.enable-admin-api"
       ];
 
       globalConfig = {

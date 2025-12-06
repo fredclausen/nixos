@@ -32,6 +32,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/77c98a59-dbc8-4121-b35a-43cf76bc35dc";
     fsType = "ext4";
+    options = [ "acl" ];
   };
 
   fileSystems."/boot" = {
