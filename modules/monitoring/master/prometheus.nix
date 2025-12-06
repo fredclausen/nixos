@@ -135,7 +135,7 @@ in
 
       # Prometheus now requires extraFlags for TSDB paths
       extraFlags = [
-        "--storage.tsdb.retention.time=1d"
+        "--storage.tsdb.retention.time=90d"
         "--web.enable-admin-api"
       ];
 
