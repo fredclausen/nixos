@@ -25,7 +25,27 @@
   deployment.role = "desktop";
   sops_secrets.enable_secrets.enable = true;
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_testing;
+  boot = {
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_18;
+
+    kernelParams = [
+      "usbcore.autosuspend=-1"
+      "xhci_hcd.quirks=270336"
+    ];
+
+    initrd.kernelModules = [
+      "usbhid"
+      "hid_generic"
+      "hid_logitech_hidpp"
+      "hid_logitech_dj"
+      "hid_apple" # optional but helpful for Keychron
+    ];
+  };
+
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
+  '';
+
   networking.hostName = "maranello";
 
   environment.systemPackages = with pkgs; [ ];
