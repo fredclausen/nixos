@@ -253,7 +253,7 @@
       ###############################################################
       {
         name = "dump978";
-        image = "ghcr.io/sdr-enthusiasts/docker-dump978:trixie-latest-build-2";
+        image = "ghcr.io/sdr-enthusiasts/docker-dump978:telegraf-build-773";
 
         hostname = "dump978";
         restart = "always";
@@ -269,6 +269,7 @@
 
         ports = [
           "8083:80"
+          "9275:9275"
         ];
 
         volumes = [

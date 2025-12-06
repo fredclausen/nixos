@@ -169,6 +169,18 @@ in
             }
           ];
         }
+
+        {
+          job_name = "dump978";
+          static_configs = [
+            {
+              targets = [
+                "sdrhub.local:9275"
+              ];
+            }
+          ];
+        }
+
         {
           job_name = "node";
           static_configs =
