@@ -208,7 +208,7 @@
       ###############################################################
       {
         name = "ultrafeeder";
-        image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-839";
+        image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:telegraph-build-840";
 
         hostname = "ultrafeeder";
         restart = "always";
@@ -229,6 +229,7 @@
           "30005:30005"
           "30047:30047"
           "12000:12000"
+          "9273-9274:9273-9274"
         ];
 
         volumes = [
