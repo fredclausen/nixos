@@ -27,17 +27,17 @@ jobs:
             exit 0
           fi
 
-          BASE_TREE="${{ github.event.merge_group.base_commit.tree_id }}"
-          HEAD_TREE="${{ github.event.merge_group.head_commit.tree_id }}"
+          PR_BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          QUEUE_BASE_SHA="${{ github.event.merge_group.base_sha }}"
 
-          echo "Base tree: $BASE_TREE"
-          echo "Head tree: $HEAD_TREE"
+          echo "PR base:    $PR_BASE_SHA"
+          echo "Queue base: $QUEUE_BASE_SHA"
 
-          if [ "$BASE_TREE" = "$HEAD_TREE" ]; then
-            echo "No diff in merge tree — fast-path skip."
+          if [ "$PR_BASE_SHA" = "$QUEUE_BASE_SHA" ]; then
+            echo "Fast-path: PR already tested against this base."
             echo "skip=true" >> $GITHUB_OUTPUT
           else
-            echo "Merge introduces changes — running CI."
+            echo "Base advanced since PR CI — must run CI."
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
 
