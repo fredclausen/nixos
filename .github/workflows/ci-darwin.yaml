@@ -10,26 +10,28 @@ on:
 jobs:
   # =====================================================================
   # Fast-path: Detect whether merge_queue introduces zero diff
+  # NOTE: MUST ALWAYS RUN, otherwise all dependent jobs skip.
   # =====================================================================
   skip-if-clean:
     name: Skip if merge_queue produces no diff
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.check.outputs.skip }}
-    # Only relevant during merge_group runs
-    if: github.event_name == 'merge_group'
+    if: ${{ always() }} # <-- IMPORTANT FIX (same fix as Lint)
     steps:
-      - name: Check merge_group synthetic commit
+      - name: Determine skip mode
         id: check
         run: |
-          echo "base_sha: ${{ github.event.merge_group.base_sha }}"
-          echo "head_sha: ${{ github.event.merge_group.head_sha }}"
+          # PR phase: always run full CI
+          if [ "${{ github.event_name }}" != "merge_group" ]; then
+            echo "skip=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
 
+          # Merge queue: determine if synthetic merge is a no-op
           if [ "${{ github.event.merge_group.base_sha }}" = "${{ github.event.merge_group.head_sha }}" ]; then
-            echo "Synthetic merge produced no changes — skipping CI."
             echo "skip=true" >> $GITHUB_OUTPUT
           else
-            echo "Synthetic merge contains changes — running CI."
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
 
@@ -40,24 +42,19 @@ jobs:
     name: Find Darwin systems
     runs-on: ubuntu-latest
     needs: [skip-if-clean]
-    # Run normally for PRs,
-    # For merge_group: run only if NOT skipping
-    if: >
-      github.event_name != 'merge_group' ||
-      (github.event_name == 'merge_group' &&
-       needs.skip-if-clean.outputs.skip != 'true')
+    if: ${{ needs.skip-if-clean.outputs.skip != 'true' }} # <-- works reliably now
 
     outputs:
       systems: ${{ steps.out.outputs.systems }}
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: actions/checkout@v6
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
+        uses: DeterminateSystems/nix-installer-action@v21
 
       - name: Enable Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
+        uses: DeterminateSystems/magic-nix-cache-action@v13
         with:
           use-flakehub: false
           use-gha-cache: false
@@ -76,10 +73,7 @@ jobs:
     name: Build Darwin systems
     runs-on: macos-latest
     needs: [skip-if-clean, find-darwin]
-    if: >
-      github.event_name != 'merge_group' ||
-      (github.event_name == 'merge_group' &&
-       needs.skip-if-clean.outputs.skip != 'true')
+    if: ${{ needs.skip-if-clean.outputs.skip != 'true' }} # <-- same tidy logic
 
     strategy:
       fail-fast: false
@@ -87,13 +81,13 @@ jobs:
         system: ${{ fromJson(needs.find-darwin.outputs.systems) }}
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: actions/checkout@v6
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
+        uses: DeterminateSystems/nix-installer-action@v21
 
       - name: Enable Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
+        uses: DeterminateSystems/magic-nix-cache-action@v13
         with:
           use-flakehub: false
           use-gha-cache: false
@@ -106,27 +100,24 @@ jobs:
           # nix build ".#darwinConfigurations.${{ matrix.system }}.system"
 
   # =====================================================================
-  # Final summary — Required Check
-  # * Runs ALWAYS so merge_queue is satisfied
-  # * Succeeds immediately if skipping
-  # * Fails if any matrix entry failed
+  # Required Check Summary
   # =====================================================================
   build-darwin-summary:
     name: Build Darwin Systems Summary
     runs-on: ubuntu-latest
     needs: [skip-if-clean, build-darwin]
-    if: always()
+    if: ${{ always() }}
 
     steps:
       - name: Evaluate results (skip or enforce failures)
         run: |
-          # Case 1: merge_queue skipped all real work
+          # Case 1: merge queue fast-path
           if [ "${{ needs.skip-if-clean.outputs.skip }}" = "true" ]; then
             echo "Merge queue synthetic merge was clean — summary passing without builds."
             exit 0
           fi
 
-          # Case 2: builds were actually run — enforce correctness
+          # Case 2: enforce matrix results
           STATUS="${{ needs.build-darwin.result }}"
           echo "build-darwin result: $STATUS"
 
