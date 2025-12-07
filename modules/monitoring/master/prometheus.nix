@@ -155,6 +155,7 @@ in
 
       ruleFiles = [
         ./alert-rules/alert-rules.yaml
+        ./alert-rules/docker-rules.yaml
       ];
 
       scrapeConfigs = [
