@@ -120,7 +120,6 @@ Each system's `configuration.nix` supports these options:
 
 #### Hyprland/Niri Tools
 
-- `fuzzel`
 - `waybar`
 - `swaync`
 - `vicinae`

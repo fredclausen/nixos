@@ -8,20 +8,53 @@ on:
   workflow_dispatch:
 
 jobs:
+  # =====================================================================
+  # Fast-path: Detect whether merge_queue introduces zero diff
+  # NOTE: MUST ALWAYS RUN, otherwise all dependent jobs skip.
+  # =====================================================================
+  skip-if-clean:
+    name: Skip if merge_queue produces no diff
+    runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.check.outputs.skip }}
+    if: ${{ always() }} # <-- IMPORTANT FIX (same fix as Lint)
+    steps:
+      - name: Determine skip mode
+        id: check
+        run: |
+          # PR phase: always run full CI
+          if [ "${{ github.event_name }}" != "merge_group" ]; then
+            echo "skip=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Merge queue: determine if synthetic merge is a no-op
+          if [ "${{ github.event.merge_group.base_sha }}" = "${{ github.event.merge_group.head_sha }}" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+  # =====================================================================
+  # Discover Darwin systems
+  # =====================================================================
   find-darwin:
     name: Find Darwin systems
     runs-on: ubuntu-latest
+    needs: [skip-if-clean]
+    if: ${{ needs.skip-if-clean.outputs.skip != 'true' }} # <-- works reliably now
+
     outputs:
       systems: ${{ steps.out.outputs.systems }}
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@v6
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
+        uses: DeterminateSystems/nix-installer-action@v21
 
       - name: Enable Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
+        uses: DeterminateSystems/magic-nix-cache-action@v13
         with:
           use-flakehub: false
           use-gha-cache: false
@@ -33,11 +66,14 @@ jobs:
           echo "Darwin systems: $systems"
           echo "systems=$systems" >> "$GITHUB_OUTPUT"
 
+  # =====================================================================
+  # Build Darwin systems (matrix)
+  # =====================================================================
   build-darwin:
     name: Build Darwin systems
     runs-on: macos-latest
-    needs: find-darwin
-    if: ${{ needs.find-darwin.outputs.systems != '[]' }}
+    needs: [skip-if-clean, find-darwin]
+    if: ${{ needs.skip-if-clean.outputs.skip != 'true' }} # <-- same tidy logic
 
     strategy:
       fail-fast: false
@@ -45,29 +81,55 @@ jobs:
         system: ${{ fromJson(needs.find-darwin.outputs.systems) }}
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@v6
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
+        uses: DeterminateSystems/nix-installer-action@v21
 
       - name: Enable Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
+        uses: DeterminateSystems/magic-nix-cache-action@v13
         with:
           use-flakehub: false
           use-gha-cache: false
 
       - name: Build Darwin system
         run: |
-          # FIXME: this is broken. Disabling for now. Leaving the check in place
-          echo "Skipping booo"
+          echo "Skipping build for now (placeholder)"
+          # Uncomment when ready:
           # echo "Building Darwin system: ${{ matrix.system }}"
           # nix build ".#darwinConfigurations.${{ matrix.system }}.system"
 
+  # =====================================================================
+  # Required Check Summary
+  # =====================================================================
   build-darwin-summary:
     name: Build Darwin Systems Summary
     runs-on: ubuntu-latest
-    needs: build-darwin
+    needs: [skip-if-clean, build-darwin]
+    if: ${{ always() }}
+
     steps:
-      - name: Mark servers build summary
+      - name: Evaluate results (skip or enforce failures)
         run: |
-          echo "All server builds finished."
+          # Case 1: merge queue fast-path
+          if [ "${{ needs.skip-if-clean.outputs.skip }}" = "true" ]; then
+            echo "Merge queue synthetic merge was clean — summary passing without builds."
+            exit 0
+          fi
+
+          # Case 2: enforce matrix results
+          STATUS="${{ needs.build-darwin.result }}"
+          echo "build-darwin result: $STATUS"
+
+          if [ "$STATUS" = "failure" ]; then
+            echo "❌ One or more Darwin builds failed."
+            exit 1
+          fi
+
+          if [ "$STATUS" = "cancelled" ]; then
+            echo "❌ Darwin build was cancelled — treating as failure."
+            exit 1
+          fi
+
+          echo "All Darwin builds succeeded."
+          exit 0

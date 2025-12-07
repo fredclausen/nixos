@@ -233,7 +233,6 @@ in
             "$mainMod SHIFT, T, exec, $terminal start -- bash"
             "$mainMod, A, exec, nautilus"
             "$mainMod, S, exec, code"
-            "CTRL, SPACE, exec, fuzzel"
             "ALT, SPACE, exec, vicinae toggle"
             "$mainMod, C, killactive"
             "$mainMod, M, exit"
