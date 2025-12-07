@@ -9,44 +9,43 @@ on:
 
 jobs:
   # =====================================================================
-  # Fast-path: Detect whether merge_queue introduces zero diff
+  # Fast-path job — now always runs, but only sets skip=true on merge_group
   # =====================================================================
   skip-if-clean:
     name: Skip if merge_queue produces no diff
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.check.outputs.skip }}
-    if: ${{ github.event_name == 'merge_group' }}
+    if: ${{ always() }} # <-- IMPORTANT FIX
     steps:
       - name: Check merge_group synthetic commit
         id: check
         run: |
-          echo "base_sha: ${{ github.event.merge_group.base_sha }}"
-          echo "head_sha: ${{ github.event.merge_group.head_sha }}"
+          # PR mode: never skip
+          if [ "${{ github.event_name }}" != "merge_group" ]; then
+            echo "skip=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
 
+          # Merge queue mode:
           if [ "${{ github.event.merge_group.base_sha }}" = "${{ github.event.merge_group.head_sha }}" ]; then
-            echo "Synthetic merge produced no changes — skipping lint."
             echo "skip=true" >> $GITHUB_OUTPUT
           else
-            echo "Synthetic merge contains changes — running lint."
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
 
   # =====================================================================
-  # Primary lint job
+  # Primary Lint job
   # =====================================================================
   lint:
     name: Lint
     runs-on: ubuntu-latest
     needs: [skip-if-clean]
-    if: ${{ github.event_name != 'merge_group' ||
-      (github.event_name == 'merge_group' &&
-      needs.skip-if-clean.outputs.skip != 'true') }}
+    if: ${{ needs.skip-if-clean.outputs.skip != 'true' }} # <-- now valid in PRs
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
-
-      - uses: cachix/install-nix-action@0b0e072294b088b73964f1d72dfdac0951439dbd
+      - uses: actions/checkout@v6
+      - uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
@@ -54,7 +53,7 @@ jobs:
         run: nix develop -c pre-commit run --all-files
 
   # =====================================================================
-  # Required Check: Lint Summary
+  # Required Check Summary
   # =====================================================================
   lint-summary:
     name: Lint Summary
@@ -63,24 +62,22 @@ jobs:
     if: ${{ always() }}
 
     steps:
-      - name: Evaluate summary (skip or propagate failure)
+      - name: Evaluate summary
         run: |
           if [ "${{ needs.skip-if-clean.outputs.skip }}" = "true" ]; then
-            echo "Merge queue synthetic merge was clean — skipping lint, marking success."
+            echo "Merge queue noop — skipping lint."
             exit 0
           fi
 
           STATUS="${{ needs.lint.result }}"
 
-          echo "Lint job result: $STATUS"
-
           if [ "$STATUS" = "failure" ]; then
-            echo "❌ Lint failed."
+            echo "Lint failed"
             exit 1
           fi
 
           if [ "$STATUS" = "cancelled" ]; then
-            echo "❌ Lint was cancelled — treating as failure."
+            echo "Lint cancelled"
             exit 1
           fi
 
