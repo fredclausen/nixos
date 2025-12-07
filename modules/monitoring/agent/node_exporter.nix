@@ -48,49 +48,61 @@
         serviceConfig = {
           Type = "oneshot";
           ExecStart = pkgs.writeShellScript "nixos-revision-metric.sh" ''
-                    set -euo pipefail
+                  set -euo pipefail
 
-                    GIT=${pkgs.git}/bin/git
-                    CURL=${pkgs.curl}/bin/curl
-                    JQ=${pkgs.jq}/bin/jq
+                  CURL=${pkgs.curl}/bin/curl
+                  JQ=${pkgs.jq}/bin/jq
+                  GIT=${pkgs.git}/bin/git
 
-                    REPO_DIR="/home/fred/GitHub/nixos"
-                    OWNER="fredsystems"
-                    REPO="nixos"
-                    HOST="${config.networking.hostName}"
+                  REPO_DIR="/home/fred/GitHub/nixos"
+                  OWNER="fredsystems"
+                  REPO="nixos"
+                  HOST="${config.networking.hostName}"
 
-                    # --- Force Git to treat the repo as safe ---
-                    export GIT_CONFIG_COUNT=1
-                    export GIT_CONFIG_KEY_0=safe.directory
-                    export GIT_CONFIG_VALUE_0="$REPO_DIR"
+                  # --- Local commit (current checkout used for this system) ---
+                  LOCAL=$($GIT -C "$REPO_DIR" rev-parse HEAD)
 
-                    # --- Get local commit ---
-                    LOCAL=$($GIT -C "$REPO_DIR" rev-parse HEAD)
+                  # --- Remote commit SHA from GitHub (main) ---
+                  API_COMMIT="https://api.github.com/repos/$OWNER/$REPO/commits/main"
+                  REMOTE=$($CURL -s "$API_COMMIT" | $JQ -r .sha)
 
-                    # --- Get upstream commit ---
-                    API="https://api.github.com/repos/$OWNER/$REPO/commits/main"
-                    REMOTE=$($CURL -s "$API" | $JQ -r .sha)
+                  if [[ "$REMOTE" = "null" || -z "$REMOTE" ]]; then
+                    BEHIND=0
+                    LAG=0
+                  else
+                    # Compare REMOTE (base) ... LOCAL (head)
+                    # ahead_by  = commits LOCAL has that REMOTE doesn't (local ahead)
+                    # behind_by = commits REMOTE has that LOCAL doesn't (local behind)
+                    API_COMPARE="https://api.github.com/repos/$OWNER/$REPO/compare/$REMOTE...$LOCAL"
+                    COMPARE=$($CURL -s "$API_COMPARE")
 
-                    if [[ "$REMOTE" = "null" || -z "$REMOTE" ]]; then
-                      BEHIND=0
-                      LAG=0
-                    else
-                      if [[ "$LOCAL" = "$REMOTE" ]]; then
+                    STATUS=$(echo "$COMPARE" | $JQ -r .status)
+                    BEHIND_BY=$(echo "$COMPARE" | $JQ -r .behind_by)
+                    AHEAD_BY=$(echo "$COMPARE" | $JQ -r .ahead_by)
+
+                    # Default safe values
+                    BEHIND=0
+                    LAG=0
+
+                    # If we actually got numbers, interpret them
+                    if [[ "$BEHIND_BY" != "null" && "$BEHIND_BY" =~ ^[0-9]+$ ]]; then
+                      if [[ "$BEHIND_BY" -gt 0 ]]; then
+                        # Local is behind remote
+                        BEHIND=1
+                        LAG=$BEHIND_BY
+                      else
+                        # Not behind; could be identical or ahead
                         BEHIND=0
                         LAG=0
-                      else
-                        LAG=$($GIT -C "$REPO_DIR" rev-list --count "$LOCAL..$REMOTE" || echo 0)
-                        if [[ "$LAG" -gt 0 ]]; then
-                          BEHIND=1
-                        else
-                          BEHIND=0
-                        fi
                       fi
                     fi
 
-                    mkdir -p /var/lib/node_exporter/textfiles
+                    # (Optional: you could export AHEAD_BY as another metric if you want)
+                  fi
 
-                    cat <<EOF > /var/lib/node_exporter/textfiles/nixos_revision.prom
+                  mkdir -p /var/lib/node_exporter/textfiles
+
+                  cat <<EOF > /var/lib/node_exporter/textfiles/nixos_revision.prom
             nixos_revision_behind{host="$HOST"} $BEHIND
             nixos_revision_lag{host="$HOST"} $LAG
             EOF
