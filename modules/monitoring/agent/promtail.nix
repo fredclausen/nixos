@@ -6,9 +6,10 @@
 
   users.users.promtail.extraGroups = [ "docker" ];
 
-  #########################################################
-  # Node Exporter (runs on every node)
-  #########################################################
+  networking.firewall.allowedTCPPorts = [
+    9080 # promtail
+  ];
+
   services = {
     promtail = {
       enable = true;
@@ -27,7 +28,6 @@
           }
         ];
         scrape_configs = [
-          # System journal logs
           {
             job_name = "journal";
             journal = {
@@ -38,6 +38,7 @@
                 host = "${config.networking.hostName}";
               };
             };
+
             relabel_configs = [
               {
                 source_labels = [ "__journal__systemd_unit" ];
@@ -52,42 +53,41 @@
                 target_label = "container_id";
               }
             ];
+
+            pipeline_stages = [
+              {
+                match = {
+                  selector = ''{unit=~"docker-.*"}'';
+                  stages = [
+                    {
+                      regex = {
+                        expression = ''(?P<sdr_err>device not found)|(?P<upstream_err>connect.*fail)'';
+                      };
+                    }
+                    {
+                      metrics = {
+                        sdr_service_failure_total = {
+                          type = "Counter";
+                          source = "sdr_err";
+                          description = "SDR-related USB/init failures";
+                          config.action = "inc";
+                        };
+
+                        feeder_upstream_failure_total = {
+                          type = "Counter";
+                          source = "upstream_err";
+                          description = "Upstream connection failures";
+                          config.action = "inc";
+                        };
+                      };
+                    }
+                  ];
+                };
+              }
+            ];
           }
         ];
       };
     };
-
-    prometheus.exporters.node = {
-      enable = true;
-      openFirewall = true;
-      listenAddress = "0.0.0.0";
-      port = 9100;
-    };
-
-    #########################################################
-    # cAdvisor
-    #########################################################
-    cadvisor = {
-      enable = true;
-      listenAddress = "0.0.0.0";
-      port = 4567;
-    };
   };
-
-  #########################################################
-  # (Optional future expansions)
-  # - systemd exporter
-  # - docker exporter
-  # - github-runner exporter
-  # - custom pushgateway metrics
-  #########################################################
-
-  #######################################
-  # Firewall
-  #######################################
-  networking.firewall.allowedTCPPorts = [
-    4567 # cAdvisor
-    9080 # promtail
-    9100 # node_exporter
-  ];
 }

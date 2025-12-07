@@ -9,8 +9,8 @@
     ./hardware-configuration.nix
     ../../modules/secrets/sops.nix
     ../../modules/adsb-docker-units.nix
-    ../../modules/monitoring/monitoring-master.nix
-    ../../modules/monitoring/monitoring-agent.nix
+    ../../modules/monitoring/master
+    ../../modules/monitoring/agent
   ];
 
   # Server profile (no desktop components)
@@ -208,7 +208,7 @@
       ###############################################################
       {
         name = "ultrafeeder";
-        image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-840";
+        image = "ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:telegraf-build-840";
 
         hostname = "ultrafeeder";
         restart = "always";
@@ -229,6 +229,7 @@
           "30005:30005"
           "30047:30047"
           "12000:12000"
+          "9273-9274:9273-9274"
         ];
 
         volumes = [
@@ -252,7 +253,7 @@
       ###############################################################
       {
         name = "dump978";
-        image = "ghcr.io/sdr-enthusiasts/docker-dump978:trixie-latest-build-2";
+        image = "ghcr.io/sdr-enthusiasts/docker-dump978:telegraf-build-773";
 
         hostname = "dump978";
         restart = "always";
@@ -268,6 +269,7 @@
 
         ports = [
           "8083:80"
+          "9275:9275"
         ];
 
         volumes = [

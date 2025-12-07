@@ -1,0 +1,119 @@
+groups:
+  - name: node-alerts
+    rules:
+      - alert: NodeDown
+        expr: up{job="node"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Node {{ $labels.hostname }} is DOWN"
+          description: "Prometheus has not scraped {{ $labels.hostname }} for 2 minutes."
+
+      - alert: HighNodeCPU
+        expr: 100 - (avg by (hostname) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 70
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU on {{ $labels.hostname }}"
+          description: "CPU usage exceeded 70% for 5 minutes."
+
+      - alert: HighNodeMemory
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) > 0.80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage on {{ $labels.hostname }}"
+          description: "Node memory usage > 80% for 5 minutes."
+
+      - alert: NodeDiskLow
+        expr: |
+          (node_filesystem_avail_bytes{mountpoint="/",fstype!~"tmpfs|overlay"}
+           / node_filesystem_size_bytes{mountpoint="/",fstype!~"tmpfs|overlay"}) < 0.10
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Disk almost full on {{ $labels.hostname }}"
+          description: "Root filesystem <10% available."
+
+  - name: systemd-alerts
+    rules:
+      - alert: SystemdUnitFailed
+        expr: node_systemd_unit_state{state="failed", name!~"docker-.*"} == 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Systemd unit {{ $labels.name }} FAILED on {{ $labels.hostname }}"
+          description: "The unit {{ $labels.name }} has been in a failed state for >2 minutes."
+
+      - alert: SystemdUnitFlapping
+        expr: changes(node_systemd_unit_state{state="active", name!~"docker-.*"}[10m]) > 3
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Systemd unit {{ $labels.name }} is flapping"
+          description: "The unit {{ $labels.name }} changed state more than 3 times in the last 10 minutes."
+
+  - name: container-alerts
+    rules:
+      - alert: ContainerRestarting
+        expr: changes(
+          container_start_time_seconds{
+          id=~"/system\\.slice/docker-.*\\.(service|scope)",
+          id!~"/system\\.slice/github-runner-runner-.*"
+          }[15m]
+          ) > 3
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container {{ $labels.name }} is restarting"
+          description: "{{ $labels.name }} on {{ $labels.hostname }} restarted more than 3 times in 15 minutes."
+
+      - alert: ContainerOOM
+        expr: increase(
+          container_oom_events_total{
+          id=~"/system\\.slice/docker-.*\\.(service|scope)",
+          id!~"/system\\.slice/github-runner-runner-.*"
+          }[15m]
+          ) > 0
+        labels:
+          severity: critical
+        annotations:
+          summary: "Container OOMKilled"
+          description: "{{ $labels.name }} on {{ $labels.hostname }} was OOM killed."
+
+  - name: system-alerts
+    rules:
+      - alert: PrometheusTargetDown
+        expr: sum by (job, instance) (up == 0) > 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Targets for {{ $labels.job }} are DOWN"
+          description: "Prometheus cannot scrape {{ $labels.instance }} for >2 minutes."
+
+      - alert: NodeInodesLow
+        expr: node_filesystem_files_free{mountpoint="/"}
+          / node_filesystem_files{mountpoint="/"} < 0.10
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low inodes on {{ $labels.hostname }}"
+          description: "Less than 10% of inodes remain on root filesystem."
+
+      - alert: ClockSkewDetected
+        expr: abs(node_timex_offset_seconds) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Clock skew detected on {{ $labels.hostname }}"
+          description: "Clock offset >100ms from NTP server."
