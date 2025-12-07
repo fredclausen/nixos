@@ -2,7 +2,7 @@ groups:
   - name: system-alerts
     rules:
       - alert: NixOSNotOnMain
-        expr: nixos_branch == 0
+        expr: nixos_branch == 1
         for: 6h
         labels:
           severity: warning

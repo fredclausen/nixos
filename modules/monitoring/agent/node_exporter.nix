@@ -71,16 +71,16 @@
                     API="https://api.github.com/repos/$OWNER/$REPO/commits/main"
                     REMOTE=$($CURL -s "$API" | $JQ -r .sha)
 
-                    if [ "$REMOTE" = "null" ] || [ -z "$REMOTE" ]; then
+                    if [[ "$REMOTE" = "null" || -z "$REMOTE" ]]; then
                       BEHIND=0
                       LAG=0
                     else
-                      if [ "$LOCAL" = "$REMOTE" ]; then
+                      if [[ "$LOCAL" = "$REMOTE" ]]; then
                         BEHIND=0
                         LAG=0
                       else
                         LAG=$($GIT -C "$REPO_DIR" rev-list --count "$LOCAL..$REMOTE" || echo 0)
-                        if [ "$LAG" -gt 0 ]; then
+                        if [[ "$LAG" -gt 0 ]]; then
                           BEHIND=1
                         else
                           BEHIND=0
