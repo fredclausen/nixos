@@ -8,21 +8,50 @@ on:
   workflow_dispatch:
 
 jobs:
-  find-systems:
-    name: Find linux systems
+  # =====================================================================
+  # Fast-path: Detect whether merge_queue introduces zero diff
+  # =====================================================================
+  skip-if-clean:
+    name: Skip if merge_queue produces no diff
     runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.check.outputs.skip }}
+    if: github.event_name == 'merge_group'
+    steps:
+      - name: Check merge_group synthetic commit
+        id: check
+        run: |
+          echo "base_sha: ${{ github.event.merge_group.base_sha }}"
+          echo "head_sha: ${{ github.event.merge_group.head_sha }}"
+
+          if [ "${{ github.event.merge_group.base_sha }}" = "${{ github.event.merge_group.head_sha }}" ]; then
+            echo "Synthetic merge produced no changes — skipping CI."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "Synthetic merge contains changes — running CI."
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+  # =====================================================================
+  # Discover Linux systems (servers + desktops)
+  # =====================================================================
+  find-systems:
+    name: Find Linux systems
+    runs-on: ubuntu-latest
+    needs: [skip-if-clean]
+    if: needs.skip-if-clean.outputs.skip != 'true' || github.event_name != 'merge_group'
     outputs:
       servers: ${{ steps.out.outputs.servers }}
       desktops: ${{ steps.out.outputs.desktops }}
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@v6
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
+        uses: DeterminateSystems/nix-installer-action@v21
 
       - name: Enable Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
+        uses: DeterminateSystems/magic-nix-cache-action@v13
         with:
           use-flakehub: false
           use-gha-cache: false
@@ -33,10 +62,8 @@ jobs:
           echo "Evaluating nixosConfigurations..."
 
           all_systems=$(nix eval --json .#nixosConfigurations --apply builtins.attrNames)
-
           echo "All systems: $all_systems"
 
-          # Desktop systems
           desktop_names=("Daytona" "maranello")
 
           servers=()
@@ -50,78 +77,112 @@ jobs:
             fi
           done
 
-          # Convert bash arrays → compact JSON arrays
           servers_json=$(printf '%s\n' "${servers[@]}" | jq -R . | jq -cs .)
           desktops_json=$(printf '%s\n' "${desktops[@]}" | jq -R . | jq -cs .)
 
           echo "Servers JSON: $servers_json"
           echo "Desktops JSON: $desktops_json"
 
-          # MUST be single lines without leading/trailing spaces
-          echo "servers=$servers_json" >> "$GITHUB_OUTPUT"
+          echo "servers=$servers_json"   >> "$GITHUB_OUTPUT"
           echo "desktops=$desktops_json" >> "$GITHUB_OUTPUT"
 
+  # =====================================================================
+  # Build server systems
+  # =====================================================================
   build-servers:
     name: Build server systems
     runs-on: ubuntu-latest
-    needs: find-systems
+    needs: [skip-if-clean, find-systems]
+    if: needs.skip-if-clean.outputs.skip != 'true' || github.event_name != 'merge_group'
     strategy:
       fail-fast: false
       matrix:
         system: ${{ fromJson(needs.find-systems.outputs.servers) }}
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@v6
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
+        uses: DeterminateSystems/nix-installer-action@v21
 
       - name: Enable Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
+        uses: DeterminateSystems/magic-nix-cache-action@v13
         with:
           use-flakehub: false
           use-gha-cache: false
 
       - name: Build server system
         run: |
-          echo "Building system: ${{ matrix.system }}"
+          echo "Building server: ${{ matrix.system }}"
+          nix build ".#nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel"
 
-          nix build \
-            ".#nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel"
-
+  # =====================================================================
+  # Build desktop systems
+  # =====================================================================
   build-desktops:
     name: Build desktop systems
     runs-on: self-hosted
-    needs: find-systems
+    needs: [skip-if-clean, find-systems]
+    if: needs.skip-if-clean.outputs.skip != 'true' || github.event_name != 'merge_group'
     strategy:
       fail-fast: false
       matrix:
         system: ${{ fromJson(needs.find-systems.outputs.desktops) }}
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@v6
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
+        uses: DeterminateSystems/nix-installer-action@v21
 
       - name: Enable Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
+        uses: DeterminateSystems/magic-nix-cache-action@v13
         with:
           use-flakehub: false
           use-gha-cache: false
 
       - name: Build desktop system
         run: |
-          echo "Building system: ${{ matrix.system }}"
+          echo "Building desktop: ${{ matrix.system }}"
+          nix build ".#nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel"
 
-          nix build \
-            ".#nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel"
-
-  build-servers-summary:
+  # =====================================================================
+  # Required Check: Build Linux Summary
+  # - Always runs so merge_group is satisfied
+  # - Succeeds immediately if skipping
+  # - Fails if ANY matrix in either job fails
+  # =====================================================================
+  build-linux-summary:
     name: Build Linux Summary
     runs-on: ubuntu-latest
-    needs: [build-servers, build-desktops]
+    needs: [skip-if-clean, build-servers, build-desktops]
+    if: always()
+
     steps:
-      - name: Mark servers build summary
+      - name: Evaluate summary (skip or propagate failures)
         run: |
-          echo "All server builds finished."
+          # Case 1: merge_queue skip mode
+          if [ "${{ needs.skip-if-clean.outputs.skip }}" = "true" ]; then
+            echo "Merge queue synthetic merge was clean — summary passing without builds."
+            exit 0
+          fi
+
+          # Case 2: real CI, enforce failure propagation
+          SERVERS="${{ needs.build-servers.result }}"
+          DESKTOPS="${{ needs.build-desktops.result }}"
+
+          echo "Servers result:   $SERVERS"
+          echo "Desktops result:  $DESKTOPS"
+
+          if [ "$SERVERS" = "failure" ] || [ "$DESKTOPS" = "failure" ]; then
+            echo "❌ One or more Linux builds failed."
+            exit 1
+          fi
+
+          if [ "$SERVERS" = "cancelled" ] || [ "$DESKTOPS" = "cancelled" ]; then
+            echo "❌ Build job was cancelled — treating as failure."
+            exit 1
+          fi
+
+          echo "All Linux systems built successfully."
+          exit 0

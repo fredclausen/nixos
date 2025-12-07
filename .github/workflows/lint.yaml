@@ -1,5 +1,6 @@
 ---
 name: Lint
+
 on:
   merge_group:
   pull_request:
@@ -7,9 +8,40 @@ on:
   workflow_dispatch:
 
 jobs:
+  # =====================================================================
+  # Fast-path: Detect whether merge_queue introduces zero diff
+  # =====================================================================
+  skip-if-clean:
+    name: Skip if merge_queue produces no diff
+    runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.check.outputs.skip }}
+    if: github.event_name == 'merge_group'
+    steps:
+      - name: Check merge_group synthetic commit
+        id: check
+        run: |
+          echo "base_sha: ${{ github.event.merge_group.base_sha }}"
+          echo "head_sha: ${{ github.event.merge_group.head_sha }}"
+
+          if [ "${{ github.event.merge_group.base_sha }}" = "${{ github.event.merge_group.head_sha }}" ]; then
+            echo "Synthetic merge produced no changes — skipping lint."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "Synthetic merge contains changes — running lint."
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+  # =====================================================================
+  # Primary lint job
+  # =====================================================================
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    needs: [skip-if-clean]
+    # For merge_group: run only if not skipping.
+    # For PRs: always run.
+    if: needs.skip-if-clean.outputs.skip != 'true' || github.event_name != 'merge_group'
 
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
@@ -20,3 +52,39 @@ jobs:
 
       - name: Run flake pre-commit hooks
         run: nix develop -c pre-commit run --all-files
+
+  # =====================================================================
+  # Required Check: Lint Summary
+  # (like your Linux/Darwin summaries)
+  # =====================================================================
+  lint-summary:
+    name: Lint Summary
+    runs-on: ubuntu-latest
+    needs: [skip-if-clean, lint]
+    if: always()
+
+    steps:
+      - name: Evaluate summary (skip or propagate failure)
+        run: |
+          # Case 1 — merge_queue skip mode
+          if [ "${{ needs.skip-if-clean.outputs.skip }}" = "true" ]; then
+            echo "Merge queue synthetic merge was clean — skipping lint, marking success."
+            exit 0
+          fi
+
+          STATUS="${{ needs.lint.result }}"
+
+          echo "Lint job result: $STATUS"
+
+          if [ "$STATUS" = "failure" ]; then
+            echo "❌ Lint failed."
+            exit 1
+          fi
+
+          if [ "$STATUS" = "cancelled" ]; then
+            echo "❌ Lint was cancelled — treating as failure."
+            exit 1
+          fi
+
+          echo "Lint succeeded."
+          exit 0
