@@ -184,6 +184,17 @@ in
         }
 
         {
+          job_name = "acarshub";
+          static_configs = [
+            {
+              targets = [
+                "sdrhub.local:8085"
+              ];
+            }
+          ];
+        }
+
+        {
           job_name = "node";
           static_configs =
             (map (h: {
