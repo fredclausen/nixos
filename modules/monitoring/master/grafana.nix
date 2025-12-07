@@ -38,6 +38,13 @@
       group = "grafana";
       mode = "0444";
     };
+
+    "grafana/provisioning/dashboards/adsb/dashboard-acars.json" = {
+      source = ./dashboards/acars.json;
+      user = "grafana";
+      group = "grafana";
+      mode = "0444";
+    };
   };
 
   services = {
