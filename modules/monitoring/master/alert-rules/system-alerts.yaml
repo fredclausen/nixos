@@ -1,0 +1,29 @@
+groups:
+  - name: system-alerts
+    rules:
+      - alert: NixOSNotOnMain
+        expr: nixos_branch == 0
+        for: 6h
+        labels:
+          severity: warning
+        annotations:
+          summary: "NixOS repo not on main branch"
+          description: "The NixOS configuration is not checked out on main for more than 6 hours."
+
+      - alert: NixOSNeedsReboot
+        expr: nixos_needs_reboot == 1
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "NixOS system requires a reboot"
+          description: "Host {{ $labels.host }} has pending upgrades and needs a reboot."
+
+      - alert: NixOSRevisionBehind
+        expr: nixos_revision_behind == 1
+        for: 6h
+        labels:
+          severity: warning
+        annotations:
+          summary: "NixOS checkout is behind GitHub main"
+          description: "Host {{ $labels.host }} is {{ $labels.host }} commits behind GitHub main."
