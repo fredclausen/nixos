@@ -17,8 +17,17 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.check.outputs.skip }}
-    if: ${{ always() }} # <-- IMPORTANT FIX (same fix as Lint)
+    if: ${{ always() }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+
+      - name: Merge Queue CI Check Skipper
+        id: merge-queue-ci-skipper
+        uses: ./.github/merge-queue-ci-skipper
+        with:
+          secret: ${{ secrets.GH_ACCESS_TOKEN }}
+
       - name: Check merge_group synthetic commit
         id: check
         run: |
@@ -28,17 +37,9 @@ jobs:
             exit 0
           fi
 
-          BASE_TREE="${{ github.event.merge_group.base_commit.tree_id }}"
-          HEAD_TREE="${{ github.event.merge_group.head_commit.tree_id }}"
-
-          echo "Base tree: $BASE_TREE"
-          echo "Head tree: $HEAD_TREE"
-
-          if [ "$BASE_TREE" = "$HEAD_TREE" ]; then
-            echo "No diff in merge tree — fast-path skip."
+          if [ "${{ steps.merge-queue-ci-skipper.outputs.skip-check }}" = "true" ]; then
             echo "skip=true" >> $GITHUB_OUTPUT
           else
-            echo "Merge introduces changes — running CI."
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
 
