@@ -441,11 +441,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1765115924,
-        "narHash": "sha256-taZc/QD5DeZkXsyl+AJiS2Q5Z8EXJPzZz98uWfdXvvs=",
+        "lastModified": 1765150443,
+        "narHash": "sha256-GD6nEEVPdbMSo+8BKfZ0nK8n+Zzs95tipPLCSB0IXQA=",
         "owner": "nix-community",
         "repo": "nixvim",
-        "rev": "cd0443e166c1cd35283e9be0ce3fc2966456bc5a",
+        "rev": "451b1806a6da6b69f01c7fc98d751bcad8fdbf28",
         "type": "github"
       },
       "original": {
