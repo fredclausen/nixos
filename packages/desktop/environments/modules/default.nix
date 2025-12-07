@@ -16,7 +16,6 @@ in
   };
   imports = [
     ./clipboard
-    ./fuzzel
     ./hyprlandextra
     ./pamixer
     ./swaync
@@ -29,7 +28,6 @@ in
       clipboard.enable = true;
       hyprlandextra.enable = true;
       pamixer.enable = true;
-      fuzzel.enable = true;
       vicinae.enable = true;
       waybar.enable = true;
       swaync.enable = true;

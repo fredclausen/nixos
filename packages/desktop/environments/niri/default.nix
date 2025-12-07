@@ -246,10 +246,6 @@ in
               spawn = [ "code" ];
             };
 
-            "Ctrl+Space".action = {
-              spawn = [ "fuzzel" ];
-            };
-
             "Alt+Space".action = {
               spawn = [ "ulauncher" ];
             };
