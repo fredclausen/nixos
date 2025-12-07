@@ -19,19 +19,26 @@ jobs:
       skip: ${{ steps.check.outputs.skip }}
     if: ${{ always() }} # <-- IMPORTANT FIX (same fix as Lint)
     steps:
-      - name: Determine skip mode
+      - name: Check merge_group synthetic commit
         id: check
         run: |
-          # PR phase: always run full CI
+          # PR mode: never skip
           if [ "${{ github.event_name }}" != "merge_group" ]; then
             echo "skip=false" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          # Merge queue: determine if synthetic merge is a no-op
-          if [ "${{ github.event.merge_group.base_sha }}" = "${{ github.event.merge_group.head_sha }}" ]; then
+          BASE_TREE="${{ github.event.merge_group.base_commit.tree_id }}"
+          HEAD_TREE="${{ github.event.merge_group.head_commit.tree_id }}"
+
+          echo "Base tree: $BASE_TREE"
+          echo "Head tree: $HEAD_TREE"
+
+          if [ "$BASE_TREE" = "$HEAD_TREE" ]; then
+            echo "No diff in merge tree — fast-path skip."
             echo "skip=true" >> $GITHUB_OUTPUT
           else
+            echo "Merge introduces changes — running CI."
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
 
