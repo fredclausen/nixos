@@ -1,5 +1,6 @@
 {
   user,
+  config,
   ...
 }:
 let
@@ -15,6 +16,28 @@ in
     ../../modules/ansible/ansible.nix
     ../../modules/nas-home.nix
   ];
+
+  systemd.user.services.mute-led-watcher = {
+    Unit = {
+      Description = "Sync keyboard mute LED with PipeWire mute state";
+      After = [
+        "pipewire.service"
+        "wireplumber.service"
+      ];
+    };
+
+    Service = {
+      ExecStart = "${config.xdg.configHome}/hyprextra/scripts/watchsync";
+      Restart = "always";
+      RestartSec = 1;
+      StandardOutput = "journal";
+      StandardError = "journal";
+    };
+
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+  };
 
   nas = {
     enable = true;

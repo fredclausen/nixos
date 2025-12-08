@@ -4,8 +4,7 @@ iDIR="$HOME/.config/hyprextra/icons"
 
 # Get Volume
 get_volume() {
-	volume=$(pamixer --get-volume)
-	echo "$volume"
+	pamixer --get-volume
 }
 
 # Get icons
@@ -29,12 +28,30 @@ notify_user() {
 
 # Increase Volume
 inc_volume() {
-	pamixer -i 5 && notify_user
+    prev=$(get_volume)
+	pamixer -i 5
+
+	# if the new volume is 0, run toggle mute
+	if [ "$prev" -eq 0 ]; then
+		toggle_mute
+	elif [ "$prev" -ne 100 ]; then
+		notify_user
+	fi
+
 }
 
 # Decrease Volume
 dec_volume() {
-	pamixer -d 5 && notify_user
+    prev=$(get_volume)
+	pamixer -d 5
+	new=$(get_volume)
+
+	# if the current volume is 0, run toggle mute
+    if [[ "$new" -eq 0 && "$prev" -ne 0 ]]; then
+        toggle_mute
+    elif [[ "$new" -ne 0 && "$prev" -ne 0 ]]; then
+        notify_user
+    fi
 }
 
 # Toggle Mute
