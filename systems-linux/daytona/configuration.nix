@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/secrets/sops.nix
+    ../../modules/nas-system.nix
   ];
 
   nix.settings.experimental-features = [
@@ -26,6 +27,52 @@
   deployment.role = "desktop";
 
   sops_secrets.enable_secrets.enable = true;
+
+  nas = {
+    enable = true;
+
+    mounts = [
+      {
+        path = "/mnt/nas/fred";
+        host = "192.168.31.16";
+        share = "/volume1/Fred Share";
+        type = "nfs";
+        gvfsName = "Fred Share";
+      }
+
+      {
+        path = "/mnt/nas/discord";
+        host = "192.168.31.16";
+        share = "/volume1/discord";
+        type = "nfs";
+        gvfsName = "Discord";
+      }
+
+      {
+        path = "/mnt/nas/dropbox";
+        host = "192.168.31.16";
+        share = "/volume1/Dropbox";
+        type = "nfs";
+        gvfsName = "Dropbox";
+      }
+
+      {
+        path = "/mnt/nas/media";
+        host = "192.168.31.16";
+        share = "/volume1/Media";
+        type = "nfs";
+        gvfsName = "Media";
+      }
+
+      {
+        path = "/mnt/nas/prometheus";
+        host = "192.168.31.16";
+        share = "/volume1/Prometheus";
+        type = "nfs";
+        gvfsName = "Prometheus";
+      }
+    ];
+  };
 
   hardware.graphics = {
     enable = true;
