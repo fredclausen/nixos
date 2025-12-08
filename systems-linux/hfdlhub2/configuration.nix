@@ -58,21 +58,21 @@ in
 
   services = {
     github-runners = {
-      runner-1 = {
-        enable = true;
-        url = "https://github.com/FredSystems/nixos";
-        name = "nixos-hfdlhub2-runner-1";
-        tokenFile = config.sops.secrets."github-token".path;
-        ephemeral = true;
-      };
+      # runner-1 = {
+      #   enable = true;
+      #   url = "https://github.com/FredSystems/nixos";
+      #   name = "nixos-hfdlhub2-runner-1";
+      #   tokenFile = config.sops.secrets."github-token".path;
+      #   ephemeral = true;
+      # };
 
-      runner-2 = {
-        enable = true;
-        url = "https://github.com/FredSystems/nixos";
-        name = "nixos-hfdlhub2-runner-2";
-        tokenFile = config.sops.secrets."github-token".path;
-        ephemeral = true;
-      };
+      # runner-2 = {
+      #   enable = true;
+      #   url = "https://github.com/FredSystems/nixos";
+      #   name = "nixos-hfdlhub2-runner-2";
+      #   tokenFile = config.sops.secrets."github-token".path;
+      #   ephemeral = true;
+      # };
 
       # runner-3 = {
       #   enable = true;
@@ -116,20 +116,20 @@ in
       ###############################################################
       # HFDLOBserver
       ###############################################################
-      # {
-      #   name = "hfdlobserver";
-      #   image = "ghcr.io/sdr-enthusiasts/docker-hfdlobserver:latest-build-14";
+      {
+        name = "hfdlobserver";
+        image = "ghcr.io/sdr-enthusiasts/docker-hfdlobserver:latest-build-14";
 
-      #   environmentFiles = [
-      #     config.sops.secrets."docker/hfdlhub2.env".path
-      #   ];
+        environmentFiles = [
+          config.sops.secrets."docker/hfdlhub2.env".path
+        ];
 
-      #   volumes = [
-      #     "/opt/adsb/hfdlobserver:/run/hfdlobserver"
-      #   ];
+        volumes = [
+          "/opt/adsb/hfdlobserver:/run/hfdlobserver"
+        ];
 
-      #   requires = [ "network-online.target" ];
-      # }
+        requires = [ "network-online.target" ];
+      }
 
     ];
   };
