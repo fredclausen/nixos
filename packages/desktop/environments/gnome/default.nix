@@ -39,7 +39,11 @@ in
       pkgs.sushi
       pkgs.polkit_gnome
       pkgs.gparted
+      pkgs.gvfs
+      pkgs.gnome.gvfs
     ];
+
+    services.gvfs.enable = true;
 
     programs.nautilus-open-any-terminal = {
       enable = true;
