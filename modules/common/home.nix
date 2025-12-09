@@ -40,12 +40,13 @@ in
         signingkey = ${github_signing_key}
 
     [commit]
-        gpgsign = true
+        gpgsign = false
 
     [gpg]
         program = ${
           if isDarwin then "/run/current-system/sw/bin/gpg" else "/run/current-system/sw/bin/gpg"
         }
+        format = ssh
 
     [core]
         pager = delta

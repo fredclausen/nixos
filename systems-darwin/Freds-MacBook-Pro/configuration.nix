@@ -33,10 +33,13 @@ in
     primaryUser = "${username}";
     stateVersion = 6;
   };
-  security.pam.services.sudo_local = {
-    touchIdAuth = true;
-    reattach = true;
-    watchIdAuth = true;
+
+  security.pam.services = {
+    sudo_local = {
+      touchIdAuth = true;
+      reattach = true;
+      watchIdAuth = true;
+    };
   };
 
   users.users.${username}.home = "/Users/${username}";
@@ -67,6 +70,7 @@ in
     ../../packages/desktop/ghostty
     ../../packages/desktop/wezterm
     ../../packages/desktop/zed
+    ../../packages/desktop/yubikey
   ];
 
   desktop = {

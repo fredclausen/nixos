@@ -45,6 +45,23 @@ in
           mode = "0600";
         };
 
+        "ssh/yubi_authorized_signing" = {
+          path = "${homeDir}/.config/git/allowed_signers";
+          owner = username;
+          mode = "0644";
+        };
+
+        "ssh/yubi_github_pub" = {
+          path = "${homeDir}/.ssh/id_ed25519_sk.pub";
+          owner = username;
+        };
+
+        "ssh/yubi_github_private" = {
+          path = "${homeDir}/.ssh/id_ed25519_sk";
+          owner = username;
+          mode = "0600";
+        };
+
         "ssh/id_ed25519" = {
           path = "${homeDir}/.ssh/id_ed25519";
           owner = username;
@@ -75,6 +92,7 @@ in
       openssh.authorizedKeys.keys = [
         config.sops.secrets."ssh/id_rsa.pub".path
         config.sops.secrets."ssh/id_ed25519.pub".path
+        config.sops.secrets."ssh/yubi_github_pub".path
       ];
     };
   };
