@@ -74,7 +74,7 @@
       user = "fred";
       verbose_name = "Fred Clausen";
       github_email = "43556888+fredclausen@users.noreply.github.com";
-      github_signing_key = "F406B080289FEC21";
+      github_signing_key = "~/.ssh/id_ed25519_sk.pub";
       hmlib = home-manager.lib;
 
       agentNodes = builtins.filter (

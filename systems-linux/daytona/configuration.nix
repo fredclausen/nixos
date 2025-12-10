@@ -86,6 +86,15 @@
     networkmanager.wifi.scanRandMacAddress = false;
   };
 
+  security.pam.services = {
+    gdm-fingerprint.fprintAuth = false;
+    login.fprintAuth = false;
+    gdm-password.fprintAuth = false;
+    polkit-1.fprintAuth = true;
+    polkit-gnome-authentication-agent-1.fprintAuth = true;
+    hyprpolkitagent.fprintAuth = true;
+  };
+
   services = {
     logind = {
       settings = {

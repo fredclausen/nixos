@@ -17,6 +17,8 @@ in
 
   programs.ansible.enable = true;
 
+  services.yubikey-agent.enable = true;
+
   programs.sync-compose = {
     enable = true;
     user = username; # comes from flake.nix

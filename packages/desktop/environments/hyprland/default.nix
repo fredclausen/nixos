@@ -48,6 +48,28 @@ in
       ];
     };
 
+    # systemd = {
+    #   user.services.polkit-agent-helper-1 = {
+    #     description = "polkit-agent-helper-1";
+    #     wantedBy = [ "graphical-session.target" ];
+    #     wants = [ "graphical-session.target" ];
+    #     after = [ "graphical-session.target" ];
+    #     serviceConfig = {
+    #       Type = "simple";
+    #       ExecStart = "/run/wrappers/bin/polkit-agent-helper-1";
+    #       Restart = "on-failure";
+    #       RestartSec = 1;
+    #       TimeoutStopSec = 10;
+    #     };
+    #   };
+    #   settings.Manager = {
+    #     DefaultTimeoutStopSec = "10s";
+    #   };
+    #   # extraConfig = ''
+    #   #   DefaultTimeoutStopSec=10s
+    #   # '';
+    # };
+
     programs.hyprland = {
       # Install the packages from nixpkgs
       enable = true;
@@ -117,11 +139,11 @@ in
           ];
 
           exec-once = [
-            "polkit-agent-helper-1"
+            #"polkit-agent-helper-1"
             "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
             "gsettings set org.gnome.desktop.interface gtk-theme \"Catppuccin-GTK-Purple-Dark\""
             # "hyprctl setcursor Adwaita 24"
-            "systemctl start --user polkit-gnome-authentication-agent-1"
+            #"systemctl start --user polkit-gnome-authentication-agent-1"
             "systemctl start --user waybar"
             "systemctl start --user swaync"
             "systemctl start --user network-manager-applet"

@@ -63,6 +63,7 @@ in
     ./vscode
     ./wezterm
     ./wireshark
+    ./yubikey
     ./zed
   ];
 
@@ -90,6 +91,7 @@ in
       audio.enable = true;
       wireshark.enable = true;
       ladybird.enable = true;
+      yubikey.enable = true;
       music.enable = if cfg.enable_extra then true else false;
       appimage.enable = if cfg.enable_extra then true else false;
       discord.enable = if cfg.enable_extra then true else false;

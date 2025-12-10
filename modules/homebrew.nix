@@ -15,6 +15,7 @@
       "trunk"
       "cargo-make"
       "diesel"
+      "openssh"
     ];
 
     casks = [
