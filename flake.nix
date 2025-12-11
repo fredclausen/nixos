@@ -20,11 +20,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    git-hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
@@ -53,6 +48,10 @@
       url = "github:fredclausen/nixos-needsreboot";
     };
 
+    precommit-base = {
+      url = "github:FredSystems/pre-commit-checks";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -62,7 +61,7 @@
       home-manager,
       catppuccin,
       apple-fonts,
-      git-hooks,
+      precommit-base,
       nixvim,
       niri,
       darwin,
@@ -279,105 +278,17 @@
       ##########################################################################
       ## Pre-commit checks (per system)                                       ##
       ##########################################################################
-      checks = forAllSystems (
-        system:
-        let
-          pkgs = import nixpkgs { inherit system; };
-        in
-        {
-          pre-commit-check = git-hooks.lib.${system}.run {
-            src = pkgs.lib.cleanSourceWith {
-              src = ./.;
-              # deadnix: skip
-              filter = path: type: true;
-            };
 
-            excludes = [
-              "^res/"
-              "^./res/"
-              "^typos\\.toml$"
-              "^speed_tests/.*\\.txt$"
-              "^Documents/.*"
-              "^.*\\.png$"
-              "^.*\\.jpg$"
-              "^dotfiles/.config/fastfetch/.*"
-              "secrets.yaml"
-            ];
+      checks = forAllSystems (system: {
+        pre-commit-check = precommit-base.lib.mkPrecommitCheck {
+          inherit system;
+          src = ./.;
 
-            hooks = {
-              # Built-in git-hooks.nix hooks
-              check-yaml.enable = true;
-              end-of-file-fixer.enable = true;
-
-              trailing-whitespace = {
-                enable = true;
-                entry = "${pkgs.python3Packages.pre-commit-hooks}/bin/trailing-whitespace-fixer";
-              };
-
-              mixed-line-ending = {
-                enable = true;
-                entry = "${pkgs.python3Packages.pre-commit-hooks}/bin/mixed-line-ending";
-                args = [ "--fix=auto" ];
-              };
-
-              check-executables-have-shebangs.enable = true;
-              check-shebang-scripts-are-executable.enable = true;
-              black.enable = true;
-              flake8.enable = true;
-              nixfmt.enable = true;
-              hadolint.enable = true;
-              shellcheck.enable = true;
-              prettier.enable = true;
-
-              # deadnix: detect unused variables, dead code
-              deadnix = {
-                enable = true;
-                entry = "${pkgs.deadnix}/bin/deadnix";
-                args = [ "--fail" ]; # exit nonzero on findings
-                files = "\\.nix$";
-              };
-
-              # statix: idiomatic Nix linter
-              statix = {
-                enable = true;
-                entry = "${pkgs.statix}/bin/statix";
-                args = [ "check" ];
-                files = "\\.nix$";
-              };
-
-              # Hooks that need system packages
-              codespell = {
-                enable = true;
-                entry = "${pkgs.codespell}/bin/codespell";
-                args = [ "--ignore-words=.dictionary.txt" ];
-                files = "\\.([ch]|cpp|rs|py|sh|txt|md|toml|yaml|yml)$";
-              };
-
-              check-github-actions = {
-                enable = true;
-                entry = "${pkgs.check-jsonschema}/bin/check-jsonschema";
-                args = [
-                  "--builtin-schema"
-                  "github-actions"
-                ];
-                files = "^\\.github/actions/.*\\.ya?ml$";
-                pass_filenames = true;
-              };
-
-              check-github-workflows = {
-                enable = true;
-                entry = "${pkgs.check-jsonschema}/bin/check-jsonschema";
-                args = [
-                  "--builtin-schema"
-                  "github-workflows"
-                ];
-                files = "^\\.github/workflows/.*\\.ya?ml$";
-                pass_filenames = true;
-              };
-            };
-          };
-        }
-      );
+          extraExcludes = [
+            "secrets.yaml"
+          ];
+        };
+      });
 
       ##########################################################################
       ## Dev shells (per system, Rust-free)                                   ##
@@ -394,20 +305,11 @@
             buildInputs =
               enabledPackages
               ++ (with pkgs; [
-                pre-commit
-                check-jsonschema
-                codespell
-                typos
-                nixfmt
-                nodePackages.markdownlint-cli2
               ]);
 
             shellHook = ''
               # Run git-hooks.nix setup (creates .pre-commit-config.yaml)
               ${shellHook}
-
-              # Convenience alias
-              alias pre-commit="pre-commit run --all-files"
             '';
           };
         }
