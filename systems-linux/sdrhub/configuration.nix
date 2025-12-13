@@ -452,7 +452,7 @@
       ###############################################################
       {
         name = "opensky";
-        image = "ghcr.io/sdr-enthusiasts/docker-opensky-network:trixie-latest-build-3";
+        image = "ghcr.io/sdr-enthusiasts/docker-opensky-network:trixie-latest-build-4";
 
         restart = "always";
         tty = true;
