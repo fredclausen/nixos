@@ -46,7 +46,9 @@ This is mostly here for my own machines---but if you want to adopt it:
 6. Copy your generated `/etc/nixos/hardware-configuration.nix` into
    that directory.
 7. In `flake.nix`, update the `{nixos|darwin}Configurations.<system>` entry to
-   point to your renamed system directory. Each of the `mk{Nixos|Darwin}System` has some global configuration options. The name documents what they do, and you will want to change them. Very likely, you will want to ALSO set the `stateVersion` to the most recent NixOS release (I started my Nix journey when 24.11 was the most recent), which at this current time is `25.05`.
+   point to your renamed system directory. Each of the `mk{Nixos|Darwin}System` has some global configuration options.
+   The name documents what they do, and you will want to change them.
+   Very likely, you will want to ALSO set the `stateVersion` to the most recent NixOS release which at this current time is `25.05`.
 8. Build and switch:
 
 ```bash
@@ -54,7 +56,9 @@ sudo nixos-rebuild switch --flake .#<system name>
 ```
 
 > [!IMPORTANT]
-> `flake.nix` has the configuration options to allow you to dynamically set your username and a few other options to customize this to your needs. That said, if you look in the dotfiles directory I have custom scripts for myself that hard code paths in them. You will, obviously, need to audit these files because they're bespoke to my needs. Most of these can probably be nuked without issue.
+> `flake.nix` has the configuration options to allow you to dynamically set your username and a few other options to customize this to your needs.
+> That said, if you look in the dotfiles directory I have custom scripts for myself that hard code paths in them.
+> You will, obviously, need to audit these files because they're bespoke to my needs. Most of these can probably be nuked without issue.
 
 ### Optional Post-Install Steps
 

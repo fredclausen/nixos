@@ -283,6 +283,8 @@
         pre-commit-check = precommit-base.lib.mkCheck {
           inherit system;
 
+          src = ./.;
+
           extraExcludes = [
             "secrets.yaml"
           ];
