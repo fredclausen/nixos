@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  user,
   stateVersion,
   ...
 }:
@@ -61,6 +62,12 @@
   sops.secrets = {
     # wifi
     "wifi.env" = { };
+
+    "fred-yubi-maranello" = {
+      path = "/home/${user}/.config/Yubico/u2f_keys";
+      owner = user;
+      mode = "0600";
+    };
   };
 
   nas = {

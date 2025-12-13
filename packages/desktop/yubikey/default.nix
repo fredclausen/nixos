@@ -56,14 +56,6 @@ in
       };
     };
 
-    sops.secrets = {
-      "fred-yubi" = {
-        path = "/home/${username}/.config/Yubico/u2f_keys";
-        owner = username;
-        mode = "0600";
-      };
-    };
-
     users.users.${username} = {
       packages = with pkgs; [
         pam_u2f
