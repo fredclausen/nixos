@@ -424,11 +424,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1765186076,
-        "narHash": "sha256-hM20uyap1a0M9d344I692r+ik4gTMyj60cQWO+hAYP8=",
+        "lastModified": 1765472234,
+        "narHash": "sha256-9VvC20PJPsleGMewwcWYKGzDIyjckEz8uWmT0vCDYK0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "addf7cf5f383a3101ecfba091b98d0a1263dc9b8",
+        "rev": "2fbfb1d73d239d2402a8fe03963e37aab15abe8b",
         "type": "github"
       },
       "original": {
@@ -512,11 +512,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1765633367,
-        "narHash": "sha256-agSHT3A5JeDV5Su8wn1qqeuQYR7L66R/vw47TouKSBQ=",
+        "lastModified": 1765638045,
+        "narHash": "sha256-6bwYuCfvpUc1f6Pyetvb5K1RjSOCAFo/y6kAZqHs0tc=",
         "owner": "FredSystems",
         "repo": "pre-commit-checks",
-        "rev": "5b4221ad03f372ffaf8793f3bcfef3c9f88f968d",
+        "rev": "4d8862de47d4017748ff4f010d35fc891cbd0bdf",
         "type": "github"
       },
       "original": {
