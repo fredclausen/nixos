@@ -477,11 +477,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1765632024,
-        "narHash": "sha256-2fQHSg0UxmWvhHvGaHUnGF+BkUuemFicRKE1mNgBEg8=",
+        "lastModified": 1765646394,
+        "narHash": "sha256-yqeB023/s/SOxhpm4SFKBDHagzn5L/KF7bCA10ZH/Q4=",
         "owner": "nix-community",
         "repo": "nixvim",
-        "rev": "960ff28d965f6aa78c863131c447d8afcb0b3288",
+        "rev": "c97e8e34250c7fe5d4e0c3333a0ca4a9d28957d0",
         "type": "github"
       },
       "original": {
@@ -512,11 +512,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1765638045,
-        "narHash": "sha256-6bwYuCfvpUc1f6Pyetvb5K1RjSOCAFo/y6kAZqHs0tc=",
+        "lastModified": 1765674150,
+        "narHash": "sha256-iF6yp52/Gus+cQUNKbrdnzpyK/g/QXH2ZyZS/Nfn4gc=",
         "owner": "FredSystems",
         "repo": "pre-commit-checks",
-        "rev": "4d8862de47d4017748ff4f010d35fc891cbd0bdf",
+        "rev": "a941de87292becddfe5562db19e6acea74e47f3c",
         "type": "github"
       },
       "original": {
