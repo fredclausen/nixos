@@ -53,12 +53,12 @@ in
           "credential \"https://gist.github.com\"" = {
             helper = "!${pkgs.gh}/bin/gh auth git-credential";
           };
-        };
 
-        extraConfig = {
-          gpg.format = "ssh";
+          gpg = {
+            format = "ssh";
 
-          gpg.ssh.allowedSignersFile = "${homeDir}/.config/git/allowed_signers";
+            ssh.allowedSignersFile = "${homeDir}/.config/git/allowed_signers";
+          };
         };
 
         enable = true;
