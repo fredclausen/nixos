@@ -38,6 +38,7 @@ in
             "spacing" = 4;
 
             "modules-left" = [
+              "hyprland/workspaces"
               "temperature"
               "custom/weather"
               "tray"
@@ -48,6 +49,7 @@ in
             ];
 
             "modules-right" = [
+              "custom/caffeine"
               "network"
               "battery"
               "pulseaudio"
@@ -69,14 +71,28 @@ in
               "on-click" = "activate";
               "on-scroll-up" = "hyprctl dispatch workspace e-1";
               "on-scroll-down" = "hyprctl dispatch workspace e+1";
-              "format-icons" = {
-                "1" = "🦊";
-                "2" = "🗨️";
-                "3" = "📝";
-                "4" = "🖥️";
-                # "5" = "";
-                # "6" = "";
-              };
+              # "format-icons" = {
+              #   "1" = "🦊";
+              #   "2" = "🗨️";
+              #   "3" = "📝";
+              #   "4" = "🖥️";
+              # "5" = "";
+              # "6" = "";
+              #};
+            };
+
+            "custom/caffeine" = {
+              "exec" = ''
+                if systemctl --user --quiet is-active caffeine-inhibit.service; then
+                  echo '{"text":"  Awake","class":"active"}'
+                else
+                  echo '{"text":"  Idle","class":"inactive"}'
+                fi
+              '';
+              "return-type" = "json";
+              "interval" = 2;
+              "tooltip" = false;
+              "on-click" = "~/.config/hyprextra/scripts/idleinhibit.sh";
             };
 
             "hyprland/window" = {
@@ -298,13 +314,14 @@ in
           #mode,
           #custom-notification,
           #custom-weather,
+          #custom-caffeine,
           #scratchpad {
             margin-top: 2px;
             margin-bottom: 2px;
-            margin-left: 4px;
-            margin-right: 4px;
-            padding-left: 4px;
-            padding-right: 4px;
+            margin-left: 2px;
+            margin-right: 2px;
+            padding-left: 2px;
+            padding-right: 2px;
             background-color: @crust;
             border-radius: 10px;
           }
@@ -346,6 +363,27 @@ in
           #custom-notification {
               color: @pink;
               border: 2px solid @pink;
+          }
+
+          #custom-caffeine {
+              color: @pink;
+              border: 2px solid @sapphire;
+              font-family: "SFProDisplay Nerd Font, Font Awesome 7 Free";
+              font-weight: 900;
+          }
+
+          /* Active (coffee) */
+          #custom-caffeine.active {
+            color: @flamingo;
+          }
+
+          /* Inactive (sleep) */
+          #custom-caffeine.inactive {
+            color: @sapphire;
+          }
+
+          #custom-caffeine:hover {
+            background-color: rgba(180, 190, 254, 0.3);
           }
 
           #idle_inhibitor {

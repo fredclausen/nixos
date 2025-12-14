@@ -243,7 +243,7 @@ in
             };
 
             "Mod+S".action = {
-              spawn = [ "code" ];
+              spawn = [ "pkill -USR1 swayidle || pkill -USR2 swayidle" ];
             };
 
             "Alt+Space".action = {

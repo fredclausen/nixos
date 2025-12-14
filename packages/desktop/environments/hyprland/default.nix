@@ -254,7 +254,7 @@ in
             "$mainMod, T, exec, $terminal"
             "$mainMod SHIFT, T, exec, $terminal start -- bash"
             "$mainMod, A, exec, nautilus"
-            "$mainMod, S, exec, code"
+            "$mainMod, S, exec, ~/.config/hyprextra/scripts/idleinhibit.sh"
             "ALT, SPACE, exec, vicinae toggle"
             "$mainMod, C, killactive"
             "$mainMod, M, exit"

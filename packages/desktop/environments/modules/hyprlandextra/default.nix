@@ -2,6 +2,7 @@
   lib,
   config,
   user,
+  pkgs,
   ...
 }:
 with lib;
@@ -19,6 +20,23 @@ in
 
   config = mkIf cfg.enable {
     home-manager.users.${username} = {
+      systemd.user.services.caffeine-inhibit = {
+        Unit = {
+          Description = "Caffeine idle inhibitor";
+        };
+
+        Service = {
+          Type = "simple";
+          ExecStart = ''
+            ${pkgs.systemd}/bin/systemd-inhibit \
+              --what=idle:sleep \
+              --who=caffeine \
+              --why=User-requested-stay-awake \
+              ${pkgs.coreutils}/bin/sleep infinity
+          '';
+        };
+      };
+
       home.file.".config/hyprextra/" = {
         source = ./hyprextra;
         recursive = true;
