@@ -58,6 +58,7 @@ in
 
     users.users.${username} = {
       packages = with pkgs; [
+        yubikey-manager
         pam_u2f
         yubioath-flutter
         yubico-piv-tool

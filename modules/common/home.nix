@@ -4,13 +4,21 @@
   system,
   verbose_name,
   github_email,
-  github_signing_key,
   ...
 }:
 
 let
   isDarwin = lib.hasSuffix "darwin" system;
   isLinux = !isDarwin;
+
+  yubikeyMap = {
+    "13380413" = "~/.ssh/id_ed25519_sk.pub";
+    "35681557" = "~/.ssh/id_ed25519_sk_github.pub";
+  };
+
+  yubikeyMapText = lib.concatStringsSep "\n" (
+    lib.mapAttrsToList (serial: key: "${serial} ${key}") yubikeyMap
+  );
 in
 {
   ##########################################################################
@@ -37,7 +45,6 @@ in
     [user]
         name = ${verbose_name}
         email = ${github_email}
-        signingkey = ${github_signing_key}
 
     [commit]
         gpgsign = false
@@ -63,5 +70,11 @@ in
 
     [diff]
         colorMoved = default
+    [include]
+        path = ~/.config/git/signing.conf
   '';
+
+  home.file.".config/git/yubikey-map" = {
+    text = yubikeyMapText + "\n";
+  };
 }

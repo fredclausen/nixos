@@ -56,8 +56,19 @@ in
           owner = username;
         };
 
+        "ssh/yubi_github_pub_two" = {
+          path = "${homeDir}/.ssh/id_ed25519_sk_github.pub";
+          owner = username;
+        };
+
         "ssh/yubi_github_private" = {
           path = "${homeDir}/.ssh/id_ed25519_sk";
+          owner = username;
+          mode = "0600";
+        };
+
+        "ssh/yubi_github_private_two" = {
+          path = "${homeDir}/.ssh/id_ed25519_sk_github";
           owner = username;
           mode = "0600";
         };
