@@ -82,16 +82,10 @@ in
             };
 
             "custom/caffeine" = {
-              "exec" = ''
-                if systemctl --user --quiet is-active caffeine-inhibit.service; then
-                  echo '{"text":"  Awake","class":"active"}'
-                else
-                  echo '{"text":"  Idle","class":"inactive"}'
-                fi
-              '';
+              "exec" = "~/.config/hyprextra/scripts/idleinhibit-toolbar.sh";
               "return-type" = "json";
               "interval" = 2;
-              "tooltip" = false;
+              "tooltip" = true;
               "on-click" = "~/.config/hyprextra/scripts/idleinhibit.sh";
             };
 
@@ -277,11 +271,49 @@ in
           }
 
           #workspaces {
-              border-radius: 20px;
+              margin: 2px;
+              padding: 0px 2px;   /* horizontal only */
+
+              background-color: @crust;
+              border-radius: 14px;
+              border: 2px solid @overlay1;
           }
 
           #workspaces button {
-              padding: 0 4px;
+              margin: 1px 2px;
+              padding: 1px 3px;
+
+              background: transparent;
+
+              border-radius: 10px;
+              border: 2px solid transparent;
+
+              min-height: 0;
+
+              color: @overlay0;
+
+              transition: all 0.15s ease-in-out;
+          }
+
+          #workspaces button:hover {
+              background-color: rgba(0, 0, 0, 0.25);
+              color: @crust;
+              background: @rosewater;
+              border-color: @mauve;
+          }
+
+          #workspaces button.active:hover {
+              background-color: rgba(0, 0, 0, 0.25);
+              color: @crust;
+              background: @rosewater;
+              border-color: @mauve;
+          }
+
+          #workspaces button.focused:hover {
+              background-color: rgba(0, 0, 0, 0.25);
+              color: @crust;
+              background: @rosewater;
+              border-color: @mauve;
           }
 
           #workspaces button.focused {
@@ -293,7 +325,7 @@ in
           #workspaces button.active {
               background-color: rgba(0, 0, 0, 0.3);
               color: @mauve;
-              border-top: 2px solid @mauve;
+              border: 2px solid @mauve;
           }
 
           #workspaces button.urgent {
@@ -316,12 +348,8 @@ in
           #custom-weather,
           #custom-caffeine,
           #scratchpad {
-            margin-top: 2px;
-            margin-bottom: 2px;
-            margin-left: 2px;
-            margin-right: 2px;
-            padding-left: 2px;
-            padding-right: 2px;
+            margin: 2px;
+            padding: 2px 8px;
             background-color: @crust;
             border-radius: 10px;
           }
@@ -382,8 +410,9 @@ in
             color: @sapphire;
           }
 
-          #custom-caffeine:hover {
-            background-color: rgba(180, 190, 254, 0.3);
+          /* External (busy) */
+          #custom-caffeine.external {
+            color: @mauve;
           }
 
           #idle_inhibitor {
