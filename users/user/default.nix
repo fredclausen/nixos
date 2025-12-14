@@ -16,6 +16,7 @@ in
     services.udev.packages = [ pkgs.rtl-sdr ]; # (there might be other packages that require udev here too)
 
     users.users.${username} = {
+      linger = true;
       isNormalUser = true;
       description = "${full_name}";
       extraGroups = [

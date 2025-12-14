@@ -3,7 +3,6 @@
   user,
   verbose_name,
   github_email,
-  github_signing_key,
   system,
   lib,
   ...
@@ -66,7 +65,6 @@ in
         signing = {
           signer = "${pkgs.gnupg}/bin/gpg";
           signByDefault = false;
-          key = github_signing_key;
         };
 
         lfs = {
