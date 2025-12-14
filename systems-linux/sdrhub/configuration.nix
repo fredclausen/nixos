@@ -183,7 +183,7 @@
       ###############################################################
       {
         name = "airspy_adsb";
-        image = "ghcr.io/sdr-enthusiasts/airspy_adsb:trixie-latest-build-3";
+        image = "ghcr.io/sdr-enthusiasts/airspy_adsb:trixie-latest-build-4";
 
         hostname = "airspy_adsb";
         restart = "always";
