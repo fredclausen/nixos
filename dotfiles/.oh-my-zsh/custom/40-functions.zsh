@@ -43,6 +43,8 @@ updatenix() {
 
             echo
         fi
+
+        pkill -RTMIN+8 waybar 2>/dev/null || true
     fi
 
     [[ "$pushed" = true ]] && popd >/dev/null || return

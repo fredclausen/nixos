@@ -92,6 +92,7 @@ in
               "exec" = "~/.config/hyprextra/scripts/waybar-updates.sh";
               "return-type" = "json";
               "interval" = 600;
+              "signal" = 8;
             };
 
             "custom/caffeine" = {
