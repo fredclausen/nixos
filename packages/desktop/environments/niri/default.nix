@@ -73,16 +73,6 @@ in
           };
 
           spawn-at-startup = [
-            { command = [ "polkit-agent-helper-1" ]; }
-
-            {
-              command = [
-                "sh"
-                "-c"
-                "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"
-              ];
-            }
-
             {
               command = [
                 "sh"
