@@ -80,15 +80,6 @@ in
                 "gsettings set org.gnome.desktop.interface gtk-theme 'Catppuccin-GTK-Purple-Dark'"
               ];
             }
-
-            {
-              command = [
-                "systemctl"
-                "--user"
-                "start"
-                "polkit-gnome-authentication-agent-1.service"
-              ];
-            }
             {
               command = [
                 "systemctl"
@@ -115,7 +106,6 @@ in
             }
 
             { command = [ "/home/${username}/.config/hyprextra/scripts/sleep" ]; }
-            { command = [ "sway-audio-idle-inhibit" ]; }
 
             {
               command = [
@@ -124,13 +114,6 @@ in
                 "*"
                 "-i"
                 "/home/${username}/.config/backgrounds/lewis.jpg"
-              ];
-            }
-
-            {
-              command = [
-                "nm-applet"
-                "--indicator"
               ];
             }
             {

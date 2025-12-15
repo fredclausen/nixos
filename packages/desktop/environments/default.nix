@@ -84,6 +84,28 @@ in
             TimeoutStopSec = 10;
           };
         };
+
+        sway-audio-idle-inhibit = {
+          description = "sway-audio-idle-inhibit Background";
+          wantedBy = [ "graphical-session.target" ];
+          wants = [
+            "graphical-session.target"
+            "polkit-gnome-authentication-agent-1.service"
+            "waybar.service"
+          ];
+          after = [
+            "graphical-session.target"
+            "polkit-gnome-authentication-agent-1.service"
+            "waybar.service"
+          ];
+          serviceConfig = {
+            Type = "simple";
+            ExecStart = "${pkgs.sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit";
+            Restart = "on-failure";
+            RestartSec = 1;
+            TimeoutStopSec = 10;
+          };
+        };
       };
     };
 

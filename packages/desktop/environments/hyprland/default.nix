@@ -145,9 +145,7 @@ in
             "systemctl start --user waybar"
             "systemctl start --user network-manager-applet"
             "~/.config/hyprextra/scripts/sleep"
-            "sway-audio-idle-inhibit"
             "swaybg -o \"*\" -i \"/home/${username}/.config/backgrounds/lewis.jpg\" &"
-            "nm-applet --indicator"
             "geary --gapplication-service"
             "gnome-calendar --gapplication-service"
             "[workspace 1 silent] firefox"
@@ -159,6 +157,10 @@ in
             "systemctl stop --user waybar"
             "systemctl stop --user swaync"
             "systemctl stop --user network-manager-applet"
+            "systemctl stop --user udiskie-agent"
+            "systemctl stop --user one-password-agent"
+            "systemctl stop --user sway-audio-idle-inhibit"
+            "systemctl stop --user polkit-gnome-authentication-agent-1"
           ];
 
           general = {
