@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if nixos-needsreboot >/dev/null 2>&1; then
+if nixos-needsreboot --dry-run >/dev/null 2>&1; then
     echo '{"text":"󰜉","class":"reboot","tooltip":"Reboot required"}'
     exit 0
 fi
