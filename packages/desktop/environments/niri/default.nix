@@ -243,7 +243,7 @@ in
             };
 
             "Mod+S".action = {
-              spawn = [ "pkill -USR1 swayidle || pkill -USR2 swayidle" ];
+              spawn = [ "~/.config/hyprextra/scripts/idleinhibit.sh" ];
             };
 
             "Alt+Space".action = {
