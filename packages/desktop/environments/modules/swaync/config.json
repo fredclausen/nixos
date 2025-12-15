@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/ErikReider/SwayNotificationCenter/f55b433e05bf2f7d9772b86a9f613571efc3ae34/src/configSchema.json",
+  "$schema": "https://raw.githubusercontent.com/ErikReider/SwayNotificationCenter/master/src/configSchema.json",
 
   "positionX": "right",
   "positionY": "top",
@@ -25,6 +25,17 @@
   "hide-on-clear": true,
   "hide-on-action": true,
   "script-fail-notify": true,
+
+  "notification-visibility": {
+    "volume": {
+      "state": "transient",
+      "summary": "[Vv]olume.*+"
+    },
+    "discord": {
+      "state": "transient",
+      "app-name": "Discord"
+    }
+  },
 
   "widgets": [
     "title",

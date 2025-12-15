@@ -145,19 +145,6 @@ in
             }
             {
               command = [
-                "1password"
-                "--silent"
-              ];
-            }
-            {
-              command = [
-                "udiskie"
-                "--appindicator"
-                "-t"
-              ];
-            }
-            {
-              command = [
                 "geary"
                 "--gapplication-service"
               ];

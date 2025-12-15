@@ -139,20 +139,15 @@ in
           ];
 
           exec-once = [
-            #"polkit-agent-helper-1"
             "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
             "gsettings set org.gnome.desktop.interface gtk-theme \"Catppuccin-GTK-Purple-Dark\""
-            # "hyprctl setcursor Adwaita 24"
-            #"systemctl start --user polkit-gnome-authentication-agent-1"
-            "systemctl start --user waybar"
             "systemctl start --user swaync"
+            "systemctl start --user waybar"
             "systemctl start --user network-manager-applet"
             "~/.config/hyprextra/scripts/sleep"
             "sway-audio-idle-inhibit"
             "swaybg -o \"*\" -i \"/home/${username}/.config/backgrounds/lewis.jpg\" &"
             "nm-applet --indicator"
-            "1password --silent &"
-            "udiskie --appindicator -t &"
             "geary --gapplication-service"
             "gnome-calendar --gapplication-service"
             "[workspace 1 silent] firefox"
