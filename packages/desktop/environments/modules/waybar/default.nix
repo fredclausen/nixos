@@ -41,6 +41,8 @@ in
               "hyprland/workspaces"
               "temperature"
               "custom/weather"
+              "custom/vpn"
+              "custom/updates"
               "tray"
             ];
 
@@ -53,6 +55,7 @@ in
               "network"
               "battery"
               "pulseaudio"
+              "custom/media"
               "clock"
               "custom/notification"
             ];
@@ -71,14 +74,24 @@ in
               "on-click" = "activate";
               "on-scroll-up" = "hyprctl dispatch workspace e-1";
               "on-scroll-down" = "hyprctl dispatch workspace e+1";
-              # "format-icons" = {
-              #   "1" = "🦊";
-              #   "2" = "🗨️";
-              #   "3" = "📝";
-              #   "4" = "🖥️";
-              # "5" = "";
-              # "6" = "";
-              #};
+            };
+
+            "custom/vpn" = {
+              "exec" = "~/.config/hyprextra/scripts/waybar-vpn.sh";
+              "return-type" = "json";
+              "interval" = 5;
+            };
+
+            "custom/media" = {
+              "exec" = "~/.config/hyprextra/scripts/waybar-media.sh";
+              "return-type" = "json";
+              "interval" = 2;
+            };
+
+            "custom/updates" = {
+              "exec" = "~/.config/hyprextra/scripts/waybar-updates.sh";
+              "return-type" = "json";
+              "interval" = 600;
             };
 
             "custom/caffeine" = {
@@ -347,6 +360,9 @@ in
           #custom-notification,
           #custom-weather,
           #custom-caffeine,
+          #custom-media,
+          #custom-vpn,
+          #custom-updates,
           #scratchpad {
             margin: 2px;
             padding: 2px 8px;
@@ -440,10 +456,58 @@ in
           }
 
           #custom-vpn {
-              color: @lavender;
-              border-radius: 15px;
-              padding-left: 6px;
-              padding-right: 6px;
+            border: 2px solid @lavender;
+            color: @lavender;
+          }
+
+          #custom-vpn.active {
+            color: @green;
+            border-color: @green;
+          }
+
+          #custom-vpn.inactive {
+            color: @overlay1;
+            border-color: @overlay1;
+          }
+
+          #custom-media {
+            border: 2px solid @sky;
+            color: @sky;
+          }
+
+          #custom-media.mic {
+            color: @red;
+            border-color: @red;
+          }
+
+          #custom-media.audio {
+            color: @blue;
+            border-color: @blue;
+          }
+
+          #custom-media.idle {
+            color: @overlay1;
+            border-color: @overlay1;
+          }
+
+          #custom-updates {
+            border: 2px solid @green;
+            color: @green;
+          }
+
+          #custom-updates.updates {
+            color: @yellow;
+            border-color: @yellow;
+          }
+
+          #custom-updates.reboot {
+            color: @red;
+            border-color: @red;
+          }
+
+          #custom-updates.clean {
+            color: @overlay1;
+            border-color: @overlay1;
           }
 
         '';
