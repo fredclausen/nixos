@@ -393,28 +393,28 @@ in
 
             "XF86AudioRaiseVolume".action = {
               spawn = [
-                "~/.config/hyprextra/scripts/volume"
+                "~/.config/hyprextra/scripts/volume.sh"
                 "--inc"
               ];
             };
 
             "XF86AudioLowerVolume".action = {
               spawn = [
-                "~/.config/hyprextra/scripts/volume"
+                "~/.config/hyprextra/scripts/volume.sh"
                 "--dec"
               ];
             };
 
             "XF86AudioMute".action = {
               spawn = [
-                "~/.config/hyprextra/scripts/volume"
+                "~/.config/hyprextra/scripts/volume.sh"
                 "--toggle"
               ];
             };
 
             "XF86AudioMicMute".action = {
               spawn = [
-                "~/.config/hyprextra/scripts/volume"
+                "~/.config/hyprextra/scripts/volume.sh"
                 "--toggle-mic"
               ];
             };

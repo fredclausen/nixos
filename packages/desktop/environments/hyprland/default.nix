@@ -311,10 +311,10 @@ in
           ];
 
           binde = [
-            ", XF86AudioRaiseVolume, exec, ~/.config/hyprextra/scripts/volume --inc "
-            ", XF86AudioLowerVolume, exec, ~/.config/hyprextra/scripts/volume --dec "
-            ", XF86AudioMute, exec, ~/.config/hyprextra/scripts/volume --toggle"
-            ", XF86AudioMicMute, exec, ~/.config/hyprextra/scripts/volume --toggle-mic"
+            ", XF86AudioRaiseVolume, exec, ~/.config/hyprextra/scripts/volume.sh --inc "
+            ", XF86AudioLowerVolume, exec, ~/.config/hyprextra/scripts/volume.sh --dec "
+            ", XF86AudioMute, exec, ~/.config/hyprextra/scripts/volume.sh --toggle"
+            ", XF86AudioMicMute, exec, ~/.config/hyprextra/scripts/volume.sh --toggle-mic"
             ", XF86AudioPlay, exec, playerctl play-pause"
             ", XF86AudioPause, exec, playerctl play-pause"
             ", XF86AudioNext, exec, playerctl next"
