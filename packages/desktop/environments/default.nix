@@ -45,14 +45,16 @@ in
           description = "1Password Background";
           wantedBy = [ "graphical-session.target" ];
           wants = [
-            "graphical-session.target"
             "waybar.service"
-            "polkit-gnome-authentication-agent-1.service"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
           ];
+
           after = [
             "graphical-session.target"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
             "polkit-gnome-authentication-agent-1.service"
-            "waybar.service"
           ];
           serviceConfig = {
             Type = "simple";
@@ -67,14 +69,16 @@ in
           description = "udiskie Background";
           wantedBy = [ "graphical-session.target" ];
           wants = [
-            "graphical-session.target"
-            "polkit-gnome-authentication-agent-1.service"
             "waybar.service"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
           ];
+
           after = [
             "graphical-session.target"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
             "polkit-gnome-authentication-agent-1.service"
-            "waybar.service"
           ];
           serviceConfig = {
             Type = "simple";
@@ -89,14 +93,16 @@ in
           description = "sway-audio-idle-inhibit Background";
           wantedBy = [ "graphical-session.target" ];
           wants = [
-            "graphical-session.target"
-            "polkit-gnome-authentication-agent-1.service"
             "waybar.service"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
           ];
+
           after = [
             "graphical-session.target"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
             "polkit-gnome-authentication-agent-1.service"
-            "waybar.service"
           ];
           serviceConfig = {
             Type = "simple";
@@ -111,14 +117,16 @@ in
           description = "sway-background Background";
           wantedBy = [ "graphical-session.target" ];
           wants = [
-            "graphical-session.target"
-            "polkit-gnome-authentication-agent-1.service"
             "waybar.service"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
           ];
+
           after = [
             "graphical-session.target"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
             "polkit-gnome-authentication-agent-1.service"
-            "waybar.service"
           ];
           serviceConfig = {
             Type = "simple";
@@ -133,14 +141,16 @@ in
           description = "Geary Background";
           wantedBy = [ "graphical-session.target" ];
           wants = [
-            "graphical-session.target"
-            "polkit-gnome-authentication-agent-1.service"
             "waybar.service"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
           ];
+
           after = [
             "graphical-session.target"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
             "polkit-gnome-authentication-agent-1.service"
-            "waybar.service"
           ];
           serviceConfig = {
             Type = "simple";
@@ -155,14 +165,16 @@ in
           description = "GNOME Calendar Background";
           wantedBy = [ "graphical-session.target" ];
           wants = [
-            "graphical-session.target"
-            "polkit-gnome-authentication-agent-1.service"
             "waybar.service"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
           ];
+
           after = [
             "graphical-session.target"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
             "polkit-gnome-authentication-agent-1.service"
-            "waybar.service"
           ];
           serviceConfig = {
             Type = "simple";
@@ -177,14 +189,16 @@ in
           description = "User Sleep Hook";
           wantedBy = [ "graphical-session.target" ];
           wants = [
-            "graphical-session.target"
-            "polkit-gnome-authentication-agent-1.service"
             "waybar.service"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
           ];
+
           after = [
             "graphical-session.target"
+            "xdg-desktop-portal.service"
+            "xdg-desktop-portal-hyprland.service"
             "polkit-gnome-authentication-agent-1.service"
-            "waybar.service"
           ];
           serviceConfig = {
             Type = "simple";
