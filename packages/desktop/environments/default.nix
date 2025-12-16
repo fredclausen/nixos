@@ -106,6 +106,28 @@ in
             TimeoutStopSec = 10;
           };
         };
+
+        sway-background = {
+          description = "sway-background Background";
+          wantedBy = [ "graphical-session.target" ];
+          wants = [
+            "graphical-session.target"
+            "polkit-gnome-authentication-agent-1.service"
+            "waybar.service"
+          ];
+          after = [
+            "graphical-session.target"
+            "polkit-gnome-authentication-agent-1.service"
+            "waybar.service"
+          ];
+          serviceConfig = {
+            Type = "simple";
+            ExecStart = "${pkgs.swaybg}/bin/swaybg -o \"*\" -i \"%h/.config/backgrounds/lewis.jpg\"";
+            Restart = "on-failure";
+            RestartSec = 1;
+            TimeoutStopSec = 10;
+          };
+        };
       };
     };
 

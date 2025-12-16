@@ -145,7 +145,7 @@ in
             "systemctl start --user waybar"
             "systemctl start --user network-manager-applet"
             "~/.config/hyprextra/scripts/sleep"
-            "swaybg -o \"*\" -i \"/home/${username}/.config/backgrounds/lewis.jpg\" &"
+            #"swaybg -o \"*\" -i \"/home/${username}/.config/backgrounds/lewis.jpg\" &"
             "geary --gapplication-service"
             "gnome-calendar --gapplication-service"
             "[workspace 1 silent] firefox"

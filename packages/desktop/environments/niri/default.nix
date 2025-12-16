@@ -106,16 +106,6 @@ in
             }
 
             { command = [ "/home/${username}/.config/hyprextra/scripts/sleep" ]; }
-
-            {
-              command = [
-                "${pkgs.swaybg}/bin/swaybg"
-                "-o"
-                "*"
-                "-i"
-                "/home/${username}/.config/backgrounds/lewis.jpg"
-              ];
-            }
             {
               command = [
                 "geary"
