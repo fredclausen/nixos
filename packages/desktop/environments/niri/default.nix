@@ -104,21 +104,6 @@ in
                 "network-manager-applet.service"
               ];
             }
-
-            { command = [ "/home/${username}/.config/hyprextra/scripts/sleep" ]; }
-            {
-              command = [
-                "geary"
-                "--gapplication-service"
-              ];
-            }
-            {
-              command = [
-                "gnome-calendar"
-                "--gapplication-service"
-              ];
-            }
-
             { command = [ "firefox" ]; }
             { command = [ "discord" ]; }
             { command = [ "wezterm" ]; }

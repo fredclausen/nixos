@@ -128,6 +128,72 @@ in
             TimeoutStopSec = 10;
           };
         };
+
+        geary-background = {
+          description = "Geary Background";
+          wantedBy = [ "graphical-session.target" ];
+          wants = [
+            "graphical-session.target"
+            "polkit-gnome-authentication-agent-1.service"
+            "waybar.service"
+          ];
+          after = [
+            "graphical-session.target"
+            "polkit-gnome-authentication-agent-1.service"
+            "waybar.service"
+          ];
+          serviceConfig = {
+            Type = "simple";
+            ExecStart = "${pkgs.geary}/bin/geary --gapplication-service";
+            Restart = "on-failure";
+            RestartSec = 1;
+            TimeoutStopSec = 10;
+          };
+        };
+
+        gnome-calendar-background = {
+          description = "GNOME Calendar Background";
+          wantedBy = [ "graphical-session.target" ];
+          wants = [
+            "graphical-session.target"
+            "polkit-gnome-authentication-agent-1.service"
+            "waybar.service"
+          ];
+          after = [
+            "graphical-session.target"
+            "polkit-gnome-authentication-agent-1.service"
+            "waybar.service"
+          ];
+          serviceConfig = {
+            Type = "simple";
+            ExecStart = "${pkgs.gnome-calendar}/bin/gnome-calendar --gapplication-service";
+            Restart = "on-failure";
+            RestartSec = 1;
+            TimeoutStopSec = 10;
+          };
+        };
+
+        user-sleep-hook = {
+          description = "User Sleep Hook";
+          wantedBy = [ "graphical-session.target" ];
+          wants = [
+            "graphical-session.target"
+            "polkit-gnome-authentication-agent-1.service"
+            "waybar.service"
+          ];
+          after = [
+            "graphical-session.target"
+            "polkit-gnome-authentication-agent-1.service"
+            "waybar.service"
+          ];
+          serviceConfig = {
+            Type = "simple";
+            ExecStart = "%h/.config/hyprextra/scripts/sleep.sh";
+            Restart = "on-failure";
+            RestartSec = 1;
+            TimeoutStopSec = 10;
+          };
+        };
       };
     };
 

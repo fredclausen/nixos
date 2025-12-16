@@ -144,10 +144,6 @@ in
             "systemctl start --user swaync"
             "systemctl start --user waybar"
             "systemctl start --user network-manager-applet"
-            "~/.config/hyprextra/scripts/sleep"
-            #"swaybg -o \"*\" -i \"/home/${username}/.config/backgrounds/lewis.jpg\" &"
-            "geary --gapplication-service"
-            "gnome-calendar --gapplication-service"
             "[workspace 1 silent] firefox"
             "[workspace 2 silent] discord"
             "[workspace 3 silent] wezterm"
@@ -160,6 +156,10 @@ in
             "systemctl stop --user udiskie-agent"
             "systemctl stop --user one-password-agent"
             "systemctl stop --user sway-audio-idle-inhibit"
+            "systemctl stop --user sway-background"
+            "systemctl stop --user user-sleep-hook"
+            "systemctl stop --user geary-background"
+            "systemctl stop --user gnome-calendar-background"
             "systemctl stop --user polkit-gnome-authentication-agent-1"
           ];
 
