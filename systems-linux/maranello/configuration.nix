@@ -59,6 +59,12 @@
     "f /var/lib/gdm/.config/monitors.xml 0644 gdm gdm - ${./monitors.xml}"
   ];
 
+  security.pam.services = {
+    polkit-1.u2fAuth = true;
+    polkit-gnome-authentication-agent-1.u2fAuth = true;
+    hyprpolkitagent.u2fAuth = true;
+  };
+
   sops.secrets = {
     # wifi
     "wifi.env" = { };

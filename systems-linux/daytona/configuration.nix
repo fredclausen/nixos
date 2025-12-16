@@ -94,6 +94,10 @@
     polkit-1.fprintAuth = true;
     polkit-gnome-authentication-agent-1.fprintAuth = true;
     hyprpolkitagent.fprintAuth = true;
+
+    polkit-1.u2fAuth = true;
+    polkit-gnome-authentication-agent-1.u2fAuth = true;
+    hyprpolkitagent.u2fAuth = true;
   };
 
   services = {
