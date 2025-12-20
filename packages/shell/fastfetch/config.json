@@ -32,6 +32,12 @@
       "keyColor": "34"
     },
     {
+      "type": "command",
+      "key": "󰜉 ",
+      "keyColor": "34",
+      "text": "nixos-needsreboot --dry-run >/dev/null && echo 'No Reboot Required' || echo 'Reboot Required'"
+    },
+    {
       "type": "packages",
       "format": "{} (nix)",
       "key": " ",
