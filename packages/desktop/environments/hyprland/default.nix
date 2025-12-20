@@ -21,8 +21,21 @@ in
   config = mkIf cfg.enable {
     desktop.environments.modules.enable = true;
 
-    # Enable the GNOME Desktop Environment.
-    services.displayManager.gdm.enable = true;
+    services.displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+
+      settings = {
+        Theme = {
+          font = "SFProDisplay Nerd Font";
+        };
+
+        General = {
+          RememberLastSession = true;
+          RememberLastUser = true;
+        };
+      };
+    };
 
     users.users.${username} = {
       packages = with pkgs; [
@@ -139,28 +152,32 @@ in
           ];
 
           exec-once = [
+            "systemctl restart --user polkit-gnome-authentication-agent-1"
             "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
             "gsettings set org.gnome.desktop.interface gtk-theme \"Catppuccin-GTK-Purple-Dark\""
-            "systemctl start --user swaync"
-            "systemctl start --user waybar"
-            "systemctl start --user network-manager-applet"
-            "[workspace 1 silent] firefox"
-            "[workspace 2 silent] discord"
-            "[workspace 3 silent] wezterm"
+            "swaybg -o \"*\" -i \"/home/${username}/.config/backgrounds/lewis.jpg\""
+            "waybar"
+            "systemctl restart --user sway-audio-idle-inhibit"
+            "systemctl restart --user geary-background"
+            "systemctl restart --user gnome-calendar-background"
+            "systemctl restart --user user-sleep-hook"
+            "systemctl restart --user one-password-agent"
+            "systemctl restart --user network-manager-applet"
+            "systemctl restart --user udiskie-agent"
+            "swaync"
           ];
 
           exec-shutdown = [
-            "systemctl stop --user waybar"
-            "systemctl stop --user swaync"
             "systemctl stop --user network-manager-applet"
             "systemctl stop --user udiskie-agent"
             "systemctl stop --user one-password-agent"
             "systemctl stop --user sway-audio-idle-inhibit"
-            "systemctl stop --user sway-background"
             "systemctl stop --user user-sleep-hook"
             "systemctl stop --user geary-background"
             "systemctl stop --user gnome-calendar-background"
             "systemctl stop --user polkit-gnome-authentication-agent-1"
+            "pkill waybar"
+            "pkill swaync"
           ];
 
           general = {
@@ -172,6 +189,7 @@ in
             "col.nogroup_border_active" = "rgb(bd93f9) rgb(44475a) 90deg";
             no_border_on_floating = false;
             border_size = 2;
+            resize_on_border = true;
           };
 
           input = {

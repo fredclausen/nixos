@@ -50,8 +50,21 @@ in
 
     desktop.environments.modules.enable = true;
 
-    # Enable the GNOME Desktop Environment.
-    services.displayManager.gdm.enable = true;
+    services.displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+
+      settings = {
+        Theme = {
+          font = "SFProDisplay Nerd Font";
+        };
+
+        General = {
+          RememberLastSession = true;
+          RememberLastUser = true;
+        };
+      };
+    };
 
     home-manager.users.${username} = {
       home.packages = with pkgs; [
@@ -70,43 +83,108 @@ in
               enable = true;
               max-scroll-amount = "25%";
             };
+            keyboard = {
+              numlock = true;
+            };
           };
 
           spawn-at-startup = [
+            # GTK theming
             {
               command = [
                 "sh"
                 "-c"
-                "gsettings set org.gnome.desktop.interface gtk-theme 'Catppuccin-GTK-Purple-Dark'"
+                "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' && \
+                 gsettings set org.gnome.desktop.interface gtk-theme 'Catppuccin-GTK-Purple-Dark'"
+              ];
+            }
+
+            # Wallpaper (same as swaybg in Hyprland)
+            {
+              command = [
+                "swaybg"
+                "-o"
+                "*"
+                "-i"
+                "/home/${username}/.config/backgrounds/lewis.jpg"
+              ];
+            }
+
+            # Waybar (match Hyprland: direct start, not systemd)
+            {
+              command = [ "waybar" ];
+            }
+
+            # swaync (IMPORTANT: direct start, no systemd)
+            {
+              command = [ "swaync" ];
+            }
+
+            # Background helpers (systemd user units)
+            {
+              command = [
+                "systemctl"
+                "--user"
+                "restart"
+                "polkit-gnome-authentication-agent-1"
               ];
             }
             {
               command = [
                 "systemctl"
                 "--user"
-                "start"
-                "waybar.service"
+                "restart"
+                "sway-audio-idle-inhibit"
               ];
             }
             {
               command = [
                 "systemctl"
                 "--user"
-                "start"
-                "swaync.service"
+                "restart"
+                "geary-background"
               ];
             }
             {
               command = [
                 "systemctl"
                 "--user"
-                "start"
-                "network-manager-applet.service"
+                "restart"
+                "gnome-calendar-background"
               ];
             }
-            { command = [ "firefox" ]; }
-            { command = [ "discord" ]; }
-            { command = [ "wezterm" ]; }
+            {
+              command = [
+                "systemctl"
+                "--user"
+                "restart"
+                "user-sleep-hook"
+              ];
+            }
+            {
+              command = [
+                "systemctl"
+                "--user"
+                "restart"
+                "one-password-agent"
+              ];
+            }
+            {
+              command = [
+                "systemctl"
+                "--user"
+                "restart"
+                "network-manager-applet"
+              ];
+            }
+            {
+              command = [
+                "systemctl"
+                "--user"
+                "restart"
+                "udiskie-agent"
+              ];
+            }
           ];
 
           layout = {
@@ -146,8 +224,13 @@ in
             };
           };
 
-          binds = {
+          window-rules = [
+            {
+              open-maximized = true;
+            }
+          ];
 
+          binds = {
             # --- App Launchers ---
             "Mod+F".action = {
               spawn = [ "firefox" ];
@@ -182,7 +265,10 @@ in
             };
 
             "Alt+Space".action = {
-              spawn = [ "ulauncher" ];
+              spawn = [
+                "vicinae"
+                "toggle"
+              ];
             };
 
             # --- Kill window / exit ---
@@ -215,13 +301,25 @@ in
               move-window-to-workspace-down = { };
             };
 
-            "Mod+Equal".action = {
-              set-column-width = "60%";
-            };
-            "Mod+Minus".action = {
+            "Mod+4".action = {
               set-column-width = "40%";
             };
-            "Mod+Backspace".action = {
+            "Mod+5".action = {
+              set-column-width = "50%";
+            };
+            "Mod+6".action = {
+              set-column-width = "60%";
+            };
+            "Mod+7".action = {
+              set-column-width = "70%";
+            };
+            "Mod+8".action = {
+              set-column-width = "80%";
+            };
+            "Mod+9".action = {
+              set-column-width = "90%";
+            };
+            "Mod+0".action = {
               set-column-width = "100%";
             };
 
@@ -255,68 +353,68 @@ in
             };
 
             # --- Workspace switching ---
-            "Mod+1".action = {
-              focus-workspace = 1;
-            };
-            "Mod+2".action = {
-              focus-workspace = 2;
-            };
-            "Mod+3".action = {
-              focus-workspace = 3;
-            };
-            "Mod+4".action = {
-              focus-workspace = 4;
-            };
-            "Mod+5".action = {
-              focus-workspace = 5;
-            };
-            "Mod+6".action = {
-              focus-workspace = 6;
-            };
-            "Mod+7".action = {
-              focus-workspace = 7;
-            };
-            "Mod+8".action = {
-              focus-workspace = 8;
-            };
-            "Mod+9".action = {
-              focus-workspace = 9;
-            };
-            "Mod+0".action = {
-              focus-workspace = 10;
-            };
+            # "Mod+1".action = {
+            #   focus-workspace = 1;
+            # };
+            # "Mod+2".action = {
+            #   focus-workspace = 2;
+            # };
+            # "Mod+3".action = {
+            #   focus-workspace = 3;
+            # };
+            # "Mod+4".action = {
+            #   focus-workspace = 4;
+            # };
+            # "Mod+5".action = {
+            #   focus-workspace = 5;
+            # };
+            # "Mod+6".action = {
+            #   focus-workspace = 6;
+            # };
+            # "Mod+7".action = {
+            #   focus-workspace = 7;
+            # };
+            # "Mod+8".action = {
+            #   focus-workspace = 8;
+            # };
+            # "Mod+9".action = {
+            #   focus-workspace = 9;
+            # };
+            # "Mod+0".action = {
+            #   focus-workspace = 10;
+            # };
 
             # --- Move active window to workspace ---
-            "Mod+Shift+1".action = {
-              move-column-to-workspace = 1;
-            };
-            "Mod+Shift+2".action = {
-              move-column-to-workspace = 2;
-            };
-            "Mod+Shift+3".action = {
-              move-column-to-workspace = 3;
-            };
-            "Mod+Shift+4".action = {
-              move-column-to-workspace = 4;
-            };
-            "Mod+Shift+5".action = {
-              move-column-to-workspace = 5;
-            };
-            "Mod+Shift+6".action = {
-              move-column-to-workspace = 6;
-            };
-            "Mod+Shift+7".action = {
-              move-column-to-workspace = 7;
-            };
-            "Mod+Shift+8".action = {
-              move-column-to-workspace = 8;
-            };
-            "Mod+Shift+9".action = {
-              move-column-to-workspace = 9;
-            };
-            "Mod+Shift+0".action = {
-              move-column-to-workspace = 10;
-            };
+            # "Mod+Shift+1".action = {
+            #   move-column-to-workspace = 1;
+            # };
+            # "Mod+Shift+2".action = {
+            #   move-column-to-workspace = 2;
+            # };
+            # "Mod+Shift+3".action = {
+            #   move-column-to-workspace = 3;
+            # };
+            # "Mod+Shift+4".action = {
+            #   move-column-to-workspace = 4;
+            # };
+            # "Mod+Shift+5".action = {
+            #   move-column-to-workspace = 5;
+            # };
+            # "Mod+Shift+6".action = {
+            #   move-column-to-workspace = 6;
+            # };
+            # "Mod+Shift+7".action = {
+            #   move-column-to-workspace = 7;
+            # };
+            # "Mod+Shift+8".action = {
+            #   move-column-to-workspace = 8;
+            # };
+            # "Mod+Shift+9".action = {
+            #   move-column-to-workspace = 9;
+            # };
+            # "Mod+Shift+0".action = {
+            #   move-column-to-workspace = 10;
+            # };
 
             # --- Workspace scroll (mouse wheel) ---
             "Mod+WheelScrollDown".action = {
