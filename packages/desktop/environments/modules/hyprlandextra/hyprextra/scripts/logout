@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-loginctl terminate-user "$USER"
+if [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
+    hyprctl dispatch exit
+elif [[ "$XDG_CURRENT_DESKTOP" == "niri" ]]; then
+    niri msg action quit
+fi

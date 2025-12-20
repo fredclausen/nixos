@@ -65,6 +65,44 @@
     hyprpolkitagent.u2fAuth = true;
   };
 
+  services.displayManager.sddm = {
+    enable = true;
+    wayland = {
+      enable = true;
+    };
+
+    settings = {
+      Wayland = {
+        EnableHiDPI = true;
+
+        CompositorCommand = "${pkgs.hyprland}/bin/Hyprland";
+      };
+    };
+  };
+
+  system.activationScripts.sddm-hyprland-config = ''
+    mkdir -p /var/lib/sddm/.config/hypr
+    cat <<EOF > /var/lib/sddm/.config/hypr/hyprland.conf
+    # monitor=name,res,offset,scale
+
+    # HDMI-A-1 at top left
+    monitor=HDMI-A-1, 2560x1440@144.01, 0x0, 1
+
+    # DP-2 below HDMI-A-1
+    monitor=DP-2, 2560x1440@143.97, 0x1440, 1
+
+    # DP-1 (Primary) to the right of DP-2
+    monitor=DP-1, 2560x1440@143.97, 2560x1440, 1
+
+    ecosystem {
+      no_update_news = true
+      no_donation_nag = true
+    }
+
+    EOF
+    chown -R sddm:sddm /var/lib/sddm/.config
+  '';
+
   sops.secrets = {
     # wifi
     "wifi.env" = { };

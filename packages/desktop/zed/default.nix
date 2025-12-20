@@ -88,6 +88,7 @@ in
           "markdown"
           "markdownlint"
           "git-firefly"
+          "xml"
         ];
         userSettings = {
           # theme = {

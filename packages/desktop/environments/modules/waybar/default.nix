@@ -29,6 +29,9 @@ in
 
       programs.waybar = {
         enable = true;
+        systemd = {
+          enable = false;
+        };
 
         settings = {
           "mainBar" = {

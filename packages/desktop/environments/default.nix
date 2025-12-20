@@ -29,183 +29,92 @@ in
       user.services = {
         polkit-gnome-authentication-agent-1 = {
           description = "polkit-gnome-authentication-agent-1";
-          wantedBy = [ "graphical-session.target" ];
-          wants = [ "graphical-session.target" ];
-          after = [ "graphical-session.target" ];
+          unitConfig = {
+            StartLimitIntervalSec = 0;
+          };
           serviceConfig = {
             Type = "simple";
             ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-            Restart = "on-failure";
-            RestartSec = 1;
-            TimeoutStopSec = 10;
+            Restart = "always";
+            RestartSec = "2s";
           };
         };
 
         one-password-agent = {
           description = "1Password Background";
-          wantedBy = [ "graphical-session.target" ];
-          wants = [
-            "waybar.service"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-          ];
-
-          after = [
-            "graphical-session.target"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-            "polkit-gnome-authentication-agent-1.service"
-          ];
+          unitConfig = {
+            StartLimitIntervalSec = 0;
+          };
           serviceConfig = {
             Type = "simple";
             ExecStart = "${pkgs._1password-gui}/bin/1password --silent";
-            Restart = "on-failure";
-            RestartSec = 1;
-            TimeoutStopSec = 10;
+            Restart = "always";
+            RestartSec = "2s";
           };
         };
 
         udiskie-agent = {
           description = "udiskie Background";
-          wantedBy = [ "graphical-session.target" ];
-          wants = [
-            "waybar.service"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-          ];
-
-          after = [
-            "graphical-session.target"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-            "polkit-gnome-authentication-agent-1.service"
-          ];
+          unitConfig = {
+            StartLimitIntervalSec = 0;
+          };
           serviceConfig = {
             Type = "simple";
             ExecStart = "${pkgs.udiskie}/bin/udiskie --appindicator -t";
-            Restart = "on-failure";
-            RestartSec = 1;
-            TimeoutStopSec = 10;
+            Restart = "always";
+            RestartSec = "2s";
           };
         };
 
         sway-audio-idle-inhibit = {
           description = "sway-audio-idle-inhibit Background";
-          wantedBy = [ "graphical-session.target" ];
-          wants = [
-            "waybar.service"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-          ];
-
-          after = [
-            "graphical-session.target"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-            "polkit-gnome-authentication-agent-1.service"
-          ];
+          unitConfig = {
+            StartLimitIntervalSec = 0;
+          };
           serviceConfig = {
             Type = "simple";
             ExecStart = "${pkgs.sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit";
-            Restart = "on-failure";
-            RestartSec = 1;
-            TimeoutStopSec = 10;
-          };
-        };
-
-        sway-background = {
-          description = "sway-background Background";
-          wantedBy = [ "graphical-session.target" ];
-          wants = [
-            "waybar.service"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-          ];
-
-          after = [
-            "graphical-session.target"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-            "polkit-gnome-authentication-agent-1.service"
-          ];
-          serviceConfig = {
-            Type = "simple";
-            ExecStart = "${pkgs.swaybg}/bin/swaybg -o \"*\" -i \"%h/.config/backgrounds/lewis.jpg\"";
-            Restart = "on-failure";
-            RestartSec = 1;
-            TimeoutStopSec = 10;
+            Restart = "always";
+            RestartSec = "2s";
           };
         };
 
         geary-background = {
           description = "Geary Background";
-          wantedBy = [ "graphical-session.target" ];
-          wants = [
-            "waybar.service"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-          ];
-
-          after = [
-            "graphical-session.target"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-            "polkit-gnome-authentication-agent-1.service"
-          ];
+          unitConfig = {
+            StartLimitIntervalSec = 0;
+          };
           serviceConfig = {
             Type = "simple";
             ExecStart = "${pkgs.geary}/bin/geary --gapplication-service";
-            Restart = "on-failure";
-            RestartSec = 1;
-            TimeoutStopSec = 10;
+            Restart = "always";
+            RestartSec = "2s";
           };
         };
 
         gnome-calendar-background = {
           description = "GNOME Calendar Background";
-          wantedBy = [ "graphical-session.target" ];
-          wants = [
-            "waybar.service"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-          ];
-
-          after = [
-            "graphical-session.target"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-            "polkit-gnome-authentication-agent-1.service"
-          ];
+          unitConfig = {
+            StartLimitIntervalSec = 0;
+          };
           serviceConfig = {
             Type = "simple";
             ExecStart = "${pkgs.gnome-calendar}/bin/gnome-calendar --gapplication-service";
-            Restart = "on-failure";
-            RestartSec = 1;
-            TimeoutStopSec = 10;
+            Restart = "always";
+            RestartSec = "2s";
           };
         };
 
         user-sleep-hook = {
           description = "User Sleep Hook";
-          wantedBy = [ "graphical-session.target" ];
-          wants = [
-            "waybar.service"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-          ];
-
-          after = [
-            "graphical-session.target"
-            "xdg-desktop-portal.service"
-            "xdg-desktop-portal-hyprland.service"
-            "polkit-gnome-authentication-agent-1.service"
-          ];
+          unitConfig = {
+            StartLimitIntervalSec = 0;
+          };
           serviceConfig = {
             Type = "simple";
             ExecStart = "%h/.config/hyprextra/scripts/sleep.sh";
-            Restart = "on-failure";
-            RestartSec = 1;
-            TimeoutStopSec = 10;
+            Restart = "always";
+            RestartSec = "2s";
           };
         };
       };

@@ -54,7 +54,22 @@ in
       # Enable the X11 windowing system.
       xserver.enable = false;
       # Enable the GNOME Desktop Environment.
-      displayManager.gdm.enable = true;
+      displayManager.sddm = {
+        enable = true;
+        wayland.enable = true;
+
+        settings = {
+          Theme = {
+            font = "SFProDisplay Nerd Font";
+          };
+
+          General = {
+            RememberLastSession = true;
+            RememberLastUser = true;
+          };
+        };
+      };
+
       desktopManager.gnome.enable = true;
     };
 

@@ -58,6 +58,14 @@
       udev.packages = with pkgs; [
         airspy
       ];
+
+      logind = {
+        settings = {
+          Login = {
+            KillUserProcesses = true;
+          };
+        };
+      };
     };
 
     xdg.portal = {
