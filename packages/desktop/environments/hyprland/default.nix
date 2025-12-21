@@ -273,7 +273,7 @@ in
             "ALT, SPACE, exec, vicinae toggle"
             "$mainMod, C, killactive"
             "$mainMod, M, exit"
-            "$mainMod, L, exec, ~/.config/hyprextra/scripts/pauseandsleep"
+            "$mainMod, L, exec, ~/.config/hyprextra/scripts/pauseandsleep.sh"
 
             # Move windows with mainMod + arrow keys
             "$mainMod, left, movewindow, l"
@@ -334,14 +334,14 @@ in
             ", XF86AudioPause, exec, playerctl play-pause"
             ", XF86AudioNext, exec, playerctl next"
             ", XF86AudioPrev, exec, playerctl previous"
-            ", XKB_KEY_XF86KbdBrightnessUp, exec, ~/.config/hyprextra/scripts/kbbacklight --inc"
-            ", XKB_KEY_XF86KbdBrightnessDown, exec, ~/.config/hyprextra/scripts/kbbacklight --dec"
+            ", XKB_KEY_XF86KbdBrightnessUp, exec, ~/.config/hyprextra/scripts/kbbacklight.sh --inc"
+            ", XKB_KEY_XF86KbdBrightnessDown, exec, ~/.config/hyprextra/scripts/kbbacklight.sh --dec"
             ", XF86SelectiveScreenshot, exec, grim -g \"$(slurp)\""
-            ", XF86Display, exec, ~/.config/hyprextra/scripts/pauseandsleep"
+            ", XF86Display, exec, ~/.config/hyprextra/scripts/pauseandsleep.sh"
             ", code:248, exec, $terminal"
             ", XF86Favorites, exec, fuzzel"
-            "$mainMod, XF86MonBrightnessUp, exec, ~/.config/hyprextra/scripts/kbbacklight --inc"
-            "$mainMod, XF86MonBrightnessDown, exec, ~/.config/hyprextra/scripts/kbbacklight --dec"
+            "$mainMod, XF86MonBrightnessUp, exec, ~/.config/hyprextra/scripts/kbbacklight.sh --inc"
+            "$mainMod, XF86MonBrightnessDown, exec, ~/.config/hyprextra/scripts/kbbacklight.sh --dec"
           ];
 
           bindm = [
@@ -352,7 +352,7 @@ in
 
           bindl = [
             # Lock lid on close
-            ",switch:off:Lid Switch, exec, ~/.config/hyprextra/scripts/pauseandsleep"
+            ",switch:off:Lid Switch, exec, ~/.config/hyprextra/scripts/pauseandsleep.sh"
           ];
         };
       };

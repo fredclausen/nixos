@@ -37,12 +37,13 @@ in
           "mainBar" = {
             "layer" = "top";
             "position" = "top";
-            "height" = 24;
-            "spacing" = 4;
+            "height" = 34;
+            "spacing" = 1;
 
             "modules-left" = [
               "hyprland/workspaces"
               "temperature"
+              "custom/cpu"
               "custom/weather"
               "custom/vpn"
               "custom/updates"
@@ -180,6 +181,13 @@ in
               };
             };
 
+            "custom/cpu" = {
+              "exec" = "~/.config/hyprextra/scripts/waybar-cpu-tooltip.sh";
+              "return-type" = "json";
+              "interval" = 2;
+              "tooltip-format-markup" = true;
+            };
+
             "temperature" = {
               "format" = "{icon} {temperatureC}°C";
               "format-critical" = "{icon} {temperatureC}°C";
@@ -248,14 +256,20 @@ in
         style = ''
           * {
               font-family: "SFProDisplay Nerd Font";
-              font-size: 16px;
+              font-size: 14px;
               min-height: 0;
               font-weight: bold;
           }
 
+          tooltip {
+            background: @base;
+            border-radius: 10px;
+            border: 2px solid @yellow;
+            padding: 8px;
+          }
+
           window#waybar {
-              background: transparent;
-              /* background-color: @crust; */
+              background-color: rgba(30, 30, 46, 0.70); /* catppuccin-mocha base with transparency */
               color: @overlay0;
               transition-property: background-color;
               transition-duration: 0.1s;
@@ -264,12 +278,12 @@ in
 
           #window {
               margin-top: 2px;
-              margin-bottom: 2px;
+              margin-bottom: 0px;
               margin-left: 4px;
               margin-right: 4px;
               padding-left: 4px;
               padding-right: 4px;
-              background-color: @crust;
+              background-color: @base;
               border-radius: 10px;
               color: @mauve;
               border: 2px solid @mauve;
@@ -291,7 +305,7 @@ in
               margin: 2px;
               padding: 0px 2px;   /* horizontal only */
 
-              background-color: @crust;
+              background-color: @base;
               border-radius: 14px;
               border: 2px solid @overlay1;
           }
@@ -314,21 +328,21 @@ in
 
           #workspaces button:hover {
               background-color: rgba(0, 0, 0, 0.25);
-              color: @crust;
+              color: @base;
               background: @rosewater;
               border-color: @mauve;
           }
 
           #workspaces button.active:hover {
               background-color: rgba(0, 0, 0, 0.25);
-              color: @crust;
+              color: @base;
               background: @rosewater;
               border-color: @mauve;
           }
 
           #workspaces button.focused:hover {
               background-color: rgba(0, 0, 0, 0.25);
-              color: @crust;
+              color: @base;
               background: @rosewater;
               border-color: @mauve;
           }
@@ -353,6 +367,7 @@ in
           #clock,
           #battery,
           #cpu,
+          #custom-cpu,
           #memory,
           #disk,
           #temperature,
@@ -368,24 +383,37 @@ in
           #custom-vpn,
           #custom-updates,
           #scratchpad {
-            margin: 2px;
+            margin-left: 2px;
+            margin-right: 2px;
+            margin-top: 0px;
+            margin-bottom: 0px;
             padding: 2px 8px;
-            background-color: @crust;
+            background-color: @base;
             border-radius: 10px;
           }
 
+          #cpu {
+              color: @lavender;
+              border: 2px solid @lavender;
+          }
+
+          #custom-cpu {
+              color: @lavender;
+              border: 2px solid @lavender;
+          }
+
           #temperature {
-              color: @sky;
-              border: 2px solid @sky;
+              color: @peach;
+              border: 2px solid @peach;
           }
           #custom-weather {
-              color: @teal;
-              border: 2px solid @teal;
+              color: @blue;
+              border: 2px solid @blue;
           }
 
           #tray {
-              color: @blue;
-              border: 2px solid @blue;
+              color: @maroon;
+              border: 2px solid @maroon;
           }
 
           #clock {
@@ -499,6 +527,11 @@ in
             color: @green;
           }
 
+          #custom-updates.clean {
+            border: 2px solid @green;
+            color: @green;
+          }
+
           #custom-updates.updates {
             color: @yellow;
             border-color: @yellow;
@@ -508,12 +541,6 @@ in
             color: @red;
             border-color: @red;
           }
-
-          #custom-updates.clean {
-            color: @overlay1;
-            border-color: @overlay1;
-          }
-
         '';
       };
     };

@@ -56,7 +56,6 @@ in
     ../../packages/develop/make
     ../../packages/develop/ninja
     ../../packages/develop/node
-    ../../packages/develop/pre-commit
     ../../packages/develop/nvim
     ../../packages/develop/python
     ../../packages/develop/rust

@@ -88,11 +88,11 @@
           },
           {
             "label": "   Lock",
-            "command": "~/.config/hyprextra/scripts/lock"
+            "command": "~/.config/hyprextra/scripts/lock.sh"
           },
           {
             "label": "   Logout",
-            "command": "~/.config/hyprextra/scripts/logout"
+            "command": "~/.config/hyprextra/scripts/logout.sh"
           },
           {
             "label": "   Shut down",
