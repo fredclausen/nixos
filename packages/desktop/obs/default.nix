@@ -20,6 +20,12 @@ in
   };
 
   config = mkIf cfg.enable {
+    services.udev = {
+      packages = with pkgs; [
+        streamcontroller
+      ];
+    };
+
     users.users.${username} = {
       packages = with pkgs; [
         obs-studio
