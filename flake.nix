@@ -285,6 +285,13 @@
 
           src = ./.;
 
+          check_javascript = true;
+
+          javascript = {
+            enableBiome = true;
+            enableTsc = true;
+          };
+
           extraExcludes = [
             "secrets.yaml"
           ];
