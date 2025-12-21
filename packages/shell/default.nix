@@ -10,6 +10,7 @@ in
     ./fastfetch
     ./fd
     ./fzf
+    ./gh-dash
     ./lazydocker
     ./lazygit
     ./lsd
