@@ -7,6 +7,26 @@ garbagecollect() {
     updatenix
 }
 
+rebase() {
+    git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
+        echo "❌ Not inside a git repository" >&2
+        return 1
+    }
+
+    if ! git diff --quiet || ! git diff --cached --quiet; then
+        echo "❌ working tree not clean" >&2
+        return 1
+    fi
+
+    if ! git symbolic-ref --quiet HEAD; then
+        echo "❌ HEAD is detached" >&2
+        return 1
+    fi
+
+    git fetch origin
+    git rebase origin/main --exec 'git commit --amend --no-edit -S'
+}
+
 updatenix() {
     local nixos_dir="${GITHUB_DIR}/nixos"
     local pushed=false
