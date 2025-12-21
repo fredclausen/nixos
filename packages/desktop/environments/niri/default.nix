@@ -218,7 +218,7 @@ in
             "lid-close" = {
               action = {
                 spawn = [
-                  "~/.config/hyprextra/scripts/pauseandsleep"
+                  "~/.config/hyprextra/scripts/pauseandsleep.sh"
                 ];
               };
             };
@@ -283,7 +283,7 @@ in
             # Lock / sleep
             "Mod+L".action = {
               spawn = [
-                "/home/${username}/.config/hyprextra/scripts/pauseandsleep"
+                "/home/${username}/.config/hyprextra/scripts/pauseandsleep.sh"
               ];
             };
 
@@ -482,14 +482,14 @@ in
 
             # "XKB_KEY_XF86KbdBrightnessUp".action = {
             #   spawn = [
-            #     "~/.config/hyprextra/scripts/kbbacklight"
+            #     "~/.config/hyprextra/scripts/kbbacklight.sh"
             #     "--inc"
             #   ];
             # };
 
             # "XKB_KEY_XF86KbdBrightnessDown".action = {
             #   spawn = [
-            #     "~/.config/hyprextra/scripts/kbbacklight"
+            #     "~/.config/hyprextra/scripts/kbbacklight.sh"
             #     "--dec"
             #   ];
             # };
@@ -504,7 +504,7 @@ in
 
             "XF86Display".action = {
               spawn = [
-                "~/.config/hyprextra/scripts/pauseandsleep"
+                "~/.config/hyprextra/scripts/pauseandsleep.sh"
               ];
             };
 
@@ -514,14 +514,14 @@ in
 
             "Mod+XF86MonBrightnessUp".action = {
               spawn = [
-                "~/.config/hyprextra/scripts/kbbacklight"
+                "~/.config/hyprextra/scripts/kbbacklight.sh"
                 "--inc"
               ];
             };
 
             "Mod+XF86MonBrightnessDown".action = {
               spawn = [
-                "~/.config/hyprextra/scripts/kbbacklight"
+                "~/.config/hyprextra/scripts/kbbacklight.sh"
                 "--dec"
               ];
             };

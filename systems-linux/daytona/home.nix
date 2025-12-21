@@ -27,7 +27,7 @@ in
     };
 
     Service = {
-      ExecStart = "${config.xdg.configHome}/hyprextra/scripts/watchsync";
+      ExecStart = "${config.xdg.configHome}/hyprextra/scripts/watchsync.sh";
       Restart = "always";
       RestartSec = 1;
       StandardOutput = "journal";
@@ -181,14 +181,14 @@ in
       binds = {
         "XF86MonBrightnessUp".action = {
           spawn = [
-            "~/.config/hyprextra/scripts/backlight"
+            "~/.config/hyprextra/scripts/backlight.sh"
             "64764"
             "--inc"
           ];
         };
         "XF86MonBrightnessDown".action = {
           spawn = [
-            "~/.config/hyprextra/scripts/backlight"
+            "~/.config/hyprextra/scripts/backlight.sh"
             "64764"
             "--dec"
           ];
@@ -203,8 +203,8 @@ in
     ];
 
     binde = [
-      ", XF86MonBrightnessUp, exec, ~/.config/hyprextra/scripts/backlight 64764 --inc"
-      ", XF86MonBrightnessDown, exec, ~/.config/hyprextra/scripts/backlight 64764 --dec"
+      ", XF86MonBrightnessUp, exec, ~/.config/hyprextra/scripts/backlight.sh 64764 --inc"
+      ", XF86MonBrightnessDown, exec, ~/.config/hyprextra/scripts/backlight.sh 64764 --dec"
     ];
   };
 }
