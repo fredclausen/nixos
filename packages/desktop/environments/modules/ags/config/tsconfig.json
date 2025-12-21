@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+
+    "moduleResolution": "bundler",
+
+    "jsx": "react-jsx",
+    "jsxImportSource": "ags/gtk4",
+
+    "strict": true,
+    "skipLibCheck": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "ags/*": ["/home/fred/.local/share/ags/lib/*"],
+      "@girs/*": ["/home/fred/.config/ags/@girs/*"]
+    },
+
+    "types": ["node"]
+  },
+
+  "include": ["**/*.ts", "**/*.tsx"]
+}

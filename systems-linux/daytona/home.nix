@@ -1,6 +1,7 @@
 {
   user,
   config,
+  inputs,
   ...
 }:
 let
@@ -12,6 +13,7 @@ in
   # ------------------------------
 
   imports = [
+    inputs.ags.homeManagerModules.default
     ../../modules/sync-compose.nix
     ../../modules/ansible/ansible.nix
     ../../modules/nas-home.nix
