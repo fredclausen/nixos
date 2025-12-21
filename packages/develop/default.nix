@@ -9,7 +9,6 @@
     ./ninja
     ./node
     ./nvim
-    ./pre-commit
     ./python
     ./rust
     ./shellcheck
