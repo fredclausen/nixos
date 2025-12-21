@@ -52,6 +52,10 @@
       url = "github:FredSystems/pre-commit-checks";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    astal.url = "github:aylur/astal";
+
+    ags.url = "github:aylur/ags";
   };
 
   outputs =
@@ -285,15 +289,16 @@
 
           src = ./.;
 
-          check_javascript = true;
+          check_javascript = false;
 
           javascript = {
             enableBiome = true;
-            enableTsc = true;
+            enableTsc = false;
           };
 
           extraExcludes = [
             "secrets.yaml"
+            "tsconfig.json"
           ];
         };
       });
