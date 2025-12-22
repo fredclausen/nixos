@@ -109,7 +109,7 @@ export function TrayItem(item: TrayItem): TrayButton {
     pixel_size: 16,
   });
 
-  const button = new Gtk.Button({
+  let button = new Gtk.Button({
     css_classes: ["tray-item"],
     focusable: false,
     child: image,
@@ -165,6 +165,10 @@ export function TrayItem(item: TrayItem): TrayButton {
       button._popover = null;
     }
   };
+
+  item.connect("notify::gicon", (event) => {
+    image.set_from_gicon(event.gicon);
+  });
 
   return button;
 }
