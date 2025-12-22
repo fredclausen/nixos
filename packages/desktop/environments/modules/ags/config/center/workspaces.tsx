@@ -5,15 +5,16 @@ type Workspace = Hyprland.Workspace;
 
 const hypr = Hyprland.get_default();
 
-export function Workspaces() {
-  let box: Gtk.Box | null = null;
+export function Workspaces(): Gtk.Box {
+  const box = new Gtk.Box({
+    spacing: 6,
+    css_classes: ["workspaces", "pill"],
+    valign: Gtk.Align.CENTER,
+  });
 
   function render() {
-    if (!box) return;
-
     // Clear children safely
-    let child = box.get_first_child();
-    while (child) {
+    for (let child = box.get_first_child(); child; ) {
       const next = child.get_next_sibling();
       box.remove(child);
       child = next;
@@ -33,10 +34,7 @@ export function Workspaces() {
         focusable: false,
       });
 
-      const label = new Gtk.Label({
-        label: String(ws.id),
-      });
-
+      const label = new Gtk.Label({ label: String(ws.id) });
       button.set_child(label);
 
       button.connect("clicked", () => {
@@ -47,17 +45,9 @@ export function Workspaces() {
     }
   }
 
-  return (
-    <box
-      class="workspaces pill"
-      spacing={6}
-      onRealize={(self: Gtk.Box) => {
-        box = self;
+  render();
+  hypr.connect("notify::workspaces", render);
+  hypr.connect("notify::focused-workspace", render);
 
-        render();
-        hypr.connect("notify::workspaces", render);
-        hypr.connect("notify::focused-workspace", render);
-      }}
-    />
-  );
+  return box;
 }
