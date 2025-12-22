@@ -1,7 +1,9 @@
 import App from "ags/gtk4/app";
+import Gtk from "gi://Gtk?version=4.0";
 import { Astal } from "ags/gtk4";
 import { WindowWorkspacesPill } from "./center/window-workspaces-pill";
 import { SystemTray } from "./left/sys-tray/tray";
+import { TimePill } from "./right/time-pill/time-pill";
 
 App.reset_css();
 App.apply_css(`./style.css`);
@@ -11,17 +13,24 @@ App.start({
     const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
 
     return [
-      <window visible anchor={TOP | LEFT | RIGHT} class="bar">
-        <centerbox>
-          <box $type="start">
+      <window
+        visible
+        anchor={TOP | LEFT | RIGHT}
+        class="bar"
+        default_height={28}
+      >
+        <centerbox valign={Gtk.Align.CENTER}>
+          <box $type="start" valign={Gtk.Align.CENTER}>
             <SystemTray />
           </box>
 
-          <box $type="center">
+          <box $type="center" valign={Gtk.Align.CENTER}>
             <WindowWorkspacesPill />
           </box>
 
-          <box $type="end" />
+          <box $type="end" valign={Gtk.Align.CENTER}>
+            <TimePill />
+          </box>
         </centerbox>
       </window>,
     ];
