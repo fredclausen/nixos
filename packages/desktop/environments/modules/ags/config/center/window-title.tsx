@@ -70,6 +70,8 @@ export function WindowTitle(): Gtk.Box {
   update();
   hypr.connect("notify::focused-client", update);
   hypr.connect("notify::focused-title", update);
+  hypr.connect("client-added", update);
+  hypr.connect("client-removed", update);
 
   return box;
 }
