@@ -142,22 +142,6 @@ in
                 "systemctl"
                 "--user"
                 "restart"
-                "geary-background"
-              ];
-            }
-            {
-              command = [
-                "systemctl"
-                "--user"
-                "restart"
-                "gnome-calendar-background"
-              ];
-            }
-            {
-              command = [
-                "systemctl"
-                "--user"
-                "restart"
                 "user-sleep-hook"
               ];
             }

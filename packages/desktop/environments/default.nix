@@ -79,32 +79,6 @@ in
           };
         };
 
-        geary-background = {
-          description = "Geary Background";
-          unitConfig = {
-            StartLimitIntervalSec = 0;
-          };
-          serviceConfig = {
-            Type = "simple";
-            ExecStart = "${pkgs.geary}/bin/geary --gapplication-service";
-            Restart = "always";
-            RestartSec = "2s";
-          };
-        };
-
-        gnome-calendar-background = {
-          description = "GNOME Calendar Background";
-          unitConfig = {
-            StartLimitIntervalSec = 0;
-          };
-          serviceConfig = {
-            Type = "simple";
-            ExecStart = "${pkgs.gnome-calendar}/bin/gnome-calendar --gapplication-service";
-            Restart = "always";
-            RestartSec = "2s";
-          };
-        };
-
         user-sleep-hook = {
           description = "User Sleep Hook";
           unitConfig = {
