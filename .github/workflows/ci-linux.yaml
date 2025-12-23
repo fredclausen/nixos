@@ -162,12 +162,45 @@ jobs:
           nix build ".#nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel"
 
   # =====================================================================
+  # AGS config validation (headless)
+  # =====================================================================
+  ags-check:
+    name: AGS Config Check
+    runs-on: ubuntu-latest
+    needs: [skip-if-clean]
+    if: ${{ needs.skip-if-clean.outputs.skip != 'true' }}
+
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
+
+      - name: Enable Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
+        with:
+          use-flakehub: false
+          use-gha-cache: false
+
+      - name: Run AGS type + bundle checks
+        run: |
+          nix develop .#ags-ci --command bash -e -c '
+            set -euxo pipefail
+            cd packages/desktop/environments/modules/ags
+            echo "▶ Generating AGS types"
+            ags types
+
+            echo "▶ Bundling AGS config"
+            ags bundle ./config
+          '
+
+  # =====================================================================
   # Required summary check
   # =====================================================================
   build-linux-summary:
     name: Build Linux Summary
     runs-on: ubuntu-latest
-    needs: [skip-if-clean, build-servers, build-desktops]
+    needs: [skip-if-clean, build-servers, build-desktops, ags-check]
     if: ${{ always() }}
 
     steps:
@@ -181,17 +214,19 @@ jobs:
 
           SERVERS="${{ needs.build-servers.result }}"
           DESKTOPS="${{ needs.build-desktops.result }}"
+          AGS="${{ needs.ags-check.result }}"
 
           echo "Servers result:   $SERVERS"
           echo "Desktops result:  $DESKTOPS"
+          echo "AGS result:       $AGS"
 
-          if [ "$SERVERS" = "failure" ] || [ "$DESKTOPS" = "failure" ]; then
-            echo "❌ One or more Linux builds failed."
+          if [ "$SERVERS" != "success" ] || [ "$DESKTOPS" != "success" ]; then
+            echo "❌ One or more Linux builds failed or were cancelled."
             exit 1
           fi
 
-          if [ "$SERVERS" = "cancelled" ] || [ "$DESKTOPS" = "cancelled" ]; then
-            echo "❌ Build job was cancelled — treating as failure."
+          if [ "$AGS" != "success" ]; then
+            echo "❌ AGS config validation failed or was cancelled."
             exit 1
           fi
 
