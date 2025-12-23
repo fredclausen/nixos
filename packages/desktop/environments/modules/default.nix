@@ -15,6 +15,7 @@ in
     };
   };
   imports = [
+    ./ags
     ./clipboard
     ./hyprlandextra
     ./pamixer
@@ -25,6 +26,7 @@ in
 
   config = mkIf cfg.enable {
     desktop.environments.modules = {
+      ags.enable = true;
       clipboard.enable = true;
       hyprlandextra.enable = true;
       pamixer.enable = true;

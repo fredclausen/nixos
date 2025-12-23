@@ -42,7 +42,7 @@ in
 
             "modules-left" = [
               "hyprland/workspaces"
-              "temperature"
+              "custom/cputemp"
               "custom/cpu"
               "custom/weather"
               "custom/vpn"
@@ -186,6 +186,13 @@ in
               "return-type" = "json";
               "interval" = 2;
               "tooltip-format-markup" = true;
+            };
+
+            "custom/cputemp" = {
+              "exec" = "~/.config/hyprextra/scripts/cputemp.sh";
+              "interval" = 5;
+              "return-type" = "json";
+              "tooltip" = false;
             };
 
             "temperature" = {
@@ -382,6 +389,7 @@ in
           #custom-media,
           #custom-vpn,
           #custom-updates,
+          #custom-cputemp,
           #scratchpad {
             margin-left: 2px;
             margin-right: 2px;
@@ -391,6 +399,20 @@ in
             background-color: @base;
             border-radius: 10px;
           }
+
+          #custom-cputemp {
+            color: @peach;
+            border: 2px solid @peach;
+          }
+
+          #custom-cputemp.warning {
+            color: @yellow;
+          }
+
+          #custom-cputemp.critical {
+            color: @red;
+          }
+
 
           #cpu {
               color: @lavender;
