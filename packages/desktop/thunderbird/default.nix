@@ -108,8 +108,10 @@ in
             smtp = {
               host = "secure.emailsrvr.com";
               port = 587;
+              authentication = "login";
               tls = {
                 enable = true;
+                useStartTls = true;
               };
             };
 
@@ -138,8 +140,10 @@ in
             smtp = {
               host = "smtp.gmail.com";
               port = 587;
+              authentication = "login";
               tls = {
                 enable = true;
+                useStartTls = true;
               };
             };
 
@@ -198,8 +202,10 @@ in
             smtp = {
               host = "smtp.mail.me.com";
               port = 587;
+              authentication = "login";
               tls = {
                 enable = true;
+                useStartTls = true;
               };
             };
 
