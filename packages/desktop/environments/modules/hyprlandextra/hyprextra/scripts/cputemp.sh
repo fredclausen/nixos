@@ -6,15 +6,27 @@ temps=()
 
 for hw in /sys/class/hwmon/hwmon*; do
     [[ -r "$hw/name" ]] || continue
-    [[ $(cat "$hw/name") == "k10temp" ]] || continue
 
+    [[ $(cat "$hw/name") == "k10temp" ]] || continue
+    # We prefer tctl over tccd
+    # But some systems may not have tctl
+    tctl_temps=()
+    tccd_temps=()
     for label in "$hw"/temp*_label; do
         [[ -r "$label" ]] || continue
-        if [[ $(cat "$label") == Tccd* ]]; then
+        if [[ $(cat "$label") == Tctl* ]]; then
             input="${label/_label/_input}"
-            temps+=("$(cat "$input")")
+            tctl_temps+=("$(cat "$input")")
+        elif [[ $(cat "$label") == Tccd* ]]; then
+            input="${label/_label/_input}"
+            tccd_temps+=("$(cat "$input")")
         fi
     done
+    if ((${#tctl_temps[@]} > 0)); then
+        temps+=("${tctl_temps[@]}")
+    elif ((${#tccd_temps[@]} > 0)); then
+        temps+=("${tccd_temps[@]}")
+    fi
 done
 
 if ((${#temps[@]} == 0)); then
