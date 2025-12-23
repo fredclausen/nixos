@@ -112,6 +112,16 @@
       owner = user;
       mode = "0600";
     };
+
+    "email/natca/signature" = {
+      owner = user;
+      mode = "0600";
+    };
+
+    "email/icloud/signature" = {
+      owner = user;
+      mode = "0600";
+    };
   };
 
   nas = {
