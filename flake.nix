@@ -318,6 +318,8 @@
             buildInputs =
               enabledPackages
               ++ (with pkgs; [
+                nodejs
+                nodePackages.typescript
               ]);
 
             shellHook = ''
