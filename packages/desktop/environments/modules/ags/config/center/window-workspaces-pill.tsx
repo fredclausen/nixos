@@ -1,7 +1,7 @@
 import Gtk from "gi://Gtk?version=4.0";
+import { ActiveWorkspace } from "./active-workspace";
 import { WindowTitle } from "./window-title";
 import { Workspaces } from "./workspaces";
-import { ActiveWorkspace } from "./active-workspace";
 
 export function WindowWorkspacesPill(): Gtk.Box {
   const activeWs = ActiveWorkspace();

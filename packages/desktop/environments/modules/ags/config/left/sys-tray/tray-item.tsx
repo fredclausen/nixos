@@ -1,6 +1,6 @@
-import Gtk from "gi://Gtk?version=4.0";
-import Gdk from "gi://Gdk?version=4.0";
 import AstalTray from "gi://AstalTray";
+import Gdk from "gi://Gdk?version=4.0";
+import Gtk from "gi://Gtk?version=4.0";
 
 type TrayItem = AstalTray.TrayItem;
 
@@ -109,7 +109,7 @@ export function TrayItem(item: TrayItem): TrayButton {
     pixel_size: 16,
   });
 
-  let button = new Gtk.Button({
+  const button = new Gtk.Button({
     css_classes: ["tray-item"],
     focusable: false,
     child: image,

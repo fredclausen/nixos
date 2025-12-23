@@ -1,7 +1,12 @@
 // tray.tsx
-import Gtk from "gi://Gtk?version=4.0";
+
 import Tray from "gi://AstalTray";
+import Gtk from "gi://Gtk?version=4.0";
 import { TrayItem } from "./tray-item";
+
+interface DisposableWidget {
+  _cleanup?: () => void;
+}
 
 const tray = Tray.get_default();
 
@@ -26,7 +31,7 @@ export function SystemTray(): Gtk.Box {
     const widget = items.get(id);
     if (!widget) return;
 
-    (widget as any)._cleanup?.();
+    (widget as Gtk.Widget & DisposableWidget)._cleanup?.();
 
     box.remove(widget);
     items.delete(id);
@@ -36,7 +41,9 @@ export function SystemTray(): Gtk.Box {
   tray
     .get_items()
     .sort((a, b) => a.item_id.localeCompare(b.item_id))
-    .forEach((item) => add(item.item_id));
+    .forEach((item) => {
+      add(item.item_id);
+    });
 
   // Live updates
   tray.connect("item-added", (_, id) => add(id));

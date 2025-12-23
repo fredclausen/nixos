@@ -1,6 +1,6 @@
-import App from "ags/gtk4/app";
 import Gtk from "gi://Gtk?version=4.0";
 import { Astal } from "ags/gtk4";
+import App from "ags/gtk4/app";
 import { WindowWorkspacesPill } from "./center/window-workspaces-pill";
 import { SystemTray } from "./left/sys-tray/tray";
 import { TimePill } from "./right/time-pill/time-pill";

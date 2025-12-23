@@ -1,6 +1,7 @@
 // time-pill.tsx
-import Gtk from "gi://Gtk?version=4.0";
+
 import GLib from "gi://GLib?version=2.0";
+import Gtk from "gi://Gtk?version=4.0";
 
 type WorldClock = {
   label: string;
@@ -156,26 +157,24 @@ export function TimePill(): Gtk.Button {
   }
 
   function sizePopoverToMonitorEdge() {
-    const native = button.get_native?.();
-    const surface = native?.get_surface?.();
-    const display = button.get_display?.();
-    if (!surface || !display) return;
+    const display = button.get_display();
+    const native = button.get_native();
+    const surface = native?.get_surface();
+    if (!display || !surface) return;
 
     const monitor = display.get_monitor_at_surface(surface);
     if (!monitor) return;
 
     const geo = monitor.get_geometry();
-    const root = button.get_root?.();
-    if (!root) return;
 
-    const [ok, xInRoot] = button.translate_coordinates(root as any, 0, 0);
+    const root = button.get_root();
+    if (!(root instanceof Gtk.Widget)) return;
+
+    const [ok, xInRoot] = button.translate_coordinates(root, 0, 0);
     if (!ok) return;
 
-    const origin = (surface as any).get_origin?.();
-    const surfaceX = Array.isArray(origin) ? origin[0] : geo.x;
-
-    const buttonGlobalX = surfaceX + xInRoot;
-    const remaining = geo.x + geo.width - buttonGlobalX;
+    // Remaining width from button's left edge to monitor's right edge
+    const remaining = geo.width - xInRoot;
 
     popRoot.set_size_request(Math.max(remaining, 200), -1);
   }

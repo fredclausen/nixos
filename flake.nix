@@ -289,7 +289,7 @@
 
           src = ./.;
 
-          check_javascript = false;
+          check_javascript = true;
 
           javascript = {
             enableBiome = true;

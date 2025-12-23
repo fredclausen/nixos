@@ -1,6 +1,6 @@
 import Hyprland from "gi://AstalHyprland";
-import Gtk from "gi://Gtk?version=4.0";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk?version=4.0";
 import Pango from "gi://Pango?version=1.0";
 
 const hypr = Hyprland.get_default();
