@@ -57,6 +57,7 @@ in
     ./steam
     ./stockfish
     ./sublimetext
+    ./thunderbird
     ./tradingview
     ./trezor
     ./vlc
@@ -92,6 +93,7 @@ in
       wireshark.enable = true;
       ladybird.enable = true;
       yubikey.enable = true;
+      thunderbird.enable = true;
       music.enable = if cfg.enable_extra then true else false;
       appimage.enable = if cfg.enable_extra then true else false;
       discord.enable = if cfg.enable_extra then true else false;

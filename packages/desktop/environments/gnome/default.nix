@@ -77,6 +77,7 @@ in
       atomix # puzzle game
       cheese # webcam tool
       epiphany # web browser
+      geary # email client
       gnome-characters
       gnome-music
       gnome-photos
