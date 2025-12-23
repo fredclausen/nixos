@@ -309,12 +309,23 @@
       devShells = forAllSystems (
         system:
         let
-          pkgs = import nixpkgs { inherit system; };
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [
+              (_: prev: {
+                ags = inputs.ags.packages.${system}.default or prev.ags;
+                astal = inputs.astal.packages.${system}.default or prev.astal;
+              })
+            ];
+          };
+
           inherit (self.checks.${system}.pre-commit-check) shellHook enabledPackages;
         in
         {
+          # ─────────────────────────────────────────────
+          # Your EXISTING dev shell (unchanged)
+          # ─────────────────────────────────────────────
           default = pkgs.mkShell {
-            # Bring in the hook packages + extra tools
             buildInputs =
               enabledPackages
               ++ (with pkgs; [
@@ -323,9 +334,21 @@
               ]);
 
             shellHook = ''
-              # Run git-hooks.nix setup (creates .pre-commit-config.yaml)
               ${shellHook}
             '';
+          };
+
+          # ─────────────────────────────────────────────
+          # New: AGS-only CI shell
+          # ─────────────────────────────────────────────
+          ags-ci = pkgs.mkShell {
+            name = "ags-ci";
+
+            buildInputs = with pkgs; [
+              ags
+              astal
+              nodejs
+            ];
           };
         }
       );
