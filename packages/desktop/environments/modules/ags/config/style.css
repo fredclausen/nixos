@@ -72,6 +72,7 @@ tooltip-internal {
 
 tooltip,
 tooltip.background {
+  color: var(--ctp-text);
   background-color: transparent;
   border: none;
   padding: 0;
@@ -86,17 +87,6 @@ tooltip.background {
 .tooltip-body {
   padding: 6px 10px;
 }
-
-/*
-tooltip label {
-    color: var(--ctp-text);
-}
-
-tooltip.background {
-    background-color: var(--ctp-base);
-    border-radius: 12px;
-    border: 2px solid var(--ctp-overlay1);
-}*/
 
 window {
   background-color: rgba(30, 30, 46, 0.7);
@@ -219,6 +209,11 @@ window {
   box-shadow: inset 0 0 0 1px var(--ctp-surface0);
 }
 
+.tray-tooltip {
+  border: 2px solid var(--ctp-maroon);
+  box-shadow: inset 0 0 0 1px var(--ctp-surface0);
+}
+
 .tray button,
 .tray-item {
   min-width: 24px;
@@ -301,11 +296,20 @@ window {
   color: var(--ctp-subtext0);
 }
 
+.state-idle-tooltip {
+  border-color: var(--ctp-overlay1);
+  color: var(--ctp-success);
+}
+
 /* Info: something happening, not urgent */
 
 .state-info {
   border-color: var(--ctp-info);
   color: var(--ctp-info);
+}
+
+.state-info-tooltip {
+  border-color: var(--ctp-success);
 }
 
 /* Warn: user attention recommended */
@@ -315,9 +319,17 @@ window {
   color: var(--ctp-warning);
 }
 
+.state-warn-tooltip {
+  border-color: var(--ctp-warning);
+}
+
 /* Error: something is wrong */
 
 .state-error {
   border-color: var(--ctp-error);
   color: var(--ctp-error);
+}
+
+.state-error-tooltip {
+  border-color: var(--ctp-error);
 }

@@ -10,6 +10,7 @@ interface TooltipOptions {
 export function attachTooltip(anchor: Gtk.Widget, opts: TooltipOptions): void {
   anchor.has_tooltip = true;
 
+  // FIXME: Cache because we have to regenerate this a fair bit on mouse move
   const handlerId = anchor.connect(
     "query-tooltip",
     (
@@ -19,17 +20,23 @@ export function attachTooltip(anchor: Gtk.Widget, opts: TooltipOptions): void {
       _keyboardMode: boolean,
       tooltip: Gtk.Tooltip,
     ) => {
+      const text = opts.text();
+      if (!text || text.length === 0) {
+        return false;
+      }
+
+      // --- CREATE FRESH WIDGETS EVERY TIME ---
       const label = new Gtk.Label({
-        label: opts.text(),
+        label: text,
         wrap: true,
         xalign: 0,
+        use_markup: true,
       });
 
       const body = new Gtk.Box({
         orientation: Gtk.Orientation.VERTICAL,
         css_classes: ["tooltip-body"],
       });
-
       body.append(label);
 
       const frame = new Gtk.Frame({
@@ -39,13 +46,20 @@ export function attachTooltip(anchor: Gtk.Widget, opts: TooltipOptions): void {
       const cls = opts.classes?.();
       if (cls) {
         const list = Array.isArray(cls) ? cls : [cls];
-        for (const c of list) {
-          frame.add_css_class(c);
+        if (list.length === 0) {
+          frame.add_css_class("state-idle-tooltip");
+        } else {
+          for (const c of list) {
+            frame.add_css_class(`${c}-tooltip`);
+          }
         }
+      } else {
+        frame.add_css_class("state-idle-tooltip");
       }
 
       frame.set_child(body);
       tooltip.set_custom(frame);
+
       return true;
     },
   );
