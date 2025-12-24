@@ -58,6 +58,46 @@ button {
   min-width: 0;
 }
 
+/* ----------------------------------------
+ * Tooltips (match FredBar pill styling)
+ * ---------------------------------------- */
+
+tooltip-internal {
+  background-color: var(--ctp-base);
+  border-color: var(--ctp-blue);
+  border-radius: 12px;
+  border: 2px solid var(--ctp-blue);
+  padding: 6px 10px;
+}
+
+tooltip,
+tooltip.background {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.tooltip-frame {
+  background-color: var(--ctp-base);
+  border-radius: 12px;
+  border: 2px solid var(--ctp-overlay1);
+}
+
+.tooltip-body {
+  padding: 6px 10px;
+}
+
+/*
+tooltip label {
+    color: var(--ctp-text);
+}
+
+tooltip.background {
+    background-color: var(--ctp-base);
+    border-radius: 12px;
+    border: 2px solid var(--ctp-overlay1);
+}*/
+
 window {
   background-color: rgba(30, 30, 46, 0.7);
   color: var(--ctp-overlay0);

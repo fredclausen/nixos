@@ -1,10 +1,11 @@
 import Gtk from "gi://Gtk?version=4.0";
+import { attachTooltip } from "tooltip";
 import type { AggregatedSystemState } from "./state/helpers/aggregate";
 import type { SystemSignal } from "./state/helpers/normalize";
 import { systemState } from "./state/modules/system";
 
 // Neutral icon shown when system is idle
-const IDLE_ICON = "󰒓"; // pick whatever feels right later
+const IDLE_ICON = "󰒓";
 
 export function StatePill(): Gtk.Box {
   const box = new Gtk.Box({
@@ -12,10 +13,7 @@ export function StatePill(): Gtk.Box {
     css_classes: ["state-pill", "pill", "state-idle"],
   });
 
-  const iconLabel = new Gtk.Label({
-    label: "",
-  });
-
+  const iconLabel = new Gtk.Label({ label: "" });
   box.append(iconLabel);
 
   function update(): void {
@@ -31,31 +29,36 @@ export function StatePill(): Gtk.Box {
 
     const isIdle = state.severity === "idle" && state.sources.length === 0;
 
-    if (isIdle) {
-      iconLabel.label = IDLE_ICON;
-      box.set_tooltip_text("All systems normal");
-      return;
-    }
-
-    // Non-idle state
-    iconLabel.label = state.icon ?? "";
-
-    const tooltip = state.sources
-      .map((s: SystemSignal) => `• ${s.summary}`)
-      .join("\n");
-
-    box.set_tooltip_text(tooltip);
+    iconLabel.label = isIdle ? IDLE_ICON : (state.icon ?? "");
   }
 
   // Initial render
   update();
 
-  // Reactive updates (notification-only Accessor)
-  const unsubscribe = systemState.subscribe(() => {
-    update();
+  // Reactive updates
+  const unsubscribe = systemState.subscribe(update);
+
+  /* Tooltip — dynamic, state-driven */
+  attachTooltip(box, {
+    text: () => {
+      const state = systemState();
+
+      if (state.sources.length === 0) {
+        return "All systems normal";
+      }
+
+      return state.sources
+        .map((s: SystemSignal) => `${s.icon ?? "•"} ${s.summary}`)
+        .join("\n");
+    },
+
+    classes: () => {
+      const state = systemState();
+      return [`state-${state.severity}`];
+    },
   });
 
-  // Cleanup hook (matches your existing pattern)
+  // Cleanup hook
   (box as Gtk.Widget & { _cleanup?: () => void })._cleanup = () => {
     unsubscribe();
   };
