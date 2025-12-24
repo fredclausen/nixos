@@ -22,7 +22,18 @@ const severityRank: Record<Severity, number> = {
   idle: 0,
 };
 
-const ICON_PRIORITY: string[] = ["audio", "mic", "reboot", "updates"];
+const ICON_PRIORITY: string[] = [
+  "audio",
+  "mic",
+
+  // Idle inhibitors (should surface before updates)
+  "caffeine",
+  "external",
+
+  // System state
+  "reboot",
+  "updates",
+];
 
 export function resolveSystemState(
   states: Array<SystemSignal | null>,

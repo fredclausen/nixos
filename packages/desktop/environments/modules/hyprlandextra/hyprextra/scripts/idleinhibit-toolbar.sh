@@ -33,18 +33,16 @@ else
     sentence+=", and ${items[count - 1]} are prohibiting sleep"
 fi
 
-# Decide visual state
 if systemctl --user --quiet is-active caffeine-inhibit.service; then
-    text="  Awake"
+    text=""
     class="caffeine"
 elif ((count > 0)); then
-    text="  Busy"
+    text=""
     class="external"
 else
-    text="  Idle"
+    text=""
     class="inactive"
 fi
 
-# Emit ONE clean JSON object
 printf '{"text":"%s","class":"%s","tooltip":"%s"}\n' \
     "$text" "$class" "$sentence"
