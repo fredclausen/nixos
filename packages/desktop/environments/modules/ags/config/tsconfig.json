@@ -14,11 +14,9 @@
     "baseUrl": ".",
     "paths": {
       "ags/*": ["/home/fred/.local/share/ags/lib/*"],
-      "@girs/*": ["/home/fred/.config/ags/@girs/*"]
+      "@girs/*": ["/home/fred/.config/ags/@girs/*"],
     },
-
-    "types": ["node"]
   },
 
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx"],
 }

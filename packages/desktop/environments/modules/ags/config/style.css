@@ -240,3 +240,27 @@ window {
 .clock-time {
   color: var(--ctp-rosewater);
 }
+
+.state-pill {
+  padding: 0 8px;
+
+  border: 2px solid var(--ctp-overlay1);
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px var(--ctp-surface0);
+}
+
+.state-idle {
+  background: var(--ctp-base);
+}
+
+.state-info {
+  background: var(--ctp-base);
+}
+
+.state-warn {
+  background: var(--ctp-warn);
+}
+
+.state-error {
+  background: var(--ctp-error);
+}

@@ -3,6 +3,7 @@ import { Astal } from "ags/gtk4";
 import App from "ags/gtk4/app";
 import { WindowWorkspacesPill } from "./center/window-workspaces-pill";
 import { SystemTray } from "./left/sys-tray/tray";
+import { StatePill } from "./right/system/state-pill";
 import { TimePill } from "./right/time-pill/time-pill";
 
 App.reset_css();
@@ -30,6 +31,7 @@ App.start({
 
           <box $type="end" valign={Gtk.Align.CENTER}>
             <TimePill />
+            <StatePill />
           </box>
         </centerbox>
       </window>,
