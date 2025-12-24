@@ -4,6 +4,7 @@ import { resolveSystemState } from "../helpers/aggregate";
 
 import { idleInhibitState } from "../modules/idleInhibit";
 import { mediaState } from "../modules/media";
+import { networkState } from "./networkState";
 import { updateState } from "./updateState";
 
 const INITIAL: AggregatedSystemState = {
@@ -14,5 +15,10 @@ const INITIAL: AggregatedSystemState = {
 };
 
 export const systemState = createPoll<AggregatedSystemState>(INITIAL, 250, () =>
-  resolveSystemState([idleInhibitState(), mediaState(), updateState()]),
+  resolveSystemState([
+    idleInhibitState(),
+    mediaState(),
+    updateState(),
+    networkState(),
+  ]),
 );

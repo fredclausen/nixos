@@ -1,12 +1,6 @@
-export type Severity = "idle" | "info" | "warn" | "error";
+import type { SystemSignal } from "./normalize";
 
-export interface SystemSignal {
-  severity: Severity;
-  category: string;
-  icon: string | null;
-  summary: string;
-  raw?: unknown;
-}
+export type Severity = "idle" | "info" | "warn" | "error";
 
 export interface AggregatedSystemState {
   severity: Severity;
@@ -39,7 +33,8 @@ export function resolveSystemState(
   states: Array<SystemSignal | null>,
 ): AggregatedSystemState {
   const active: SystemSignal[] = states.filter(
-    (s): s is SystemSignal => s !== null && s.severity !== "idle",
+    (s): s is SystemSignal =>
+      s !== null && (s.severity !== "idle" || s.contextual === true),
   );
 
   if (active.length === 0) {

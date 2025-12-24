@@ -8,6 +8,7 @@ export interface SystemSignal {
   icon: string | null;
   summary: string;
   raw?: unknown;
+  contextual?: boolean;
 }
 
 interface WaybarPayload {

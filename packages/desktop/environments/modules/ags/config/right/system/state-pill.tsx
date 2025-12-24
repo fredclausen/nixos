@@ -1,8 +1,6 @@
 import Gtk from "gi://Gtk?version=4.0";
-import type {
-  AggregatedSystemState,
-  SystemSignal,
-} from "./state/helpers/aggregate";
+import type { AggregatedSystemState } from "./state/helpers/aggregate";
+import type { SystemSignal } from "./state/helpers/normalize";
 import { systemState } from "./state/modules/system";
 
 // Neutral icon shown when system is idle
