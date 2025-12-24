@@ -1,6 +1,7 @@
 import Gtk from "gi://Gtk?version=4.0";
 import { Astal } from "ags/gtk4";
 import App from "ags/gtk4/app";
+import { VolumePill } from "right/speaker-volume/volume";
 import { WindowWorkspacesPill } from "./center/window-workspaces-pill";
 import { SystemTray } from "./left/sys-tray/tray";
 import { StatePill } from "./right/system/state-pill";
@@ -30,6 +31,7 @@ App.start({
           </box>
 
           <box $type="end" valign={Gtk.Align.CENTER}>
+            <VolumePill />
             <TimePill />
             <StatePill />
           </box>
