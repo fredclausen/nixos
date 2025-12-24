@@ -22,6 +22,8 @@ const severityRank: Record<Severity, number> = {
   idle: 0,
 };
 
+const ICON_PRIORITY: string[] = ["audio", "mic", "reboot", "updates"];
+
 export function resolveSystemState(
   states: Array<SystemSignal | null>,
 ): AggregatedSystemState {
@@ -42,9 +44,25 @@ export function resolveSystemState(
     (a, b) => severityRank[b.severity] - severityRank[a.severity],
   )[0];
 
+  // Determine icon independently of severity
+  let icon: string | null = null;
+
+  for (const category of ICON_PRIORITY) {
+    const match = active.find((s) => s.category === category);
+    if (match?.icon) {
+      icon = match.icon;
+      break;
+    }
+  }
+
+  // Fallback: use highest-severity icon
+  if (!icon) {
+    icon = top.icon;
+  }
+
   return {
     severity: top.severity,
-    icon: top.icon,
+    icon,
     summary: top.summary,
     sources: active,
   };

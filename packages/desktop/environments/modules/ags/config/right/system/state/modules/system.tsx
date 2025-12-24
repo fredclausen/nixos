@@ -3,8 +3,7 @@ import type { AggregatedSystemState } from "../helpers/aggregate";
 import { resolveSystemState } from "../helpers/aggregate";
 
 import { mediaState } from "../modules/media";
-
-// later: cpuState, ramState, rebootState, etc
+import { updateState } from "./updateState";
 
 const INITIAL: AggregatedSystemState = {
   severity: "idle",
@@ -13,16 +12,6 @@ const INITIAL: AggregatedSystemState = {
   sources: [],
 };
 
-/**
- * Aggregate all system signals into a single derived state.
- * We poll this because the underlying states (createPoll accessors)
- * do not expose a .connect() API in your setup.
- */
 export const systemState = createPoll<AggregatedSystemState>(INITIAL, 250, () =>
-  resolveSystemState([
-    mediaState(),
-    // cpuState(),
-    // ramState(),
-    // rebootState(),
-  ]),
+  resolveSystemState([mediaState(), updateState()]),
 );

@@ -21,7 +21,10 @@ interface WaybarPayload {
  *
  * Returns null if the payload is unusable.
  */
-export function normalizeWaybar(raw: unknown): SystemSignal | null {
+export function normalizeWaybar(
+  raw: unknown,
+  opts?: { severity?: Severity },
+): SystemSignal | null {
   if (typeof raw !== "object" || raw === null) {
     return null;
   }
@@ -34,22 +37,14 @@ export function normalizeWaybar(raw: unknown): SystemSignal | null {
       ? [payload.class]
       : [];
 
-  let severity: Severity = "idle";
-
-  if (classes.includes("critical") || classes.includes("error")) {
-    severity = "error";
-  } else if (classes.includes("warning")) {
-    severity = "warn";
-  } else if (classes.length > 0 && !classes.includes("idle")) {
-    // any non-idle semantic state is informational
-    severity = "info";
-  }
-
   return {
-    severity,
+    severity: opts?.severity ?? "idle",
     category: classes[0] ?? "unknown",
     icon: payload.text ?? null,
     summary: payload.tooltip ?? "",
-    raw,
+    raw: {
+      ...payload,
+      classes,
+    },
   };
 }

@@ -5,11 +5,11 @@ import { normalizeWaybar } from "../helpers/normalize";
 export const mediaState = createPoll<SystemSignal | null>(
   null,
   2000,
-  ["bash", "-lc", "/home/fred/.config/hyprextra/scripts/waybar-media.sh"],
-  (stdout: string): SystemSignal | null => {
+  ["bash", "-lc", "~/.config/hyprextra/scripts/waybar-media.sh"],
+  (stdout) => {
     try {
-      const parsed: unknown = JSON.parse(stdout);
-      return normalizeWaybar(parsed);
+      const parsed = JSON.parse(stdout);
+      return normalizeWaybar(parsed, { severity: "info" });
     } catch {
       return null;
     }

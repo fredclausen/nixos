@@ -241,26 +241,43 @@ window {
   color: var(--ctp-rosewater);
 }
 
+/* State Pill base */
+
 .state-pill {
   padding: 0 8px;
-
-  border: 2px solid var(--ctp-overlay1);
   border-radius: 12px;
+
+  background: var(--ctp-base);
+  border: 2px solid var(--ctp-overlay1);
+
+  color: var(--ctp-subtext0);
   box-shadow: inset 0 0 0 1px var(--ctp-surface0);
 }
 
+/* Idle: muted, present, calm */
+
 .state-idle {
-  background: var(--ctp-base);
+  border-color: var(--ctp-overlay1);
+  color: var(--ctp-subtext0);
 }
+
+/* Info: something happening, not urgent */
 
 .state-info {
-  background: var(--ctp-base);
+  border-color: var(--ctp-info);
+  color: var(--ctp-info);
 }
+
+/* Warn: user attention recommended */
 
 .state-warn {
-  background: var(--ctp-warn);
+  border-color: var(--ctp-warning);
+  color: var(--ctp-warning);
 }
 
+/* Error: something is wrong */
+
 .state-error {
-  background: var(--ctp-error);
+  border-color: var(--ctp-error);
+  color: var(--ctp-error);
 }
