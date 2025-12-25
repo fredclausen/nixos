@@ -58,6 +58,36 @@ button {
   min-width: 0;
 }
 
+/* ----------------------------------------
+ * Tooltips (match FredBar pill styling)
+ * ---------------------------------------- */
+
+tooltip-internal {
+  background-color: var(--ctp-base);
+  border-color: var(--ctp-blue);
+  border-radius: 12px;
+  border: 2px solid var(--ctp-blue);
+  padding: 6px 10px;
+}
+
+tooltip,
+tooltip.background {
+  color: var(--ctp-text);
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.tooltip-frame {
+  background-color: var(--ctp-base);
+  border-radius: 12px;
+  border: 2px solid var(--ctp-overlay1);
+}
+
+.tooltip-body {
+  padding: 6px 10px;
+}
+
 window {
   background-color: rgba(30, 30, 46, 0.7);
   color: var(--ctp-overlay0);
@@ -179,6 +209,11 @@ window {
   box-shadow: inset 0 0 0 1px var(--ctp-surface0);
 }
 
+.tray-tooltip {
+  border: 2px solid var(--ctp-maroon);
+  box-shadow: inset 0 0 0 1px var(--ctp-surface0);
+}
+
 .tray button,
 .tray-item {
   min-width: 24px;
@@ -239,4 +274,86 @@ window {
 
 .clock-time {
   color: var(--ctp-rosewater);
+}
+
+/* Volume Pill */
+
+.volume-pill {
+  padding: 0 8px;
+  border-radius: 12px;
+
+  background: var(--ctp-base);
+  border: 2px solid var(--ctp-blue);
+
+  color: var(--ctp-blue);
+  box-shadow: inset 0 0 0 1px var(--ctp-surface0);
+}
+
+.volume-pill-tooltip {
+  padding: 0 8px;
+  border-radius: 12px;
+
+  background: var(--ctp-base);
+  border: 2px solid var(--ctp-blue);
+
+  color: var(--ctp-blue);
+  box-shadow: inset 0 0 0 1px var(--ctp-surface0);
+}
+
+/* State Pill base */
+
+.state-pill {
+  padding: 0 8px;
+  border-radius: 12px;
+
+  background: var(--ctp-base);
+  border: 2px solid var(--ctp-overlay1);
+
+  color: var(--ctp-subtext0);
+  box-shadow: inset 0 0 0 1px var(--ctp-surface0);
+}
+
+/* Idle: muted, present, calm */
+
+.state-idle {
+  border-color: var(--ctp-overlay1);
+  color: var(--ctp-subtext0);
+}
+
+.state-idle-tooltip {
+  border-color: var(--ctp-overlay1);
+  color: var(--ctp-success);
+}
+
+/* Info: something happening, not urgent */
+
+.state-info {
+  border-color: var(--ctp-info);
+  color: var(--ctp-info);
+}
+
+.state-info-tooltip {
+  border-color: var(--ctp-success);
+}
+
+/* Warn: user attention recommended */
+
+.state-warn {
+  border-color: var(--ctp-warning);
+  color: var(--ctp-warning);
+}
+
+.state-warn-tooltip {
+  border-color: var(--ctp-warning);
+}
+
+/* Error: something is wrong */
+
+.state-error {
+  border-color: var(--ctp-error);
+  color: var(--ctp-error);
+}
+
+.state-error-tooltip {
+  border-color: var(--ctp-error);
 }

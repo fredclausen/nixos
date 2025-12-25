@@ -42,8 +42,8 @@ in
 
             "modules-left" = [
               "hyprland/workspaces"
-              "custom/cputemp"
-              "custom/cpu"
+              # "custom/cputemp"
+              # "custom/cpu"
               "custom/weather"
               "custom/vpn"
               "custom/updates"

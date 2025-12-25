@@ -1,6 +1,7 @@
 import AstalTray from "gi://AstalTray";
 import Gdk from "gi://Gdk?version=4.0";
 import Gtk from "gi://Gtk?version=4.0";
+import { attachTooltip } from "tooltip";
 
 type TrayItem = AstalTray.TrayItem;
 
@@ -16,7 +17,6 @@ function closeOpenPopover(): void {
   if (!OPEN_POPOVER) return;
 
   try {
-    // popdown is the correct "close" in GTK4
     OPEN_POPOVER.popdown();
   } catch {
     // ignore
@@ -40,7 +40,6 @@ function ensurePopover(
     popover.insert_action_group("dbusmenu", item.action_group);
     popover.set_parent(button);
 
-    // When the popover closes, clear the global pointer if it was this one
     popover.connect("closed", () => {
       if (OPEN_POPOVER === popover) OPEN_POPOVER = null;
     });
@@ -55,7 +54,6 @@ function popupMenu(button: TrayButton, item: TrayItem): void {
   const popover = ensurePopover(button, item);
   if (!popover) return;
 
-  // Enforce only-one-open:
   if (OPEN_POPOVER && OPEN_POPOVER !== popover) {
     closeOpenPopover();
   }
@@ -64,7 +62,10 @@ function popupMenu(button: TrayButton, item: TrayItem): void {
   popover.popup();
 }
 
-function resolveTooltip(item: AstalTray.TrayItem): string | null {
+/* ------------------------------------------------------------------
+ * Tooltip resolution (markup-aware)
+ * ------------------------------------------------------------------ */
+function resolveTooltipMarkup(item: AstalTray.TrayItem): string | null {
   // 1️⃣ Explicit markup string
   if (
     typeof item.tooltip_markup === "string" &&
@@ -73,7 +74,7 @@ function resolveTooltip(item: AstalTray.TrayItem): string | null {
     return item.tooltip_markup;
   }
 
-  // 2️⃣ Boxed Tooltip object (Discord, 1Password, etc.)
+  // 2️⃣ Boxed tooltip object (Discord, 1Password, etc.)
   const tooltipObj = item.tooltip as unknown;
   if (tooltipObj && typeof tooltipObj === "object") {
     const anyTooltip = tooltipObj as {
@@ -115,14 +116,18 @@ export function TrayItem(item: TrayItem): TrayButton {
     child: image,
   }) as TrayButton;
 
-  const tip = resolveTooltip(item);
-  if (tip) {
-    button.set_tooltip_text(tip);
+  /* ----------------------------------------------------------------
+   * Tooltip attachment (NEW)
+   * ---------------------------------------------------------------- */
+  const tooltip = resolveTooltipMarkup(item);
+  if (tooltip) {
+    attachTooltip(button, {
+      text: () => tooltip,
+      classes: () => ["tray"],
+    });
   }
 
   // PRIMARY CLICK
-  // - For applets: open menu
-  // - For apps: activate (but still close any open menu first)
   button.connect("clicked", () => {
     closeOpenPopover();
 
@@ -151,7 +156,6 @@ export function TrayItem(item: TrayItem): TrayButton {
 
   // Cleanup for when SystemTray removes this widget
   button._cleanup = () => {
-    // If this button's popover is the open one, close it
     if (button._popover && OPEN_POPOVER === button._popover) {
       closeOpenPopover();
     }
