@@ -156,7 +156,7 @@ in
             "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
             "gsettings set org.gnome.desktop.interface gtk-theme \"Catppuccin-GTK-Purple-Dark\""
             "swaybg -o \"*\" -i \"/home/${username}/.config/backgrounds/lewis.jpg\""
-            "waybar"
+            "systemctl restart --user fredbar"
             "systemctl restart --user sway-audio-idle-inhibit"
             "systemctl restart --user user-sleep-hook"
             "systemctl restart --user one-password-agent"
@@ -175,7 +175,7 @@ in
             "systemctl stop --user sway-audio-idle-inhibit"
             "systemctl stop --user user-sleep-hook"
             "systemctl stop --user polkit-gnome-authentication-agent-1"
-            "pkill waybar"
+            "systemctl stop --user fredbar"
             "pkill swaync"
           ];
 
