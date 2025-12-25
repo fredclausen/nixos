@@ -47,7 +47,11 @@
     },
     "astal": {
       "inputs": {
-        "nixpkgs": ["fredbar", "ags", "nixpkgs"]
+        "nixpkgs": [
+          "fredbar",
+          "ags",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1764173295,
@@ -83,7 +87,9 @@
     },
     "catppuccin": {
       "inputs": {
-        "nixpkgs": ["nixpkgs"]
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1765990358,
@@ -101,7 +107,9 @@
     },
     "darwin": {
       "inputs": {
-        "nixpkgs": ["nixpkgs"]
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1766524813,
@@ -167,7 +175,10 @@
     },
     "flake-parts": {
       "inputs": {
-        "nixpkgs-lib": ["nixvim", "nixpkgs"]
+        "nixpkgs-lib": [
+          "nixvim",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1765835352,
@@ -259,7 +270,9 @@
       "inputs": {
         "ags": "ags",
         "astal": "astal_2",
-        "nixpkgs": ["nixpkgs"],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "precommit": "precommit"
       },
       "locked": {
@@ -280,7 +293,11 @@
       "inputs": {
         "flake-compat": "flake-compat",
         "gitignore": "gitignore",
-        "nixpkgs": ["fredbar", "precommit", "nixpkgs"]
+        "nixpkgs": [
+          "fredbar",
+          "precommit",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1765911976,
@@ -320,7 +337,10 @@
       "inputs": {
         "flake-compat": "flake-compat_3",
         "gitignore": "gitignore_3",
-        "nixpkgs": ["precommit-base", "nixpkgs"]
+        "nixpkgs": [
+          "precommit-base",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1765911976,
@@ -338,7 +358,12 @@
     },
     "gitignore": {
       "inputs": {
-        "nixpkgs": ["fredbar", "precommit", "git-hooks", "nixpkgs"]
+        "nixpkgs": [
+          "fredbar",
+          "precommit",
+          "git-hooks",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1709087332,
@@ -356,7 +381,11 @@
     },
     "gitignore_2": {
       "inputs": {
-        "nixpkgs": ["nixos-needsreboot", "git-hooks", "nixpkgs"]
+        "nixpkgs": [
+          "nixos-needsreboot",
+          "git-hooks",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1709087332,
@@ -374,7 +403,11 @@
     },
     "gitignore_3": {
       "inputs": {
-        "nixpkgs": ["precommit-base", "git-hooks", "nixpkgs"]
+        "nixpkgs": [
+          "precommit-base",
+          "git-hooks",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1709087332,
@@ -392,7 +425,9 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": ["nixpkgs"]
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1766682973,
@@ -412,7 +447,9 @@
       "inputs": {
         "niri-stable": "niri-stable",
         "niri-unstable": "niri-unstable",
-        "nixpkgs": ["nixpkgs"],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "nixpkgs-stable": "nixpkgs-stable",
         "xwayland-satellite-stable": "xwayland-satellite-stable",
         "xwayland-satellite-unstable": "xwayland-satellite-unstable"
@@ -680,7 +717,10 @@
       "inputs": {
         "flake-utils": "flake-utils_2",
         "git-hooks": "git-hooks",
-        "nixpkgs": ["fredbar", "nixpkgs"],
+        "nixpkgs": [
+          "fredbar",
+          "nixpkgs"
+        ],
         "rust-overlay": "rust-overlay"
       },
       "locked": {
@@ -701,7 +741,9 @@
       "inputs": {
         "flake-utils": "flake-utils_4",
         "git-hooks": "git-hooks_3",
-        "nixpkgs": ["nixpkgs"],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
@@ -856,7 +898,9 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": ["nixpkgs"]
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1766289575,
