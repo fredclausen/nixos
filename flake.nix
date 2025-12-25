@@ -53,9 +53,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    astal.url = "github:aylur/astal";
-
-    ags.url = "github:aylur/ags";
+    fredbar = {
+      url = "github:FredSystems/fred-bar";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -288,13 +289,6 @@
           inherit system;
 
           src = ./.;
-
-          check_javascript = true;
-
-          javascript = {
-            enableBiome = true;
-            enableTsc = false;
-          };
 
           extraExcludes = [
             "secrets.yaml"
