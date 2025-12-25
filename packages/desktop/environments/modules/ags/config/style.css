@@ -276,6 +276,30 @@ window {
   color: var(--ctp-rosewater);
 }
 
+/* Volume Pill */
+
+.volume-pill {
+  padding: 0 8px;
+  border-radius: 12px;
+
+  background: var(--ctp-base);
+  border: 2px solid var(--ctp-blue);
+
+  color: var(--ctp-blue);
+  box-shadow: inset 0 0 0 1px var(--ctp-surface0);
+}
+
+.volume-pill-tooltip {
+  padding: 0 8px;
+  border-radius: 12px;
+
+  background: var(--ctp-base);
+  border: 2px solid var(--ctp-blue);
+
+  color: var(--ctp-blue);
+  box-shadow: inset 0 0 0 1px var(--ctp-surface0);
+}
+
 /* State Pill base */
 
 .state-pill {

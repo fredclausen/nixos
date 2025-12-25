@@ -166,6 +166,14 @@ in
                 "systemctl"
                 "--user"
                 "restart"
+                "bluetooth-agent"
+              ];
+            }
+            {
+              command = [
+                "systemctl"
+                "--user"
+                "restart"
                 "udiskie-agent"
               ];
             }

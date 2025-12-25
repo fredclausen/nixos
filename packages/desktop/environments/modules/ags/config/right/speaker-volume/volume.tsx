@@ -7,30 +7,45 @@ import { attachTooltip } from "tooltip";
 
 const SCRIPT = "~/.config/hyprextra/scripts/volume.sh";
 
+const ICONS = ["󰝟", "", "", ""];
+
+function getIcon(volume: number | "Muted"): string {
+  if (volume === "Muted") return ICONS[0];
+  if (volume <= 20) return ICONS[1];
+  if (volume <= 60) return ICONS[2];
+  if (volume <= 80) return ICONS[3];
+  return ICONS[4];
+}
+
 /* -----------------------------
  * Volume state (poll-only)
  * ----------------------------- */
 
+type VolumeValue = number | "Muted";
+
 interface VolumePayload {
-  volume: number;
-  icon: string;
+  volume: VolumeValue;
+  sink: string;
 }
 
 export const volumeState = createPoll<VolumePayload | null>(
   null,
   1500,
-  ["bash", "-lc", `${SCRIPT} --get && ${SCRIPT} --get-icon`],
+  ["bash", "-lc", `${SCRIPT} --get-bar && ${SCRIPT} --get-sink-name`],
   (stdout: string): VolumePayload | null => {
     try {
       const lines = stdout.trim().split("\n");
       if (lines.length < 2) return null;
 
-      const volume = Number(lines[0]);
-      const icon = lines[1];
+      const rawVolume = lines[0];
+      const sink = lines[1];
 
-      if (Number.isNaN(volume) || !icon) return null;
+      const volume: VolumeValue =
+        rawVolume === "Muted" ? "Muted" : Number(rawVolume);
 
-      return { volume, icon };
+      if (volume !== "Muted" && Number.isNaN(volume)) return null;
+
+      return { volume, sink };
     } catch {
       return null;
     }
@@ -50,21 +65,18 @@ export function VolumePill(): Gtk.Box {
     css_classes: ["volume-pill", "pill"],
   });
 
-  const iconImage = new Gtk.Image({
-    pixel_size: 16,
-  });
-
+  const iconLabel = new Gtk.Label({ label: "" });
   const volLabel = new Gtk.Label({ label: "" });
 
-  box.append(iconImage);
+  box.append(iconLabel);
   box.append(volLabel);
 
   function update(): void {
     const state = volumeState();
     if (!state) return;
 
-    iconImage.set_from_file(state.icon);
-    volLabel.label = `${state.volume}%`;
+    iconLabel.set_text(getIcon(state.volume));
+    volLabel.label = state.volume === "Muted" ? "Muted" : `${state.volume}%`;
   }
 
   update();
@@ -77,13 +89,11 @@ export function VolumePill(): Gtk.Box {
 
   scroll.connect("scroll", (_c, _dx, dy) => {
     if (dy < 0) {
-      // scroll up
       Gio.Subprocess.new(
         ["bash", "-lc", `${SCRIPT} --inc`],
         Gio.SubprocessFlags.NONE,
       );
     } else if (dy > 0) {
-      // scroll down
       Gio.Subprocess.new(
         ["bash", "-lc", `${SCRIPT} --dec`],
         Gio.SubprocessFlags.NONE,
@@ -92,9 +102,11 @@ export function VolumePill(): Gtk.Box {
     return Gdk.EVENT_STOP;
   });
 
+  box.add_controller(scroll);
+
+  /* Click: toggle mute */
   const click = new Gtk.GestureClick();
   click.set_button(Gdk.BUTTON_PRIMARY);
-
   click.connect("released", () => {
     Gio.Subprocess.new(
       ["bash", "-lc", `${SCRIPT} --toggle`],
@@ -108,9 +120,11 @@ export function VolumePill(): Gtk.Box {
   attachTooltip(box, {
     text: () => {
       const state = volumeState();
-      return state ? `Volume: ${state.volume}%` : "";
+      if (!state) return "";
+
+      return `${state.sink}`;
     },
-    classes: () => ["state-info"],
+    classes: () => ["volume-pill"],
   });
 
   /* Cleanup */

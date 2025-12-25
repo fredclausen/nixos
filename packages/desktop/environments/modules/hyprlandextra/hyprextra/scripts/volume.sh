@@ -7,6 +7,24 @@ get_volume() {
     pamixer --get-volume
 }
 
+get_volume_bar() {
+    mute_state=$(pamixer --get-mute)
+    if [[ "$mute_state" == "true" ]]; then
+        echo "Muted"
+    else
+        get_volume
+    fi
+}
+
+get_icon_bar() {
+    mute_state=$(pamixer --get-mute)
+    if [[ "$mute_state" == "true" ]]; then
+        echo "$iDIR/volume-mute.png"
+    else
+        get_icon
+    fi
+}
+
 # Get icons
 get_icon() {
     current=$(get_volume)
@@ -158,6 +176,23 @@ dec_mic_volume() {
     pamixer --default-source -d 5 && notify_mic_user
 }
 
+get_sink_name() {
+    local sink
+    sink="$(pactl get-default-sink)"
+
+    pactl list sinks | awk -v s="$sink" '
+    $1 == "Name:" { name = $2 }
+    $1 == "Description:" && name == s {
+      gsub(/^[[:space:]]+/, "", $0)
+      sub(/^Description:[[:space:]]*/, "", $0)
+      print
+      exit
+    }
+  ' | sed -E \
+        -e 's/^Family .* HD Audio Controller/Built-in Audio/i' \
+        -e 's/Speaker(s)?$/Speakers/i'
+}
+
 # Execute accordingly
 if [[ "$1" == "--get" ]]; then
     get_volume
@@ -177,6 +212,12 @@ elif [[ "$1" == "--mic-inc" ]]; then
     inc_mic_volume
 elif [[ "$1" == "--mic-dec" ]]; then
     dec_mic_volume
+elif [[ "$1" == "--get-bar" ]]; then
+    get_volume_bar
+elif [[ "$1" == "--get-icon-bar" ]]; then
+    get_icon_bar
+elif [[ "$1" == "--get-sink-name" ]]; then
+    get_sink_name
 else
     get_volume
 fi
