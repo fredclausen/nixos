@@ -54,6 +54,7 @@
     };
 
     fredbar = {
+      #url = "path:/home/fred/GitHub/fred-bar";
       url = "github:FredSystems/fred-bar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
