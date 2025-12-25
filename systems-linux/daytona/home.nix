@@ -13,7 +13,7 @@ in
   # ------------------------------
 
   imports = [
-    inputs.ags.homeManagerModules.default
+    inputs.fredbar.homeManagerModules.fredbar
     ../../modules/sync-compose.nix
     ../../modules/ansible/ansible.nix
     ../../modules/nas-home.nix
