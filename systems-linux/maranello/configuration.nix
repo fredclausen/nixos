@@ -18,6 +18,7 @@
   ];
 
   # extra options
+  ai.enable = true;
   desktop = {
     enable = true;
     enable_extra = true;

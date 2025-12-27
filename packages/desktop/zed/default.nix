@@ -108,13 +108,22 @@ in
           assistant = {
             enabled = true;
             version = "2";
-            default_open_ai_model = null;
+
+            default_open_ai_model = "qwen2.5-coder:7b";
 
             # Provider options:
             # - zed.dev models (claude-3-5-sonnet-latest) requires GitHub connected
             # - anthropic models (claude-3-5-sonnet-latest, claude-3-haiku-latest, claude-3-opus-latest) requires API_KEY
             # - copilot_chat models (gpt-4o, gpt-4, gpt-3.5-turbo, o1-preview) requires GitHub connected
             inline_alternatives = [
+              {
+                provider = "copilot_chat";
+                model = "gpt-4o";
+              }
+              {
+                provider = "openai";
+                model = "qwen2.5-coder:7b";
+              }
               {
                 provider = "zed.dev";
                 model = "claude-3-5-sonnet-latest";
@@ -136,6 +145,12 @@ in
               provider = "copilot_chat";
               model = "gpt-4o";
             };
+          };
+
+          openai = {
+            # Local LLM (Ollama)
+            api_base = "http://localhost:11434/v1";
+            api_key = "local"; # Ollama ignores this, Zed requires it to exist
           };
 
           github_copilot = {

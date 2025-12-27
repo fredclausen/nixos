@@ -1,5 +1,6 @@
 {
   imports = [
+    ./ai
     ./common
     ./desktop
     ./develop
