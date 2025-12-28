@@ -12,6 +12,12 @@ in
   options.ai.local-llm = {
     enable = mkEnableOption "Enable local LLM stack (Ollama + Open WebUI)";
 
+    ollamaPackage = mkOption {
+      type = types.package;
+      default = pkgs.ollama-rocm;
+      description = "Ollama package to use (rocm by default, override for CPU).";
+    };
+
     ollamaPort = mkOption {
       type = types.port;
       default = 11434;
@@ -43,7 +49,7 @@ in
     services.ollama = {
       enable = true;
 
-      package = pkgs.ollama-rocm;
+      package = cfg.ollamaPackage;
 
       inherit (cfg) host;
       port = cfg.ollamaPort;
@@ -106,7 +112,7 @@ in
     hardware.graphics.enable = true;
 
     environment.systemPackages = [
-      pkgs.ollama-rocm
+      cfg.ollamaPackage
       pkgs.open-webui
     ];
   };

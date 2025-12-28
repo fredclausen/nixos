@@ -276,11 +276,11 @@
         "precommit": "precommit"
       },
       "locked": {
-        "lastModified": 1766898473,
-        "narHash": "sha256-YH3h3xyNOWhrYdi4oWDB5K5zm9VYaWv7aJUJOIfLhDA=",
+        "lastModified": 1766956495,
+        "narHash": "sha256-NkGaB9aL5KkqG/GtK2OIktNlWQf4K3wGJ7Awaw/u5eU=",
         "owner": "FredSystems",
         "repo": "fred-bar",
-        "rev": "05a32d44b604b8b97a5be4a60430dcdc5c86494a",
+        "rev": "f4e10483b5576ffcba10ee6f266bf17b310a224a",
         "type": "github"
       },
       "original": {

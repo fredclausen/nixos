@@ -18,6 +18,10 @@
   ];
 
   # extra options
+  ai.local-llm = {
+    enable = true;
+    ollamaPackage = pkgs.ollama;
+  };
   desktop = {
     enable = true;
     enable_extra = true;
