@@ -26,59 +26,37 @@ in
 
     host = mkOption {
       type = types.str;
-      default = "0.0.0.0";
+      default = "127.0.0.1";
       description = "Bind address for services";
     };
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [
-      pkgs.ollama
-      pkgs.open-webui
-    ];
-
-    users.users.ollama = {
-      isSystemUser = true;
-      home = "/var/lib/ollama";
-      createHome = true;
-      group = "ollama";
-    };
-
+    ########################################
+    # REQUIRED: group must exist
+    ########################################
     users.groups.ollama = { };
 
-    # Ollama backend (model manager + runtime)
-    systemd.services.ollama = {
-      description = "Ollama LLM runtime";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+    ########################################
+    # Ollama (AMD ROCm)
+    ########################################
+    services.ollama = {
+      enable = true;
 
-      serviceConfig = {
-        ExecStart = "${pkgs.ollama}/bin/ollama serve";
+      package = pkgs.ollama-rocm;
 
-        Restart = "always";
-        RestartSec = 3;
+      host = cfg.host;
+      port = cfg.ollamaPort;
 
-        # Run as dedicated user
-        User = "ollama";
-        Group = "ollama";
-
-        # Ollama *requires* HOME
-        Environment = [
-          "HOME=/var/lib/ollama"
-          "OLLAMA_MODELS=/var/lib/ollama/models"
-          "OLLAMA_HOST=127.0.0.1:11434"
-        ];
-
-        WorkingDirectory = "/var/lib/ollama";
-
-        StateDirectory = "ollama";
-        StateDirectoryMode = "0755";
-
-        LimitNOFILE = 1048576;
+      environmentVariables = {
+        OLLAMA_CONTEXT_LENGTH = "4096";
+        OLLAMA_KEEP_ALIVE = "5m";
       };
     };
 
-    # Open WebUI frontend (web model manager UI + OpenAI proxy)
+    ########################################
+    # Open WebUI
+    ########################################
     systemd.services.open-webui = {
       description = "Open WebUI (UI for Ollama)";
       wantedBy = [ "multi-user.target" ];
@@ -90,29 +68,46 @@ in
 
       serviceConfig = {
         ExecStart = "${pkgs.open-webui}/bin/open-webui serve";
+
         Restart = "always";
         RestartSec = 3;
-
-        Environment = [
-          # Tell Open WebUI to use Ollama
-          "OLLAMA_BASE_URL=http://127.0.0.1:${toString cfg.ollamaPort}"
-          # Auth off for local use (you can turn this on later)
-          "WEBUI_AUTH=false"
-          "ENABLE_SIGNUP=false"
-          # Persist state in /var/lib (not nix store)
-          "DATA_DIR=/var/lib/open-webui"
-          # Bind/port: Open WebUI may still default to 8080 depending on packaging,
-          # but we'll set the conventional envs anyway:
-          "HOST=${cfg.host}"
-          "PORT=${toString cfg.webuiPort}"
-        ];
 
         StateDirectory = "open-webui";
         WorkingDirectory = "/var/lib/open-webui";
 
+        Environment = [
+          "OLLAMA_BASE_URL=http://${cfg.host}:${toString cfg.ollamaPort}"
+
+          "WEBUI_AUTH=false"
+          "ENABLE_SIGNUP=false"
+
+          # Writable dirs (critical on NixOS)
+          "DATA_DIR=/var/lib/open-webui"
+          "STATIC_DIR=/var/lib/open-webui/static"
+
+          "HOST=${cfg.host}"
+          "PORT=${toString cfg.webuiPort}"
+        ];
+
         LimitNOFILE = 1048576;
-        MemoryMax = "0";
       };
     };
+
+    users.users.ollama = {
+      isSystemUser = true;
+      home = "/var/lib/ollama";
+      createHome = true;
+      group = "ollama";
+    };
+
+    ########################################
+    # System requirements
+    ########################################
+    hardware.graphics.enable = true;
+
+    environment.systemPackages = [
+      pkgs.ollama-rocm
+      pkgs.open-webui
+    ];
   };
 }
