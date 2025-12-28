@@ -276,11 +276,11 @@
         "precommit": "precommit"
       },
       "locked": {
-        "lastModified": 1766847401,
-        "narHash": "sha256-FIHePirabjZ7Z75df/4FiKwA3c86d0sx6J+yr6d693Y=",
+        "lastModified": 1766857227,
+        "narHash": "sha256-HFnjBJa0F9psV26q6PQSO/fT9D7J2BXyuC3W4+gW+lg=",
         "owner": "FredSystems",
         "repo": "fred-bar",
-        "rev": "b4924f2e646b5a73633ca4c0aaa77bfaf9681307",
+        "rev": "c6de7983776b0d9253991ad78f9b435559dee406",
         "type": "github"
       },
       "original": {
@@ -430,11 +430,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766850854,
-        "narHash": "sha256-asWZx7X5FRrna8ntfE0+vTBUIPLth8R8bckbOpfT3Us=",
+        "lastModified": 1766881808,
+        "narHash": "sha256-JR7A2xS3EBPWFeONzhqez5vp7nKEsp7eLj2Ks210Srk=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "2d36a6de2fee5cd232b0a28137d95541c21eb7f0",
+        "rev": "d2e0458d6531885600b346e161c38790dc356fa8",
         "type": "github"
       },
       "original": {
