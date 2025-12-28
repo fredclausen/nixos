@@ -45,8 +45,8 @@ in
 
       package = pkgs.ollama-rocm;
 
-      host = cfg.host;
-      port = cfg.ollamaPort;
+      inherit (cfg) host;
+      inherit (cfg) ollamaPort;
 
       environmentVariables = {
         OLLAMA_CONTEXT_LENGTH = "4096";
