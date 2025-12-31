@@ -163,7 +163,6 @@ in
             "systemctl restart --user network-manager-applet"
             "systemctl restart --user udiskie-agent"
             "systemctl restart --user bluetooth-agent"
-            "swaync"
             "blueman-applet"
           ];
 
@@ -176,7 +175,6 @@ in
             "systemctl stop --user user-sleep-hook"
             "systemctl stop --user polkit-gnome-authentication-agent-1"
             "systemctl stop --user fredbar"
-            "pkill swaync"
           ];
 
           general = {
