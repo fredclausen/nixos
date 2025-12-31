@@ -44,7 +44,7 @@
       <primary>yes</primary>
       <monitor>
         <monitorspec>
-          <connector>DP-1</connector>
+          <connector>DP-3</connector>
           <vendor>AUS</vendor>
           <product>VG27A</product>
           <serial>SCLMQS041662</serial>

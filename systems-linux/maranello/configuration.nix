@@ -93,7 +93,7 @@
     monitor=DP-2, 2560x1440@143.97, 0x1440, 1
 
     # DP-1 (Primary) to the right of DP-2
-    monitor=DP-1, 2560x1440@143.97, 2560x1440, 1
+    monitor=DP-3, 2560x1440@143.97, 2560x1440, 1
 
     ecosystem {
       no_update_news = true

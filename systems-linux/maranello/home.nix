@@ -146,7 +146,7 @@ in
 
     niri.settings = {
       outputs = {
-        "DP-1" = {
+        "DP-3" = {
           scale = 1.0;
           mode = {
             width = 2560;
@@ -190,13 +190,13 @@ in
 
   wayland.windowManager.hyprland.settings = {
     monitor = [
-      "DP-1, highrr, 0x0, 1"
+      "DP-3, highrr, 0x0, 1"
       "DP-2, highrr, -2560x0, 1"
       "HDMI-A-1, highrr, -2560x-1440, 1"
     ];
 
     workspace = [
-      "1, monitor:DP-1"
+      "1, monitor:DP-3"
       "2, monitor:DP-2"
       "3, monitor:HDMI-A-1"
     ];
