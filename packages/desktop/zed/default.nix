@@ -202,6 +202,27 @@ in
             working_directory = "current_project_directory";
           };
 
+          languages = {
+            CSS = {
+              tab_size = 2;
+              formatter = "prettier";
+            };
+            SCSS = {
+              tab_size = 2;
+              formatter = "prettier";
+            };
+            JSON = {
+              tab_size = 2;
+              formatter = "prettier";
+            };
+            YAML = {
+              tab_size = 2;
+            };
+            Markdown = {
+              tab_size = 2;
+            };
+          };
+
           lsp = {
             rust-analyzer = {
               binary = {
