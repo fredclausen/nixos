@@ -76,7 +76,7 @@
       Wayland = {
         EnableHiDPI = true;
 
-        CompositorCommand = "${pkgs.hyprland}/bin/Hyprland";
+        CompositorCommand = "${pkgs.hyprland}/bin/start-hyprland";
       };
     };
   };
