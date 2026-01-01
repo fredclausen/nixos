@@ -110,14 +110,14 @@ in
               ];
             }
 
-            # Waybar (match Hyprland: direct start, not systemd)
+            # Fred Bar
             {
-              command = [ "waybar" ];
-            }
-
-            # swaync (IMPORTANT: direct start, no systemd)
-            {
-              command = [ "swaync" ];
+              command = [
+                "systemctl"
+                "--user"
+                "restart"
+                "fredbar"
+              ];
             }
 
             # Background helpers (systemd user units)

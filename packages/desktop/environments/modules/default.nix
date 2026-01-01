@@ -19,9 +19,7 @@ in
     ./clipboard
     ./hyprlandextra
     ./pamixer
-    ./swaync
     ./vicinae
-    ./waybar
   ];
 
   config = mkIf cfg.enable {
@@ -31,8 +29,6 @@ in
       hyprlandextra.enable = true;
       pamixer.enable = true;
       vicinae.enable = true;
-      waybar.enable = true;
-      swaync.enable = true;
     };
   };
 }

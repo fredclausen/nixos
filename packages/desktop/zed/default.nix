@@ -377,7 +377,8 @@ in
 
             markdownlint = {
               settings = {
-                "MD013" = false;
+                "MD013" = false; # line length
+                "MD033" = false; # inline HTML
               };
             };
           };
