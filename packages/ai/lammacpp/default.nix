@@ -60,44 +60,46 @@ in
       };
     };
 
+    # FIXME: This is broken upstream. Re-enable when fixed
+    # https://github.com/NixOS/nixpkgs/issues/475944
     ########################################
     # Open WebUI
     ########################################
-    systemd.services.open-webui = {
-      description = "Open WebUI (UI for Ollama)";
-      wantedBy = [ "multi-user.target" ];
-      after = [
-        "network.target"
-        "ollama.service"
-      ];
-      requires = [ "ollama.service" ];
+    # systemd.services.open-webui = {
+    #   description = "Open WebUI (UI for Ollama)";
+    #   wantedBy = [ "multi-user.target" ];
+    #   after = [
+    #     "network.target"
+    #     "ollama.service"
+    #   ];
+    #   requires = [ "ollama.service" ];
 
-      serviceConfig = {
-        ExecStart = "${pkgs.open-webui}/bin/open-webui serve";
+    #   serviceConfig = {
+    #     ExecStart = "${pkgs.open-webui}/bin/open-webui serve";
 
-        Restart = "always";
-        RestartSec = 3;
+    #     Restart = "always";
+    #     RestartSec = 3;
 
-        StateDirectory = "open-webui";
-        WorkingDirectory = "/var/lib/open-webui";
+    #     StateDirectory = "open-webui";
+    #     WorkingDirectory = "/var/lib/open-webui";
 
-        Environment = [
-          "OLLAMA_BASE_URL=http://${cfg.host}:${toString cfg.ollamaPort}"
+    #     Environment = [
+    #       "OLLAMA_BASE_URL=http://${cfg.host}:${toString cfg.ollamaPort}"
 
-          "WEBUI_AUTH=false"
-          "ENABLE_SIGNUP=false"
+    #       "WEBUI_AUTH=false"
+    #       "ENABLE_SIGNUP=false"
 
-          # Writable dirs (critical on NixOS)
-          "DATA_DIR=/var/lib/open-webui"
-          "STATIC_DIR=/var/lib/open-webui/static"
+    #       # Writable dirs (critical on NixOS)
+    #       "DATA_DIR=/var/lib/open-webui"
+    #       "STATIC_DIR=/var/lib/open-webui/static"
 
-          "HOST=${cfg.host}"
-          "PORT=${toString cfg.webuiPort}"
-        ];
+    #       "HOST=${cfg.host}"
+    #       "PORT=${toString cfg.webuiPort}"
+    #     ];
 
-        LimitNOFILE = 1048576;
-      };
-    };
+    #     LimitNOFILE = 1048576;
+    #   };
+    # };
 
     users.users.ollama = {
       isSystemUser = true;
@@ -113,7 +115,7 @@ in
 
     environment.systemPackages = [
       cfg.ollamaPackage
-      pkgs.open-webui
+      # pkgs.open-webui
     ];
   };
 }
