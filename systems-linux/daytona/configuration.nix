@@ -33,6 +33,9 @@
 
   sops_secrets.enable_secrets.enable = true;
 
+  hardware.i2c.enable = true;
+  users.users.${user}.extraGroups = [ "i2c" ];
+
   nas = {
     enable = true;
 

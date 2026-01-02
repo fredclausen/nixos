@@ -51,6 +51,9 @@
 
   networking.hostName = "maranello";
 
+  hardware.i2c.enable = true;
+  users.users.${user}.extraGroups = [ "i2c" ];
+
   environment.systemPackages = with pkgs; [ ];
 
   system.stateVersion = stateVersion;
