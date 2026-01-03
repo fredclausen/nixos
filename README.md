@@ -124,8 +124,7 @@ Each system's `configuration.nix` supports these options:
 
 #### Hyprland/Niri Tools
 
-- `waybar`
-- `swaync`
+- `fredbar`
 - `vicinae`
 - `cliphist`
 - `wl-clipboard`

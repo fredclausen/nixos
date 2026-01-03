@@ -147,15 +147,21 @@ in
             # "GTK_THEME, adw-gtk3-dark"
           ];
 
+          misc = [
+            "disable_splash_rendering = true"
+            "disable_hyprland_logo = true"
+          ];
+
           exec = [
 
           ];
 
           exec-once = [
+            "systemctl stop --user swaync"
             "systemctl restart --user polkit-gnome-authentication-agent-1"
             "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
             "gsettings set org.gnome.desktop.interface gtk-theme \"Catppuccin-GTK-Purple-Dark\""
-            "swaybg -o \"*\" -i \"/home/${username}/.config/backgrounds/lewis.jpg\""
+            "~/.config/hyprextra/scripts/background.sh"
             "systemctl restart --user fredbar"
             "systemctl restart --user sway-audio-idle-inhibit"
             "systemctl restart --user user-sleep-hook"

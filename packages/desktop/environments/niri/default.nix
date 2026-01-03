@@ -89,6 +89,14 @@ in
           };
 
           spawn-at-startup = [
+            {
+              command = [
+                "systemctl"
+                "--user"
+                "stop"
+                "swaync"
+              ];
+            }
             # GTK theming
             {
               command = [
@@ -102,11 +110,7 @@ in
             # Wallpaper (same as swaybg in Hyprland)
             {
               command = [
-                "swaybg"
-                "-o"
-                "*"
-                "-i"
-                "/home/${username}/.config/backgrounds/lewis.jpg"
+                "~/.config/hyprextra/scripts/background.sh"
               ];
             }
 

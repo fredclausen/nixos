@@ -149,6 +149,21 @@
       owner = user;
       mode = "0600";
     };
+
+    "email/icloud/caldav_server" = {
+      owner = user;
+      mode = "0600";
+    };
+
+    "email/icloud/address" = {
+      owner = user;
+      mode = "0600";
+    };
+
+    "email/icloud/password" = {
+      owner = user;
+      mode = "0600";
+    };
   };
 
   networking.networkmanager = {

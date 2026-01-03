@@ -2,6 +2,8 @@
   lib,
   config,
   pkgs,
+  catppuccinWallpapers,
+  user,
   ...
 }:
 with lib;
@@ -112,6 +114,10 @@ in
       niri.enable = true;
       cosmic.enable = true;
       gnome.enable = true;
+    };
+
+    home-manager.users.${user} = {
+      home.file."Pictures/Background".source = "${catppuccinWallpapers}/share/backgrounds";
     };
   };
 }
