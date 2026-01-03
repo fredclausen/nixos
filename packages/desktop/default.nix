@@ -105,11 +105,6 @@ in
     };
 
     home-manager.users.${username} = {
-      home.file.".config/backgrounds/" = {
-        source = ../../dotfiles/.config/backgrounds;
-        recursive = true;
-      };
-
       catppuccin.cursors.enable = true;
     };
   };

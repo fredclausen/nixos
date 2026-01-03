@@ -58,6 +58,13 @@
       url = "github:FredSystems/fred-bar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # wallpapers
+
+    walls-catppuccin = {
+      url = "github:orangci/walls-catppuccin-mocha";
+      flake = false;
+    };
   };
 
   outputs =
@@ -71,6 +78,7 @@
       nixvim,
       niri,
       darwin,
+      walls-catppuccin,
       ...
     }:
 
@@ -96,6 +104,26 @@
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
     in
     {
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        {
+          catppuccin-wallpapers = pkgs.stdenvNoCC.mkDerivation {
+            pname = "catppuccin-wallpapers";
+            version = "git";
+
+            src = walls-catppuccin;
+
+            installPhase = ''
+              mkdir -p $out/share/backgrounds
+              cp -r . $out/share/backgrounds/
+            '';
+          };
+        }
+      );
+
       lib.mkSystem =
         {
           hostName,
@@ -118,6 +146,8 @@
               agentNodes
               agentTargets
               ;
+
+            catppuccinWallpapers = self.packages.${system}.catppuccin-wallpapers;
           };
 
           modules = [

@@ -221,10 +221,10 @@ in
           menu-layout = "Plasma";
         };
 
-        "org/gnome/desktop/background" = {
-          picture-uri = "file:///home/${username}/.config/backgrounds/lewis.jpg";
-          picture-uri-dark = "file:///home/${username}/.config/backgrounds/lewis.jpg"; # Updated dark background...same as light for now
-        };
+        # "org/gnome/desktop/background" = {
+        #   picture-uri = "file:///home/${username}/.config/backgrounds/lewis.jpg";
+        #   picture-uri-dark = "file:///home/${username}/.config/backgrounds/lewis.jpg"; # Updated dark background...same as light for now
+        # };
 
         "org/gnome/shell/extensions/dash-to-panel" = {
           trans-panel-opacity = 0.5;

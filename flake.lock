@@ -773,11 +773,11 @@
     },
     "nixpkgs_8": {
       "locked": {
-        "lastModified": 1767116409,
-        "narHash": "sha256-5vKw92l1GyTnjoLzEagJy5V5mDFck72LiQWZSOnSicw=",
+        "lastModified": 1767379071,
+        "narHash": "sha256-EgE0pxsrW9jp9YFMkHL9JMXxcqi/OoumPJYwf+Okucw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "cad22e7d996aea55ecab064e84834289143e44a0",
+        "rev": "fb7944c166a3b630f177938e478f0378e64ce108",
         "type": "github"
       },
       "original": {
@@ -920,7 +920,8 @@
         "nixpkgs": "nixpkgs_8",
         "nixvim": "nixvim",
         "precommit-base": "precommit-base",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "walls-catppuccin": "walls-catppuccin"
       }
     },
     "rust-overlay": {
@@ -1168,6 +1169,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "walls-catppuccin": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1762937381,
+        "narHash": "sha256-N+MZHSRcwOldS5Ai8B3YfKquKs9oeUW/GkV1iKM5+i8=",
+        "owner": "orangci",
+        "repo": "walls-catppuccin-mocha",
+        "rev": "7bfdf10d16ad3a689f9f0cf3a0930da3d1a245a8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "orangci",
+        "repo": "walls-catppuccin-mocha",
         "type": "github"
       }
     },
