@@ -152,6 +152,7 @@ in
           ];
 
           exec-once = [
+            "systemctl stop --user swaync"
             "systemctl restart --user polkit-gnome-authentication-agent-1"
             "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
             "gsettings set org.gnome.desktop.interface gtk-theme \"Catppuccin-GTK-Purple-Dark\""

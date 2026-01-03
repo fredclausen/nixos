@@ -89,6 +89,14 @@ in
           };
 
           spawn-at-startup = [
+            {
+              command = [
+                "systemctl"
+                "--user"
+                "stop"
+                "swaync"
+              ];
+            }
             # GTK theming
             {
               command = [
