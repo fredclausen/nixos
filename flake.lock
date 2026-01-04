@@ -311,11 +311,11 @@
         "precommit": "precommit_2"
       },
       "locked": {
-        "lastModified": 1767478326,
-        "narHash": "sha256-C3rA/F+r7oODMuoDKuQzCRmylIKslz9XE6GGBgHXS1U=",
+        "lastModified": 1767502542,
+        "narHash": "sha256-eC6b6FlNVIJh6pkKZtqlf1gAAKhdvLUK6Vwk+PIi/j4=",
         "owner": "FredSystems",
         "repo": "fred-bar",
-        "rev": "9ca3a8a67305e385dbebee34ddfc55c85dacaecf",
+        "rev": "24482f85db312993d08a1c9763f97d14bb10eb87",
         "type": "github"
       },
       "original": {
@@ -333,11 +333,11 @@
         "precommit": "precommit"
       },
       "locked": {
-        "lastModified": 1767474098,
-        "narHash": "sha256-bUvag7CePn4on4GYa8FihRgorqWijmxh5998qgNS5Yg=",
+        "lastModified": 1767501917,
+        "narHash": "sha256-Ka+6UtP+Pd+wNPInfdv4WAKAa96CwQJ2pKuMQNpe/CE=",
         "owner": "FredSystems",
         "repo": "fred-cal",
-        "rev": "bd97a7d84865eaaa339ae26f6d64d923e79c0713",
+        "rev": "47581c99be246bf5998233ab73bc87722c0b1764",
         "type": "github"
       },
       "original": {
@@ -1069,11 +1069,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766894905,
-        "narHash": "sha256-pn8AxxfajqyR/Dmr1wnZYdUXHgM3u6z9x0Z1Ijmz2UQ=",
+        "lastModified": 1767499857,
+        "narHash": "sha256-0zUU/PW09d6oBaR8x8vMHcAhg1MOvo3CwoXgHijzzNE=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "61b39c7b657081c2adc91b75dd3ad8a91d6f07a7",
+        "rev": "ecc41505948ec2ab0325f14c9862a4329c2b4190",
         "type": "github"
       },
       "original": {
