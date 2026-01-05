@@ -147,9 +147,6 @@ in
             ExecStartPre = [
               "${cleanupRunner}/bin/github-runner-cleanup ${runnerName} ${r.value.tokenFile} ${cfg.repo}"
             ];
-            Restart = "always";
-            RestartSec = 5;
-            OOMPolicy = "restart";
           };
         };
       }
