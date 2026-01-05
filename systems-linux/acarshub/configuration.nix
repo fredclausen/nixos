@@ -52,12 +52,12 @@
     defaultTokenFile = config.sops.secrets."github-token".path;
 
     runners = {
-      acarshub-runner-1 = {
+      runner-1 = {
         url = "https://github.com/FredSystems/nixos";
         tokenFile = config.sops.secrets."github-token".path;
       };
 
-      acarshub-runner-2 = {
+      runner-2 = {
         url = "https://github.com/FredSystems/nixos";
         tokenFile = config.sops.secrets."github-token".path;
       };

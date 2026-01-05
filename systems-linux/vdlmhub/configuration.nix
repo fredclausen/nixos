@@ -66,12 +66,12 @@
     defaultTokenFile = config.sops.secrets."github-token".path;
 
     runners = {
-      vdlmhub-runner-1 = {
+      runner-1 = {
         url = "https://github.com/FredSystems/nixos";
         tokenFile = config.sops.secrets."github-token".path;
       };
 
-      vdlmhub-runner-2 = {
+      runner-2 = {
         url = "https://github.com/FredSystems/nixos";
         tokenFile = config.sops.secrets."github-token".path;
       };

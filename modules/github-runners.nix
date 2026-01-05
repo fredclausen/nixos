@@ -47,16 +47,19 @@ let
   mkRunner =
     name: runnerCfg:
     let
-      finalName = runnerCfg.name or "nixos-${hostname}-${name}";
+      finalName = if runnerCfg.name != null then runnerCfg.name else "nixos-${hostname}-${name}";
+      finalTokenFile = runnerCfg.tokenFile or cfg.defaultTokenFile;
+
+      finalUrl = runnerCfg.url or "https://github.com/${cfg.repo}";
     in
     {
       inherit name;
       value = {
         enable = true;
-        url = runnerCfg.url;
         name = finalName;
-        tokenFile = runnerCfg.tokenFile;
-        ephemeral = runnerCfg.ephemeral;
+        url = finalUrl;
+        tokenFile = finalTokenFile;
+        inherit (runnerCfg) ephemeral;
       };
     };
 
@@ -80,34 +83,31 @@ in
 
     runners = mkOption {
       type = types.attrsOf (
-        types.submodule (
-          { ... }:
-          {
-            options = {
-              name = mkOption {
-                type = types.nullOr types.str;
-                default = null;
-                description = "Explicit runner name (defaults to nixos-<host>-<id>).";
-              };
-
-              url = mkOption {
-                type = types.str;
-                description = "GitHub repository URL.";
-              };
-
-              tokenFile = mkOption {
-                type = types.path;
-                description = "Token file used to register this runner.";
-              };
-
-              ephemeral = mkOption {
-                type = types.bool;
-                default = true;
-                description = "Whether the runner is ephemeral.";
-              };
+        types.submodule {
+          options = {
+            name = mkOption {
+              type = types.nullOr types.str;
+              default = null;
+              description = "Explicit runner name (defaults to nixos-<host>-<id>).";
             };
-          }
-        )
+
+            url = mkOption {
+              type = types.str;
+              description = "GitHub repository URL.";
+            };
+
+            tokenFile = mkOption {
+              type = types.path;
+              description = "Token file used to register this runner.";
+            };
+
+            ephemeral = mkOption {
+              type = types.bool;
+              default = true;
+              description = "Whether the runner is ephemeral.";
+            };
+          };
+        }
       );
       default = { };
       description = "GitHub runners keyed by logical ID (e.g. runner-1).";
