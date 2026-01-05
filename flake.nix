@@ -283,6 +283,12 @@
           hmModules = [ ];
         };
 
+        fredhub = self.lib.mkSystem {
+          hostName = "fredhub";
+          stateVersion = "25.11";
+          hmModules = [ ];
+        };
+
         acarshub = self.lib.mkSystem {
           hostName = "acarshub";
           hmModules = [ ];
