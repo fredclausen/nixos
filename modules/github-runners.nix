@@ -9,7 +9,6 @@ with lib;
 
 let
   cfg = config.ci.githubRunners;
-
   hostname = config.networking.hostName;
 
   # Cleanup helper: delete runner by name before (re)registering
@@ -45,23 +44,25 @@ let
 
   # Construct a github-runners entry
   mkRunner =
-    name: runnerCfg:
+    id: runnerCfg:
     let
-      finalName = if runnerCfg.name != null then runnerCfg.name else "nixos-${hostname}-${name}";
-      finalTokenFile = runnerCfg.tokenFile or cfg.defaultTokenFile;
+      runnerName = if runnerCfg.name != null then runnerCfg.name else "nixos-${hostname}-${id}";
 
-      finalUrl = runnerCfg.url or "https://github.com/${cfg.repo}";
+      tokenFile = if runnerCfg.tokenFile != null then runnerCfg.tokenFile else cfg.defaultTokenFile;
+
+      url = if runnerCfg.url != null then runnerCfg.url else "https://github.com/${cfg.repo}";
     in
     {
-      inherit name;
+      inherit id;
       value = {
         enable = true;
-        name = finalName;
-        url = finalUrl;
-        tokenFile = finalTokenFile;
+        name = runnerName;
+        inherit url tokenFile;
         inherit (runnerCfg) ephemeral;
       };
     };
+
+  runnersList = mapAttrsToList mkRunner cfg.runners;
 
 in
 {
@@ -92,13 +93,15 @@ in
             };
 
             url = mkOption {
-              type = types.str;
-              description = "GitHub repository URL.";
+              type = types.nullOr types.str;
+              default = null;
+              description = "GitHub repository URL override.";
             };
 
             tokenFile = mkOption {
-              type = types.path;
-              description = "Token file used to register this runner.";
+              type = types.nullOr types.path;
+              default = null;
+              description = "Token file override for this runner.";
             };
 
             ephemeral = mkOption {
@@ -123,14 +126,19 @@ in
     ];
 
     # Generate services.github-runners entries
-    services.github-runners = listToAttrs (mapAttrsToList mkRunner cfg.runners);
+    services.github-runners = listToAttrs (
+      map (r: {
+        name = r.id;
+        inherit (r) value;
+      }) runnersList
+    );
 
-    # Inject cleanup logic into systemd units
+    # Inject cleanup logic into systemd units (CORRECT UNIT NAMES)
     systemd.services = foldl' (
       acc: r:
       let
+        svcName = "github-runner-${r.id}";
         runnerName = r.value.name;
-        svcName = "github-runner-${runnerName}";
       in
       acc
       // {
@@ -145,6 +153,6 @@ in
           };
         };
       }
-    ) { } (mapAttrsToList mkRunner cfg.runners);
+    ) { } runnersList;
   };
 }
