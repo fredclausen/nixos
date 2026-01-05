@@ -15,6 +15,7 @@ in
     ./lazygit
     ./lsd
     ./ohmyzsh
+    ./nvim
     # FIXME: pay respects appears to be fucked. It kills the terminal
     ./pay-respects
     ./starship
