@@ -10,6 +10,7 @@
     ../../modules/secrets/sops.nix
     ../../modules/adsb-docker-units.nix
     ../../modules/monitoring/agent
+    ../../modules/github-runners.nix
   ];
 
   # Server profile
@@ -45,41 +46,25 @@
     };
   };
 
-  services = {
-    github-runners = {
-      runner-1 = {
-        enable = true;
+  ci.githubRunners = {
+    enable = true;
+    repo = "FredSystems/nixos";
+    defaultTokenFile = config.sops.secrets."github-token".path;
+
+    runners = {
+      acarshub-runner-1 = {
         url = "https://github.com/FredSystems/nixos";
-        name = "nixos-acarshub-runner-1";
         tokenFile = config.sops.secrets."github-token".path;
-        ephemeral = true;
       };
 
-      runner-2 = {
-        enable = true;
+      acarshub-runner-2 = {
         url = "https://github.com/FredSystems/nixos";
-        name = "nixos-acarshub-runner-2";
         tokenFile = config.sops.secrets."github-token".path;
-        ephemeral = true;
       };
-
-      # runner-3 = {
-      #   enable = true;
-      #   url = "https://github.com/FredSystems/nixos";
-      #   name = "nixos-acarshub-runner-3";
-      #   tokenFile = config.sops.secrets."github-token".path;
-      # ephemeral = true;
-      # };
-
-      # runner-4 = {
-      #   enable = true;
-      #   url = "https://github.com/FredSystems/nixos";
-      #   name = "nixos-acarshub-runner-4";
-      #   tokenFile = config.sops.secrets."github-token".path;
-      # ephemeral = true;
-      # };
     };
+  };
 
+  services = {
     adsb.containers = [
       ###############################################################
       # DOZZLE AGENT
