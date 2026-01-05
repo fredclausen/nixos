@@ -46,23 +46,23 @@
     };
   };
 
-  ci.githubRunners = {
-    enable = true;
-    repo = "FredSystems/nixos";
-    defaultTokenFile = config.sops.secrets."github-token".path;
+  # ci.githubRunners = {
+  #   enable = true;
+  #   repo = "FredSystems/nixos";
+  #   defaultTokenFile = config.sops.secrets."github-token".path;
 
-    runners = {
-      runner-1 = {
-        url = "https://github.com/FredSystems/nixos";
-        tokenFile = config.sops.secrets."github-token".path;
-      };
+  #   runners = {
+  #     runner-1 = {
+  #       url = "https://github.com/FredSystems/nixos";
+  #       tokenFile = config.sops.secrets."github-token".path;
+  #     };
 
-      runner-2 = {
-        url = "https://github.com/FredSystems/nixos";
-        tokenFile = config.sops.secrets."github-token".path;
-      };
-    };
-  };
+  #     runner-2 = {
+  #       url = "https://github.com/FredSystems/nixos";
+  #       tokenFile = config.sops.secrets."github-token".path;
+  #     };
+  #   };
+  # };
 
   services = {
     adsb.containers = [

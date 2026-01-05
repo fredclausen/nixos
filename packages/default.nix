@@ -3,6 +3,7 @@
     ./ai
     ./common
     ./desktop
+    ./media
     ./shell
   ];
 

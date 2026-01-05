@@ -26,6 +26,10 @@
     host = "0.0.0.0";
   };
 
+  media.jellyfin = {
+    enable = true;
+  };
+
   deployment.role = "monitoring-agent";
 
   sops_secrets.enable_secrets.enable = true;
