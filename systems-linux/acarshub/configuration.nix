@@ -40,9 +40,9 @@
 
   sops.secrets = {
     "github-token" = {
-      owner = "github-runner";
-      group = "github-runner";
-      mode = "0400";
+      owner = "root";
+      group = "github-runner-secrets";
+      mode = "0440";
     };
 
     "docker/acarshub.env" = {

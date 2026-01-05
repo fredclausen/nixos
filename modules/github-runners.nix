@@ -122,13 +122,15 @@ in
   config = mkIf cfg.enable {
     users = {
       groups.github-runner-secrets = { };
-
-      users = lib.mapAttrs' (id: _: {
-        name = "github-runner-${id}";
-        value = {
-          extraGroups = [ "github-runner-secrets" ];
-        };
-      }) cfg.runners;
+    }
+    // {
+      users = lib.mkMerge (
+        lib.mapAttrsToList (id: _: {
+          "github-runner-${id}" = {
+            extraGroups = [ "github-runner-secrets" ];
+          };
+        }) cfg.runners
+      );
     };
 
     environment.systemPackages = [
