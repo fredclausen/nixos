@@ -23,6 +23,7 @@
   ai.local-llm = {
     enable = true;
     ollamaPackage = pkgs.ollama;
+    host = "0.0.0.0";
   };
 
   deployment.role = "monitoring-agent";
