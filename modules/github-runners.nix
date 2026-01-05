@@ -120,6 +120,17 @@ in
   ###### IMPLEMENTATION ######
 
   config = mkIf cfg.enable {
+    users = {
+      groups.github-runner-secrets = { };
+
+      users = lib.mapAttrs' (id: _: {
+        name = "github-runner-${id}";
+        value = {
+          extraGroups = [ "github-runner-secrets" ];
+        };
+      }) cfg.runners;
+    };
+
     environment.systemPackages = [
       pkgs.curl
       pkgs.jq
