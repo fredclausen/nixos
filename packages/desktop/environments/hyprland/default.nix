@@ -139,7 +139,7 @@ in
           "$mainMod" = "SUPER";
           "$fileManager" = "yazi";
           "$terminal" = "wezterm";
-          "$email" = "geary -n";
+          "$email" = "thunderbird";
 
           env = [
             "QT_QPA_PLATFORMTHEME,qt6ct"

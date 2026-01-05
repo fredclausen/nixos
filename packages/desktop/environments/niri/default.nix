@@ -234,8 +234,7 @@ in
 
             "Mod+E".action = {
               spawn = [
-                "geary"
-                "-n"
+                "thunderbird"
               ];
             };
 
