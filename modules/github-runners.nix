@@ -144,7 +144,7 @@ in
       // {
         ${svcName} = {
           serviceConfig = {
-            ExecStartPre = [
+            ExecStartPre = lib.mkBefore [
               "${cleanupRunner}/bin/github-runner-cleanup ${runnerName} ${r.value.tokenFile} ${cfg.repo}"
             ];
           };
