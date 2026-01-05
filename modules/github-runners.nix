@@ -120,19 +120,6 @@ in
   ###### IMPLEMENTATION ######
 
   config = mkIf cfg.enable {
-    users = {
-      groups.github-runner-secrets = { };
-    }
-    // {
-      users = lib.mkMerge (
-        lib.mapAttrsToList (id: _: {
-          "github-runner-${id}" = {
-            extraGroups = [ "github-runner-secrets" ];
-          };
-        }) cfg.runners
-      );
-    };
-
     environment.systemPackages = [
       pkgs.curl
       pkgs.jq
@@ -158,7 +145,7 @@ in
         ${svcName} = {
           serviceConfig = {
             ExecStartPre = lib.mkBefore [
-              "${cleanupRunner}/bin/github-runner-cleanup ${runnerName} ${r.value.tokenFile} ${cfg.repo}"
+              "+${cleanupRunner}/bin/github-runner-cleanup ${runnerName} ${r.value.tokenFile} ${cfg.repo}"
             ];
           };
         };
