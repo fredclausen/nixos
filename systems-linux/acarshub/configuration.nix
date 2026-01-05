@@ -39,7 +39,11 @@
   };
 
   sops.secrets = {
-    "github-token" = { };
+    "github-token" = {
+      owner = "github-runner";
+      group = "github-runner";
+      mode = "0400";
+    };
 
     "docker/acarshub.env" = {
       format = "yaml";
