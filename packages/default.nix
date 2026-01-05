@@ -3,7 +3,6 @@
     ./ai
     ./common
     ./desktop
-    ./develop
     ./shell
   ];
 

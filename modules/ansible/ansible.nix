@@ -104,43 +104,47 @@ in
   # actual configuration
   ###########################################################
   config = lib.mkIf cfg.enable {
+    home = {
+      packages = with pkgs; [
+        ansible
+      ];
+      file = {
+        ".ansible/inventory.yaml".text = clean ''
+          ---
+          ubuntu:
+            hosts:
+          ${indent 4 ubuntuHosts}
+          nixos:
+            hosts:
+          ${indent 4 nixosHosts}
 
-    home.file = {
-      ".ansible/inventory.yaml".text = clean ''
-        ---
-        ubuntu:
-          hosts:
-        ${indent 4 ubuntuHosts}
-        nixos:
-          hosts:
-        ${indent 4 nixosHosts}
+          adsb:
+            children:
+              ubuntu:
+              nixos:
 
-        adsb:
-          children:
-            ubuntu:
-            nixos:
+          all:
+            vars:
+              ansible_user: ${username}
+              ansible_ssh_private_key_file: ~/.ssh/id_rsa
+              ansible_connection: ssh
+        '';
 
-        all:
-          vars:
-            ansible_user: ${username}
-            ansible_ssh_private_key_file: ~/.ssh/id_rsa
-            ansible_connection: ssh
-      '';
+        ".ansible/ansible.cfg".text = clean ''
+          [defaults]
+          inventory = ~/.ansible/inventory.yaml
+          host_key_checking = False
+          retry_files_enabled = False
+          stdout_callback = default
+          result_format = yaml
+          interpreter_python = python3
+        '';
 
-      ".ansible/ansible.cfg".text = clean ''
-        [defaults]
-        inventory = ~/.ansible/inventory.yaml
-        host_key_checking = False
-        retry_files_enabled = False
-        stdout_callback = default
-        result_format = yaml
-        interpreter_python = python3
-      '';
-
-      # copy your plays directory exactly
-      ".ansible/plays" = {
-        source = ./plays;
-        recursive = true;
+        # copy your plays directory exactly
+        ".ansible/plays" = {
+          source = ./plays;
+          recursive = true;
+        };
       };
     };
   };

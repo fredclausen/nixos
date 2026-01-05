@@ -38,6 +38,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    networking.firewall.allowedTCPPorts = [ 11434 ];
+
     ########################################
     # REQUIRED: group must exist
     ########################################

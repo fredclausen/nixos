@@ -7,6 +7,14 @@
     os = "nixos";
   };
 
+  fredhub = {
+    ip = "192.168.31.14";
+    dir = "fredhub";
+    docker_path = "/opt/adsb";
+    slow_start = false;
+    os = "nixos";
+  };
+
   hfdlhub1 = {
     ip = "192.168.31.19";
     dir = "hfdlhub-1";

@@ -109,6 +109,11 @@ in
             enabled = true;
             version = "2";
 
+            default_model = {
+              provider = "copilot_chat";
+              model = "gpt-4o";
+            };
+
             default_open_ai_model = "qwen2.5-coder:7b";
 
             # Provider options:
@@ -125,6 +130,10 @@ in
                 model = "qwen2.5-coder:7b";
               }
               {
+                provider = "fredhub";
+                model = "qwen2.5-coder:7b";
+              }
+              {
                 provider = "zed.dev";
                 model = "claude-3-5-sonnet-latest";
               }
@@ -134,10 +143,73 @@ in
               }
             ];
 
-            default_model = {
-              provider = "copilot_chat";
-              model = "gpt-4o";
+            providers = {
+              fredhub = {
+                type = "openai";
+                api_base = "http://fredhub.local:11434/v1";
+                api_key = "local";
+              };
             };
+          };
+
+          language_models = {
+            ollama = {
+              api_url = "http://fredhub.local:11434";
+              auto_discover = false;
+
+              available_models = [
+                {
+                  name = "qwen3-coder";
+                  display_name = "Qwen 3 Coder (FredHub)";
+                  max_tokens = 100000;
+                  supports_tools = true;
+                  supports_thinking = false;
+                  supports_images = true;
+                }
+
+                {
+                  name = "qwen2.5-coder:7b";
+                  display_name = "Qwen 2.5 Coder (FredHub)";
+                  max_tokens = 32000;
+                  supports_tools = true;
+                  supports_thinking = false;
+                  supports_images = true;
+                }
+
+                {
+                  name = "deepseek-coder-v2:latest";
+                  display_name = "Deepseek-Coder V2 (FredHub)";
+                  max_tokens = 128000;
+                  supports_tools = true;
+                  supports_thinking = false;
+                  supports_images = false;
+                }
+              ];
+            };
+
+            # openai = {
+            #   api_url = "http://localhost:11434/v1";
+            #   auto_discover = false;
+
+            #   available_models = [
+            #     {
+            #       name = "qwen2.5-coder:7b";
+            #       display_name = "Qwen 2.5 Coder 7b (local)";
+            #       max_tokens = 32000;
+            #       supports_tools = true;
+            #       supports_thinking = false;
+            #       supports_images = true;
+            #     }
+            #     {
+            #       name = "qwen2.5-coder:32b";
+            #       display_name = "Qwen 2.5 Coder 32b (local)";
+            #       max_tokens = 32000;
+            #       supports_tools = true;
+            #       supports_thinking = false;
+            #       supports_images = true;
+            #     }
+            #   ];
+            # };
           };
 
           agent = {
@@ -145,12 +217,6 @@ in
               provider = "copilot_chat";
               model = "gpt-4o";
             };
-          };
-
-          openai = {
-            # Local LLM (Ollama)
-            api_base = "http://localhost:11434/v1";
-            api_key = "local"; # Ollama ignores this, Zed requires it to exist
           };
 
           github_copilot = {

@@ -50,18 +50,6 @@ in
     inputs.home-manager.darwinModules.default
     ../../modules/secrets/sops.nix
     ../../packages/shell
-    ../../packages/develop/ansible
-    ../../packages/develop/clang
-    ../../packages/develop/hadolint
-    ../../packages/develop/make
-    ../../packages/develop/ninja
-    ../../packages/develop/node
-    ../../packages/develop/nvim
-    ../../packages/develop/python
-    ../../packages/develop/rust
-    ../../packages/develop/shellcheck
-    ../../packages/develop/typos
-    ../../packages/develop/act
     ../../packages/common/btop
     ../../packages/common/git
     ../../packages/desktop/alacritty
