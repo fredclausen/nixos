@@ -89,8 +89,13 @@ jobs:
         system: ${{ fromJson(needs.find-darwin.outputs.systems) }}
 
     steps:
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          sudo docker image prune --all --force || true
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
 
@@ -102,10 +107,10 @@ jobs:
 
       - name: Build Darwin system
         run: |
-          echo "Skipping build for now (placeholder)"
+          # echo "Skipping build for now (placeholder)"
           # Uncomment when ready:
-          # echo "Building Darwin system: ${{ matrix.system }}"
-          # nix build ".#darwinConfigurations.${{ matrix.system }}.system"
+          echo "Building Darwin system: ${{ matrix.system }}"
+          nix build ".#darwinConfigurations.${{ matrix.system }}.system"
 
   # =====================================================================
   # Required Check Summary
