@@ -53,15 +53,16 @@ let
 
       tokenFile = if runnerCfg.tokenFile != null then runnerCfg.tokenFile else cfg.defaultTokenFile;
 
-      url = if runnerCfg.url != null then runnerCfg.url else "https://github.com/${cfg.repo}";
+      inherit (cfg) repo;
+
+      url = if runnerCfg.url != null then runnerCfg.url else "https://github.com/${repo}";
+
+      ephemeral = runnerCfg.ephemeral or true;
     in
     {
       name = "github-runner-${id}";
       value = {
         serviceConfig = {
-          ######################################################
-          # launchd has no ExecStartPre → inline sequence
-          ######################################################
           ProgramArguments = [
             "/bin/sh"
             "-c"
