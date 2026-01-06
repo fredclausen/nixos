@@ -75,6 +75,10 @@ in
 
   sops_secrets.enable_secrets.enable = true;
 
+  sops.secrets = {
+    "github-token" = { };
+  };
+
   ci.githubRunners = {
     enable = true;
     repo = "FredSystems/nixos";
