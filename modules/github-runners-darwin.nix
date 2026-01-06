@@ -147,7 +147,7 @@ let
           # KeepAlive = true;
 
           # Run as your user so runner state lives in your HOME.
-          UserName = cfg.user;
+          # UserName = cfg.user;
 
           StandardOutPath = "/Users/fred/github-runner-${id}.log";
           StandardErrorPath = "/Users/fred/github-runner-${id}.err";
