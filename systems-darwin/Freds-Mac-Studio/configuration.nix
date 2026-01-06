@@ -50,6 +50,7 @@ in
   imports = [
     inputs.home-manager.darwinModules.default
     ../../modules/secrets/sops.nix
+    ../../modules/github-runner-darwin.nix
     ../../packages/shell
     ../../packages/common/btop
     ../../packages/common/git
@@ -59,7 +60,6 @@ in
     ../../packages/desktop/wezterm
     ../../packages/desktop/zed
     ../../packages/desktop/yubikey
-    ../../modules/github-runners.nix
   ];
 
   desktop = {
