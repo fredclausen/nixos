@@ -67,7 +67,10 @@ let
             "/bin/sh"
             "-c"
             ''
-              set -euo pipefail
+              set -eo pipefail
+
+              USER_HOME="$(dscl . -read /Users/$(id -un) NFSHomeDirectory | awk '{print $2}')"
+              export HOME="$USER_HOME"
 
               ${cleanupRunner} ${runnerName} ${tokenFile} ${repo}
 
