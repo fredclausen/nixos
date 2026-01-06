@@ -85,7 +85,7 @@ in
   services.github-runners = {
     "studio-runner-1" = {
       enable = true;
-      url = "https://github.com/fredsystems/nixos";
+      url = "fredsystems/nixos";
       tokenFile = config.sops.secrets."github-token".path;
     };
   };
