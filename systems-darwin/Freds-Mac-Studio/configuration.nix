@@ -76,7 +76,10 @@ in
   sops_secrets.enable_secrets.enable = true;
 
   sops.secrets = {
-    "github-token" = { };
+    "github-token" = {
+      owner = "fred";
+      mode = "600";
+    };
   };
 
   ci.githubRunners = {
