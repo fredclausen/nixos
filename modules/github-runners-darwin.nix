@@ -63,6 +63,8 @@ let
 
     TOKEN="$(cat "$TOKEN_FILE")"
 
+    echo "Using $TOKEN $REPO"
+
     ${pkgs.curl}/bin/curl --fail --silent \
       -H "Authorization: token $TOKEN" \
       -H "Accept: application/vnd.github+json" \
