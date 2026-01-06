@@ -46,7 +46,7 @@ let
   ############################################################
   # Generate a launchd daemon per runner
   ############################################################
-  mkRunnerDaemon =
+  mkRunnerAgent =
     id: runnerCfg:
     let
       runnerName = if runnerCfg.name != null then runnerCfg.name else "nixos-${hostname}-${id}";
@@ -166,6 +166,7 @@ in
     # launchd daemons (one per runner)
     ##########################################################
 
-    launchd.daemons = listToAttrs (mapAttrsToList mkRunnerDaemon cfg.runners);
+    launchd.agents = listToAttrs (mapAttrsToList mkRunnerAgent cfg.runners);
+
   };
 }
