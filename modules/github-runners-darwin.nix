@@ -58,8 +58,6 @@ let
     {
       name = "github-runner-${id}";
       value = {
-        enable = true;
-
         serviceConfig = {
           ######################################################
           # launchd has no ExecStartPre → inline sequence
