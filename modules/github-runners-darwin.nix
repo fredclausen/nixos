@@ -172,7 +172,7 @@ in
     launchd.user.agents = listToAttrs (mapAttrsToList mkRunnerAgent cfg.runners);
 
     system.activationScripts.fixLaunchAgentPerms.text = ''
-      chmod 644 $HOME/Library/LaunchAgents/org.nixos.github-runner-*.plist || true
+      chmod 644 /Users/fred/Library/LaunchAgents/org.nixos.github-runner-*.plist || true
     '';
 
   };
