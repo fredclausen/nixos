@@ -88,6 +88,9 @@ in
       url = "https://github.com/fredsystems/nixos";
       tokenFile = config.sops.secrets."github-token".path;
       user = "fred";
+      workDir = "/Users/fred/Github-Runner/Runner1";
+      replace = true;
+      ephemeral = true;
     };
   };
 
