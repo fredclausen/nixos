@@ -102,10 +102,10 @@ jobs:
 
       - name: Build Darwin system
         run: |
-          echo "Skipping build for now (placeholder)"
+          # echo "Skipping build for now (placeholder)"
           # Uncomment when ready:
-          # echo "Building Darwin system: ${{ matrix.system }}"
-          # nix build ".#darwinConfigurations.${{ matrix.system }}.system"
+          echo "Building Darwin system: ${{ matrix.system }}"
+          nix build ".#darwinConfigurations.${{ matrix.system }}.system"
 
   # =====================================================================
   # Required Check Summary
