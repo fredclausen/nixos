@@ -3,7 +3,6 @@
   lib,
   inputs,
   user,
-  config,
   hostName,
   ...
 }:
@@ -81,46 +80,6 @@ in
       mode = "600";
     };
   };
-
-  services.github-runners = {
-    "studio-runner-1" = {
-      enable = true;
-      url = "https://github.com/fredsystems/nixos";
-      tokenFile = config.sops.secrets."github-token".path;
-      user = "root";
-      workDir = "/Users/fred/Github-Runner/Runner1";
-      replace = true;
-      ephemeral = true;
-    };
-  };
-
-  # ci.githubRunners = {
-  #   enable = true;
-  #   repo = "fredsystems/nixos";
-  #   defaultTokenFile = config.sops.secrets."github-token".path;
-
-  #   runners = {
-  #     runner-1 = {
-  #       url = "https://github.com/FredSystems/nixos";
-  #       tokenFile = config.sops.secrets."github-token".path;
-  #     };
-
-  #     runner-2 = {
-  #       url = "https://github.com/FredSystems/nixos";
-  #       tokenFile = config.sops.secrets."github-token".path;
-  #     };
-
-  #     runner-3 = {
-  #       url = "https://github.com/FredSystems/nixos";
-  #       tokenFile = config.sops.secrets."github-token".path;
-  #     };
-
-  #     runner-4 = {
-  #       url = "https://github.com/FredSystems/nixos";
-  #       tokenFile = config.sops.secrets."github-token".path;
-  #     };
-  #   };
-  # };
 
   home-manager.users.${username} =
     { pkgs, ... }:
