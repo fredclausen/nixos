@@ -207,6 +207,7 @@
               github_signing_key
               hmlib
               stateVersion
+              hostName
               ;
           };
 
