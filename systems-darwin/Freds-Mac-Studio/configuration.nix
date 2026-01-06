@@ -83,6 +83,7 @@ in
   };
 
   services.github-nix-ci = {
+    age.secretsDir = "/run/secrets";
     personalRunners = {
       "fredsystems/nixos" = {
         tokenFile = "/run/secrets/github-token";
