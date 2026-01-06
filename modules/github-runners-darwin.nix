@@ -223,6 +223,6 @@ in
     ];
 
     # System domain avoids the LaunchAgent/BTM "sh" nonsense.
-    launchd.daemons = listToAttrs (mapAttrsToList mkRunnerDaemon cfg.runners);
+    launchd.user.agents = listToAttrs (mapAttrsToList mkRunnerAgent cfg.runners);
   };
 }
