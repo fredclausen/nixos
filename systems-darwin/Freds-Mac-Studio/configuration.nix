@@ -53,7 +53,7 @@ in
   imports = [
     inputs.home-manager.darwinModules.default
     ../../modules/secrets/sops.nix
-    ../../modules/github-runners-darwin.nix
+    # ../../modules/github-runners-darwin.nix
     ../../packages/shell
     ../../packages/common/btop
     ../../packages/common/git
@@ -82,33 +82,41 @@ in
     };
   };
 
-  ci.githubRunners = {
-    enable = true;
-    repo = "fredsystems/nixos";
-    defaultTokenFile = config.sops.secrets."github-token".path;
-
-    runners = {
-      runner-1 = {
-        url = "https://github.com/FredSystems/nixos";
-        tokenFile = config.sops.secrets."github-token".path;
-      };
-
-      runner-2 = {
-        url = "https://github.com/FredSystems/nixos";
-        tokenFile = config.sops.secrets."github-token".path;
-      };
-
-      runner-3 = {
-        url = "https://github.com/FredSystems/nixos";
-        tokenFile = config.sops.secrets."github-token".path;
-      };
-
-      runner-4 = {
-        url = "https://github.com/FredSystems/nixos";
-        tokenFile = config.sops.secrets."github-token".path;
-      };
+  services.github-runners = {
+    "studio-runner-1" = {
+      enable = true;
+      url = "https://github.com/FredSystems/nixos";
+      tokenFile = config.sops.secrets."github-token".path;
     };
   };
+
+  # ci.githubRunners = {
+  #   enable = true;
+  #   repo = "fredsystems/nixos";
+  #   defaultTokenFile = config.sops.secrets."github-token".path;
+
+  #   runners = {
+  #     runner-1 = {
+  #       url = "https://github.com/FredSystems/nixos";
+  #       tokenFile = config.sops.secrets."github-token".path;
+  #     };
+
+  #     runner-2 = {
+  #       url = "https://github.com/FredSystems/nixos";
+  #       tokenFile = config.sops.secrets."github-token".path;
+  #     };
+
+  #     runner-3 = {
+  #       url = "https://github.com/FredSystems/nixos";
+  #       tokenFile = config.sops.secrets."github-token".path;
+  #     };
+
+  #     runner-4 = {
+  #       url = "https://github.com/FredSystems/nixos";
+  #       tokenFile = config.sops.secrets."github-token".path;
+  #     };
+  #   };
+  # };
 
   home-manager.users.${username} =
     { pkgs, ... }:
