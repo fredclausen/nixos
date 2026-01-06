@@ -95,8 +95,8 @@ let
           #   HOME = "/var/root";
           # };
 
-          StandardOutPath = "/var/log/github-runner-${id}.log";
-          StandardErrorPath = "/var/log/github-runner-${id}.err";
+          StandardOutPath = "/tmp/github-runner-${id}.log";
+          StandardErrorPath = "/tmp/github-runner-${id}.err";
         };
       };
     };
