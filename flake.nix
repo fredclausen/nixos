@@ -310,6 +310,8 @@
         };
       };
 
+      # https://github.com/NixOS/nix-installer
+      # sudo -i nix upgrade-nix
       darwinConfigurations = {
         "Freds-MacBook-Pro" = self.lib.mkDarwinSystem {
           hostName = "Freds-MacBook-Pro";
