@@ -3,6 +3,7 @@
   lib,
   inputs,
   user,
+  hostName,
   ...
 }:
 let
@@ -42,6 +43,7 @@ in
     };
   };
 
+  networking.hostName = hostName;
   users.users.${username}.home = "/Users/${username}";
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-darwin";

@@ -4,6 +4,7 @@
   inputs,
   user,
   config,
+  hostName,
   ...
 }:
 let
@@ -42,6 +43,8 @@ in
       watchIdAuth = true;
     };
   };
+
+  networking.hostName = hostName;
 
   users.users.${username}.home = "/Users/${username}";
 
