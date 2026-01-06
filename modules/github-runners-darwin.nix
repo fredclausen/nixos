@@ -154,7 +154,7 @@ in
   # IMPLEMENTATION (DARWIN ONLY)
   ############################################################
 
-  config = mkIf (cfg.enable && pkgs.stdenv.isDarwin) {
+  config = mkIf (cfg.enable && pkgs.stdenv.hostPlatform.isDarwin) {
 
     environment.systemPackages = [
       pkgs.github-runner
