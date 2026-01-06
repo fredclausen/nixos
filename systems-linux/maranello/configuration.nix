@@ -98,6 +98,9 @@
     # DP-1 (Primary) to the right of DP-2
     monitor=DP-3, 2560x1440@143.97, 2560x1440, 1
 
+    # DP-1 at top right
+    monitor=DP-1, highrr, 0x-1440, 1
+
     ecosystem {
       no_update_news = true
       no_donation_nag = true

@@ -184,12 +184,26 @@ in
             y = -1440;
           };
         };
+
+        "DP-1" = {
+          scale = 1.0;
+          mode = {
+            width = 2560;
+            height = 1440;
+            refresh = 144.0;
+          };
+          position = {
+            x = 0;
+            y = -1440;
+          };
+        };
       };
     };
   };
 
   wayland.windowManager.hyprland.settings = {
     monitor = [
+      "DP-1, highrr, 0x-1440, 1"
       "DP-3, highrr, 0x0, 1"
       "DP-2, highrr, -2560x0, 1"
       "HDMI-A-1, highrr, -2560x-1440, 1"
@@ -199,6 +213,7 @@ in
       "1, monitor:DP-3"
       "2, monitor:DP-2"
       "3, monitor:HDMI-A-1"
+      "4, monitor:DP-1"
     ];
 
     binde = [
