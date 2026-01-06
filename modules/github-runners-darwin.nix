@@ -75,7 +75,7 @@ let
   ############################################################
   # One LaunchDaemon per runner (runs as cfg.user)
   ############################################################
-  mkRunnerAgent =
+  mkRunnerDaemon =
     id: runnerCfg:
     let
       runnerName = if runnerCfg.name != null then runnerCfg.name else "nixos-${hostname}-${id}";
@@ -140,6 +140,8 @@ let
       value = {
         serviceConfig = {
           ProgramArguments = [
+            "/bin/sh"
+            "-lc"
             "${runnerScript}/bin/github-runner-${id}"
           ];
 
@@ -148,7 +150,7 @@ let
 
           # Run as your user so runner state lives in your HOME.
           # UserName = cfg.user;
-
+          Username = "fred";
           StandardOutPath = "/Users/fred/github-runner-${id}.log";
           StandardErrorPath = "/Users/fred/github-runner-${id}.err";
         };
@@ -221,6 +223,6 @@ in
     ];
 
     # System domain avoids the LaunchAgent/BTM "sh" nonsense.
-    launchd.user.agents = listToAttrs (mapAttrsToList mkRunnerAgent cfg.runners);
+    launchd.daemons = listToAttrs (mapAttrsToList mkRunnerDaemon cfg.runners);
   };
 }
