@@ -83,7 +83,7 @@ in
   };
 
   services.github-nix-ci = {
-    tokenFile = config.sops.secrets."github-token".path;
+    age.tokenFile = config.sops.secrets."github-token".path;
     personalRunners = {
       "fredsystems/nixos".num = 4;
     };
