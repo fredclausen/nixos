@@ -9,12 +9,21 @@ with lib;
 
 let
   cfg = config.ci.githubRunners;
+
+  # Best-effort default: first non-root declared user, else "root".
+  defaultUser =
+    let
+      names = builtins.attrNames (config.users.users or { });
+      nonRoot = builtins.filter (n: n != "root") names;
+    in
+    if nonRoot != [ ] then builtins.head nonRoot else "root";
+
   hostname = config.networking.hostName;
 
   ############################################################
   # Delete stale runner by name (PAT is OK for this)
   ############################################################
-  cleanupRunner = pkgs.writeShellScript "github-runner-cleanup" ''
+  cleanupRunner = pkgs.writeShellScriptBin "github-runner-cleanup" ''
     set -euo pipefail
 
     RUNNER_NAME="$1"
@@ -46,7 +55,7 @@ let
   ############################################################
   # Mint a short-lived runner registration token (for config.sh)
   ############################################################
-  mintRegToken = pkgs.writeShellScript "github-runner-mint-registration-token" ''
+  mintRegToken = pkgs.writeShellScriptBin "github-runner-mint-registration-token" ''
     set -euo pipefail
 
     TOKEN_FILE="$1"
@@ -62,13 +71,9 @@ let
   '';
 
   ############################################################
-  # Generate a launchd user agent per runner
-  #
-  # NOTE: On nix-darwin, /nix/store is typically mounted noexec,
-  # so launchd must invoke a system interpreter (/bin/sh) rather
-  # than exec'ing /nix/store scripts directly.
+  # One LaunchDaemon per runner (runs as cfg.user)
   ############################################################
-  mkRunnerAgent =
+  mkRunnerDaemon =
     id: runnerCfg:
     let
       runnerName = if runnerCfg.name != null then runnerCfg.name else "nixos-${hostname}-${id}";
@@ -83,21 +88,22 @@ let
 
       runnerPkg = pkgs.github-runner;
 
-      # Script is "data" (read by /bin/sh), not executed directly by launchd.
-      runnerScript = pkgs.writeText "github-runner-${id}.sh" ''
-        set -euxo pipefail
+      runnerScript = pkgs.writeShellScriptBin "github-runner-${id}" ''
+        set -euo pipefail
 
-        # Force logs no matter what launchd does
         exec >> /tmp/github-runner-${id}.log 2>> /tmp/github-runner-${id}.err
-
         echo "=== runner ${id} starting at $(date) ==="
 
-        USER_HOME="$(dscl . -read /Users/$(id -un) NFSHomeDirectory | awk '{print $2}')"
+        # Ensure HOME is correct even if launchd hands us something odd.
+        USER_HOME="$(${pkgs.dscl}/bin/dscl . -read /Users/${escapeShellArg cfg.user} NFSHomeDirectory | ${pkgs.gawk}/bin/awk '{print $2}')"
         export HOME="$USER_HOME"
         echo "HOME=$HOME"
 
-        # Cleanup stale runner (best effort)
-        ${cleanupRunner} ${escapeShellArg runnerName} ${escapeShellArg (toString tokenFile)} ${escapeShellArg repo} || true
+        # Best-effort cleanup of stale runner registration
+        ${cleanupRunner}/bin/github-runner-cleanup \
+          ${escapeShellArg runnerName} \
+          ${escapeShellArg (toString tokenFile)} \
+          ${escapeShellArg repo} || true
 
         RUNNER_DIR="$HOME/.github-runner/${id}"
         mkdir -p "$RUNNER_DIR"
@@ -105,7 +111,7 @@ let
 
         if [ ! -f .runner ]; then
           echo "Minting registration token..."
-          REG_TOKEN="$(${mintRegToken} ${escapeShellArg (toString tokenFile)} ${escapeShellArg repo})"
+          REG_TOKEN="$(${mintRegToken}/bin/github-runner-mint-registration-token ${escapeShellArg (toString tokenFile)} ${escapeShellArg repo})"
 
           if [ -z "''${REG_TOKEN:-}" ] || [ "$REG_TOKEN" = "null" ]; then
             echo "ERROR: failed to mint registration token"
@@ -132,15 +138,17 @@ let
       value = {
         serviceConfig = {
           ProgramArguments = [
-            "/bin/sh"
-            "${runnerScript}"
+            "${runnerScript}/bin/github-runner-${id}"
           ];
 
           RunAtLoad = true;
           KeepAlive = true;
 
-          StandardOutPath = "/tmp/github-runner-${id}.log";
-          StandardErrorPath = "/tmp/github-runner-${id}.err";
+          # Run as your user so runner state lives in your HOME.
+          UserName = cfg.user;
+
+          # StandardOutPath = "/tmp/github-runner-${id}.log";
+          # StandardErrorPath = "/tmp/github-runner-${id}.err";
         };
       };
     };
@@ -161,6 +169,12 @@ in
     defaultTokenFile = mkOption {
       type = types.path;
       description = "Default GitHub PAT token file path (used to mint runner reg tokens).";
+    };
+
+    user = mkOption {
+      type = types.str;
+      default = defaultUser;
+      description = "macOS username to run the runner under.";
     };
 
     runners = mkOption {
@@ -201,8 +215,11 @@ in
       pkgs.github-runner
       pkgs.curl
       pkgs.jq
+      pkgs.dscl
+      pkgs.gawk
     ];
 
-    launchd.user.agents = listToAttrs (mapAttrsToList mkRunnerAgent cfg.runners);
+    # System domain avoids the LaunchAgent/BTM "sh" nonsense.
+    launchd.daemons = listToAttrs (mapAttrsToList mkRunnerDaemon cfg.runners);
   };
 }
