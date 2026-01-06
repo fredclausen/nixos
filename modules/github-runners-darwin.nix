@@ -44,8 +44,7 @@ let
   '';
 
   ############################################################
-  # Mint a short-lived runner registration token (THIS is what
-  # config.sh must receive, NOT the PAT).
+  # Mint a short-lived runner registration token (for config.sh)
   ############################################################
   mintRegToken = pkgs.writeShellScript "github-runner-mint-registration-token" ''
     set -euo pipefail
@@ -62,39 +61,6 @@ let
     | ${pkgs.jq}/bin/jq -r '.token'
   '';
 
-  runnerScript = pkgs.writeShellScript "github-runner-${id}.sh" ''
-    set -euxo pipefail
-
-    exec >> /tmp/github-runner-${id}.log 2>> /tmp/github-runner-${id}.err
-
-    echo "=== runner starting at $(date) ==="
-
-    USER_HOME="$(dscl . -read /Users/$(id -un) NFSHomeDirectory | awk '{print $2}')"
-    export HOME="$USER_HOME"
-
-    echo "HOME=$HOME"
-
-    ${cleanupRunner} ${escapeShellArg runnerName} ${escapeShellArg (toString tokenFile)} ${escapeShellArg repo} || true
-
-    RUNNER_DIR="$HOME/.github-runner/${id}"
-    mkdir -p "$RUNNER_DIR"
-    cd "$RUNNER_DIR"
-
-    if [ ! -f .runner ]; then
-      REG_TOKEN="$(${mintRegToken} ${escapeShellArg (toString tokenFile)} ${escapeShellArg repo})"
-      echo "REG_TOKEN=$REG_TOKEN"
-
-      ${runnerPkg}/bin/config.sh \
-        --unattended \
-        --name ${escapeShellArg runnerName} \
-        --url ${escapeShellArg url} \
-        --token "$REG_TOKEN" \
-        ${optionalString ephemeral "--ephemeral"}
-    fi
-
-    exec ${runnerPkg}/bin/run.sh
-  '';
-
   ############################################################
   # Generate a launchd user agent per runner
   ############################################################
@@ -105,7 +71,7 @@ let
 
       tokenFile = if runnerCfg.tokenFile != null then runnerCfg.tokenFile else cfg.defaultTokenFile;
 
-      inherit (cfg) repo;
+      repo = cfg.repo;
 
       url = if runnerCfg.url != null then runnerCfg.url else "https://github.com/${repo}";
 
@@ -113,20 +79,62 @@ let
 
       runnerPkg = pkgs.github-runner;
 
-      # runner state lives under the user's HOME so launchd user agents behave
-      runnerDirRel = ".github-runner/${id}";
+      # Real executable script path in /nix/store/...
+      runnerScript = pkgs.writeShellScript "github-runner-${id}.sh" ''
+        set -euxo pipefail
+
+        # Force logs no matter what launchd does
+        exec >> /tmp/github-runner-${id}.log 2>> /tmp/github-runner-${id}.err
+
+        echo "=== runner ${id} starting at $(date) ==="
+
+        USER_HOME="$(dscl . -read /Users/$(id -un) NFSHomeDirectory | awk '{print $2}')"
+        export HOME="$USER_HOME"
+        echo "HOME=$HOME"
+
+        # Cleanup stale runner (best effort)
+        ${cleanupRunner} ${escapeShellArg runnerName} ${escapeShellArg (toString tokenFile)} ${escapeShellArg repo} || true
+
+        RUNNER_DIR="$HOME/.github-runner/${id}"
+        mkdir -p "$RUNNER_DIR"
+        cd "$RUNNER_DIR"
+
+        if [ ! -f .runner ]; then
+          echo "Minting registration token..."
+          REG_TOKEN="$(${mintRegToken} ${escapeShellArg (toString tokenFile)} ${escapeShellArg repo})"
+
+          if [ -z "''${REG_TOKEN:-}" ] || [ "$REG_TOKEN" = "null" ]; then
+            echo "ERROR: failed to mint registration token"
+            exit 1
+          fi
+
+          echo "Configuring runner..."
+          ${runnerPkg}/bin/config.sh \
+            --unattended \
+            --name ${escapeShellArg runnerName} \
+            --url ${escapeShellArg url} \
+            --token "$REG_TOKEN" \
+            ${optionalString ephemeral "--ephemeral"}
+        else
+          echo "Runner already configured (.runner exists), skipping config."
+        fi
+
+        echo "Starting run.sh..."
+        exec ${runnerPkg}/bin/run.sh
+      '';
     in
     {
       name = "github-runner-${id}";
       value = {
         serviceConfig = {
           ProgramArguments = [
-            "${runnerScript}"
+            runnerScript
           ];
 
           RunAtLoad = true;
           KeepAlive = true;
 
+          # These don't hurt, but our exec redirection above guarantees logs anyway
           StandardOutPath = "/tmp/github-runner-${id}.log";
           StandardErrorPath = "/tmp/github-runner-${id}.err";
         };
