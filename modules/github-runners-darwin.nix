@@ -91,9 +91,9 @@ let
           RunAtLoad = true;
           KeepAlive = true;
 
-          EnvironmentVariables = {
-            HOME = "/var/root";
-          };
+          # EnvironmentVariables = {
+          #   HOME = "/var/root";
+          # };
 
           StandardOutPath = "/var/log/github-runner-${id}.log";
           StandardErrorPath = "/var/log/github-runner-${id}.err";
