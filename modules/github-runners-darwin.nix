@@ -169,7 +169,6 @@ in
     # launchd daemons (one per runner)
     ##########################################################
 
-    launchd.agents = listToAttrs (mapAttrsToList mkRunnerAgent cfg.runners);
-
+    launchd.user.agents = listToAttrs (mapAttrsToList mkRunnerAgent cfg.runners);
   };
 }
