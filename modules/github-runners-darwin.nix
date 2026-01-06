@@ -94,6 +94,8 @@ let
           RunAtLoad = true;
           KeepAlive = true;
 
+          writable = true;
+
           # EnvironmentVariables = {
           #   HOME = "/var/root";
           # };
