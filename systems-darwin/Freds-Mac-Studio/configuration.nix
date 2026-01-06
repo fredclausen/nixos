@@ -84,7 +84,7 @@ in
 
   ci.githubRunners = {
     enable = true;
-    repo = "FredSystems/nixos";
+    repo = "fredsystems/nixos";
     defaultTokenFile = config.sops.secrets."github-token".path;
 
     runners = {
