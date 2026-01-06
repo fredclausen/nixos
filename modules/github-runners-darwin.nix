@@ -95,7 +95,8 @@ let
         echo "=== runner ${id} starting at $(date) ==="
 
         # Ensure HOME is correct even if launchd hands us something odd.
-        USER_HOME="$(dscl . -read /Users/${escapeShellArg cfg.user} NFSHomeDirectory | ${pkgs.gawk}/bin/awk '{print $2}')"
+        USER_HOME="/Users/fred"
+        #USER_HOME="$(dscl . -read /Users/${escapeShellArg cfg.user} NFSHomeDirectory | ${pkgs.gawk}/bin/awk '{print $2}')"
         export HOME="$USER_HOME"
         echo "HOME=$HOME"
 
