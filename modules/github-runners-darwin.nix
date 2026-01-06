@@ -140,8 +140,6 @@ let
       value = {
         serviceConfig = {
           ProgramArguments = [
-            "/bin/sh"
-            "-lc"
             "${runnerScript}/bin/github-runner-${id}"
           ];
 
