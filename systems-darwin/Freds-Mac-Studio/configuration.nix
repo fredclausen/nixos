@@ -87,7 +87,7 @@ in
       enable = true;
       url = "https://github.com/fredsystems/nixos";
       tokenFile = config.sops.secrets."github-token".path;
-      user = "root";
+      user = "fred";
     };
   };
 
