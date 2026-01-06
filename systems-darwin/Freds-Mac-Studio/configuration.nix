@@ -82,13 +82,11 @@ in
     };
   };
 
-  services.github-nix-ci = {
-    age.secretsDir = "/run/secrets";
-    personalRunners = {
-      "fredsystems/nixos" = {
-        tokenFile = "/run/secrets/github-token";
-        num = 4;
-      };
+  services.github-runners = {
+    "studio-runner-1" = {
+      enable = true;
+      url = "https://github.com/fredsystems/nixos";
+      tokenFile = config.sops.secrets."github-token".path;
     };
   };
 
