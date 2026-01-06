@@ -91,7 +91,6 @@ let
       runnerScript = pkgs.writeShellScriptBin "github-runner-${id}" ''
         set -euo pipefail
 
-        exec >> /tmp/github-runner-${id}.log 2>> /tmp/github-runner-${id}.err
         echo "=== runner ${id} starting at $(date) ==="
 
         # Ensure HOME is correct even if launchd hands us something odd.
