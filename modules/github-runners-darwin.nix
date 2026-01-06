@@ -137,7 +137,9 @@ let
       name = "github-runner-${id}";
       value = {
         serviceConfig = {
-          ProgramArguments = [
+          serviceConfig.ProgramArguments = [
+            "/bin/sh"
+            "-lc"
             "${runnerScript}/bin/github-runner-${id}"
           ];
 
