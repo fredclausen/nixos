@@ -89,7 +89,7 @@ let
       runnerPkg = pkgs.github-runner;
 
       runnerScript = pkgs.writeShellScriptBin "github-runner-${id}" ''
-        set -euo pipefail
+        # set -euo pipefail
 
         echo "=== runner ${id} starting at $(date) ==="
 
