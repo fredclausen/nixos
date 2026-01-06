@@ -3,6 +3,7 @@
   lib,
   inputs,
   user,
+  config,
   ...
 }:
 let
@@ -58,6 +59,7 @@ in
     ../../packages/desktop/wezterm
     ../../packages/desktop/zed
     ../../packages/desktop/yubikey
+    ../../modules/github-runners.nix
   ];
 
   desktop = {
@@ -69,6 +71,34 @@ in
   deployment.role = "desktop";
 
   sops_secrets.enable_secrets.enable = true;
+
+  ci.githubRunners = {
+    enable = true;
+    repo = "FredSystems/nixos";
+    defaultTokenFile = config.sops.secrets."github-token".path;
+
+    runners = {
+      runner-1 = {
+        url = "https://github.com/FredSystems/nixos";
+        tokenFile = config.sops.secrets."github-token".path;
+      };
+
+      runner-2 = {
+        url = "https://github.com/FredSystems/nixos";
+        tokenFile = config.sops.secrets."github-token".path;
+      };
+
+      runner-3 = {
+        url = "https://github.com/FredSystems/nixos";
+        tokenFile = config.sops.secrets."github-token".path;
+      };
+
+      runner-4 = {
+        url = "https://github.com/FredSystems/nixos";
+        tokenFile = config.sops.secrets."github-token".path;
+      };
+    };
+  };
 
   home-manager.users.${username} =
     { pkgs, ... }:
