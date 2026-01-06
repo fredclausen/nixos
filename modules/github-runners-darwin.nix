@@ -215,7 +215,6 @@ in
       pkgs.github-runner
       pkgs.curl
       pkgs.jq
-      pkgs.dscl
       pkgs.gawk
     ];
 
