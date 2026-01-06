@@ -63,6 +63,10 @@ let
 
   ############################################################
   # Generate a launchd user agent per runner
+  #
+  # NOTE: On nix-darwin, /nix/store is typically mounted noexec,
+  # so launchd must invoke a system interpreter (/bin/sh) rather
+  # than exec'ing /nix/store scripts directly.
   ############################################################
   mkRunnerAgent =
     id: runnerCfg:
@@ -71,7 +75,7 @@ let
 
       tokenFile = if runnerCfg.tokenFile != null then runnerCfg.tokenFile else cfg.defaultTokenFile;
 
-      repo = cfg.repo;
+      inherit (cfg) repo;
 
       url = if runnerCfg.url != null then runnerCfg.url else "https://github.com/${repo}";
 
@@ -79,8 +83,8 @@ let
 
       runnerPkg = pkgs.github-runner;
 
-      # Real executable script path in /nix/store/...
-      runnerScript = pkgs.writeShellScriptBin "github-runner-${id}" ''
+      # Script is "data" (read by /bin/sh), not executed directly by launchd.
+      runnerScript = pkgs.writeText "github-runner-${id}.sh" ''
         set -euxo pipefail
 
         # Force logs no matter what launchd does
@@ -128,13 +132,13 @@ let
       value = {
         serviceConfig = {
           ProgramArguments = [
-            "${runnerScript}/bin/github-runner-${id}"
+            "/bin/sh"
+            "${runnerScript}"
           ];
 
           RunAtLoad = true;
           KeepAlive = true;
 
-          # These don't hurt, but our exec redirection above guarantees logs anyway
           StandardOutPath = "/tmp/github-runner-${id}.log";
           StandardErrorPath = "/tmp/github-runner-${id}.err";
         };
