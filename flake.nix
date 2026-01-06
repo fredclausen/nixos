@@ -65,6 +65,10 @@
       url = "github:orangci/walls-catppuccin-mocha";
       flake = false;
     };
+
+    github-nix-ci = {
+      url = "github:juspay/github-nix-ci";
+    };
   };
 
   outputs =
@@ -79,6 +83,7 @@
       niri,
       darwin,
       walls-catppuccin,
+      github-nix-ci,
       ...
     }:
 
@@ -321,6 +326,9 @@
 
         "Freds-Mac-Studio" = self.lib.mkDarwinSystem {
           hostName = "Freds-Mac-Studio";
+          extraModules = [
+            github-nix-ci.darwinModules.default
+          ];
           hmModules = [ ./systems-darwin/Freds-MacBook-Pro/home.nix ];
         };
       };

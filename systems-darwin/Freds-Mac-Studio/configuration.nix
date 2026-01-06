@@ -82,11 +82,10 @@ in
     };
   };
 
-  services.github-runners = {
-    "studio-runner-1" = {
-      enable = true;
-      url = "fredsystems/nixos";
-      tokenFile = config.sops.secrets."github-token".path;
+  services.github-nix-ci = {
+    tokenFile = config.sops.secrets."github-token".path;
+    personalRunners = {
+      "fredsystems/nixos".num = 4;
     };
   };
 
