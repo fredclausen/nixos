@@ -24,7 +24,6 @@
       "iterm2"
       "raycast"
       "visual-studio-code"
-      "visual-studio"
       "hiddenbar"
       "sublime-text"
       "tradingview"
@@ -44,7 +43,6 @@
       "font-hack-nerd-font"
       "font-meslo-lg-nerd-font"
       "multiviewer"
-      "mono-mdk-for-visual-studio"
     ];
 
     masApps = {
