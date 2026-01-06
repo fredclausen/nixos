@@ -128,7 +128,7 @@ let
       value = {
         serviceConfig = {
           ProgramArguments = [
-            runnerScript
+            (toString runnerScript)
           ];
 
           RunAtLoad = true;
