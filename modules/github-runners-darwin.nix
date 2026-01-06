@@ -94,8 +94,6 @@ let
           RunAtLoad = true;
           KeepAlive = true;
 
-          writable = true;
-
           # EnvironmentVariables = {
           #   HOME = "/var/root";
           # };
@@ -172,5 +170,10 @@ in
     ##########################################################
 
     launchd.user.agents = listToAttrs (mapAttrsToList mkRunnerAgent cfg.runners);
+
+    system.activationScripts.fixLaunchAgentPerms.text = ''
+      chmod 644 $HOME/Library/LaunchAgents/org.nixos.github-runner-*.plist || true
+    '';
+
   };
 }
