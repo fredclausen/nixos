@@ -142,7 +142,7 @@ let
           ];
 
           RunAtLoad = true;
-          KeepAlive = true;
+          # KeepAlive = true;
 
           # Run as your user so runner state lives in your HOME.
           UserName = cfg.user;
