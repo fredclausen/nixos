@@ -80,7 +80,7 @@ let
       runnerPkg = pkgs.github-runner;
 
       # Real executable script path in /nix/store/...
-      runnerScript = pkgs.writeShellScript "github-runner-${id}.sh" ''
+      runnerScript = pkgs.writeShellScriptBin "github-runner-${id}" ''
         set -euxo pipefail
 
         # Force logs no matter what launchd does
@@ -128,7 +128,7 @@ let
       value = {
         serviceConfig = {
           ProgramArguments = [
-            (toString runnerScript)
+            "${runnerScript}/bin/github-runner-${id}"
           ];
 
           RunAtLoad = true;
