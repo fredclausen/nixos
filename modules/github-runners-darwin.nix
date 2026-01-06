@@ -62,6 +62,39 @@ let
     | ${pkgs.jq}/bin/jq -r '.token'
   '';
 
+  runnerScript = pkgs.writeShellScript "github-runner-${id}.sh" ''
+    set -euxo pipefail
+
+    exec >> /tmp/github-runner-${id}.log 2>> /tmp/github-runner-${id}.err
+
+    echo "=== runner starting at $(date) ==="
+
+    USER_HOME="$(dscl . -read /Users/$(id -un) NFSHomeDirectory | awk '{print $2}')"
+    export HOME="$USER_HOME"
+
+    echo "HOME=$HOME"
+
+    ${cleanupRunner} ${escapeShellArg runnerName} ${escapeShellArg (toString tokenFile)} ${escapeShellArg repo} || true
+
+    RUNNER_DIR="$HOME/.github-runner/${id}"
+    mkdir -p "$RUNNER_DIR"
+    cd "$RUNNER_DIR"
+
+    if [ ! -f .runner ]; then
+      REG_TOKEN="$(${mintRegToken} ${escapeShellArg (toString tokenFile)} ${escapeShellArg repo})"
+      echo "REG_TOKEN=$REG_TOKEN"
+
+      ${runnerPkg}/bin/config.sh \
+        --unattended \
+        --name ${escapeShellArg runnerName} \
+        --url ${escapeShellArg url} \
+        --token "$REG_TOKEN" \
+        ${optionalString ephemeral "--ephemeral"}
+    fi
+
+    exec ${runnerPkg}/bin/run.sh
+  '';
+
   ############################################################
   # Generate a launchd user agent per runner
   ############################################################
@@ -88,44 +121,7 @@ let
       value = {
         serviceConfig = {
           ProgramArguments = [
-            "/bin/sh"
-            "-c"
-            ''
-              set -euo pipefail
-
-              # launchd user agents often have a garbage HOME; set it explicitly.
-              USER_HOME="$(dscl . -read /Users/$(id -un) NFSHomeDirectory | awk '{print $2}')"
-              export HOME="$USER_HOME"
-
-              # Best-effort cleanup (PAT is ok here)
-              ${cleanupRunner} ${escapeShellArg runnerName} ${escapeShellArg (toString tokenFile)} ${escapeShellArg repo} || true
-
-              RUNNER_DIR="$HOME/${runnerDirRel}"
-              mkdir -p "$RUNNER_DIR"
-              cd "$RUNNER_DIR"
-
-              # Only configure once (config.sh writes .runner on success)
-              if [ ! -f .runner ]; then
-                echo "Minting registration token for ${repo}..."
-                REG_TOKEN="$(${mintRegToken} ${escapeShellArg (toString tokenFile)} ${escapeShellArg repo})"
-
-                if [ -z "''${REG_TOKEN:-}" ] || [ "$REG_TOKEN" = "null" ]; then
-                  echo "ERROR: failed to mint runner registration token"
-                  exit 1
-                fi
-
-                echo "Configuring runner ${runnerName}..."
-                ${runnerPkg}/bin/config.sh \
-                  --unattended \
-                  --name ${escapeShellArg runnerName} \
-                  --url ${escapeShellArg url} \
-                  --token "$REG_TOKEN" \
-                  ${optionalString ephemeral "--ephemeral"}
-              fi
-
-              echo "Starting runner ${runnerName}..."
-              exec ${runnerPkg}/bin/run.sh
-            ''
+            "${runnerScript}"
           ];
 
           RunAtLoad = true;
