@@ -71,7 +71,7 @@ let
                 --name ${runnerName} \
                 --url ${url} \
                 --token "$(cat ${tokenFile})" \
-                ${optionalString runnerCfg.ephemeral "--ephemeral"}
+                ${optionalString (runnerCfg.ephemeral or true) "--ephemeral"}
             ''
           ];
 
