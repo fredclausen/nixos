@@ -83,6 +83,7 @@ in
   };
 
   services.github-nix-ci = {
+    age.secretsDir = ./secrets; # Only if you use agenix
     personalRunners = {
       "fredsystems/nixos" = {
         tokenFile = config.sops.secrets."github-token".path;
