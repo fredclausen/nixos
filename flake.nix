@@ -315,6 +315,11 @@
           hostName = "Freds-MacBook-Pro";
           hmModules = [ ./systems-darwin/Freds-MacBook-Pro/home.nix ];
         };
+
+        "Freds-Mac-Studio" = self.lib.mkDarwinSystem {
+          hostName = "Freds-Mac-Studio";
+          hmModules = [ ./systems-darwin/Freds-MacBook-Pro/home.nix ];
+        };
       };
 
       ##########################################################################
