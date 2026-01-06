@@ -137,7 +137,7 @@ in
           retry_files_enabled = False
           stdout_callback = default
           result_format = yaml
-          interpreter_python = python3
+          interpreter_python = ${pkgs.python3}/bin/python3
         '';
 
         # copy your plays directory exactly
