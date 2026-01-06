@@ -66,12 +66,24 @@ let
             "/bin/sh"
             "-c"
             ''
-              ${cleanupRunner} ${runnerName} ${tokenFile} ${cfg.repo}
-              exec ${pkgs.github-runner}/bin/Runner \
-                --name ${runnerName} \
-                --url ${url} \
-                --token "$(cat ${tokenFile})" \
-                ${optionalString (runnerCfg.ephemeral or true) "--ephemeral"}
+              set -euo pipefail
+
+              ${cleanupRunner} ${runnerName} ${tokenFile} ${repo}
+
+              RUNNER_DIR="$HOME/.github-runner/${id}"
+              mkdir -p "$RUNNER_DIR"
+              cd "$RUNNER_DIR"
+
+              if [ ! -f .runner ]; then
+                ${pkgs.github-runner}/bin/config.sh \
+                  --unattended \
+                  --name ${runnerName} \
+                  --url ${url} \
+                  --token "$(cat ${tokenFile})" \
+                  ${lib.optionalString ephemeral "--ephemeral"}
+              fi
+
+              exec ${pkgs.github-runner}/bin/run.sh
             ''
           ];
 
