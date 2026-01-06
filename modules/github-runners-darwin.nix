@@ -75,7 +75,7 @@ let
   ############################################################
   # One LaunchDaemon per runner (runs as cfg.user)
   ############################################################
-  mkRunnerDaemon =
+  mkRunnerAgent =
     id: runnerCfg:
     let
       runnerName = if runnerCfg.name != null then runnerCfg.name else "nixos-${hostname}-${id}";
