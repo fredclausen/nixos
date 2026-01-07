@@ -91,71 +91,58 @@ in
           "xml"
         ];
         userSettings = {
-          # theme = {
-          #   mode = "system";
-          #   dark = "One Dark";
-          #   light = "One Light";
-          # };
-          hour_format = "hour24";
-          # vim_mode = true;
-          # Tell Zed to use direnv and direnv can use a flake.nix environment
+          journal = {
+            hour_format = "hour24";
+          };
+
+          show_edit_predictions = true;
+          features = {
+            edit_prediction_provider = "copilot";
+          };
+
           load_direnv = "shell_hook";
           base_keymap = "VSCode";
           show_whitespaces = "all";
           ui_font_size = 14;
           buffer_font_size = 14;
 
-          assistant = {
-            enabled = true;
-            version = "2";
+          ##########################################################################
+          # AI / Agent configuration (THIS IS THE ONLY VALID AI TOP-LEVEL KEY)
+          ##########################################################################
+          agent = {
+            always_allow_tool_actions = true;
 
             default_model = {
               provider = "copilot_chat";
               model = "gpt-4o";
             };
 
-            default_open_ai_model = "qwen2.5-coder:7b";
-
-            # Provider options:
-            # - zed.dev models (claude-3-5-sonnet-latest) requires GitHub connected
-            # - anthropic models (claude-3-5-sonnet-latest, claude-3-haiku-latest, claude-3-opus-latest) requires API_KEY
-            # - copilot_chat models (gpt-4o, gpt-4, gpt-3.5-turbo, o1-preview) requires GitHub connected
             inline_alternatives = [
               {
                 provider = "copilot_chat";
                 model = "gpt-4o";
               }
               {
-                provider = "openai";
+                provider = "ollama";
                 model = "qwen2.5-coder:7b";
               }
               {
-                provider = "fredhub";
-                model = "qwen2.5-coder:7b";
+                provider = "ollama";
+                model = "deepseek-coder-v2:latest";
               }
               {
                 provider = "zed.dev";
                 model = "claude-3-5-sonnet-latest";
               }
-              {
-                provider = "openai";
-                model = "gpt-4o";
-              }
             ];
-
-            providers = {
-              fredhub = {
-                type = "openai";
-                api_base = "http://fredhub.local:11434/v1";
-                api_key = "local";
-              };
-            };
           };
 
+          ##########################################################################
+          # Language model backends
+          ##########################################################################
           language_models = {
             ollama = {
               api_url = "http://fredhub.local:11434";
-              auto_discover = false;
 
               available_models = [
                 {
@@ -164,21 +151,19 @@ in
                   max_tokens = 100000;
                   supports_tools = true;
                   supports_thinking = false;
-                  supports_images = true;
+                  supports_images = false;
                 }
-
                 {
                   name = "qwen2.5-coder:7b";
                   display_name = "Qwen 2.5 Coder (FredHub)";
                   max_tokens = 32000;
                   supports_tools = true;
                   supports_thinking = false;
-                  supports_images = true;
+                  supports_images = false;
                 }
-
                 {
                   name = "deepseek-coder-v2:latest";
-                  display_name = "Deepseek-Coder V2 (FredHub)";
+                  display_name = "DeepSeek Coder V2 (FredHub)";
                   max_tokens = 128000;
                   supports_tools = true;
                   supports_thinking = false;
@@ -186,62 +171,34 @@ in
                 }
               ];
             };
-
-            # openai = {
-            #   api_url = "http://localhost:11434/v1";
-            #   auto_discover = false;
-
-            #   available_models = [
-            #     {
-            #       name = "qwen2.5-coder:7b";
-            #       display_name = "Qwen 2.5 Coder 7b (local)";
-            #       max_tokens = 32000;
-            #       supports_tools = true;
-            #       supports_thinking = false;
-            #       supports_images = true;
-            #     }
-            #     {
-            #       name = "qwen2.5-coder:32b";
-            #       display_name = "Qwen 2.5 Coder 32b (local)";
-            #       max_tokens = 32000;
-            #       supports_tools = true;
-            #       supports_thinking = false;
-            #       supports_images = true;
-            #     }
-            #   ];
-            # };
           };
 
-          agent = {
-            always_allow_tool_actions = true;
-            default_model = {
-              provider = "copilot_chat";
-              model = "gpt-4o";
-            };
-          };
-
-          github_copilot = {
-            enabled = true;
-          };
-
+          ##########################################################################
+          # File type overrides
+          ##########################################################################
           file_types = {
             Ansible = [
-              # This is super bespoke to me. If someone else is using my stuff
-              # you will need to play with this
               "**/modules/ansible/plays/*.yaml"
             ];
           };
 
+          ##########################################################################
+          # Node (used by LSPs and extensions)
+          ##########################################################################
           node = {
-            path = lib.getExe pkgs.nodejs;
-            npm_path = lib.getExe' pkgs.nodejs "npm";
+            path = "${lib.getExe pkgs.nodejs}";
+            npm_path = "${lib.getExe' pkgs.nodejs "npm"}";
           };
 
+          ##########################################################################
+          # Terminal
+          ##########################################################################
           terminal = {
             alternate_scroll = "off";
             blinking = "off";
             copy_on_select = false;
             dock = "bottom";
+
             detect_venv = {
               on = {
                 directories = [
@@ -253,22 +210,29 @@ in
                 activate_script = "default";
               };
             };
+
             env = {
               TERM = "wezterm";
             };
-            font_family = "FiraCode Nerd Font";
+
+            font_family = "Fira Code";
             font_features = null;
             font_size = null;
             line_height = "comfortable";
             option_as_meta = false;
             button = false;
             shell = "system";
+
             toolbar = {
-              title = true;
+              breadcrumbs = true;
             };
+
             working_directory = "current_project_directory";
           };
 
+          ##########################################################################
+          # Language formatting
+          ##########################################################################
           languages = {
             CSS = {
               tab_size = 2;
@@ -288,78 +252,11 @@ in
             Markdown = {
               tab_size = 2;
             };
-          };
-
-          lsp = {
-            rust-analyzer = {
-              binary = {
-                path = lib.getExe pkgs.rust-analyzer;
-                #path_lookup = true;
-              };
-              settings = {
-                diagnostics = {
-                  enable = true;
-                  styleLints = {
-                    enable = true;
-                  }; # Corrected styleLints access
-                };
-                checkOnSave = true;
-                check = {
-                  command = "clippy";
-                  features = "all";
-                };
-                cargo = {
-                  buildScripts = {
-                    enable = true;
-                  }; # Corrected buildScripts access
-                  features = "all";
-                };
-                inlayHints = {
-                  bindingModeHints = {
-                    enable = true;
-                  }; # Corrected access
-                  closureStyle = "rust_analyzer";
-                  closureReturnTypeHints = {
-                    enable = "always";
-                  }; # Corrected access
-                  discriminantHints = {
-                    enable = "always";
-                  }; # Corrected access
-                  expressionAdjustmentHints = {
-                    enable = "always";
-                  }; # Corrected access
-                  implicitDrops = {
-                    enable = true;
-                  };
-                  lifetimeElisionHints = {
-                    enable = "always";
-                  }; # Corrected access
-                  rangeExclusiveHints = {
-                    enable = true;
-                  };
-                };
-                procMacro = {
-                  enable = true;
-                };
-                rustc = {
-                  source = "discover";
-                };
-                files = {
-                  excludeDirs = [
-                    ".cargo"
-                    ".direnv"
-                    ".git"
-                    "node_modules"
-                    "target"
-                  ];
-                };
-              };
-            };
-
-            crates-lsp = {
-              binary = {
-                path = lib.getExe pkgs.crates-lsp;
-              };
+            Python = {
+              language_servers = [
+                "!ruff"
+                "pyright"
+              ];
             };
 
             Nix = {
@@ -369,84 +266,78 @@ in
               ];
             };
 
-            nixd = {
-              binary = {
-                path = lib.getExe pkgs.nixd;
-              };
-            };
+            # Bash = {
+            #   language_servers = [ "bash-language-server" ];
+            # };
+          };
 
-            # I don't think we're using this, but it shuts up errors
-            nil = {
+          ##########################################################################
+          # LSP configuration
+          ##########################################################################
+          lsp = {
+            rust-analyzer = {
               binary = {
-                path = lib.getExe pkgs.nil;
+                path = "${lib.getExe pkgs.rust-analyzer}";
               };
-
               settings = {
-                nix = {
-                  flake = {
-                    autoArchive = true;
-                  };
+                diagnostics.enable = true;
+                diagnostics.styleLints.enable = true;
+
+                checkOnSave = true;
+                check.command = "clippy";
+                check.features = "all";
+
+                cargo.buildScripts.enable = true;
+                cargo.features = "all";
+
+                inlayHints = {
+                  bindingModeHints.enable = true;
+                  closureStyle = "rust_analyzer";
+                  closureReturnTypeHints.enable = "always";
+                  discriminantHints.enable = "always";
+                  expressionAdjustmentHints.enable = "always";
+                  implicitDrops.enable = true;
+                  lifetimeElisionHints.enable = "always";
+                  rangeExclusiveHints.enable = true;
                 };
+
+                procMacro.enable = true;
+                rustc.source = "discover";
+
+                files.excludeDirs = [
+                  ".cargo"
+                  ".direnv"
+                  ".git"
+                  "node_modules"
+                  "target"
+                ];
               };
             };
 
-            # typescript lsp
+            crates-lsp = {
+              binary.path = "${lib.getExe pkgs.crates-lsp}";
+            };
+
+            nixd.binary.path = "${lib.getExe pkgs.nixd}";
+
             vtsls = {
-              binary = {
-                path = "/etc/profiles/per-user/fred/bin/vtsls-local";
-              };
-              args = [ "--stdio" ];
+              binary.path = "/etc/profiles/per-user/fred/bin/vtsls-local";
             };
 
-            python = {
-              language_servers = [
-                "!ruff"
-                "pyright"
-              ];
-            };
-
-            # python lsp
             ruff = {
-              binary = {
-                path = "/etc/profiles/per-user/fred/bin/ruff-local";
-              };
+              binary.path = "/etc/profiles/per-user/fred/bin/ruff-local";
             };
 
-            bash = {
-              language_servers = [
-                "bash-language-server"
-              ];
-            };
+            bash-language-server.binary.path = "/etc/profiles/per-user/fred/bin/bash-language-server-local";
 
-            bash-language-server = {
-              binary = {
-                path = "/etc/profiles/per-user/fred/bin/bash-language-server-local";
-              };
-            };
+            shellcheck.binary.path = "${lib.getExe pkgs.shellcheck}";
+            shfmt.binary.path = "${lib.getExe pkgs.shfmt}";
 
-            shellcheck = {
-              binary = {
-                path = lib.getExe pkgs.shellcheck;
-              };
-            };
+            dockerfile-language-server.binary.path = "/etc/profiles/per-user/fred/bin/dockerfile-language-server-local";
 
-            shfmt = {
-              binary = {
-                path = lib.getExe pkgs.shfmt;
-              };
-            };
-
-            dockerfile-language-server = {
-              binary = {
-                path = "/etc/profiles/per-user/fred/bin/dockerfile-language-server-local";
-              };
-            };
-
-            markdownlint = {
-              settings = {
-                "MD013" = false; # line length
-                "MD033" = false; # inline HTML
-              };
+            markdownlint.settings = {
+              MD013 = false;
+              MD033 = false;
             };
           };
         };
