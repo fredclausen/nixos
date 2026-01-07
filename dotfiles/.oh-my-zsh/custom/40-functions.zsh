@@ -48,7 +48,7 @@ updatenix() {
             pushd "$nixos_dir" >/dev/null || return
             pushed=true
         fi
-        sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#"$(hostname)"
+        sudo darwin-rebuild switch --flake .#"$(hostname)"
         echo " Done with nix."
         echo " Upgrading brew"
         brew update
