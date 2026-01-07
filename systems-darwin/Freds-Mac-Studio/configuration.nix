@@ -86,7 +86,7 @@ in
     "studio-runner-1" = {
       enable = true;
       url = "https://github.com/fredsystems/nixos";
-      tokenFile = /Users/fred/test.token;
+      tokenFile = ./test.token;
       # user = "fred";
       # workDir = "/Users/fred/Github-Runner/Runner1";
       replace = true;
