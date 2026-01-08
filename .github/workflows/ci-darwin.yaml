@@ -69,12 +69,10 @@ jobs:
 
       - id: out
         run: |
-          echo "Skipping because github sux"
-          return 0
-          # echo "Evaluating darwinConfigurations..."
-          # systems=$(nix eval --json .#darwinConfigurations --apply builtins.attrNames)
-          # echo "Darwin systems: $systems"
-          # echo "systems=$systems" >> "$GITHUB_OUTPUT"
+          echo "Evaluating darwinConfigurations..."
+          systems=$(nix eval --json .#darwinConfigurations --apply builtins.attrNames)
+          echo "Darwin systems: $systems"
+          echo "systems=$systems" >> "$GITHUB_OUTPUT"
 
   # =====================================================================
   # Build Darwin systems (matrix)
@@ -109,10 +107,10 @@ jobs:
 
       - name: Build Darwin system
         run: |
-          # echo "Skipping build for now (placeholder)"
+          echo "Skipping build for now (placeholder)"
           # Uncomment when ready:
-          echo "Building Darwin system: ${{ matrix.system }}"
-          nix build ".#darwinConfigurations.${{ matrix.system }}.system"
+          # echo "Building Darwin system: ${{ matrix.system }}"
+          # nix build ".#darwinConfigurations.${{ matrix.system }}.system"
 
   # =====================================================================
   # Required Check Summary
