@@ -90,6 +90,7 @@ in
           "git-firefly"
           "xml"
         ];
+        mutableUserSettings = false;
         userSettings = {
           journal = {
             hour_format = "hour24";
