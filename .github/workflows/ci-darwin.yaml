@@ -69,10 +69,12 @@ jobs:
 
       - id: out
         run: |
-          echo "Evaluating darwinConfigurations..."
-          systems=$(nix eval --json .#darwinConfigurations --apply builtins.attrNames)
-          echo "Darwin systems: $systems"
-          echo "systems=$systems" >> "$GITHUB_OUTPUT"
+          echo "Skipping because github sux"
+          return 0
+          # echo "Evaluating darwinConfigurations..."
+          # systems=$(nix eval --json .#darwinConfigurations --apply builtins.attrNames)
+          # echo "Darwin systems: $systems"
+          # echo "systems=$systems" >> "$GITHUB_OUTPUT"
 
   # =====================================================================
   # Build Darwin systems (matrix)
