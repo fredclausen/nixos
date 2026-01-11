@@ -280,38 +280,39 @@ in
               binary = {
                 path = "${lib.getExe pkgs.rust-analyzer}";
               };
-              settings = {
-                diagnostics.enable = true;
-                diagnostics.styleLints.enable = true;
 
-                checkOnSave = true;
-                check.command = "clippy";
-                check.features = "all";
+              initialization_options = {
+                check = {
+                  command = "clippy";
+                };
+              };
+
+              settings = {
+                # check = {
+                #   command = "clippy";
+
+                #   # Zed only supports `features` OR `--all-features`, not both
+                #   features = null;
+
+                #   # Everything else must go here
+                #   extraArgs = [
+                #     "--all-targets"
+                #     "--all-features"
+                #     "--"
+                #     "-D"
+                #     "warnings"
+                #   ];
+                # };
 
                 cargo.buildScripts.enable = true;
-                cargo.features = "all";
 
-                inlayHints = {
-                  bindingModeHints.enable = true;
-                  closureStyle = "rust_analyzer";
-                  closureReturnTypeHints.enable = "always";
-                  discriminantHints.enable = "always";
-                  expressionAdjustmentHints.enable = "always";
-                  implicitDrops.enable = true;
-                  lifetimeElisionHints.enable = "always";
-                  rangeExclusiveHints.enable = true;
+                diagnostics = {
+                  enable = true;
+                  styleLints.enable = true;
                 };
 
                 procMacro.enable = true;
                 rustc.source = "discover";
-
-                files.excludeDirs = [
-                  ".cargo"
-                  ".direnv"
-                  ".git"
-                  "node_modules"
-                  "target"
-                ];
               };
             };
 
